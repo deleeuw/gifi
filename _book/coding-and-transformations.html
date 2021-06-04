@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>2 Coding and Transformations | Gifi Analysis of Multivariate Data</title>
+  <meta name="description" content="null" />
+  <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="2 Coding and Transformations | Gifi Analysis of Multivariate Data" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="null" />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="2 Coding and Transformations | Gifi Analysis of Multivariate Data" />
+  
+  <meta name="twitter:description" content="null" />
+  
+
+<meta name="author" content="Jan de Leeuw" />
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="introduction.html"/>
+<link rel="next" href="aspects.html"/>
+<script src="libs/header-attrs-2.5/header-attrs.js"></script>
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.0/anchor-sections.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.0/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Note</a></li>
+<li class="chapter" data-level="" data-path="preface.html"><a href="preface.html"><i class="fa fa-check"></i>Preface</a></li>
+<li class="chapter" data-level="1" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i><b>1</b> Introduction</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="introduction.html"><a href="introduction.html#some-dualisms"><i class="fa fa-check"></i><b>1.1</b> Some Dualisms</a></li>
+<li class="chapter" data-level="1.2" data-path="introduction.html"><a href="introduction.html#quantifying-qualitative-data"><i class="fa fa-check"></i><b>1.2</b> Quantifying Qualitative Data</a></li>
+<li class="chapter" data-level="1.3" data-path="introduction.html"><a href="introduction.html#beyond-gifi"><i class="fa fa-check"></i><b>1.3</b> Beyond Gifi</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="coding-and-transformations.html"><a href="coding-and-transformations.html"><i class="fa fa-check"></i><b>2</b> Coding and Transformations</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="coding-and-transformations.html"><a href="coding-and-transformations.html#variables-and-multivariables"><i class="fa fa-check"></i><b>2.1</b> Variables and Multivariables</a></li>
+<li class="chapter" data-level="2.2" data-path="coding-and-transformations.html"><a href="coding-and-transformations.html#induced-correlations-and-aspects"><i class="fa fa-check"></i><b>2.2</b> Induced Correlations and Aspects</a></li>
+<li class="chapter" data-level="2.3" data-path="coding-and-transformations.html"><a href="coding-and-transformations.html#transformed-variables"><i class="fa fa-check"></i><b>2.3</b> Transformed Variables</a></li>
+<li class="chapter" data-level="2.4" data-path="coding-and-transformations.html"><a href="coding-and-transformations.html#bases"><i class="fa fa-check"></i><b>2.4</b> Bases</a></li>
+<li class="chapter" data-level="2.5" data-path="coding-and-transformations.html"><a href="coding-and-transformations.html#copies-and-rank"><i class="fa fa-check"></i><b>2.5</b> Copies and Rank</a></li>
+<li class="chapter" data-level="2.6" data-path="coding-and-transformations.html"><a href="coding-and-transformations.html#orthoblocks"><i class="fa fa-check"></i><b>2.6</b> Orthoblocks</a></li>
+<li class="chapter" data-level="2.7" data-path="coding-and-transformations.html"><a href="coding-and-transformations.html#constraints"><i class="fa fa-check"></i><b>2.7</b> Constraints</a></li>
+<li class="chapter" data-level="2.8" data-path="coding-and-transformations.html"><a href="coding-and-transformations.html#missing-data"><i class="fa fa-check"></i><b>2.8</b> Missing Data</a></li>
+<li class="chapter" data-level="2.9" data-path="coding-and-transformations.html"><a href="coding-and-transformations.html#active-and-passive-variables"><i class="fa fa-check"></i><b>2.9</b> Active and Passive Variables</a></li>
+<li class="chapter" data-level="2.10" data-path="coding-and-transformations.html"><a href="coding-and-transformations.html#interactive-coding"><i class="fa fa-check"></i><b>2.10</b> Interactive Coding</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="aspects.html"><a href="aspects.html"><i class="fa fa-check"></i><b>3</b> Aspects</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="aspects.html"><a href="aspects.html#definition"><i class="fa fa-check"></i><b>3.1</b> Definition</a></li>
+<li class="chapter" data-level="3.2" data-path="aspects.html"><a href="aspects.html#stationary-equations"><i class="fa fa-check"></i><b>3.2</b> Stationary Equations</a></li>
+<li class="chapter" data-level="3.3" data-path="aspects.html"><a href="aspects.html#bilinearizability"><i class="fa fa-check"></i><b>3.3</b> Bilinearizability</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="pattern-constraints-and-gifi-loss.html"><a href="pattern-constraints-and-gifi-loss.html"><i class="fa fa-check"></i><b>4</b> Pattern Constraints and Gifi Loss</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="pattern-constraints-and-gifi-loss.html"><a href="pattern-constraints-and-gifi-loss.html#aspects-from-patterns"><i class="fa fa-check"></i><b>4.1</b> Aspects from Patterns</a></li>
+<li class="chapter" data-level="4.2" data-path="pattern-constraints-and-gifi-loss.html"><a href="pattern-constraints-and-gifi-loss.html#gifi-loss"><i class="fa fa-check"></i><b>4.2</b> Gifi Loss</a></li>
+<li class="chapter" data-level="4.3" data-path="pattern-constraints-and-gifi-loss.html"><a href="pattern-constraints-and-gifi-loss.html#associated-eigenvalue-problems"><i class="fa fa-check"></i><b>4.3</b> Associated Eigenvalue Problems</a></li>
+<li class="chapter" data-level="4.4" data-path="pattern-constraints-and-gifi-loss.html"><a href="pattern-constraints-and-gifi-loss.html#history"><i class="fa fa-check"></i><b>4.4</b> History</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="algorithm.html"><a href="algorithm.html"><i class="fa fa-check"></i><b>5</b> Algorithm</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="algorithm.html"><a href="algorithm.html#block-relaxation"><i class="fa fa-check"></i><b>5.1</b> Block Relaxation</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="multiple-correspondence-analysis-and-homals.html"><a href="multiple-correspondence-analysis-and-homals.html"><i class="fa fa-check"></i><b>6</b> Multiple Correspondence Analysis and homals()</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="multiple-correspondence-analysis-and-homals.html"><a href="multiple-correspondence-analysis-and-homals.html#equations"><i class="fa fa-check"></i><b>6.1</b> Equations</a></li>
+<li class="chapter" data-level="6.2" data-path="multiple-correspondence-analysis-and-homals.html"><a href="multiple-correspondence-analysis-and-homals.html#examples"><i class="fa fa-check"></i><b>6.2</b> Examples</a>
+<ul>
+<li class="chapter" data-level="6.2.1" data-path="multiple-correspondence-analysis-and-homals.html"><a href="multiple-correspondence-analysis-and-homals.html#hartigans-hardware"><i class="fa fa-check"></i><b>6.2.1</b> Hartigan’s Hardware</a></li>
+<li class="chapter" data-level="6.2.2" data-path="multiple-correspondence-analysis-and-homals.html"><a href="multiple-correspondence-analysis-and-homals.html#thirteen-personality-scales"><i class="fa fa-check"></i><b>6.2.2</b> Thirteen Personality Scales</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="discriminant-analysis-and-criminals.html"><a href="discriminant-analysis-and-criminals.html"><i class="fa fa-check"></i><b>7</b> Discriminant Analysis and criminals()</a>
+<ul>
+<li class="chapter" data-level="7.0.1" data-path="discriminant-analysis-and-criminals.html"><a href="discriminant-analysis-and-criminals.html#thirteen-personality-scales-1"><i class="fa fa-check"></i><b>7.0.1</b> Thirteen Personality Scales</a></li>
+</ul></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Gifi Analysis of Multivariate Data</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="coding-and-transformations" class="section level1" number="2">
+<h1><span class="header-section-number">2</span> Coding and Transformations</h1>
+<div id="variables-and-multivariables" class="section level2" number="2.1">
+<h2><span class="header-section-number">2.1</span> Variables and Multivariables</h2>
+<p>In the multivariate analysis techniques presented in this paper the data are measurements or classifications of <span class="math inline">\(n\)</span> <em>objects</em> by <span class="math inline">\(m\)</span> <em>variables</em>.
+Perhaps it is useful to insert some definitions here. A <em>variable</em> is a function that maps a domain of objects to a range of values. Domains are finite. The elements of the domain can be individuals, animals, plants, time points, locations, and so on. It is useful to distinguish the <em>codomain</em> (or <em>range</em>) of a variable and its <em>image</em>. The codomain of a variable can be the real numbers, but the image always is a finite set, the actual values the variable assumes on the domain. A <em>multivariable</em> is a sequence of variables defined on the same domain, with possibly different codomains. Multivariables are implemented in R as <em>dataframes</em>. Variables can have a finite codomain, which can be either ordered or unordered. This corresponds with a <em>factor</em> or an <em>ordered factor</em> in R. MVAOS techniques <em>quantify</em> factors, replacing the values in the image by real numbers. If the variables are real-valued to start with we replace real numbers by other real numbers and we <em>transform</em> instead of <em>quantify</em>. The distinction between quantification and transformation is somewhat fluid, because the image of a variable is always finite and thus, in a sense, all variables are categorical (a point also emphasized, for example, in <span class="citation"><a href="discriminant-analysis-and-criminals.html#ref-holland_79" role="doc-biblioref">Holland</a> (<a href="discriminant-analysis-and-criminals.html#ref-holland_79" role="doc-biblioref">1979</a>)</span>).</p>
+<p>Although the variables in a multivariable have the same domain, there can be different numbers of missing data for different variables. We handle this in the same way as R, by adding <code>NA</code> to the range of all variables. In this context it is also useful to define <em>latent</em> or <em>unobserved</em> variables. These are variables for which all values are missing, i.e. for which the image only contains <code>NA</code>. At first thought it seems somewhat perverse to have such completely missing variables, but think of examples such as principal components, factor scores, or error terms in linear models.</p>
+</div>
+<div id="induced-correlations-and-aspects" class="section level2" number="2.2">
+<h2><span class="header-section-number">2.2</span> Induced Correlations and Aspects</h2>
+<p>If all categorical variablea are quantified and all numerical variable are transformed we can compute the <em>induced correlation matrix</em> of the transformed and quantified variables. In the forms of MVAOS we consider in this book the statistics we compute, except for the transformations themselves, are usually functions of this induced correlation matrix. This means that they are functions of the second order relations between the variables, or, in order words, they are <em>joint bivariate</em>. Higher order moments and product moments are ignored. Different multivariate distributions with the same bivariate marginals will give the same MVAOS results.</p>
+</div>
+<div id="transformed-variables" class="section level2" number="2.3">
+<h2><span class="header-section-number">2.3</span> Transformed Variables</h2>
+<p>The data are collected in the <span class="math inline">\(n\times m\)</span> matrix <span class="math inline">\(H\)</span>, which codes the observations on the <span class="math inline">\(m\)</span> variables. MVAOS does not operate on the data directly, but on <em>transformations</em> or <em>quantifications</em> of the variables. Choosing a transformation to minimize a loss function is known as <em>optimal scaling</em>. Clearly this so-called optimality is only defined in terms of a specific loss function, with specific constraints. Different constraints will lead to different optimal transformations.</p>
+<p>Let us define the types of transformations we are interested in. The <span class="math inline">\(n\times m\)</span> matrix of <em>transformed variables</em> <span class="math inline">\(H\)</span> has columns <span class="math inline">\(h_j\)</span>, which are constrained by <span class="math inline">\(h_j=G_jz_j\)</span>, where <span class="math inline">\(G_j\)</span> is a given matrix defining the <em>basis</em> for variable <span class="math inline">\(j\)</span>. In addition we require <span class="math inline">\(h_j\in\mathcal{C}_j\)</span> and <span class="math inline">\(h_j\in\mathcal{S}\)</span>, where <span class="math inline">\(\mathcal{C}_j\)</span> is a <em>cone of transformations</em> and <span class="math inline">\(\mathcal{S}\)</span> is the unit sphere in <span class="math inline">\(\mathbb{R}^n\)</span>. This will be discussed in more detail in later sections, but for the time being think of the example in which <span class="math inline">\(h_j\)</span> is required to be a (centered and normalized) monotone polynomial function of the image values of variable <span class="math inline">\(j\)</span>. The whole of <span class="math inline">\(\mathbb{R}^n\)</span> and a single point in <span class="math inline">\(\mathbb{R}^n\)</span> are both special cases of these normalized cones. It is important, especially for algorithm construction, that the restrictions are defined for each variable separately. An exception to this rule is the <em>orthoblock</em>, using terminology from <span class="citation"><a href="discriminant-analysis-and-criminals.html#ref-deleeuw_C_04a" role="doc-biblioref">J. De Leeuw</a> (<a href="discriminant-analysis-and-criminals.html#ref-deleeuw_C_04a" role="doc-biblioref">2004</a>)</span>, which requires that all or some of the columns of <span class="math inline">\(H\)</span> are not only normalized but also orthogonal to each other. Clearly a normalized variable is an orthoblock of size one.</p>
+</div>
+<div id="bases" class="section level2" number="2.4">
+<h2><span class="header-section-number">2.4</span> Bases</h2>
+<p>In earlier MVAOS work, summarized for example in <span class="citation"><a href="discriminant-analysis-and-criminals.html#ref-gifi_B_90" role="doc-biblioref">Gifi</a> (<a href="discriminant-analysis-and-criminals.html#ref-gifi_B_90" role="doc-biblioref">1990</a>)</span> or <span class="citation"><a href="discriminant-analysis-and-criminals.html#ref-michailidis_deleeuw_A_98" role="doc-biblioref">Michailidis and De Leeuw</a> (<a href="discriminant-analysis-and-criminals.html#ref-michailidis_deleeuw_A_98" role="doc-biblioref">1998</a>)</span>, the basis matrices <span class="math inline">\(G_j\)</span> were binary zero-one matrices, indicating category membership. The same is true for the software in IBM SPSS Categories <span class="citation">(<a href="discriminant-analysis-and-criminals.html#ref-meulman_heiser_12" role="doc-biblioref">J. M. Meulman and Heiser 2012</a>)</span> or in the R package homals <span class="citation">(<a href="discriminant-analysis-and-criminals.html#ref-deleeuw_mair_A_09a" role="doc-biblioref">J. De Leeuw and Mair 2009a</a>)</span>. In this paper we extend the current MVAOS software using <em>B-spline bases</em>, which provide a form of fuzzy non-binary coding suitable for both categorical and numerical variables <span class="citation">(<a href="discriminant-analysis-and-criminals.html#ref-vanrijckevorsel_deleeuw_B_88" role="doc-biblioref">Van Rijckevorsel and De Leeuw 1988</a>)</span>. These generalizations were already discussed in <span class="citation"><a href="discriminant-analysis-and-criminals.html#ref-deleeuw_vanrijckevorsel_vanderwouden_A_81" role="doc-biblioref">J. De Leeuw, Van Rijckevorsel, and Van der Wouden</a> (<a href="discriminant-analysis-and-criminals.html#ref-deleeuw_vanrijckevorsel_vanderwouden_A_81" role="doc-biblioref">1981</a>)</span> and <span class="citation"><a href="discriminant-analysis-and-criminals.html#ref-gifi_B_90" role="doc-biblioref">Gifi</a> (<a href="discriminant-analysis-and-criminals.html#ref-gifi_B_90" role="doc-biblioref">1990</a>)</span>, but corresponding easily accessible software was never released.</p>
+<p>In this book we continue to use <em>indicators</em> for bases. Thus bases <span class="math inline">\(G_j\)</span> must be non-negative, with rows that add up to one. If there is only one non-zero entry in each row, which of course is then equal to one, the indicator is <em>crisp</em>, otherwise it is <em>fuzzy</em>. B-spline bases are the prime example of fuzzy indicators, but other examples are discussed in <span class="citation"><a href="discriminant-analysis-and-criminals.html#ref-vanrijckevorsel_deleeuw_B_88" role="doc-biblioref">Van Rijckevorsel and De Leeuw</a> (<a href="discriminant-analysis-and-criminals.html#ref-vanrijckevorsel_deleeuw_B_88" role="doc-biblioref">1988</a>)</span>. Only B-spline bases are implemented in our software, however.</p>
+<p>Note that the identity matrix is a crisp indicator. This is of importance in connection with missing data and orthoblocks.</p>
+</div>
+<div id="copies-and-rank" class="section level2" number="2.5">
+<h2><span class="header-section-number">2.5</span> Copies and Rank</h2>
+<p>Within a block there can be more than one version of the same variable. These multiple versions are called <em>copies</em>. They were first introduced into the Gifi framework by <span class="citation"><a href="discriminant-analysis-and-criminals.html#ref-deleeuw_C_84c" role="doc-biblioref">J. De Leeuw</a> (<a href="discriminant-analysis-and-criminals.html#ref-deleeuw_C_84c" role="doc-biblioref">1984b</a>)</span>. Since MVAOS transforms variables, having more than one copy is not necessarily redundant, because different copies can and will be transformed differently. As a simple example of copies, think of using different monomials or orthogonal polynomials of a single variable <span class="math inline">\(x\)</span> in a polynomial regression. The difference between copies and simply including a variable more than once is that copies have the same basis <span class="math inline">\(G_j\)</span>.</p>
+<p>In the algorithm copies of a variable are just treated in exactly the same way as other variables. The notion of copies replaces the notion of the <em>rank of a quantification</em> used in traditional Gifi, which in turn generalizes the distinction between <em>single</em> and <em>multiple</em> quantifications. A single variable has only one copy in its block, a multiple variable has the maximum number of copies.</p>
+<p>In our software the copies of a variable by definition have the same basis. It is possible, of course, to include the same variable multiple times, but with different bases. This must be done, however, at the input level. In terms of the structures defined in the software, a gifiVariable can have multiple copies but it only has one basis. If there is more than one basis for a variable, then we need to define an additional gifiVariable. Also note that copies of a variable are all in the same block. If you want different versions of a variable in different blocks, then that requires you to create different gifiVariables.</p>
+<p>Defining copies is thus basically a coding problem. It can be handled simply by adding a variable multiple times to a data set, and giving each variable the same bases. In our algorithm we use the fact that copies belong to the same variable to create some special shortcuts and handling routines.</p>
+<p>Ordinality restrictions on variables with copies require some special attention. In our current implementation we merely require the first copy to be ordinal with the data, the other copies are not restricted. Once again, if you want ordinal restrictions on all copies you need to create separate gifiVariables for each copy.</p>
+</div>
+<div id="orthoblocks" class="section level2" number="2.6">
+<h2><span class="header-section-number">2.6</span> Orthoblocks</h2>
+<p>If a variable has more than one copy, then we require without loss of generality that the transformations are orthogonal.</p>
+</div>
+<div id="constraints" class="section level2" number="2.7">
+<h2><span class="header-section-number">2.7</span> Constraints</h2>
+<p>As discussed earlier, each variable has a cone of transformations associated with it, and we optimize over these transformations. In
+ALSOS and classical Gifi the three type of transformation cones considered are <em>nominal, ordinal,</em> and <em>numerical</em>. Our use of B-splines
+generalizes this distinction, because both numerical and nominal can be implemented using splines. What remains is the choice for
+the degree of the spline and the location of the knots.</p>
+<p>Choice of degree and knots is basically up to the user, but the programs have some defaults. In most cases the default is to use crisp indicators with knots at the data points. Of course for truly categorical variables (i.e. for factors in R) crisp indicators are simply constructed by using the levels of the factor. We include some utilities to place knots at percentiles, or equally spaced on the range, or to have no interior knots at all (in which case we fit polynomials).</p>
+<p>And finally the user decides, for all variables, if she wants the transformations (step functions, splines, and polynomials) to be monotonic with the data. Default is not requiring monotonicity.</p>
+<p>Note that we require the spline to be monotonic in the non-missing data points – this does not mean the spline is monotonic outside the range of the data (think, for example, of a quadratic polynomial), it does not even mean the spline is monotonic between data points. This makes our spline transformations different from the integrated B-splines, or I-splines, used by <span class="citation"><a href="discriminant-analysis-and-criminals.html#ref-winsberg_ramsay_83" role="doc-biblioref">Winsberg and Ramsay</a> (<a href="discriminant-analysis-and-criminals.html#ref-winsberg_ramsay_83" role="doc-biblioref">1983</a>)</span>, which are monotone on the whole real line. Because each variable has a finite image we are not really fitting a spline, we are fitting a number of discrete points that are required to be on a spline, and optionally to be monotonic with the data. In <span class="citation"><a href="discriminant-analysis-and-criminals.html#ref-winsberg_ramsay_83" role="doc-biblioref">Winsberg and Ramsay</a> (<a href="discriminant-analysis-and-criminals.html#ref-winsberg_ramsay_83" role="doc-biblioref">1983</a>)</span> the requirement is that the fitted points are on an I-spline, which automatically makes them monotonic with the data. Clearly our approach is the less restrictive one.</p>
+</div>
+<div id="missing-data" class="section level2" number="2.8">
+<h2><span class="header-section-number">2.8</span> Missing Data</h2>
+<p>The utility <code>makeMissing()</code> expands the basis for the non-missing data in various ways. Option “m” (for “multiple”) is the default. It replaces the basis with the direct sum of the non-missing basis and an identity matrix for the missing elements. Option “s” (for “single”) adds a single binary column to the basis indicating which elements are missing. Option “a” (for “average”) codes missing data by having all the elements in rows of the basis corresponding with missing data equal to one over the number of rows. With all three options the basis remains an indicator. Some of these options make most sense in the context of crisp indicators, where they are compared in <span class="citation"><a href="discriminant-analysis-and-criminals.html#ref-meulman_82" role="doc-biblioref">J. J. Meulman</a> (<a href="discriminant-analysis-and-criminals.html#ref-meulman_82" role="doc-biblioref">1982</a>)</span>.</p>
+<p>So suppose the data are</p>
+<pre><code>##      [,1] 
+## [1,] -0.50
+## [2,]    NA
+## [3,]  0.75
+## [4,]  0.99
+## [5,]    NA</code></pre>
+<p>Create a basis for the non-missing values with</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="coding-and-transformations.html#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mprint</span>(basis <span class="ot">&lt;-</span> <span class="fu">bsplineBasis</span>(x[<span class="fu">which</span>(<span class="sc">!</span><span class="fu">is.na</span>(x))],<span class="dv">1</span>,<span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">1</span>)))</span></code></pre></div>
+<pre><code>##      [,1]  [,2]  [,3] 
+## [1,]  0.50  0.50  0.00
+## [2,]  0.00  0.25  0.75
+## [3,]  0.00  0.01  0.99</code></pre>
+<p>The three different completion options for missing data give</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="coding-and-transformations.html#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mprint</span> (<span class="fu">makeMissing</span> (x, basis, <span class="at">missing =</span> <span class="st">&quot;m&quot;</span>))</span></code></pre></div>
+<pre><code>##      [,1]  [,2]  [,3]  [,4]  [,5] 
+## [1,]  0.50  0.50  0.00  0.00  0.00
+## [2,]  0.00  0.00  0.00  1.00  0.00
+## [3,]  0.00  0.25  0.75  0.00  0.00
+## [4,]  0.00  0.01  0.99  0.00  0.00
+## [5,]  0.00  0.00  0.00  0.00  1.00</code></pre>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="coding-and-transformations.html#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mprint</span> (<span class="fu">makeMissing</span> (x, basis, <span class="at">missing =</span> <span class="st">&quot;s&quot;</span>))</span></code></pre></div>
+<pre><code>##      [,1]  [,2]  [,3]  [,4] 
+## [1,]  0.50  0.50  0.00  0.00
+## [2,]  0.00  0.00  0.00  1.00
+## [3,]  0.00  0.25  0.75  0.00
+## [4,]  0.00  0.01  0.99  0.00
+## [5,]  0.00  0.00  0.00  1.00</code></pre>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="coding-and-transformations.html#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mprint</span> (<span class="fu">makeMissing</span> (x, basis, <span class="at">missing =</span> <span class="st">&quot;a&quot;</span>))</span></code></pre></div>
+<pre><code>##      [,1]  [,2]  [,3] 
+## [1,]  0.50  0.50  0.00
+## [2,]  0.33  0.33  0.33
+## [3,]  0.00  0.25  0.75
+## [4,]  0.00  0.01  0.99
+## [5,]  0.33  0.33  0.33</code></pre>
+<p>The default option for missing data in the previous version of the Gifi system was “missing data deleted,” which involves weighting the rows in the loss functions by the number of non-missing data in that row. This leads to some complications,
+and consequently we have no option “d” in this version of Gifi.</p>
+</div>
+<div id="active-and-passive-variables" class="section level2" number="2.9">
+<h2><span class="header-section-number">2.9</span> Active and Passive Variables</h2>
+<p>If a variable is <em>passive</em> (or <em>supplementary</em>) it is incorporated in the analysis, but it does not contribute to the loss. Thus an analysis that leaves the passive variables out will give the same results for the active variables.
+Passive variables are transformed like all the others, but they do not contribute to the block scores, and thus not
+to the loss. They have category quantifications and scores, and can be used in the corresponding plots.</p>
+<p>If all variables in a block are passive, then the whole block does not contribute to the loss. This happens specifically
+for singletons, if the single variable in the block is passive.</p>
+</div>
+<div id="interactive-coding" class="section level2" number="2.10">
+<h2><span class="header-section-number">2.10</span> Interactive Coding</h2>
+<p>One of the major contributions of <em>Analyse des Données</em> is the emphasis on <em>coding</em>, which in our context can be defined as choosing how to represent the raw data of an experiment in an actual data frame (and, to a lesser extent, how to choose blocks, number of copies, dimensionality, degrees, and knots). In the section we discuss one important coding variation. Suppose we have <span class="math inline">\(n\)</span> observations on two factors, one with <span class="math inline">\(p\)</span> levels and one with <span class="math inline">\(q\)</span> levels. Then the data can be coded as <span class="math inline">\(n\)</span> observations on one factor with <span class="math inline">\(p\times q\)</span> levels, and we can construct a corresponding crisp indicator. The same reasoning applies to more than two categorical variables, which we can always code <em>interactively</em>. It also applies to bases for numerical variables, where we can define an interactive basis by using products of columns from the bases of each of the variables.</p>
+<p>If <span class="math inline">\(G=\{g_{is}\}\)</span> and <span class="math inline">\(H=\{h_{it}\}\)</span> are two indicators of dimensions <span class="math inline">\(n\times m_g\)</span> and <span class="math inline">\(n\times m_h\)</span>, then the <span class="math inline">\(n\times m_gm_h\)</span> matrix with elements {g_{is}h_{it}} is again an indicator: the elements are non-negative, and rows add up to one.</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="coding-and-transformations.html#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mprint</span> (x <span class="ot">&lt;-</span> <span class="fu">bsplineBasis</span> (<span class="dv">1</span><span class="sc">:</span><span class="dv">9</span><span class="sc">/</span><span class="dv">10</span>, <span class="dv">1</span>, .<span class="dv">5</span>))</span></code></pre></div>
+<pre><code>##       [,1]  [,2]  [,3] 
+##  [1,]  1.00  0.00  0.00
+##  [2,]  0.75  0.25  0.00
+##  [3,]  0.50  0.50  0.00
+##  [4,]  0.25  0.75  0.00
+##  [5,]  0.00  1.00  0.00
+##  [6,]  0.00  0.75  0.25
+##  [7,]  0.00  0.50  0.50
+##  [8,]  0.00  0.25  0.75
+##  [9,]  0.00  0.00  1.00</code></pre>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="coding-and-transformations.html#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mprint</span> (y <span class="ot">&lt;-</span> <span class="fu">makeIndicator</span> (<span class="fu">c</span> (<span class="fu">rep</span> (<span class="dv">1</span>, <span class="dv">5</span>), <span class="fu">rep</span> (<span class="dv">2</span>, <span class="dv">4</span>))))</span></code></pre></div>
+<pre><code>##       [,1]  [,2] 
+##  [1,]  1.00  0.00
+##  [2,]  1.00  0.00
+##  [3,]  1.00  0.00
+##  [4,]  1.00  0.00
+##  [5,]  1.00  0.00
+##  [6,]  0.00  1.00
+##  [7,]  0.00  1.00
+##  [8,]  0.00  1.00
+##  [9,]  0.00  1.00</code></pre>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="coding-and-transformations.html#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mprint</span> (<span class="fu">makeColumnProduct</span> (<span class="fu">list</span> (x, y)))</span></code></pre></div>
+<pre><code>##       [,1]  [,2]  [,3]  [,4]  [,5]  [,6] 
+##  [1,]  1.00  0.00  0.00  0.00  0.00  0.00
+##  [2,]  0.75  0.00  0.25  0.00  0.00  0.00
+##  [3,]  0.50  0.00  0.50  0.00  0.00  0.00
+##  [4,]  0.25  0.00  0.75  0.00  0.00  0.00
+##  [5,]  0.00  0.00  1.00  0.00  0.00  0.00
+##  [6,]  0.00  0.00  0.00  0.75  0.00  0.25
+##  [7,]  0.00  0.00  0.00  0.50  0.00  0.50
+##  [8,]  0.00  0.00  0.00  0.25  0.00  0.75
+##  [9,]  0.00  0.00  0.00  0.00  0.00  1.00</code></pre>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="introduction.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="aspects.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["_main.pdf"],
+"toc": {
+"collapse": "none"
+},
+"keep_md": true,
+"toolbar": {
+"position": "fixed"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

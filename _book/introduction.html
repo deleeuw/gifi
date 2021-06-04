@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>1 Introduction | Gifi Analysis of Multivariate Data</title>
+  <meta name="description" content="null" />
+  <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="1 Introduction | Gifi Analysis of Multivariate Data" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="null" />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="1 Introduction | Gifi Analysis of Multivariate Data" />
+  
+  <meta name="twitter:description" content="null" />
+  
+
+<meta name="author" content="Jan de Leeuw" />
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="preface.html"/>
+<link rel="next" href="coding-and-transformations.html"/>
+<script src="libs/header-attrs-2.5/header-attrs.js"></script>
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.0/anchor-sections.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.0/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Note</a></li>
+<li class="chapter" data-level="" data-path="preface.html"><a href="preface.html"><i class="fa fa-check"></i>Preface</a></li>
+<li class="chapter" data-level="1" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i><b>1</b> Introduction</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="introduction.html"><a href="introduction.html#some-dualisms"><i class="fa fa-check"></i><b>1.1</b> Some Dualisms</a></li>
+<li class="chapter" data-level="1.2" data-path="introduction.html"><a href="introduction.html#quantifying-qualitative-data"><i class="fa fa-check"></i><b>1.2</b> Quantifying Qualitative Data</a></li>
+<li class="chapter" data-level="1.3" data-path="introduction.html"><a href="introduction.html#beyond-gifi"><i class="fa fa-check"></i><b>1.3</b> Beyond Gifi</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="coding-and-transformations.html"><a href="coding-and-transformations.html"><i class="fa fa-check"></i><b>2</b> Coding and Transformations</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="coding-and-transformations.html"><a href="coding-and-transformations.html#variables-and-multivariables"><i class="fa fa-check"></i><b>2.1</b> Variables and Multivariables</a></li>
+<li class="chapter" data-level="2.2" data-path="coding-and-transformations.html"><a href="coding-and-transformations.html#induced-correlations-and-aspects"><i class="fa fa-check"></i><b>2.2</b> Induced Correlations and Aspects</a></li>
+<li class="chapter" data-level="2.3" data-path="coding-and-transformations.html"><a href="coding-and-transformations.html#transformed-variables"><i class="fa fa-check"></i><b>2.3</b> Transformed Variables</a></li>
+<li class="chapter" data-level="2.4" data-path="coding-and-transformations.html"><a href="coding-and-transformations.html#bases"><i class="fa fa-check"></i><b>2.4</b> Bases</a></li>
+<li class="chapter" data-level="2.5" data-path="coding-and-transformations.html"><a href="coding-and-transformations.html#copies-and-rank"><i class="fa fa-check"></i><b>2.5</b> Copies and Rank</a></li>
+<li class="chapter" data-level="2.6" data-path="coding-and-transformations.html"><a href="coding-and-transformations.html#orthoblocks"><i class="fa fa-check"></i><b>2.6</b> Orthoblocks</a></li>
+<li class="chapter" data-level="2.7" data-path="coding-and-transformations.html"><a href="coding-and-transformations.html#constraints"><i class="fa fa-check"></i><b>2.7</b> Constraints</a></li>
+<li class="chapter" data-level="2.8" data-path="coding-and-transformations.html"><a href="coding-and-transformations.html#missing-data"><i class="fa fa-check"></i><b>2.8</b> Missing Data</a></li>
+<li class="chapter" data-level="2.9" data-path="coding-and-transformations.html"><a href="coding-and-transformations.html#active-and-passive-variables"><i class="fa fa-check"></i><b>2.9</b> Active and Passive Variables</a></li>
+<li class="chapter" data-level="2.10" data-path="coding-and-transformations.html"><a href="coding-and-transformations.html#interactive-coding"><i class="fa fa-check"></i><b>2.10</b> Interactive Coding</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="aspects.html"><a href="aspects.html"><i class="fa fa-check"></i><b>3</b> Aspects</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="aspects.html"><a href="aspects.html#definition"><i class="fa fa-check"></i><b>3.1</b> Definition</a></li>
+<li class="chapter" data-level="3.2" data-path="aspects.html"><a href="aspects.html#stationary-equations"><i class="fa fa-check"></i><b>3.2</b> Stationary Equations</a></li>
+<li class="chapter" data-level="3.3" data-path="aspects.html"><a href="aspects.html#bilinearizability"><i class="fa fa-check"></i><b>3.3</b> Bilinearizability</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="pattern-constraints-and-gifi-loss.html"><a href="pattern-constraints-and-gifi-loss.html"><i class="fa fa-check"></i><b>4</b> Pattern Constraints and Gifi Loss</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="pattern-constraints-and-gifi-loss.html"><a href="pattern-constraints-and-gifi-loss.html#aspects-from-patterns"><i class="fa fa-check"></i><b>4.1</b> Aspects from Patterns</a></li>
+<li class="chapter" data-level="4.2" data-path="pattern-constraints-and-gifi-loss.html"><a href="pattern-constraints-and-gifi-loss.html#gifi-loss"><i class="fa fa-check"></i><b>4.2</b> Gifi Loss</a></li>
+<li class="chapter" data-level="4.3" data-path="pattern-constraints-and-gifi-loss.html"><a href="pattern-constraints-and-gifi-loss.html#associated-eigenvalue-problems"><i class="fa fa-check"></i><b>4.3</b> Associated Eigenvalue Problems</a></li>
+<li class="chapter" data-level="4.4" data-path="pattern-constraints-and-gifi-loss.html"><a href="pattern-constraints-and-gifi-loss.html#history"><i class="fa fa-check"></i><b>4.4</b> History</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="algorithm.html"><a href="algorithm.html"><i class="fa fa-check"></i><b>5</b> Algorithm</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="algorithm.html"><a href="algorithm.html#block-relaxation"><i class="fa fa-check"></i><b>5.1</b> Block Relaxation</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="multiple-correspondence-analysis-and-homals.html"><a href="multiple-correspondence-analysis-and-homals.html"><i class="fa fa-check"></i><b>6</b> Multiple Correspondence Analysis and homals()</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="multiple-correspondence-analysis-and-homals.html"><a href="multiple-correspondence-analysis-and-homals.html#equations"><i class="fa fa-check"></i><b>6.1</b> Equations</a></li>
+<li class="chapter" data-level="6.2" data-path="multiple-correspondence-analysis-and-homals.html"><a href="multiple-correspondence-analysis-and-homals.html#examples"><i class="fa fa-check"></i><b>6.2</b> Examples</a>
+<ul>
+<li class="chapter" data-level="6.2.1" data-path="multiple-correspondence-analysis-and-homals.html"><a href="multiple-correspondence-analysis-and-homals.html#hartigans-hardware"><i class="fa fa-check"></i><b>6.2.1</b> Hartigan’s Hardware</a></li>
+<li class="chapter" data-level="6.2.2" data-path="multiple-correspondence-analysis-and-homals.html"><a href="multiple-correspondence-analysis-and-homals.html#thirteen-personality-scales"><i class="fa fa-check"></i><b>6.2.2</b> Thirteen Personality Scales</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="discriminant-analysis-and-criminals.html"><a href="discriminant-analysis-and-criminals.html"><i class="fa fa-check"></i><b>7</b> Discriminant Analysis and criminals()</a>
+<ul>
+<li class="chapter" data-level="7.0.1" data-path="discriminant-analysis-and-criminals.html"><a href="discriminant-analysis-and-criminals.html#thirteen-personality-scales-1"><i class="fa fa-check"></i><b>7.0.1</b> Thirteen Personality Scales</a></li>
+</ul></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Gifi Analysis of Multivariate Data</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="introduction" class="section level1" number="1">
+<h1><span class="header-section-number">1</span> Introduction</h1>
+<div id="some-dualisms" class="section level2" number="1.1">
+<h2><span class="header-section-number">1.1</span> Some Dualisms</h2>
+<p>The type of multivariate analysis (MVA) we discuss in this book is sometimes called <em>descriptive</em> or <em>exploratory</em>, as opposed to <em>inferential</em> or <em>confirmatory</em>. It is located somewhere on the line between computational linear algebra and statistics, and it is probably close to data analysis, Big Data, machine learning, knowledge discovery, data mining, business analytics, or whatever other ill-defined label is used for the <em>mode du jour</em>.
+In the days of <span class="citation"><a href="discriminant-analysis-and-criminals.html#ref-gifi_B_90" role="doc-biblioref">Gifi</a> (<a href="discriminant-analysis-and-criminals.html#ref-gifi_B_90" role="doc-biblioref">1990</a>)</span> there was a small-scale civil war between the mathematical statistical (confirmatory) approach to MVA and the data analytical (exploratory) approach. This is not a new conflict, because it has its roots in the Pearson-Yule debate (<span class="citation"><a href="discriminant-analysis-and-criminals.html#ref-mackenzie_78" role="doc-biblioref">Mackenzie</a> (<a href="discriminant-analysis-and-criminals.html#ref-mackenzie_78" role="doc-biblioref">1978</a>)</span>). The first shots in modern times were probably fired by <span class="citation"><a href="discriminant-analysis-and-criminals.html#ref-tukey_62" role="doc-biblioref">Tukey</a> (<a href="discriminant-analysis-and-criminals.html#ref-tukey_62" role="doc-biblioref">1962</a>)</span>, but much additional polemic heat was generated in the 50 years since Tukey’s famous paper. In order to stand our ground we were forced to participate, for example with <span class="citation"><a href="discriminant-analysis-and-criminals.html#ref-deleeuw_A_84c" role="doc-biblioref">J. De Leeuw</a> (<a href="discriminant-analysis-and-criminals.html#ref-deleeuw_A_84c" role="doc-biblioref">1984a</a>)</span>, <span class="citation"><a href="discriminant-analysis-and-criminals.html#ref-deleeuw_A_88c" role="doc-biblioref">J. De Leeuw</a> (<a href="discriminant-analysis-and-criminals.html#ref-deleeuw_A_88c" role="doc-biblioref">1988a</a>)</span>, <span class="citation"><a href="discriminant-analysis-and-criminals.html#ref-deleeuw_C_90b" role="doc-biblioref">J. De Leeuw</a> (<a href="discriminant-analysis-and-criminals.html#ref-deleeuw_C_90b" role="doc-biblioref">1990</a>)</span>.</p>
+<p>Here is what <span class="citation"><a href="discriminant-analysis-and-criminals.html#ref-gifi_B_90" role="doc-biblioref">Gifi</a> (<a href="discriminant-analysis-and-criminals.html#ref-gifi_B_90" role="doc-biblioref">1990</a>)</span> says, clearly with some intent to provoke.</p>
+<blockquote>
+<p>The statistical approach starts with a statistical model, usually based on the
+multinormal distribution. The model is assumed to be true, and within the model
+certain parametric hypotheses are constructed. The remaining free parameters are
+estimated and the hypotheses are tested. (<span class="citation"><a href="discriminant-analysis-and-criminals.html#ref-gifi_B_90" role="doc-biblioref">Gifi</a> (<a href="discriminant-analysis-and-criminals.html#ref-gifi_B_90" role="doc-biblioref">1990</a>)</span>, p. 19)</p>
+</blockquote>
+<blockquote>
+<p>The data analytic approach does not start with a model, but looks for transformations
+and combinations of the variables with the explicit purpose of representing the data
+in a simple and comprehensive, and usually graphical, way. (<span class="citation"><a href="discriminant-analysis-and-criminals.html#ref-gifi_B_90" role="doc-biblioref">Gifi</a> (<a href="discriminant-analysis-and-criminals.html#ref-gifi_B_90" role="doc-biblioref">1990</a>)</span>, p. 19)</p>
+</blockquote>
+<p>Gifi’s first chapter, in particular his section 1.5, outlines an approach to statistics that emphasizes <em>techniques</em> over <em>models</em>. A technique is a map of data into representations of some sort. Representations can be test statistics, confidence intervals, posterior distributions, tables, graphs. <em>Statistics studies the construction, properties, and performance of techniques</em>. Models are used to <em>gauge</em> techniques, that is to see how they perform on <em>synthetic data</em>, which are data described by equations or generated by sampling. Of course models can also be used to <em>inspire</em> techniques, but data analysis does not deal with the inspirational phase. The models themselves are a part of the client sciences, not of statistics. One of the key characteristics of a technique is its <em>stability</em>, which is studied by using data perturbations of various sorts. Small and unimportant perturbations of the data should lead to small and unimportant changes in the output. A large and
+important class of perturbations is based on sampling from a population, leading to sampling distributions, confidence intervals, hypothesis tests, and standard errors. In Gifi’s branch of statistics the emphasis shifts from equations to algorithms, and from explanation to prediction.</p>
+<p>In related philosophizing <span class="citation"><a href="discriminant-analysis-and-criminals.html#ref-breiman_01" role="doc-biblioref">Breiman</a> (<a href="discriminant-analysis-and-criminals.html#ref-breiman_01" role="doc-biblioref">2001</a>)</span> contrasted the <em>two cultures</em> of data modeling (98% of statisticians) and algorithmic modeling (2% of statistians), and implored statisticians to spend less time and energy in the first culture and more in the second.</p>
+<blockquote>
+<p>Reading a preprint of Gifi’s book (1990) many years ago uncovered a kindred spirit.
+(<span class="citation"><a href="discriminant-analysis-and-criminals.html#ref-breiman_01" role="doc-biblioref">Breiman</a> (<a href="discriminant-analysis-and-criminals.html#ref-breiman_01" role="doc-biblioref">2001</a>)</span>, p. 205)</p>
+</blockquote>
+<p>This was written some time after the influential paper by <span class="citation"><a href="discriminant-analysis-and-criminals.html#ref-breiman_friedman_85" role="doc-biblioref">Breiman and Friedman</a> (<a href="discriminant-analysis-and-criminals.html#ref-breiman_friedman_85" role="doc-biblioref">1985</a>)</span>, which introduced the Gifi-like ACE technique for multiple regression.</p>
+<p>The emphasis in the data modeling culture is on explanation or information, the emphasis in the algorithmic modeling culture on prediction. There are various ways to present and evaluate this distinction. A good overview, from the philosophy of science point of view, is <span class="citation"><a href="discriminant-analysis-and-criminals.html#ref-shmueli_10" role="doc-biblioref">Shmueli</a> (<a href="discriminant-analysis-and-criminals.html#ref-shmueli_10" role="doc-biblioref">2010</a>)</span>. From the lofty heights of Academia we hear</p>
+<blockquote>
+<p>The two goals in analyzing data which Leo calls prediction and information I prefer to describe as “management”
+and “science.” Management seeks <em>profit</em>, practical answers (predictions) useful for decision making in the short
+run. Science seeks <em>truth</em>, fundamental knowledge about nature which provides understanding and control in the
+long run. (Parzen, in the discussion of <span class="citation"><a href="discriminant-analysis-and-criminals.html#ref-breiman_01" role="doc-biblioref">Breiman</a> (<a href="discriminant-analysis-and-criminals.html#ref-breiman_01" role="doc-biblioref">2001</a>)</span>, p. 224)</p>
+</blockquote>
+<p>The emphasis on techniques was also shared by <span class="citation"><a href="discriminant-analysis-and-criminals.html#ref-cleveland_14" role="doc-biblioref">Cleveland</a> (<a href="discriminant-analysis-and-criminals.html#ref-cleveland_14" role="doc-biblioref">2014</a>)</span>, who proposed a new curriculum for statistics departments with more emphasis on computing with data and tool evaluation. Another early ally was Laurie Davis, see the interesting papers by <span class="citation"><a href="discriminant-analysis-and-criminals.html#ref-davies_95" role="doc-biblioref">Davies</a> (<a href="discriminant-analysis-and-criminals.html#ref-davies_95" role="doc-biblioref">1995</a>)</span> and <span class="citation"><a href="discriminant-analysis-and-criminals.html#ref-davies_08" role="doc-biblioref">Davies</a> (<a href="discriminant-analysis-and-criminals.html#ref-davies_08" role="doc-biblioref">2008</a>)</span>.</p>
+<blockquote>
+<p>The first chapter of Gifi (1990) contains an interesting discussion of statistical
+practice with special reference to multivariate data. The point of view taken there,
+with its emphasis on ‘techniques,’ has points of contact with the present paper
+where we use Tukey’s nomenclature and refer to ‘procedure.’ (<span class="citation"><a href="discriminant-analysis-and-criminals.html#ref-davies_08" role="doc-biblioref">Davies</a> (<a href="discriminant-analysis-and-criminals.html#ref-davies_08" role="doc-biblioref">2008</a>)</span>, p. 192)</p>
+</blockquote>
+<p>Of course currently the big discussion is if Data Science is actually statistics under a new name. And, more importantly, who should teach it. And, even more importantly, which department should receive the grant money. Parzen may believe that statisticians seek the Truth, whatever that is, but the current situation in Academia is that there is no truth if you do not consider profit. Statistics departments are typically small, and they feel threatened by gigantic Schools of Engineering looming over them (<span class="citation"><a href="discriminant-analysis-and-criminals.html#ref-asa_14" role="doc-biblioref">Association</a> (<a href="discriminant-analysis-and-criminals.html#ref-asa_14" role="doc-biblioref">2014</a>)</span>, <span class="citation"><a href="discriminant-analysis-and-criminals.html#ref-yu_14" role="doc-biblioref">Yu</a> (<a href="discriminant-analysis-and-criminals.html#ref-yu_14" role="doc-biblioref">2014</a>)</span>). It is partly a question of scale: there are too many data to fit into statistics departments. Numerous new graduate Data Science programs are popping up, in many cases geared toward management and not so much toward science. Statistics departments are seriously considering changing their names, before the levies break and they are flooded by the inevitable rise of data.</p>
+<p>We shall not pay much attention any more to these turf and culture wars, because basically they are over. Data analysis, in its multitude of disguises and appearances, is the winner. Classical statistics departments are gone, or on their way out. They may not have changed their name, but their curricula and hiring practices are very different from what they were 20 or even 10 years ago.</p>
+<blockquote>
+<p>Neither do men put new wine into old bottles: else the bottles break, and the wine runneth out, and the bottles
+perish: but they put new wine into new bottles, and both are preserved. (Matthew 9:17)</p>
+</blockquote>
+<p>Notwithstanding the monumental changes, inferential statistics remains an important form of stability analysis for data analysis techniques. Probabilistic models are becoming more and more important in many branches of science, and perturbing a probabilistic model is most naturally done by sampling. Thus huge parts of classical statistrucs are preserved, and not surprisingly these are exactly the parts useful in data analysis.</p>
+</div>
+<div id="quantifying-qualitative-data" class="section level2" number="1.2">
+<h2><span class="header-section-number">1.2</span> Quantifying Qualitative Data</h2>
+<p>One way of looking at <em>Multivariate Analysis with Optimal Scaling</em>, or <em>MVAOS</em>, is as an extension of classical linear multivariate analysis to variables that are binary, ordered, or even unordered categorical. In R terminology, classical MVA techniques can thus be applied if some or all of the variables in the dataframe are <em>factors</em>. Categorical variables are <em>quantified</em> and numerical variables are <em>transformed</em> to optimize the linear or bilinear least squares fit.</p>
+<p>Least squares and eigenvalue methods for quantifying multivariate qualitative data were first introduced by <span class="citation"><a href="discriminant-analysis-and-criminals.html#ref-guttman_41" role="doc-biblioref">Guttman</a> (<a href="discriminant-analysis-and-criminals.html#ref-guttman_41" role="doc-biblioref">1941</a>)</span>, although there were some bivariate predecessors in the work of Pearson, Fisher, Maung, and Hirschfeld (see <span class="citation"><a href="discriminant-analysis-and-criminals.html#ref-deleeuw_A_83b" role="doc-biblioref">J. De Leeuw</a> (<a href="discriminant-analysis-and-criminals.html#ref-deleeuw_A_83b" role="doc-biblioref">1983</a>)</span> or <span class="citation"><a href="discriminant-analysis-and-criminals.html#ref-gower_90" role="doc-biblioref">Gower</a> (<a href="discriminant-analysis-and-criminals.html#ref-gower_90" role="doc-biblioref">1990</a>)</span> for a historical overview). In this earlier work the emphasis was often on optimizing quadratic forms, or ratios of quadratic forms, and not so much on least squares, distance geometry, and graphical representations such as <em>biplots</em> (<span class="citation"><a href="discriminant-analysis-and-criminals.html#ref-gower_hand_96" role="doc-biblioref">Gower and Hand</a> (<a href="discriminant-analysis-and-criminals.html#ref-gower_hand_96" role="doc-biblioref">1996</a>)</span>, <span class="citation"><a href="discriminant-analysis-and-criminals.html#ref-gower_leroux_gardnerlubbe_15" role="doc-biblioref">Gower, Le Roux, and Gardner-Lubbe</a> (<a href="discriminant-analysis-and-criminals.html#ref-gower_leroux_gardnerlubbe_15" role="doc-biblioref">2015</a>)</span>, <span class="citation"><a href="discriminant-analysis-and-criminals.html#ref-gower_leroux_gardnerlubbe_16" role="doc-biblioref">Gower, Le Roux, and Gardner-Lubbe</a> (<a href="discriminant-analysis-and-criminals.html#ref-gower_leroux_gardnerlubbe_16" role="doc-biblioref">2016</a>)</span>). They were taken up by, among others, <span class="citation"><a href="discriminant-analysis-and-criminals.html#ref-deleeuw_R_68e" role="doc-biblioref">J. De Leeuw</a> (<a href="discriminant-analysis-and-criminals.html#ref-deleeuw_R_68e" role="doc-biblioref">1968a</a>)</span>, by Benzécri and his students in France (see <span class="citation"><a href="discriminant-analysis-and-criminals.html#ref-cordier_65" role="doc-biblioref">Cordier</a> (<a href="discriminant-analysis-and-criminals.html#ref-cordier_65" role="doc-biblioref">1965</a>)</span>), and by Hayashi and his students in Japan (see <span class="citation"><a href="discriminant-analysis-and-criminals.html#ref-tanaka_79" role="doc-biblioref">Tanaka</a> (<a href="discriminant-analysis-and-criminals.html#ref-tanaka_79" role="doc-biblioref">1979</a>)</span>). Early applications can be found in ecology, following an influential paper by <span class="citation"><a href="discriminant-analysis-and-criminals.html#ref-hill_74" role="doc-biblioref">Hill</a> (<a href="discriminant-analysis-and-criminals.html#ref-hill_74" role="doc-biblioref">1974</a>)</span>. With increasing emphasis on software the role of graphical representations has increased and continues to increase.</p>
+<p>In <span class="citation"><a href="discriminant-analysis-and-criminals.html#ref-deleeuw_B_74" role="doc-biblioref">J. De Leeuw</a> (<a href="discriminant-analysis-and-criminals.html#ref-deleeuw_B_74" role="doc-biblioref">1974</a>)</span> a first attempt was made to unify most classical descriptive multivariate techniques using a single least squares loss function and a corresponding <em>alternating least squares (ALS)</em> optimization method. His work then bifurcated to the <em>ALSOS project</em>, with Young and Takane at the University of North Carolina Chapell Hill, and the <em>Gifi project</em>, at the Department of Data Theory of Leiden University.</p>
+<p>The ALSOS project was started in 1973-1974, when De Leeuw was visiting Bell Telephone Labs in Murray Hill. ALSOS stands for Alternating Least Squares with Optimal Scaling. The ALS part of the name was provided by <span class="citation"><a href="discriminant-analysis-and-criminals.html#ref-deleeuw_R_68d" role="doc-biblioref">J. De Leeuw</a> (<a href="discriminant-analysis-and-criminals.html#ref-deleeuw_R_68d" role="doc-biblioref">1968b</a>)</span> and the OS part by <span class="citation"><a href="discriminant-analysis-and-criminals.html#ref-bock_60" role="doc-biblioref">Bock</a> (<a href="discriminant-analysis-and-criminals.html#ref-bock_60" role="doc-biblioref">1960</a>)</span>. At early meetings of the Psychometric Society some members were offended by our use of “Optimal Scaling,” because they took it to imply that their methods of scaling were supposedly inferior to ours. But the “optimal” merely refers to optimality in the context of a specific least squares loss function.</p>
+<p>Young, De Leeuw, and Takane applied the basic ALS and OS methodology to conjoint analysis, regression, principal component analysis, multidimensional scaling, and factor analysis, producing computer programs (and SAS modules) for each of the techniques. An overview of the project, basically at the end of its lifetime, is in <span class="citation"><a href="discriminant-analysis-and-criminals.html#ref-young_deleeuw_takane_C_80" role="doc-biblioref">Young, De Leeuw, and Takane</a> (<a href="discriminant-analysis-and-criminals.html#ref-young_deleeuw_takane_C_80" role="doc-biblioref">1980</a>)</span> and <span class="citation"><a href="discriminant-analysis-and-criminals.html#ref-young_81" role="doc-biblioref">Young</a> (<a href="discriminant-analysis-and-criminals.html#ref-young_81" role="doc-biblioref">1981</a>)</span>.</p>
+<p>The ALSOS project was clearly inspired by the path-breaking work of <span class="citation"><a href="discriminant-analysis-and-criminals.html#ref-kruskal_64a" role="doc-biblioref">Kruskal</a> (<a href="discriminant-analysis-and-criminals.html#ref-kruskal_64a" role="doc-biblioref">1964a</a>)</span> and <span class="citation"><a href="discriminant-analysis-and-criminals.html#ref-kruskal_64b" role="doc-biblioref">Kruskal</a> (<a href="discriminant-analysis-and-criminals.html#ref-kruskal_64b" role="doc-biblioref">1964b</a>)</span>, who designed a general way to turn metric multivariate analysis techniques into non-metric ones. In fact, Kruskal applied the basic methodology developed for multidimensional scaling to linear models in <span class="citation"><a href="discriminant-analysis-and-criminals.html#ref-kruskal_65" role="doc-biblioref">Kruskal</a> (<a href="discriminant-analysis-and-criminals.html#ref-kruskal_65" role="doc-biblioref">1965</a>)</span>, and to principal component analysis in <span class="citation"><a href="discriminant-analysis-and-criminals.html#ref-kruskal_shepard_74" role="doc-biblioref">Kruskal and Shepard</a> (<a href="discriminant-analysis-and-criminals.html#ref-kruskal_shepard_74" role="doc-biblioref">1974</a>)</span> (which was actually written around 1965 as well). In parallel developments closely related nonmetric methods were developed by <span class="citation"><a href="discriminant-analysis-and-criminals.html#ref-roskam_68" role="doc-biblioref">Roskam</a> (<a href="discriminant-analysis-and-criminals.html#ref-roskam_68" role="doc-biblioref">1968</a>)</span> and by Guttman and Lingoes (see <span class="citation"><a href="discriminant-analysis-and-criminals.html#ref-lingoes_73" role="doc-biblioref">Lingoes</a> (<a href="discriminant-analysis-and-criminals.html#ref-lingoes_73" role="doc-biblioref">1973</a>)</span>).</p>
+<p>The Gifi project took its inspiration from Kruskal, but perhaps even more from <span class="citation"><a href="discriminant-analysis-and-criminals.html#ref-guttman_41" role="doc-biblioref">Guttman</a> (<a href="discriminant-analysis-and-criminals.html#ref-guttman_41" role="doc-biblioref">1941</a>)</span> (and to a lesser extent from the optimal scaling work of Fisher, see <span class="citation"><a href="discriminant-analysis-and-criminals.html#ref-gower_90" role="doc-biblioref">Gower</a> (<a href="discriminant-analysis-and-criminals.html#ref-gower_90" role="doc-biblioref">1990</a>)</span>). Guttman’s quantification method, which later became known as <em>multiple correspondence analysis</em>, was merged with linear and nonlinear principal component analysis in the HOMALS/PRINCALS techniques and programs (<span class="citation"><a href="discriminant-analysis-and-criminals.html#ref-deleeuw_vanrijckevorsel_C_80" role="doc-biblioref">J. De Leeuw and Van Rijckevorsel</a> (<a href="discriminant-analysis-and-criminals.html#ref-deleeuw_vanrijckevorsel_C_80" role="doc-biblioref">1980</a>)</span>). The MVAOS loss function that was chosen ultimately, for example in the work of <span class="citation"><a href="discriminant-analysis-and-criminals.html#ref-vanderburg_deleeuw_verdegaal_A_88" role="doc-biblioref">Van der Burg, De Leeuw, and Verdegaal</a> (<a href="discriminant-analysis-and-criminals.html#ref-vanderburg_deleeuw_verdegaal_A_88" role="doc-biblioref">1988</a>)</span>, had been used earlier by <span class="citation"><a href="discriminant-analysis-and-criminals.html#ref-carroll_68" role="doc-biblioref">Carroll</a> (<a href="discriminant-analysis-and-criminals.html#ref-carroll_68" role="doc-biblioref">1968</a>)</span> in multi-set canonical correlation analysis of numerical variables.</p>
+<p>A project similar to ALSOS/Gifi was ACE, short for <em>Alternating Conditional Expectations</em>. The ACE method for regression was introduced by <span class="citation"><a href="discriminant-analysis-and-criminals.html#ref-breiman_friedman_85" role="doc-biblioref">Breiman and Friedman</a> (<a href="discriminant-analysis-and-criminals.html#ref-breiman_friedman_85" role="doc-biblioref">1985</a>)</span> and the ACE method for principal component analysis by
+<span class="citation"><a href="discriminant-analysis-and-criminals.html#ref-koyak_87" role="doc-biblioref">Koyak</a> (<a href="discriminant-analysis-and-criminals.html#ref-koyak_87" role="doc-biblioref">1987</a>)</span>. Both techniques use the same ALS block relaxation methods, but instead of projecting on a cone or subspace of possible transformation, they apply a smoother (typically Friedman’s supersmoother) to find the
+optimal transformation. This implies that the method is intended primarily for continuous variables, and that the convergence properties of the ACE algorithm are more complicated than those of a proper ALS algorithms.</p>
+<p>An even more closely related project, by Winsberg and Ramsay, uses the cone of I-splines (integrated B-splines)
+to define the optimal transformations. The technique for linear models is in <span class="citation"><a href="discriminant-analysis-and-criminals.html#ref-winsberg_ramsay_80" role="doc-biblioref">Winsberg and Ramsay</a> (<a href="discriminant-analysis-and-criminals.html#ref-winsberg_ramsay_80" role="doc-biblioref">1980</a>)</span> and the one for
+principal component analysis in <span class="citation"><a href="discriminant-analysis-and-criminals.html#ref-winsberg_ramsay_83" role="doc-biblioref">Winsberg and Ramsay</a> (<a href="discriminant-analysis-and-criminals.html#ref-winsberg_ramsay_83" role="doc-biblioref">1983</a>)</span>. Again, the emphasis on monotonic splines indicates that
+continuous variables play a larger role than in the ALSOS or Gifi system.</p>
+<p>So generally there have been a number of projects over the last 50 years that differ in detail, but apply basically the same methodology (alternating least squares and optimal scaling) to generalize classical MVA techniques. Some of them emphasize transformation of continuous variables, some emphasize quantification of discrete variables. Some emphasize monotonicity, some smoothness. Usually these projects include techniques for regression and principal component analysis, but in the case of Gifi the various forms of correspondence analysis and canonical analysis are also included.</p>
+</div>
+<div id="beyond-gifi" class="section level2" number="1.3">
+<h2><span class="header-section-number">1.3</span> Beyond Gifi</h2>
+<p>The techniques discussed in <span class="citation"><a href="discriminant-analysis-and-criminals.html#ref-gifi_B_90" role="doc-biblioref">Gifi</a> (<a href="discriminant-analysis-and-criminals.html#ref-gifi_B_90" role="doc-biblioref">1990</a>)</span>, and implemented in the corresponding computer programs, use a particular least squares loss function and minimize it by alternating least squares algorithms. All techniques use what Gifi calls <em>meet loss</em>, which is basically the loss function proposed by <span class="citation"><a href="discriminant-analysis-and-criminals.html#ref-carroll_68" role="doc-biblioref">Carroll</a> (<a href="discriminant-analysis-and-criminals.html#ref-carroll_68" role="doc-biblioref">1968</a>)</span> for multiset canonical correlation analysis. Carroll’s work was extended in Gifi by using optimal scaling to transform or quantify variables coded with indicators, and to use constraints on the parameters to adapt the basic technique, often called <em>homogeneity analysis</em>, to different classical MVA techniques.</p>
+<p>There have been various extensions of the classical Gifi repertoire by adding
+techniques that do not readily fit into meet loss. Examples are path analysis (<span class="citation"><a href="discriminant-analysis-and-criminals.html#ref-coolen_deleeuw_R_87" role="doc-biblioref">Coolen and De Leeuw</a> (<a href="discriminant-analysis-and-criminals.html#ref-coolen_deleeuw_R_87" role="doc-biblioref">1987</a>)</span>), linear dynamic systems (<span class="citation"><a href="discriminant-analysis-and-criminals.html#ref-bijleveld_deleeuw_A_91" role="doc-biblioref">Bijleveld and De Leeuw</a> (<a href="discriminant-analysis-and-criminals.html#ref-bijleveld_deleeuw_A_91" role="doc-biblioref">1991</a>)</span>), and factor analysis (<span class="citation"><a href="discriminant-analysis-and-criminals.html#ref-deleeuw_C_04a" role="doc-biblioref">J. De Leeuw</a> (<a href="discriminant-analysis-and-criminals.html#ref-deleeuw_C_04a" role="doc-biblioref">2004</a>)</span>). But adding these techniques does not really add up to a new framework.</p>
+<p>Somewhat more importantly, <span class="citation"><a href="discriminant-analysis-and-criminals.html#ref-deleeuw_vanrijckevorsel_C_88" role="doc-biblioref">J. De Leeuw and Van Rijckevorsel</a> (<a href="discriminant-analysis-and-criminals.html#ref-deleeuw_vanrijckevorsel_C_88" role="doc-biblioref">1988</a>)</span> discuss various ways to generalize meet loss by using <em>fuzzy coding</em>. Transformations are no longer step functions, and coding can be done with fuzzy indicators, such as B-spline bases.
+This makes it easier to deal with variables that have many ordered categories. Although this is a substantial generalization the basic framework remains the same.</p>
+<p>One of the outgrowths of the Gifi project was the <em>aspect</em> approach, first discussed systematically by <span class="citation"><a href="discriminant-analysis-and-criminals.html#ref-deleeuw_C_88b" role="doc-biblioref">J. De Leeuw</a> (<a href="discriminant-analysis-and-criminals.html#ref-deleeuw_C_88b" role="doc-biblioref">1988c</a>)</span>, and implemented in the R package
+<code>aspect</code> by <span class="citation"><a href="discriminant-analysis-and-criminals.html#ref-mair_deleeuw_A_10" role="doc-biblioref">Mair and De Leeuw</a> (<a href="discriminant-analysis-and-criminals.html#ref-mair_deleeuw_A_10" role="doc-biblioref">2010</a>)</span>. In its original formulation it uses <em>majorization</em> to optimize functions defined on the space of correlation matrices, where the correlations are computed over transformed variables, coded by indicators. Thus we optimize aspects of the correlation matrix over transformations of the variables. The <code>aspect</code> software was recently updated to allow for B-spline transformations (<span class="citation"><a href="discriminant-analysis-and-criminals.html#ref-deleeuw_E_15b" role="doc-biblioref">J. De Leeuw</a> (<a href="discriminant-analysis-and-criminals.html#ref-deleeuw_E_15b" role="doc-biblioref">2015a</a>)</span>). Many different aspects were implemented, based on eigenvalues, determinants, multiple correlations, and sums of powers of correlation coefficients. Unformately, aspects defined in terms of canonical correlations, or generalized canonical correlations, were not covered. Thus the range of techniques covered by the <code>aspect</code> approach has multiple regression and principal component analysis in common with the range of the Gifi system, but is otherwise disjoint from it.</p>
+<p>In <span class="citation"><a href="discriminant-analysis-and-criminals.html#ref-deleeuw_C_04a" role="doc-biblioref">J. De Leeuw</a> (<a href="discriminant-analysis-and-criminals.html#ref-deleeuw_C_04a" role="doc-biblioref">2004</a>)</span> a particular correlation aspect was singled out that could bridge the gap between the aspect approach and the Gifi approach, provided <em>orthoblocks</em> of transformations were introduced. This is combined with the notion of <em>copies</em>, introduced in <span class="citation"><a href="discriminant-analysis-and-criminals.html#ref-deleeuw_C_84c" role="doc-biblioref">J. De Leeuw</a> (<a href="discriminant-analysis-and-criminals.html#ref-deleeuw_C_84c" role="doc-biblioref">1984b</a>)</span>, to design a new class of techniques that encompasses all of Gifi and that brings generalized canonical correlation analysis in the aspect framework. Thus correlation aspects, and the majorization algorithms to optimize them, are now a true generalization of the Gifi system.</p>
+<p>*** This is the system we discuss in this book.</p>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="preface.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="coding-and-transformations.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["_main.pdf"],
+"toc": {
+"collapse": "none"
+},
+"keep_md": true,
+"toolbar": {
+"position": "fixed"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

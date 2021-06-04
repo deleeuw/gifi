@@ -1,0 +1,1387 @@
+---
+title: "Homogeneity Analysis"
+author: "Jan de Leeuw"
+date: "Version 1.02, November 12, 2015"
+output:
+  html_document:
+    toc: yes
+  pdf_document:
+    keep_tex: yes
+    toc: yes
+graphics: yes
+bibliography: homals.bib
+---
+```{r packages, echo = FALSE}
+library(captioner)
+figure_nums <- captioner (prefix = "Figure")
+figure_nums (name = "smallzero", caption = "Multiple Loss, Degree Zero", display = FALSE)
+figure_nums (name = "smalltwo", caption = "Multiple Loss, Degree Two", display = FALSE)
+figure_nums (name = "smalltwotrian", caption = "Multiple Loss, Category and Object Quantifications", display = FALSE)
+figure_nums (name = "small0multsing", caption = "Single Quantification, Multiple Loss, Degree Zero", display = FALSE)
+figure_nums (name = "small0singsing", caption = "Single Quantification, Single Loss, Degree Zero", display = FALSE)
+figure_nums (name = "small2multsing", caption = "Single Quantification, Multiple Loss, Degree Two", display = FALSE)
+figure_nums (name = "small2singsing", caption = "Single Quantification, Single Loss, Degree Two", display = FALSE)
+figure_nums (name = "epi_object_0", caption = "Personality Scales, Object Scores, Multiple Nominal, Degree Zero", display = FALSE)
+figure_nums (name = "epi_transform_0", caption = "Personality Scales, Transformations, Multiple Nominal, Degree Zero", display = FALSE)
+figure_nums (name = "epi_star_0", caption = "Personality Scales, Star Plots, Multiple Nominal, Degree Zero", display = FALSE)
+figure_nums (name = "epi_object_2", caption = "Personality Scales, Object Scores, Multiple Nominal, Degree Two", display = FALSE)
+figure_nums (name = "epi_transform_2", caption = "Personality Scales, Transformations, Multiple Nominal, Degree Two", display = FALSE)
+figure_nums (name = "epi_object_S_2", caption = "Personality Scales, Object Scores, Single Ordinal, Degree Two", display = FALSE)
+figure_nums (name = "epi_transform_S_2", caption = "Personality Scales, Transformations, Single Ordinal, Degree Two", display = FALSE)
+figure_nums (name = "epi_object_P_2", caption = "Personality Scales, Object Scores, Single Numerical, Degree Two", display = FALSE)
+figure_nums (name = "epi_transform_P_2", caption = "Personality Scales, Transformations, Single Numerical, Degree Two", display = FALSE)
+figure_nums (name = "neumann_objects", caption = "Gases with Convertible Components, Objects Scores", display = FALSE)
+figure_nums (name = "neumann_transform", caption = "Gases with Convertible Components, Transformations", display = FALSE)
+figure_nums (name = "iris_objects", caption = "Iris Data, Objects Scores", display = FALSE)
+figure_nums (name = "iris_transform", caption = "Iris Data, Transformations", display = FALSE)
+figure_nums (name = "epi_multi_object", caption = "Personality Scales, Multi-Set, Objects Scores", display = FALSE)
+figure_nums (name = "epi_multi_transform", caption = "Personality Scales, Multi-Set, , Transformations", display = FALSE)
+```
+```{r the_code, echo = FALSE}
+source("gs.R")
+source("bsplineBasis.R")
+library (nnls)
+
+homals <-
+  function (data,
+            knots,
+            degrees,
+            ordinal,
+            sets = 1:ncol(data),
+            copies = rep (1, ncol(data)),
+            ndim = 2,
+            itmax = 1000,
+            eps = 1e-6,
+            seed = 123,
+            verbose = TRUE) {
+    nvars <- ncol (data)
+    nobs <- nrow (data)
+    nsets <- max (sets)
+    ncops <- sum (copies)
+    lmax <- ndim * nsets
+    indices <- homalsIndices (nvars, nsets, ordinal, sets, copies)
+    setup <-
+      homalsSetup (data, knots, degrees, ordinal, sets , copies, indices$expand)
+    initials <-
+      homalsInitials (
+        setup$q,
+        setup$r,
+        nobs,
+        nsets,
+        ncops,
+        ndim,
+        indices$expand,
+        indices$nvarsets,
+        indices$ordicops,
+        seed
+      )
+    fold <- 0
+    itel <- 1
+    setcopies <- indices$setcopies
+    h <- initials$h
+    a <- initials$a
+    x <- initials$x
+    for (s in 1:nsets) {
+      hh <- h[1:nobs, which (setcopies == s), drop = FALSE]
+      aa <- a[which (setcopies == s), 1:ndim, drop = FALSE]
+      fold <- fold + sum ((x - hh %*% aa) ^ 2)
+    }
+    fold <- fold / lmax
+    repeat {
+      xz <- matrix(0, nobs, ndim)
+      fnew <- fmid <- 0
+      for (s in 1:nsets) {
+        id <- which (setcopies == s)
+        hh <- h[1:nobs, id, drop = FALSE]
+        lf <- lm.fit (hh, x)
+        aa <- lf$coefficients
+        rs <- lf$residuals
+        kappa <- max (eigen (crossprod (aa))$values)
+        fmid <- fmid + sum (rs ^ 2)
+        target <- hh + tcrossprod (rs, aa) / kappa
+        k <- 1
+        for (l in id) {
+          ql <- setup$q[[l]]
+          vl <- setup$v[[l]]
+          if (indices$ordicops[l]) {
+            hz <- drop (crossprod (ql, target[, k]))
+            ns <- nnls (vl, hz)
+            rz <- coefficients (ns)
+            hk <- drop (ql %*% (hz - drop (vl %*% rz)))
+          }
+          else {
+            hk <- ql %*% crossprod (ql, target[, k])
+          }
+          hh[, k] <- hk / sqrt (sum (hk ^ 2))
+          k <- k + 1
+        }
+        ha <- hh %*% aa
+        xz <- xz + ha
+        fnew <- fnew + sum ((x - ha) ^ 2)
+        h[1:nobs, id] <- hh
+        a[id, 1:ndim] <- aa
+      }
+      fmid <- fmid / lmax
+      fnew <- fnew / lmax
+      if (verbose)
+        cat(
+          "Iteration: ",
+          formatC (itel, width = 3, format = "d"),
+          "fold: ",
+          formatC (
+            fold,
+            digits = 8,
+            width = 12,
+            format = "f"
+          ),
+          "fmid: ",
+          formatC (
+            fmid,
+            digits = 8,
+            width = 12,
+            format = "f"
+          ),
+          "fnew: ",
+          formatC (
+            fnew,
+            digits = 8,
+            width = 12,
+            format = "f"
+          ),
+          "\n"
+        )
+      if ((itel == itmax) || ((fold - fnew) < eps))
+        break
+      itel <- itel + 1
+      fold <- fnew
+      x <- gs (center (xz))$q
+    }
+    return (list (
+      f = fnew,
+      ntel = itel,
+      x = x,
+      a = a,
+      h = h
+    ))
+  }
+
+homalsIndices <- function (nvars, nsets, ordinal, sets, copies) {
+  ordicops <- logical (0)
+  expand <- numeric (0)
+  for (j in 1:nvars) {
+    ordicops <- c (ordicops, ordinal [j], rep (FALSE, copies[j] - 1))
+    expand <- c (expand, rep (j, copies [j]))
+  }
+  setcopies <- sets[expand]
+  nvarsets <- numeric(0)
+  for (s in 1:nsets) {
+    nvarsets <- c(nvarsets, sum (copies[which (sets == s)]))
+  }
+  return (list (
+    ordicops = ordicops,
+    setcopies = setcopies,
+    expand = expand,
+    nvarsets = nvarsets
+  ))
+}
+
+homalsSetup <-
+  function (data,
+            knots,
+            degrees,
+            ordinal,
+            sets,
+            copies,
+            expand) {
+    nvars <- ncol (data)
+    nobs <- nrow (data)
+    ncops <- sum (copies)
+    g <- b <- q <- r <- v <- list()
+    for (l in 1:ncops) {
+      j <- expand[l]
+      mm <- is.na(data[, j])
+      nm <- !mm
+      dm <- data[nm, j]
+      if (degrees[j] < 0) {
+        gn <- ifelse (outer (dm, unique (dm), "=="), 1, 0)
+      }
+      else {
+        gn <- bsplineBasis (dm, degrees[j], knots[[j]])
+      }
+      nr <- ncol (gn)
+      ns <- sum (mm)
+      gg <- matrix (0, nobs, nr + ns)
+      gg[!mm, 1:nr] <- gn
+      if (ns > 0) {
+        gg[mm, nr + (1:ns)] <- diag (ns)
+      }
+      gg <- center (gg)[,-1, drop = FALSE]
+      g <- c (g, list (gg))
+      bb <- gs (g[[l]])
+      q <- c(q, list (bb$q))
+      r <- c (r, list (bb$r))
+      vv <- makeV (data[[j]], q[[l]])
+      v <- c (v, list (vv))
+    }
+    return (list (q = q, r = r, v = v))
+  }
+
+homalsInitials <-
+  function (q,
+            r,
+            nobs,
+            nsets,
+            ncops,
+            ndim,
+            expand,
+            nvarsets,
+            ordicops,
+            seed) {
+    set.seed (seed)
+    x <- matrix (rnorm (nobs * ndim), nobs, ndim)
+    x <- gs (center (x))$q
+    a <- matrix (rnorm (ncops * ndim), ncops, ndim)
+    h <- matrix (0, nobs, ncops)
+    for (l in 1:ncops) {
+      ql <- q[[l]]
+      rl <- r[[l]]
+      if (ordicops[l])
+        cf <- 1:ncol (ql)
+      else
+        cf <- rnorm (ncol (ql))
+      h[, l] <- drop (ql %*% rl %*% cf)
+    }
+    h <- center (h)
+    h <- apply (h, 2, function (z)
+      z / sqrt (sum (z ^ 2)))
+    return (list (x = x, a = a, h = h))
+  }
+
+makeV <- function (x, g) {
+  r <- order (x)[1:length(which(!is.na(x)))]
+  n <- length (r)
+  m <- ncol (g)
+  v <- numeric (0)
+  k <- 0
+  for (i in 1:(n - 1)) {
+    ri <- r[i]
+    rj <- r[i + 1]
+    if (is.na(x[ri]) || is.na(x[rj]))
+      next
+    if (x[rj] > x[ri]) {
+      v <- c(v, g[ri,] - g[rj,])
+      k <- k + 1
+    }
+  }
+  return (t(matrix (v, k, m, byrow = TRUE)))
+}
+
+center <- function (x) {
+  return (apply (x, 2, function (z)
+    z - mean (z)))
+}
+
+normalize <- function (x) {
+  return (x / sqrt (sum (x ^ 2)))
+}
+
+bsplineBasis <-
+  function (x, degree, innerknots, lowknot = min(x,innerknots) - 1e-6, highknot = max(x,innerknots) + 1e-6) {
+  innerknots <- unique (sort (innerknots))
+  knots <-
+  c(rep(lowknot, degree + 1), innerknots, rep(highknot, degree + 1))
+  n <- length (x)
+  m <- length (innerknots) + 2 * (degree + 1)
+  nf <- length (innerknots) + degree + 1
+  basis <- rep (0,  n * nf)
+  res <- .C(
+  "splinebasis", d = as.integer(degree),
+  n = as.integer(n), m = as.integer (m), x = as.double (x), knots = as.double (knots), basis = as.double(basis)
+  )
+  basis <- matrix (res$basis, n, nf)
+  basis <- basis[,which(colSums(basis) > 0)]
+  return (basis)
+  }
+
+gs<-function(x) {
+n<-dim(x)[1]; m<-dim(x)[2];
+q<-matrix(0,n,m); r<-matrix(0,m,m)
+qr<-.C("gsc",as.double(x),as.double(q),as.double(r),as.integer(dim(x)[1]),
+	as.integer(dim(x)[2]))
+return(list(q=matrix(qr[[2]],n,m),r=matrix(qr[[3]],m,m)))
+}
+
+aline <- function (a) {
+  abline (0, a[2] / a[1])
+}
+
+aperp <- function (a, x) {
+  abline (x * (sum (a ^ 2) / a[2]), -a[1] / a[2])
+}
+
+aproj <- function (a, h, x) {
+  mu <- (h - sum (a * x)) / (sum (a ^ 2))
+  return (x + mu * a)
+}
+
+stepPlotter <- function (x, y, knots, xlab) {
+    y <- as.matrix (y)
+    plot (x, y[, 1], type = "n", xlab = xlab, ylab = "Transform")
+    nknots <- length (knots)
+    knots <- c(min(x)-1,knots,max(x)+1)
+    for (i in 1:(nknots + 1)) {
+        ind <- which ((x >= knots [i]) & (x < knots[i + 1]))
+        lev <- median (y [ind, 1])
+        lines (rbind (c(knots[i], lev), c (knots[i+1], lev)), col = "RED", lwd = 3)
+        if (ncol (y) == 2) {
+          lev <- median (y [ind, 2])
+          lines (rbind (c(knots[i], lev), c (knots[i+1], lev)), col = "BLUE", lwd = 3)
+        }
+    }
+}
+
+```
+```{c ccode, echo = FALSE, results = "hide"}
+#include <stddef.h>
+#include <stdlib.h>
+#include <stdio.h>
+
+double bs (int nknots, int nspline, int degree, double x, double * knots);
+int mindex (int i, int j, int nrow);
+
+void splinebasis (int *d, int *n, int *m, double * x, double * knots, double * basis) {
+    int mm = *m, dd = *d, nn = *n;
+    int k = mm - dd - 1, i , j, ir, jr;
+    for (i = 0; i < nn; i++) {
+        ir = i + 1;
+        if (x[i] == knots[mm - 1]) {
+           basis [mindex (ir, k, nn) - 1] =  1.0;
+            for (j = 0; j <  (k - 1);  j++) {
+                basis [mindex (ir, jr, nn) - 1] = 0.0;
+                jr = j + 1;
+            }
+        } else {
+            for (j = 0; j < k ; j++) {
+                jr = j + 1;
+                basis [mindex (ir, jr, nn) - 1] = bs (mm, jr, dd + 1, x[i], knots);
+            }
+        }
+    }
+}
+
+int mindex (int i, int j, int nrow) {
+    return (j - 1) * nrow + i;
+}
+
+double bs (int nknots, int nspline, int updegree, double x, double * knots) {
+    double y, y1, y2, temp1, temp2;
+     if (updegree == 1) {
+        if ((x >= knots[nspline - 1]) && (x < knots[nspline]))
+            y = 1.0;
+        else
+            y = 0.0;
+     }
+     else {
+        temp1 = 0.0;
+        if ((knots[nspline + updegree - 2] - knots[nspline - 1]) > 0)
+            temp1 = (x - knots[nspline - 1]) / (knots[nspline + updegree - 2] - knots[nspline - 1]);
+        temp2 = 0.0;
+        if ((knots[nspline + updegree - 1] - knots[nspline]) > 0)
+            temp2 = (knots[nspline + updegree - 1] - x) / (knots[nspline + updegree - 1] - knots[nspline]);
+        y1 = bs(nknots, nspline, updegree - 1, x, knots);
+        y2 = bs(nknots, nspline + 1, updegree - 1, x, knots);
+        y =  temp1 * y1 + temp2 * y2;
+    }
+    return y;
+}
+```
+```{c gs, echo = FALSE, results = "hide"}
+#include <math.h>
+
+void
+gsc(double *x, double *q, double *r, int *n, int *m)
+{
+	int             i, j, l, jn, ln, jm, imax = *n, jmax = *m;
+	double          s = 0.0;
+	for (i = 0; i < imax; i++)
+		s += *(x + i) * *(x + i);
+	s = sqrt(s);
+	*r = s;
+	for (i = 0; i < imax; i++)
+		*(q + i) = *(x + i) / s;
+	for (j = 1; j < jmax; j++) {
+		jn = j * imax;
+		jm = j * jmax;
+		for (l = 0; l < j; l++) {
+			ln = l * imax;
+			s = 0.0;
+			for (i = 0; i < imax; i++)
+				s += *(q + ln + i) * *(x + jn + i);
+			*(r + jm + l) = s;
+			for (i = 0; i < imax; i++)
+				*(q + jn + i) += s * *(q + ln + i);
+		}
+		for (i = 0; i < imax; i++)
+			*(q + jn + i) = *(x + jn + i) - *(q + jn + i);
+		s = 0.0;
+		for (i = 0; i < imax; i++)
+			s += *(q + jn + i) * *(q + jn + i);
+		s = sqrt(s);
+		*(r + jm + j) = s;
+		for (i = 0; i < imax; i++)
+			*(q + jn + i) /= s;
+	}
+}
+```
+####Note
+The directory [gifi.stat.ucla.edu/homals](http://gifi.stat.ucla.edu/homals) has a pdf copy of this article,
+the complete Rmd file with all code chunks, and R and C files with the code.
+
+###Loss Function
+
+In the multivariate analysis techniques presented in this paper the data are measurements or categorizations of $n$ _objects_ by $p$ _variables_. Variables are partitioned into $m$ _sets of variables_, with set $j$ containing $p_j$ variables. Thus $\sum_{j=1}^m p_j=p$. The number of variables in a set is also called the _rank_ of the set.
+
+_Homogeneity Analysis_, as defined in this paper, is the minimization of the loss function
+$$
+\sigma(X,H,A)=\frac{1}{m}\sum_{j=1}^m\mathbf{SSQ}\ (X-H_jA_j),\tag{1}
+$$
+where $\mathbf{SSQ}()$ is the sum of squares.
+
+The loss function depends on three sets of parameters $X, H$ and $A$. One of them, the matrix $X$, is common to all sets. The data are in the matrix $H_j$, which codes observations on the $p_j$ variables in set $j$. Homogeneity analysis does not operate on the variables directly, but on _admissible transformations_ of the variables. Matrix $A_j$ has coefficients used to make linear combinations of the variables in set $j$.
+
+1. The $n\times r$ matrix $X$ of _object scores_ is required to be column-centered and normalized by $X'X=I$. The _dimensionality_ $r$ is chosen by the user.
+2. The $n\times p_j$ matrices of _transformed variables_ $H_j$ have columns $h_{j\ell}$, with $\ell=1,\cdots,p_j$. We require $h_{j\ell}\in\mathcal{K_{j\ell}}\cap\mathcal{S}$, where $\mathcal{K}_{j\ell}$ is a _cone of admissible transformations_ and $\mathcal{S}$ is the unit sphere in $\mathbb{R}^n$. For example, $\mathcal{K}_{j\ell}$ can be the cone of all centered vectors in $\mathbb{R}^n$ that are monotone with the data.
+3. The $p_j\times r$ matrices $A_j$ of _component loadings_ are unconstrained.
+
+Thus we make linear combinations of the transformed variables in such a way that the _set scores_ $H_jA_j$ are as close as possible to the object scores $X$, and consequently as close as possible to each other. This explains the name of the technique: we want to make the $m$ set scores as _homogeneous_ as possible. Note that homogeneity analysis is both linear and non-linear, in the sense that it makes linear combinations of non-linear transformations of the variables.
+
+The history of loss function (1) is complicated. Least squares and eigenvalue methods for quantifying multivariate qualitative data were introduced by @guttman_41. They were taken up by, among others, @deleeuw_R_68e and by Benzécri and his students [@cordier_65]. In this earlier work the emphasis was often on optimizing quadratic forms, or ratios of quadratic forms, and not so much on least squares, distance geometry, and so-called _biplots_ [@gower_hand_96].
+
+In @deleeuw_B_74 a first attempt was made to unify most classical descriptive multivariate techniques using a single least squares loss function and a corresponding _alternating least squares (ALS)_ optimization method. Guttman's quantification method, which later became known as _multiple correspondence analysis_, was merged with linear and nonlinear principal component analysis in the HOMALS/PRINCALS techniques and programs [@deleeuw_vanrijckevorsel_C_80]. The homogeneity analysis loss function that was chosen ultimately, for example in the work of @vanderburg_deleeuw_verdegaal_A_88, had been used earlier by @carroll_68 in multi-set canonical correlation analysis.
+
+In the Gifi system [@gifi_B_90, @michailidis_deleeuw_A_98] a slightly different parametrization, and a correspondingly different ALS algorithm, were used. The loss function used by Gifi is
+$$
+\sigma(X,Y)=\frac{1}{m}\sum_{j=1}^m\mathbf{SSQ}\ (X-\sum_{\ell=1}^{p_j}G_{j\ell}Y_{j\ell}),\tag{2}
+$$
+where the $G_{j\ell}$ are known spanning matrices for the cones of admissible transformations, and the $Y_{j\ell}$ are $k_{j\ell}\times p$ matrices of _category quantifications_. By using the full rank decompositions $Y_{j\ell}=Z_{j\ell}A_{j\ell}$ we can show that (1) and (2) are essentially the same. We feel that the new parametrization in terms of $H_j$ and and $A_j$ has some conceptual and computational advantages.
+
+###Algorithm
+
+The standard way to minimize loss function (2) is implemented in the `OVERALS` program [@vanderburg_deleeuw_verdegaal_A_88, @meulman_heiser_11]. It is also the one used in the `homals` package [@deleeuw_mair_A_09a].
+
+In this paper the algorithm is different because we use the loss function (1). We still use ALS, which means in this case that we cycle through three substeps in each iteration. We update $A$ for given $X$ and $H$, we then update $X$ for given $H$ and $A$, and finally we update $H$ for given $X$ and $A$. Algorithm A goes as follows.
+
+0. Set $k=0$ and start with some $X^{(0)},H^{(0)},A^{(0)}$.
+1. $X^{(k+1)}=\mathbf{ortho}(\mathbf{center}(\sum_{j=1}^m H_j^{(k)}A_j^{(k)}))$.
+2. For $j=1,\cdots,m$ compute $A_j^{(k+1)}=\{H_j^{(k)}\}^+X^{(k+1)}$.
+3. For $j=1,\cdots,m$ and $s=1,\cdots p_j$ compute $h_{js}^{(k+1)}=\mathbf{proj}_{\mathcal{K}_{js}\cap\mathcal{S}}((X^{(k+1)}-\sum_{t<s}h_{jt}^{(k+1)}\{a_{jt}^{(k+1)}\}'-\sum_{t>s}h_{jt}^{(k)}\{a_{jt}^{(k+1)}\}')a_s^{(k+1)})$.
+4. If converged stop. Else $k\leftarrow k+1$ and go to step 1.
+
+In step 1 we use superscript + for the Moore-Penrose inverse. In step 2 the center operator does column centering, the ortho operator finds an orthonormal basis for the column space of its argument.
+
+The complicated part is step 4, the _optimal scaling_, i.e. the updating of $H_j$ for given $X$ and $A_j$. We cycle through the variables in the set, each time projecting a single column on the cone of admissible transformations of the variable, and then normalizing the projection to length one.
+The _target_, i.e. the vector we are projecting, is complicated, because the other variables in the same set must be taken into account.
+
+In order to simplify the optimal scaling computations within an iteration we can use majorization [@deleeuw_C_94c, @heiser_95, @lange_hunter_yang_00, @deleeuw_E_15b]. This has the additional benefit that the optimal scaling step becomes embarassingly parallel. We expand the loss for set $j$ around a previous solution $\tilde H_j$.
+$$
+\mathbf{SSQ}(X-H_jA_j)=
+\mathbf{SSQ}(X-\tilde H_jA_j)-2\mathbf{tr}\ (H_j-\tilde H_j)'(X-\tilde H_jA_j)A_j'
++\mathbf{tr}\ A_j'(H_j-\tilde H_j)'(H_j-\tilde H_j)A_j.
+$$
+Now
+$$
+\mathbf{tr}\ (H_j-\tilde H_j)A_jA_j'(H_j-\tilde H_j)'\leq\kappa_j\ \mathbf{tr}\ (H_j-\tilde H_j)'(H_j-\tilde H_j),
+$$
+where $\kappa_j$ is the largest eigenvalue of $A_j'A_j$. Thus
+$$
+\mathbf{SSQ}(X-H_jA_j)\leq\mathbf{SSQ}(X-\tilde H_jA_j)+\kappa_j\ \mathbf{SSQ}(H_j-U_j)-\frac{1}{\kappa_j}\ \mathbf{SSQ}((X-\tilde H_jA_j)A_j'),
+$$
+where $U_j$ is the _target_
+$$
+U_j=\tilde H_j+\frac{1}{\kappa_j}(X-\tilde H_jA_j)A_j'.\tag{3}
+$$
+It follows we can update the optimal scaling of the variables by projecting the columns of $U_j$
+on their respective cones and then normalizing. See @deleeuw_U_75a for results on normalized cone regression. This can be done for all variables in the set separately, without taking any of the other variables in the set (or in any of the other sets) into account. Thus the optimal scaling is easy to parallellize. The resulting algorithm B is as follows.
+
+0. Set $k=0$ and start with some $X^{(0)},H^{(0)},A^{(0)}$.
+1. $X^{(k+1)}=\mathbf{ortho}(\mathbf{center}(\sum_{j=1}^m H_j^{(k)}A_j^{(k)}))$.
+2. For $j=1,\cdots,m$ compute $A_j^{(k+1)}=\{H_j^{(k)}\}^+X^{(k+1)}$.
+3. For $j=1,\cdots,m$ compute $U_j^{(k+1)}=H_j^{(k)}+\frac{1}{\kappa_j}(X^{(k+1)}-H_j^{(k)}A_j^{(k+1)})\{A_j^{(k+1)}\}'$ and for $s=1,\cdots p_j$ compute $h_{js}^{(k+1)}=\mathbf{proj}_{\mathcal{K}_{js}\cap\mathcal{S}}(u_{js}^{(k+1)})$.
+4. If converged stop. Else $k\leftarrow k+1$ and go to step 1.
+
+###Implementation Details
+
+If we follow the ALS strategy strictly the $\mathbf{ortho}()$ operator should be implemented using Procrustus rotation [@gibson_62]. Thus if $Z=K\Lambda L'$ is the singular value decomposition of $X$, then $\mathbf{ortho}(Z)=KL'$. Note, however, that any other basis for the column space of $Z$ merely differs from the Procrustus basis by a rotation. And this rotation matrix will carry unmodified into the upgrade of $A_j$ in step 2 of the algorithm, and thus after steps 1 and 2 the loss will be the same, no matter whch rotation we select. In our algorithm we use the QR decomposition to find the basis, using the Gram-Schmidt code from @deleeuw_E_15d.
+
+We implement the cone restrictions by the constraints $h_{js}=G_{js}z_s$ in combination with $T_{js}h_{js}\geq 0$. Thus the transformed variables must be in the intersection of the subspace spanned by the columns of the _transformation basis_ $G_{js}$ and the polyhedral convex cones of all vectors $h$ such that $T_{js}h\geq 0$. We suppose that all columns of the $G_{js}$ add up to zero, and we require, in addition, the normalization $SSQ(h_{js})=1$.
+
+In earlier homogeneity analysis work, summarized for example in @gifi_B_90 or @michailidis_deleeuw_A_98, the transformation basis matrices $G_{js}$ were binary zero-one matrices, indicating category membership. The same is true for the software in IBM SPSS Categories [@meulman_heiser_11] or in the `R` package `homals`  [@deleeuw_mair_A_09a]. In this paper we extend the current homogeneity analysis software using _B-spline bases_, which provide a form of fuzzy non-binary coding suitable for both categorical and numerical variables [@vanrijckevorsel_deleeuw_B_88]. These generalizations were already discussed in @deleeuw_vanrijckevorsel_vanderwouden_A_81 and @gifi_B_90, but corresponding easily accessible software was never released.
+
+We use the code described in @deleeuw_E_15e to generate B-spline bases. Note that for coding purposes binary indicators are B-splines of degree zero, while polynomials are B-splines without interior knots. Also note that binary indicators can be created for qualitative non-numerical variables, for which B-splines are not defined. We have added the option using degree -1 to bypass the B-spline code and generate an indicator matrix. Throughout we first orthonormalize the basis matrices $G_{js}$, using the Gram-Schmidt code from @deleeuw_E_15d.
+
+The matrices $T_{js}$ in the homogeneous linear inequality restrictions that define the cones $\mathcal{K}_{js}$ can be used to define monotonicity or convexity of the resulting transformations. In the current implementation we merely allow for monotonicity, which means the $T_{js}$ do not have to be stored. The transformations for each variable can be restricted to be increasing, or they can be unrestricted. By using splines without interior knots we allow in addition for polynomial transformations, which again can be restricted to be either monotonic or not. This covers the previous Gifi types _nominal_, _ordinal_, and _numerical_, which were of course designed for categorical variables with a small number of categories. Note that it is somewhat misleading to say we are fitting monotone splines or polynomials, we are mainly requiring monotonicity at the data points. 
+
+Missing data are incorporated in the definition of the cones of transformations by using a $G_{js}$ which is the direct sum of a spline basis for the non-missing and an identity matrix for the missing data. This is called _missing data multiple_ in @gifi_B_90. There are no linear inequality restrictions on the quantifications of the missing data.
+
+###Associated Eigenvalue Problems
+
+Associated with the problem of minimizing loss function (1) are some eigen and singular value problems defined by the matrices $H_j$. This has been discussed extensively in @gifi_B_90, and there are some more recent discussions in @tenenhaus_tenenhaus_11 and @vandervelden_takane_12.
+
+Suppose $H_j^+$ is the Moore-Penrose inverse of $H_j$ and $P_j=H_jH_j^+$ is the orthogonal projector associated with the column space of $H_j$. Then
+$$
+\min_{A_j}\sigma(X,H,A)=\frac{1}{m}\sum_{j=1}^m(r-\mathbf{tr}\ X'P_jX)=r-\mathbf{tr}\ X'P_\star X,
+$$
+with $P_\star$ the average of the projectors $P_j$. Thus
+$$
+\min_{X'X=I}\min_{A_j}\sigma(X,H,A)=r-\sum_{s=1}^r\lambda_s(P_\star),
+$$
+where $\lambda_s$ are the ordered eigenvalues of $P_\star$ (from large to small). Thus we see that homogeneity analysis chooses the $H_j$, i.e. transforms or quantifies the variables, in such a way that the sum of the $r$ largest eigenvalues of $P_\star$ is maximized.
+
+Now consider alternative restrictions where we do not normalize $X$, but we normalize the loadings $A$ by requiring that
+$$
+\frac{1}{m}\sum_{j=1}^m A_j'D_jA_j=I,
+$$
+where $D_j=H_j'H_j$. Also define $C_{jv}=H_j'H_v.$ We can collect the matrices $C_{jv}$ in an $p\times p$ super-matrix $C$, which we we will call the _Burt matrix_. Note that if $H=\begin{bmatrix}H_1&H_2&\cdots&H_m\end{bmatrix}$, then $C=H'H$. The matrix $D$ is defined as the direct sum of the $D_j$, i.e. it consists of the diagonal submatrices of $C$.
+
+The minimum of loss over unrestricted $X$ for fixed $A$ and $H$ is attained at the average of the set scores $X=\frac{1}{m}\sum_{j=1}^m H_jA_j,$ and thus
+$$
+\min_{X}\sigma(X,H,A)=r-\frac{1}{m^2}\mathbf{tr}\ A'CA,
+$$
+and
+$$
+\min{A'DA=mI}\min_{X}\sigma(X,H,A)=r-\sum_{s=1}^r\lambda_s(C,mD),
+$$
+where the $\lambda_s$ are now the generalized eigenvalues of the pair $C$ and $mD$.
+
+If we define $K$ by
+$$
+K=m^{-\frac12}\begin{bmatrix}H_1(H_1'H_1)^{-\frac12}&\cdots&H_m(H_m'H_m)^{-\frac12}\end{bmatrix},
+$$
+with $(H_j'H_j)^{-\frac12}$ the Moore-Penrose inverse of the symmetric square root. Then $P_\star=KK'$ and the non-zero eigenvalues of $P_\star$ are the same as those of $K'K$, which in turn are equal to the generalized eigenvalues of the pair $(C,mD)$. Thus homogeneity analysis can also be interpreted as transforming the variables in such a way that the sum of the $p$ largest generalized eigenvalues of $(C,mD)$ is maximized.
+
+###Special Cases
+
+1. If there are only two sets the generalized eigenvalue problem for the Burt matrix becomes
+$$
+\begin{bmatrix}
+D_1&C_{12}\\C_{21}&D_2
+\end{bmatrix}
+\begin{bmatrix}
+a_1\\a_2
+\end{bmatrix}=2\lambda\begin{bmatrix}D_1&0\\0&D_2\end{bmatrix}\begin{bmatrix}
+a_1\\a_2
+\end{bmatrix},
+$$
+which we can rewrite as
+$$
+\begin{split}
+C_{12}a_2&=(2\lambda-1)D_1a_1,\\
+C_{21}a_1&=(2\lambda-1)D_2a_2,
+\end{split}
+$$
+from which we see that homogeneity analysis maximizes the sum of the $r$ largest canonical correlations between $H_1$ and $H_2$. See also @vandervelden_12.
+
+2. Suppose all $m$ sets each contain only a single variable. Then the Burt matrix is the correlation matrix of the $H_j$, which are all $n\times 1$ matrices in this case. It follows that homogeneity analysis maximizes the sum of the $r$ largest eigenvalues of the correlation matrix over transformations, i.e. homogeneity analysis is _nonlinear principal component analysis_ [@deleeuw_C_14].
+
+3. Suppose all basis matrices $G_{j\ell}$ in set $j$ are the same, say equal to $G_j$. Then the set scores $H_jA_j$ are equal to $G_jZ_jA_j$, which we can write simply as $G_jY_j$. Thus loss must be minimized over $X$ and the $Y_j$. If all $G_j$ are binary indicators of categorical variables, and the $m$ sets are all of rank one, then homogeneity analysis is _multiple correspondence analysis_ (MCA). The set scores $G_jY_j$ are $k_j$ different points, with $k_j$ the number of categories of the variable, usually much less than $n$. The plot connecting the set scores to the object scores is called the _star plot_ of the variable. 
+
+4. More generally, we can include an arbitrary number of _copies_ of a variable in a set by using the same basis matrix $G_j$ a number of times. As soon as we have decided how many copies to include, the algorithm can forget all about the fact that some variables are copies and just treat them like any other variable. The notion of copies replaces the notion of the _rank of a quantification_ used in traditional Gifi, which in turn generalizes the distinction between _single_ and _multiple_ quantifications.
+
+5. If the second set only contains a single copy of a single variable then we choose transformations that maximize the multiple correlation of that variable and the variables in the first set.
+
+6. If the second set contains more than one copy of a single variable and we use binary indicator coding for that variable, then we optimize the
+eigenvalue (between/within ratio) sums for a canonical discriminant analysis.
+
+### MCA Example: Thirteen Personality Scales
+
+Our first example is a small data set from the `psych` package [@revelle_15] of five scales from the Eysenck Personality Inventory, five from a Big Five inventory, a Beck Depression Inventory, and State and Trait Anxiety measures.
+
+```{r epi}
+data(epi.bfi, package = "psych")
+epi <- epi.bfi
+epi_knots <- lapply (epi, function (x) fivenum (x)[2:4])
+epi_degrees <- rep (0, 13)
+epi_ordinal <- rep (FALSE, 13)
+epi_copies <- rep (2,13)
+epi_sets <- 1:13
+```
+We perform a two-dimensional MCA, using degree zero and inner knots at the three quartiles for all 13 variables.
+```{r run_epi_0, cache = TRUE}
+h <- homals(epi, epi_knots, epi_degrees, epi_ordinal, epi_sets, epi_copies, verbose = FALSE)
+```
+We have convergence in `r h$ntel` iterations to loss `r h$f`. The object scores are in figure `r figure_nums("epi_object_0", display = "n")`.
+<hr>
+```{r plot_epi_x_0, fig.align = "center", cache = TRUE, echo = FALSE}
+plot(h$x, xlab = "dim1", ylab = "dim2", col = "RED", cex = .5)
+```
+<center>
+`r figure_nums("epi_object_0")`
+</center>
+<hr>
+Figure `r figure_nums("epi_transform_0", display = "n")` has the $G_jY_j$ for each of the thirteen variables, with the first dimension in red, and the second dimension in blue. Because the degree of the splines is zero, these _transformation plots_ show step functions, with the steps at the knots, which are represented by vertical lines.
+<hr>
+```{r plot_epi_trans_0, fig.align="center", cache = TRUE, echo = FALSE}
+lbs <- c("epiE","epiS","epiImp","epiLie","epiNeur","bfagree","bfcon","bfext","bfneur","bfopen","bdi","traitanx","statanx")
+par(mfrow=c(1,5))
+for (j in 1:13) {
+  stepPlotter (epi [, j], h$h[, c((2*j)-1, 2*j)], epi_knots[[j]], xlab = lbs [j])
+  nknots <- length (epi_knots[[j]])
+  for (k in 1:nknots) abline(v = epi_knots[[j]][k])
+}
+par(mfrow=c(1,1))
+```
+<center>
+`r figure_nums("epi_transform_0")`
+</center>
+<hr>
+The thirteen star plots are in figure `r figure_nums("epi_transform_0", display = "n")`.
+<hr>
+```{r plot_epi_star_0, fig.align = "center", echo = FALSE}
+par(mfrow=c(1,3))
+for (j in 1:13) {
+plot(h$x, xlab = "dim1", ylab = "dim2", col = "RED", cex = .5, main = lbs[j])
+hh <- h$h[,c(2 * j - 1, 2 * j)]
+aa <- h$a[c(2 * j - 1, 2 * j),]
+gy <- hh %*% aa
+points(gy, col = "BLUE", cex = .5)
+for (i in 1:nrow(h$x))
+  lines (rbind (h$x[i,], gy[i,]))
+}
+par(mfrow=c(1,1))
+```
+<center>
+`r figure_nums("epi_star_0")`
+</center>
+<hr>
+Now change the degree to two for all variables, i.e. fit piecewise quadratic polynomials which are differentiable at the knots. We still have two copies for each variable, and these two copies define the sets.
+```{r run_epi_2, cache = TRUE}
+epi_degrees <- rep (2, 13)
+h <- homals(epi, epi_knots, epi_degrees, epi_ordinal, epi_sets, epi_copies, verbose = FALSE)
+```
+We have convergence in `r h$ntel` iterations to loss `r h$f`. The object scores are in figure `r figure_nums("epi_object_2", display = "n")` and the transformation plots in figure `r figure_nums("epi_transform_2", display = "n")`.
+<hr>
+```{r plot_epi_x_2, fig.align = "center", cache = TRUE, echo = FALSE}
+plot (h$x, xlab = "dim1", ylab = "dim2", col = "RED", cex = .5)
+```
+<center>
+`r figure_nums("epi_object_2")`
+</center>
+<hr>
+
+<hr>
+```{r plot_epi_trans_2, fig.align="center", cache = TRUE, echo = FALSE}
+par(mfrow=c(1,5))
+for (j in 1:13) {
+  oj <- order (epi[,j])
+  plot(epi[oj,j], h$h[oj, 2 * j - 1], col="RED", xlab=lbs[j], ylab="transform", lwd = 3, type = "l")
+  lines (epi[oj, j], h$h[oj, 2 * j], col = "BLUE", lwd = 3)
+  nknots <- length (epi_knots[[j]])
+  for (k in 1:nknots) abline(v = epi_knots[[j]][k])
+}
+par(mfrow=c(1,1))
+```
+<center>
+`r figure_nums("epi_transform_2")`
+</center>
+<hr>
+
+
+### NLPCA Example: Thirteen Personality Scales
+
+We use the same data as before for an NLPCA with all sets of rank one, all variables ordinal, and splines of degree 2.
+
+```{r run_epi_3, cache = TRUE}
+library(nnls)
+epi_copies <- rep (1, 13)
+epi_ordinal <- rep (TRUE, 13)
+h <- homals(epi, epi_knots, epi_degrees, epi_ordinal, epi_sets, epi_copies, verbose = FALSE)
+```
+```{r eigen_epi, echo = FALSE}
+val0 <- eigen(cor(epi))$values
+val1 <- eigen(cor(h$h))$values
+```
+In `r h$ntel` iterations we find minimum loss `r h$f`. The object scores are in figure
+`r figure_nums("epi_object_S_2", display = "n")` and the transformation plots in figure
+`r figure_nums("epi_transform_S_2", display = "n")`. NLPCA maximizes the sum of the two largest eigenvalues of the correlation matrix of the variables. Before transformation the eigenvalues are `r val0`, after transformation they are `r val1`. The sum of the first two goes from `r sum(val0[1:2])`
+to `r sum(val1[1:2])`.
+<hr>
+```{r plot_epi_x_S_2, fig.align = "center", cache = FALSE, echo = FALSE}
+plot(h$x, xlab = "dim1", ylab = "dim2", col = "RED", cex = .5)
+```
+<center>
+`r figure_nums("epi_object_S_2")`
+</center>
+<hr>
+
+<hr>
+```{r plot_epi_trans_S_0, fig.align="center", cache = FALSE, echo = FALSE}
+par(mfrow=c(1,5))
+for (j in 1:13) {
+  oj <- order (epi[,j])
+  plot(epi[oj,j], h$h[oj,j], col="RED", xlab=lbs[j], ylab="transform", type= "l", lwd = 3)
+  nknots <- length (epi_knots[[j]])
+  for (k in 1:nknots) abline(v = epi_knots[[j]][k])
+}
+par(mfrow=c(1,1))
+```
+<center>
+`r figure_nums("epi_transform_S_2")`
+</center>
+<hr>
+
+We repeat the analysis with ordinal variables of degree two, without interior knots. Thus we the transformation plots will be quadratic polynomials that are monotone over the range of the data.
+```{r run_epi_4, cache = TRUE}
+epi_knots <- lapply (1:13, function (j) numeric(0))
+h <- homals(epi, epi_knots, epi_degrees, epi_ordinal, epi_sets, epi_copies, verbose = FALSE)
+```
+```{r epi_eig, echo=FALSE}
+val2 <- eigen(cor(h$h))$values
+```
+In `r h$ntel` iterations we find minimum loss `r h$f`. The object scores are in figure
+`r figure_nums("epi_object_P_2", display = "n")` and the transformation plots in figure
+`r figure_nums("epi_transform_P_2", display = "n")`. The eigenvalues are now `r val2`, with sum of the first two equal to `r sum(val2[1:2])`.
+<hr>
+```{r plot_epi_x_P_2, fig.align = "center", cache = FALSE, echo = FALSE}
+plot(h$x, xlab = "dim1", ylab = "dim2", col = "RED", cex = .5)
+```
+<center>
+`r figure_nums("epi_object_P_2")`
+</center>
+<hr>
+
+<hr>
+```{r plot_epi_trans_P_0, fig.align="center", cache = FALSE, echo = FALSE}
+par(mfrow=c(1,5))
+for (j in 1:13) {
+  oj <- order (epi[,j])
+  plot(epi[oj,j], h$h[oj,j], col="RED", xlab=lbs[j], ylab="transform", type = "l", lwd = 3)
+}
+par(mfrow=c(1,1))
+```
+<center>
+`r figure_nums("epi_transform_P_2")`
+</center>
+<hr>
+
+
+### Regression Example: Gases with Convertible Components
+
+We analyze a regression example, using data from Neumann, previously used by Willard Gibbs, and analyzed with regression in a still quite readable article by @wilson_26. Wilson's analysis was discussed and modified using splines in @gifi_B_90 [pages 370-376]. In the regression analysis in this section we use two copies of temperature, with spline degree zero, and the first copy ordinal. For pressure and the dependent variable density we use a single ordinal copy with spline degree two.
+
+```{r neumann}
+data (neumann, package = "homals")
+neumann_knots <- lapply (neumann, function (x) fivenum (x)[2:4])
+neumann_degrees <- c(0,2,2)
+neumann_ordinal <-c(TRUE, TRUE, TRUE)
+neumann_copies <- c(2,1,1)
+neumann_sets <- c(1,1,2)
+```
+```{r run_neumann, cache = TRUE}
+h <- homals(neumann, neumann_knots, neumann_degrees, neumann_ordinal, neumann_sets, neumann_copies, itmax = 500, ndim = 1, verbose = FALSE)
+```
+```{r neumann_cor, echo = FALSE}
+r <- cor(h$h)
+ beta<-solve(r[-4,-4],r[-4,4])
+```
+In `r h$ntel` iterations we find minimum loss `r h$f`, corresponding with a multiple correlation of `r sum(beta*r[-4,4])`.  The object scores are in figure
+`r figure_nums("neumann_objects", display = "n")` plotted against the original variables (not the transformed variables), and the transformation plots in are figure
+`r figure_nums("neumann_transform", display = "n")`.
+
+<hr>
+```{r plot_neumann_objects, fig.align="center", cache = FALSE, echo = FALSE}
+par(mfrow=c(1,3))
+plot(neumann[,1], h$x, col = "RED", ylab = "Object Scores", xlab = "Temperature")
+plot(neumann[,2], h$x, col = "RED", ylab = "Object Scores", xlab = "Pressure")
+plot(neumann[,3], h$x, col = "RED", ylab = "Object Scores", xlab = "Density")
+par(mfrow=c(1,1))
+```
+<center>
+`r figure_nums("neumann_objects")`
+</center>
+<hr>
+
+<hr>
+```{r plot_neumann, fig.align="center", cache = FALSE, echo = FALSE}
+par(mfrow=c(2,2))
+stepPlotter(neumann[,1], h$h[,1], neumann_knots[[1]], xlab = "Temperature, Copy 1")
+nknots <- length (neumann_knots[[1]])
+for (k in 1:nknots) abline(v = neumann_knots[[1]][k])
+stepPlotter(neumann[,1], h$h[,2], neumann_knots[[1]], xlab = "Temperature, Copy 2")
+nknots <- length (neumann_knots[[1]])
+for (k in 1:nknots) abline(v = neumann_knots[[1]][k])
+oj <- order (neumann[,2])
+plot(neumann[oj ,2], h$h[oj ,3], col = "RED", xlab = "Pressure", ylab = "Transform", type = "l", lwd = 3)
+nknots <- length (neumann_knots[[2]])
+for (k in 1:nknots) abline(v = neumann_knots[[2]][k])
+oj <- order (neumann[,3])
+plot(neumann[oj,3], h$h[oj,4], col = "RED", xlab = "Density", ylab = "Transform", type = "l", lwd = 3)
+nknots <- length (neumann_knots[[3]])
+for (k in 1:nknots) abline(v = neumann_knots[[3]][k])
+par(mfrow=c(1,1))
+```
+<center>
+`r figure_nums("neumann_transform")`
+</center>
+<hr>
+
+### Discriminant Analysis Example: Iris data
+
+The next example illustrates (canonical) discriminant analysis, using the obligatory Anderson-Fisher iris data. Since there are three species of iris, we use two copies for the species variable. The other four variables are in the same set, they are transformed using piecewise linear monotone splines with five knots.
+
+```{r iris_data}
+data(iris, package="datasets")
+iris_vars <- names(iris)
+iris[[5]] <- as.numeric (iris[[5]])
+iris_knots <- as.list(1:5)
+for (i in 1:4) iris_knots[[i]] <- quantile (iris[[i]], (1:5) / 6)
+iris_knots[[5]] <- 1:3
+iris_degrees <- c(1,1,1,1,0)
+iris_ordinal <- c (TRUE, TRUE, TRUE, TRUE, FALSE)
+iris_copies <- c (1,1,1,1,2)
+iris_sets <- c(1,1,1,1,2)
+```
+
+```{r run_iris, cache = FALSE}
+h<-homals(iris, iris_knots,iris_degrees,iris_ordinal,iris_sets,iris_copies, verbose = FALSE)
+```
+In `r h$ntel` iterations we find minimum loss `r h$f`. The object scores are in figure
+`r figure_nums("iris_objects", display = "n")` plotted against the original variables (not the transformed variables), and the transformation 
+plots are in figure
+`r figure_nums("iris_transform", display = "n")`.
+
+<hr>
+```{r plot_iris_objects, fig.align="center", cache = FALSE, echo = FALSE}
+plot (h$x, col = "RED", type = "n", xlab = "dim 1", ylab = "dim 2")
+text (h$x, as.character (iris[[5]]), col = "RED")
+```
+<center>
+`r figure_nums("iris_objects")`
+</center>
+<hr>
+
+<hr>
+```{r plot_iris_transform, fig.align="center", cache = FALSE, echo = FALSE}
+par(mfrow=c(2,2))
+oj <- order (iris[,1])
+plot(iris[oj ,1], h$h[oj ,1], col = "RED", xlab = iris_vars[1], ylab = "Transform", type = "l", lwd = 3)
+nknots <- length (iris_knots[[1]])
+for (k in 1:nknots) abline(v = iris_knots[[1]][k])
+oj <- order (iris[,2])
+plot(iris[oj,2], h$h[oj,2], col = "RED", xlab = iris_vars[2], ylab = "Transform", type = "l", lwd = 3)
+nknots <- length (iris_knots[[2]])
+for (k in 1:nknots) abline(v = iris_knots[[2]][k])
+oj <- order (iris[,3])
+plot(iris[oj ,3], h$h[oj, 3], col = "RED", xlab = iris_vars[3], ylab = "Transform", type = "l", lwd = 3)
+nknots <- length (iris_knots[[3]])
+for (k in 1:nknots) abline(v = iris_knots[[3]][k])
+oj <- order (iris[,4])
+plot(iris[oj,4], h$h[oj,4], col = "RED", xlab = iris_vars[4], ylab = "Transform", type = "l", lwd = 3)
+nknots <- length (iris_knots[[4]])
+for (k in 1:nknots) abline(v = iris_knots[[4]][k])
+```
+<center>
+`r figure_nums("iris_transform")`
+</center>
+<hr>
+```{r iris_cda, echo = FALSE}
+cda <- function (x,y) {
+    g <- ifelse (outer(y, unique(y), "=="), 1 ,0)
+    x <- apply (x, 2, function (z) z - mean (z))
+    x <- apply (x, 2, function (z) z / sqrt (sum (z ^ 2)))
+    r <- crossprod (x)
+    b <- qr.solve (g, x)
+    d <- colSums (g)
+    s <- crossprod (b, d * b)
+    return (eigen (solve (r, s)))
+}
+```
+Discriminant analysis decomposes the total dispersion matrix $T$ into a sum of a between-groups dispersion $B$ and a within-groups dispersion $W$, and then finds directions in the space spanned by the variables for which the between-variance is largest relative to the total variance. Homogeneity analysis optimizes the sum of the $r$ largest eigenvalues of $T^{-1}B$. Before optimal transformation these 
+eigenvalues for the iris data are `r cda(iris[,1:4],iris[,5])$values[1:2]`, after transformation they are  `r Re(cda(h$h[,1:4],iris[,5])$values[1:2])`.
+
+###Multiset Canonical Correlation Example: Thirteen Personality Scales
+
+This is the same example as before, but now we group the five scales from the Eysenck Personality Inventory and the five from the Big Five inventory into sets. The remaining three variables define three separate sets. No cpies are used, and we use monotone cubic splines with the interior knots at the quartiles.
+
+```{r multiset_example}
+epi_knots <- lapply (epi, function (x) fivenum (x)[2:4])
+epi_degrees <- rep (3, 13)
+epi_sets <- c(1,1,1,1,1,2,2,2,2,2,3,4,5)
+```
+```{r run_multiset, cache = TRUE}
+h <- homals(epi, epi_knots, epi_degrees, epi_ordinal, epi_sets, epi_copies, verbose = FALSE)
+```
+In `r h$ntel` iterations we find minimum loss `r h$f`. The object scores are in figure
+`r figure_nums("epi_multi_object", display = "n")` and the transformation plots in figure
+`r figure_nums("epi_multi_transform", display = "n")`.
+<hr>
+```{r plot_epi_x_mult, fig.align = "center", cache = FALSE, echo = FALSE}
+plot(h$x, xlab = "dim1", ylab = "dim2", col = "RED", cex = .5)
+```
+<center>
+`r figure_nums("epi_multi_object")`
+</center>
+<hr>
+
+<hr>
+```{r plot_epi_trans_mult, fig.align="center", cache = FALSE, echo = FALSE}
+par(mfrow=c(1,5))
+for (j in 1:13) {
+  oj <- order (epi[,j])
+  plot(epi[oj,j], h$h[oj,j], col="RED", xlab=lbs[j], ylab="transform", type= "l", lwd = 3)
+  nknots <- length (epi_knots[[j]])
+  for (k in 1:nknots) abline(v = epi_knots[[j]][k])
+}
+par(mfrow=c(1,1))
+```
+<center>
+`r figure_nums("epi_multi_transform")`
+</center>
+<hr>
+
+###Appendix: Code
+```{r homals, eval = FALSE}
+source("gs.R")
+source("bsplineBasis.R")
+library (nnls)
+
+homals <-
+  function (data,
+            knots,
+            degrees,
+            ordinal,
+            sets = 1:ncol(data),
+            copies = rep (1, ncol(data)),
+            ndim = 2,
+            itmax = 1000,
+            eps = 1e-6,
+            seed = 123,
+            verbose = TRUE) {
+    nvars <- ncol (data)
+    nobs <- nrow (data)
+    nsets <- max (sets)
+    ncops <- sum (copies)
+    lmax <- ndim * nsets
+    indices <- homalsIndices (nvars, nsets, ordinal, sets, copies)
+    setup <-
+      homalsSetup (data, knots, degrees, ordinal, sets , copies, indices$expand)
+    initials <-
+      homalsInitials (
+        setup$q,
+        setup$r,
+        nobs,
+        nsets,
+        ncops,
+        ndim,
+        indices$expand,
+        indices$nvarsets,
+        indices$ordicops,
+        seed
+      )
+    fold <- 0
+    itel <- 1
+    setcopies <- indices$setcopies
+    h <- initials$h
+    a <- initials$a
+    x <- initials$x
+    for (s in 1:nsets) {
+      hh <- h[1:nobs, which (setcopies == s), drop = FALSE]
+      aa <- a[which (setcopies == s), 1:ndim, drop = FALSE]
+      fold <- fold + sum ((x - hh %*% aa) ^ 2)
+    }
+    fold <- fold / lmax
+    repeat {
+      xz <- matrix(0, nobs, ndim)
+      fnew <- fmid <- 0
+      for (s in 1:nsets) {
+        id <- which (setcopies == s)
+        hh <- h[1:nobs, id, drop = FALSE]
+        lf <- lm.fit (hh, x)
+        aa <- lf$coefficients
+        rs <- lf$residuals
+        kappa <- max (eigen (crossprod (aa))$values)
+        fmid <- fmid + sum (rs ^ 2)
+        target <- hh + tcrossprod (rs, aa) / kappa
+        k <- 1
+        for (l in id) {
+          ql <- setup$q[[l]]
+          vl <- setup$v[[l]]
+          if (indices$ordicops[l]) {
+            hz <- drop (crossprod (ql, target[, k]))
+            ns <- nnls (vl, hz)
+            rz <- coefficients (ns)
+            hk <- drop (ql %*% (hz - drop (vl %*% rz)))
+          }
+          else {
+            hk <- ql %*% crossprod (ql, target[, k])
+          }
+          hh[, k] <- hk / sqrt (sum (hk ^ 2))
+          k <- k + 1
+        }
+        ha <- hh %*% aa
+        xz <- xz + ha
+        fnew <- fnew + sum ((x - ha) ^ 2)
+        h[1:nobs, id] <- hh
+        a[id, 1:ndim] <- aa
+      }
+      fmid <- fmid / lmax
+      fnew <- fnew / lmax
+      if (verbose)
+        cat(
+          "Iteration: ",
+          formatC (itel, width = 3, format = "d"),
+          "fold: ",
+          formatC (
+            fold,
+            digits = 8,
+            width = 12,
+            format = "f"
+          ),
+          "fmid: ",
+          formatC (
+            fmid,
+            digits = 8,
+            width = 12,
+            format = "f"
+          ),
+          "fnew: ",
+          formatC (
+            fnew,
+            digits = 8,
+            width = 12,
+            format = "f"
+          ),
+          "\n"
+        )
+      if ((itel == itmax) || ((fold - fnew) < eps))
+        break
+      itel <- itel + 1
+      fold <- fnew
+      x <- gs (center (xz))$q
+    }
+    return (list (
+      f = fnew,
+      ntel = itel,
+      x = x,
+      a = a,
+      h = h
+    ))
+  }
+
+homalsIndices <- function (nvars, nsets, ordinal, sets, copies) {
+  ordicops <- logical (0)
+  expand <- numeric (0)
+  for (j in 1:nvars) {
+    ordicops <- c (ordicops, ordinal [j], rep (FALSE, copies[j] - 1))
+    expand <- c (expand, rep (j, copies [j]))
+  }
+  setcopies <- sets[expand]
+  nvarsets <- numeric(0)
+  for (s in 1:nsets) {
+    nvarsets <- c(nvarsets, sum (copies[which (sets == s)]))
+  }
+  return (list (
+    ordicops = ordicops,
+    setcopies = setcopies,
+    expand = expand,
+    nvarsets = nvarsets
+  ))
+}
+
+homalsSetup <-
+  function (data,
+            knots,
+            degrees,
+            ordinal,
+            sets,
+            copies,
+            expand) {
+    nvars <- ncol (data)
+    nobs <- nrow (data)
+    ncops <- sum (copies)
+    g <- b <- q <- r <- v <- list()
+    for (l in 1:ncops) {
+      j <- expand[l]
+      mm <- is.na(data[, j])
+      nm <- !mm
+      dm <- data[nm, j]
+      if (degrees[j] < 0) {
+        gn <- ifelse (outer (dm, unique (dm), "=="), 1, 0)
+      }
+      else {
+        gn <- bsplineBasis (dm, degrees[j], knots[[j]])
+      }
+      nr <- ncol (gn)
+      ns <- sum (mm)
+      gg <- matrix (0, nobs, nr + ns)
+      gg[!mm, 1:nr] <- gn
+      if (ns > 0) {
+        gg[mm, nr + (1:ns)] <- diag (ns)
+      }
+      gg <- center (gg)[,-1, drop = FALSE]
+      g <- c (g, list (gg))
+      bb <- gs (g[[l]])
+      q <- c(q, list (bb$q))
+      r <- c (r, list (bb$r))
+      vv <- makeV (data[[j]], q[[l]])
+      v <- c (v, list (vv))
+    }
+    return (list (q = q, r = r, v = v))
+  }
+
+homalsInitials <-
+  function (q,
+            r,
+            nobs,
+            nsets,
+            ncops,
+            ndim,
+            expand,
+            nvarsets,
+            ordicops,
+            seed) {
+    set.seed (seed)
+    x <- matrix (rnorm (nobs * ndim), nobs, ndim)
+    x <- gs (center (x))$q
+    a <- matrix (rnorm (ncops * ndim), ncops, ndim)
+    h <- matrix (0, nobs, ncops)
+    for (l in 1:ncops) {
+      ql <- q[[l]]
+      rl <- r[[l]]
+      if (ordicops[l])
+        cf <- 1:ncol (ql)
+      else
+        cf <- rnorm (ncol (ql))
+      h[, l] <- drop (ql %*% rl %*% cf)
+    }
+    h <- center (h)
+    h <- apply (h, 2, function (z)
+      z / sqrt (sum (z ^ 2)))
+    return (list (x = x, a = a, h = h))
+  }
+
+makeV <- function (x, g) {
+  r <- order (x)[1:length(which(!is.na(x)))]
+  n <- length (r)
+  m <- ncol (g)
+  v <- numeric (0)
+  k <- 0
+  for (i in 1:(n - 1)) {
+    ri <- r[i]
+    rj <- r[i + 1]
+    if (is.na(x[ri]) || is.na(x[rj]))
+      next
+    if (x[rj] > x[ri]) {
+      v <- c(v, g[ri,] - g[rj,])
+      k <- k + 1
+    }
+  }
+  return (t(matrix (v, k, m, byrow = TRUE)))
+}
+
+center <- function (x) {
+  return (apply (x, 2, function (z)
+    z - mean (z)))
+}
+
+normalize <- function (x) {
+  return (x / sqrt (sum (x ^ 2)))
+}
+```
+
+###Appendix: NEWS
+016: 06/28/15
+
+* added figure captioning and numbering
+* separated computation and plotting chunks
+* hlines around figures
+* rescaled small example
+* added table of contents
+* redid figures and computations in single chapter
+* added NEWS section
+* added link to pdf and Rmd versions
+
+017: 06/29/15
+
+* added nominal, ordinal, numerical
+* added ALS algorithm for ordinal
+* expanded NLPCA section
+
+018: 06/30/15
+
+* more ALS for ordinal
+* worked on NLPCA example
+
+019: 07/01/15
+
+* minor editing changes throughout
+* introduced QR decomposition of indicators earlier
+
+020: 07/02/15
+
+* transformation plots for epi example (still a bug in ordinal single)
+
+021: 07/06/15
+
+* squashed the bug in ordinal
+* added TO DO appendix
+* code now has inner iterations
+
+022: 07/07/13
+
+* added single numerical example
+* some NLPCA theory added
+
+023: 07/08/15
+
+* center the basis matrices in the code
+
+024: 07/08/15
+
+* added star plots for MCA degree zero
+* added graphics : yes and keep tex: yes to the YAML to please pandoc
+* material on sets of variables
+
+025: 07/10/15
+
+* material on copies
+
+027: 07/11/15
+
+* some editing
+* copies algorithm
+
+028: 07/12/15
+
+* majorization part of copies algorithm
+
+029: 07/13/15
+
+* majorization part of copies algorithm
+
+031: 07/21/15
+
+* new copies-based code wrapped up and inserted
+* redid all examples and plots with the new homals program
+* made ftp directory
+
+032: 07/21/15
+
+* added neumann example
+
+033: 07/21/15
+
+* minor edits
+* normalized loss
+
+034: 07/22/15
+
+* extensive editing
+* itermax default to 1000
+* got rid of details of "old" algorithm
+* introduce copies much earlier
+
+035: 07/24/15
+
+* (X,H,A) loss replacing (X,Y) loss earlier
+* transformation plots become line plots
+* added stepPlotter function for discrete case
+* redid discrete plots with stepPlotter
+
+036: 07/27/15
+
+* described copies algorithm earlier and in more detail
+* added caches for homals solutions
+
+037: 08/02/15
+
+* added seed to homals parameter list for homalsInitials
+* fixed homalsSetup bug for dim(g[[j]])[2]=2 (added DROP=FALSE)
+
+038: 08/03/15
+
+* various edits
+* move copies loss even more to the beginning
+* number algorithms
+
+039: 08/04/15
+
+* added iris example
+
+040: 08/05/15
+
+* added multiset CCA example
+
+041: 08/19/15
+
+* complete rewrite, remove old notation, Gifi approach
+
+042: 08/20/15
+
+* still working on the copies rewrite
+
+043: 09/27/15
+
+* reorganizing and rewriting
+
+044: 10/01/15
+
+* reorganizing and rewriting
+
+045: 10/15/15
+
+* reorganizing and rewriting
+
+046: 10/20/15
+
+* reorganizing and rewriting
+
+047: 10/21/15
+
+* implementation details added
+
+048: 10/23/15
+
+* cut out some unnecessary stuff
+
+049: 10/25/15
+
+* special cases expanded
+* loss geometry eliminated for now
+
+050: 11/01/15
+
+* needs more testing, but added primary/secondary ties to ordinal
+* may not work yet, but provisions for missing data
+
+051: 11/02/15
+
+* missing data implemented, needs more testing
+
+052: 11/05/15
+
+* some edits
+* degree = -1 now means categorical variable, makes indicator without calling B-spline code
+* primary/secondary ties for each variable separately
+
+053: 11/07/15
+
+* eliminate secondary approach to ties, which does not make much sense
+
+054: 11/08/15
+
+* some code changes to deal with categorical variables
+* reformat code
+
+100: 11/10/15
+
+* some final edits
+
+101: 11/10/15
+
+* added some before and after statistics
+
+102: 11/12/15
+
+* lots of small edits
+
+###References
