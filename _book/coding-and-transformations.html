@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>2 Coding and Transformations | Gifi Analysis of Multivariate Data</title>
   <meta name="description" content="null" />
-  <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.22.3 and GitBook 2.6.7" />
 
   <meta property="og:title" content="2 Coding and Transformations | Gifi Analysis of Multivariate Data" />
   <meta property="og:type" content="book" />
@@ -32,7 +32,7 @@
   
 <link rel="prev" href="introduction.html"/>
 <link rel="next" href="aspects.html"/>
-<script src="libs/header-attrs-2.5/header-attrs.js"></script>
+<script src="libs/header-attrs-2.8.6/header-attrs.js"></script>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -50,14 +50,15 @@
 
 
 
-<link href="libs/anchor-sections-1.0/anchor-sections.css" rel="stylesheet" />
-<script src="libs/anchor-sections-1.0/anchor-sections.js"></script>
+<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
 
 
 <style type="text/css">
 pre > code.sourceCode { white-space: pre; position: relative; }
 pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
 pre.sourceCode { margin: 0; }
 @media screen {
@@ -116,6 +117,29 @@ code span.st { color: #4070a0; } /* String */
 code span.va { color: #19177c; } /* Variable */
 code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
 </style>
 
 </head>
@@ -203,7 +227,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="variables-and-multivariables" class="section level2" number="2.1">
 <h2><span class="header-section-number">2.1</span> Variables and Multivariables</h2>
 <p>In the multivariate analysis techniques presented in this paper the data are measurements or classifications of <span class="math inline">\(n\)</span> <em>objects</em> by <span class="math inline">\(m\)</span> <em>variables</em>.
-Perhaps it is useful to insert some definitions here. A <em>variable</em> is a function that maps a domain of objects to a range of values. Domains are finite. The elements of the domain can be individuals, animals, plants, time points, locations, and so on. It is useful to distinguish the <em>codomain</em> (or <em>range</em>) of a variable and its <em>image</em>. The codomain of a variable can be the real numbers, but the image always is a finite set, the actual values the variable assumes on the domain. A <em>multivariable</em> is a sequence of variables defined on the same domain, with possibly different codomains. Multivariables are implemented in R as <em>dataframes</em>. Variables can have a finite codomain, which can be either ordered or unordered. This corresponds with a <em>factor</em> or an <em>ordered factor</em> in R. MVAOS techniques <em>quantify</em> factors, replacing the values in the image by real numbers. If the variables are real-valued to start with we replace real numbers by other real numbers and we <em>transform</em> instead of <em>quantify</em>. The distinction between quantification and transformation is somewhat fluid, because the image of a variable is always finite and thus, in a sense, all variables are categorical (a point also emphasized, for example, in <span class="citation"><a href="discriminant-analysis-and-criminals.html#ref-holland_79" role="doc-biblioref">Holland</a> (<a href="discriminant-analysis-and-criminals.html#ref-holland_79" role="doc-biblioref">1979</a>)</span>).</p>
+Perhaps it is useful to insert some definitions here. A <em>variable</em> is a function that maps a domain of objects to a range of values. Domains are finite. The elements of the domain can be individuals, animals, plants, time points, locations, and so on. It is useful to distinguish the <em>codomain</em> (or <em>range</em>) of a variable and its <em>image</em>. The codomain of a variable can be the real numbers, but the image always is a finite set, the actual values the variable assumes on the domain. A <em>multivariable</em> is a sequence of variables defined on the same domain, with possibly different codomains. Multivariables are implemented in R as <em>dataframes</em>. Variables can have a finite codomain, which can be either ordered or unordered. This corresponds with a <em>factor</em> or an <em>ordered factor</em> in R. MVAOS techniques <em>quantify</em> factors, replacing the values in the image by real numbers. If the variables are real-valued to start with we replace real numbers by other real numbers and we <em>transform</em> instead of <em>quantify</em>. The distinction between quantification and transformation is somewhat fluid, because the image of a variable is always finite and thus, in a sense, all variables are categorical (a point also emphasized, for example, in <span class="citation"><a href="#ref-holland_79" role="doc-biblioref">Holland</a> (<a href="#ref-holland_79" role="doc-biblioref">1979</a>)</span>).</p>
 <p>Although the variables in a multivariable have the same domain, there can be different numbers of missing data for different variables. We handle this in the same way as R, by adding <code>NA</code> to the range of all variables. In this context it is also useful to define <em>latent</em> or <em>unobserved</em> variables. These are variables for which all values are missing, i.e. for which the image only contains <code>NA</code>. At first thought it seems somewhat perverse to have such completely missing variables, but think of examples such as principal components, factor scores, or error terms in linear models.</p>
 </div>
 <div id="induced-correlations-and-aspects" class="section level2" number="2.2">
@@ -213,17 +237,17 @@ Perhaps it is useful to insert some definitions here. A <em>variable</em> is a f
 <div id="transformed-variables" class="section level2" number="2.3">
 <h2><span class="header-section-number">2.3</span> Transformed Variables</h2>
 <p>The data are collected in the <span class="math inline">\(n\times m\)</span> matrix <span class="math inline">\(H\)</span>, which codes the observations on the <span class="math inline">\(m\)</span> variables. MVAOS does not operate on the data directly, but on <em>transformations</em> or <em>quantifications</em> of the variables. Choosing a transformation to minimize a loss function is known as <em>optimal scaling</em>. Clearly this so-called optimality is only defined in terms of a specific loss function, with specific constraints. Different constraints will lead to different optimal transformations.</p>
-<p>Let us define the types of transformations we are interested in. The <span class="math inline">\(n\times m\)</span> matrix of <em>transformed variables</em> <span class="math inline">\(H\)</span> has columns <span class="math inline">\(h_j\)</span>, which are constrained by <span class="math inline">\(h_j=G_jz_j\)</span>, where <span class="math inline">\(G_j\)</span> is a given matrix defining the <em>basis</em> for variable <span class="math inline">\(j\)</span>. In addition we require <span class="math inline">\(h_j\in\mathcal{C}_j\)</span> and <span class="math inline">\(h_j\in\mathcal{S}\)</span>, where <span class="math inline">\(\mathcal{C}_j\)</span> is a <em>cone of transformations</em> and <span class="math inline">\(\mathcal{S}\)</span> is the unit sphere in <span class="math inline">\(\mathbb{R}^n\)</span>. This will be discussed in more detail in later sections, but for the time being think of the example in which <span class="math inline">\(h_j\)</span> is required to be a (centered and normalized) monotone polynomial function of the image values of variable <span class="math inline">\(j\)</span>. The whole of <span class="math inline">\(\mathbb{R}^n\)</span> and a single point in <span class="math inline">\(\mathbb{R}^n\)</span> are both special cases of these normalized cones. It is important, especially for algorithm construction, that the restrictions are defined for each variable separately. An exception to this rule is the <em>orthoblock</em>, using terminology from <span class="citation"><a href="discriminant-analysis-and-criminals.html#ref-deleeuw_C_04a" role="doc-biblioref">J. De Leeuw</a> (<a href="discriminant-analysis-and-criminals.html#ref-deleeuw_C_04a" role="doc-biblioref">2004</a>)</span>, which requires that all or some of the columns of <span class="math inline">\(H\)</span> are not only normalized but also orthogonal to each other. Clearly a normalized variable is an orthoblock of size one.</p>
+<p>Let us define the types of transformations we are interested in. The <span class="math inline">\(n\times m\)</span> matrix of <em>transformed variables</em> <span class="math inline">\(H\)</span> has columns <span class="math inline">\(h_j\)</span>, which are constrained by <span class="math inline">\(h_j=G_jz_j\)</span>, where <span class="math inline">\(G_j\)</span> is a given matrix defining the <em>basis</em> for variable <span class="math inline">\(j\)</span>. In addition we require <span class="math inline">\(h_j\in\mathcal{C}_j\)</span> and <span class="math inline">\(h_j\in\mathcal{S}\)</span>, where <span class="math inline">\(\mathcal{C}_j\)</span> is a <em>cone of transformations</em> and <span class="math inline">\(\mathcal{S}\)</span> is the unit sphere in <span class="math inline">\(\mathbb{R}^n\)</span>. This will be discussed in more detail in later sections, but for the time being think of the example in which <span class="math inline">\(h_j\)</span> is required to be a (centered and normalized) monotone polynomial function of the image values of variable <span class="math inline">\(j\)</span>. The whole of <span class="math inline">\(\mathbb{R}^n\)</span> and a single point in <span class="math inline">\(\mathbb{R}^n\)</span> are both special cases of these normalized cones. It is important, especially for algorithm construction, that the restrictions are defined for each variable separately. An exception to this rule is the <em>orthoblock</em>, using terminology from <span class="citation"><a href="#ref-deleeuw_C_04a" role="doc-biblioref">J. De Leeuw</a> (<a href="#ref-deleeuw_C_04a" role="doc-biblioref">2004</a>)</span>, which requires that all or some of the columns of <span class="math inline">\(H\)</span> are not only normalized but also orthogonal to each other. Clearly a normalized variable is an orthoblock of size one.</p>
 </div>
 <div id="bases" class="section level2" number="2.4">
 <h2><span class="header-section-number">2.4</span> Bases</h2>
-<p>In earlier MVAOS work, summarized for example in <span class="citation"><a href="discriminant-analysis-and-criminals.html#ref-gifi_B_90" role="doc-biblioref">Gifi</a> (<a href="discriminant-analysis-and-criminals.html#ref-gifi_B_90" role="doc-biblioref">1990</a>)</span> or <span class="citation"><a href="discriminant-analysis-and-criminals.html#ref-michailidis_deleeuw_A_98" role="doc-biblioref">Michailidis and De Leeuw</a> (<a href="discriminant-analysis-and-criminals.html#ref-michailidis_deleeuw_A_98" role="doc-biblioref">1998</a>)</span>, the basis matrices <span class="math inline">\(G_j\)</span> were binary zero-one matrices, indicating category membership. The same is true for the software in IBM SPSS Categories <span class="citation">(<a href="discriminant-analysis-and-criminals.html#ref-meulman_heiser_12" role="doc-biblioref">J. M. Meulman and Heiser 2012</a>)</span> or in the R package homals <span class="citation">(<a href="discriminant-analysis-and-criminals.html#ref-deleeuw_mair_A_09a" role="doc-biblioref">J. De Leeuw and Mair 2009a</a>)</span>. In this paper we extend the current MVAOS software using <em>B-spline bases</em>, which provide a form of fuzzy non-binary coding suitable for both categorical and numerical variables <span class="citation">(<a href="discriminant-analysis-and-criminals.html#ref-vanrijckevorsel_deleeuw_B_88" role="doc-biblioref">Van Rijckevorsel and De Leeuw 1988</a>)</span>. These generalizations were already discussed in <span class="citation"><a href="discriminant-analysis-and-criminals.html#ref-deleeuw_vanrijckevorsel_vanderwouden_A_81" role="doc-biblioref">J. De Leeuw, Van Rijckevorsel, and Van der Wouden</a> (<a href="discriminant-analysis-and-criminals.html#ref-deleeuw_vanrijckevorsel_vanderwouden_A_81" role="doc-biblioref">1981</a>)</span> and <span class="citation"><a href="discriminant-analysis-and-criminals.html#ref-gifi_B_90" role="doc-biblioref">Gifi</a> (<a href="discriminant-analysis-and-criminals.html#ref-gifi_B_90" role="doc-biblioref">1990</a>)</span>, but corresponding easily accessible software was never released.</p>
-<p>In this book we continue to use <em>indicators</em> for bases. Thus bases <span class="math inline">\(G_j\)</span> must be non-negative, with rows that add up to one. If there is only one non-zero entry in each row, which of course is then equal to one, the indicator is <em>crisp</em>, otherwise it is <em>fuzzy</em>. B-spline bases are the prime example of fuzzy indicators, but other examples are discussed in <span class="citation"><a href="discriminant-analysis-and-criminals.html#ref-vanrijckevorsel_deleeuw_B_88" role="doc-biblioref">Van Rijckevorsel and De Leeuw</a> (<a href="discriminant-analysis-and-criminals.html#ref-vanrijckevorsel_deleeuw_B_88" role="doc-biblioref">1988</a>)</span>. Only B-spline bases are implemented in our software, however.</p>
+<p>In earlier MVAOS work, summarized for example in <span class="citation"><a href="#ref-gifi_B_90" role="doc-biblioref">Gifi</a> (<a href="#ref-gifi_B_90" role="doc-biblioref">1990</a>)</span> or <span class="citation"><a href="#ref-michailidis_deleeuw_A_98" role="doc-biblioref">Michailidis and De Leeuw</a> (<a href="#ref-michailidis_deleeuw_A_98" role="doc-biblioref">1998</a>)</span>, the basis matrices <span class="math inline">\(G_j\)</span> were binary zero-one matrices, indicating category membership. The same is true for the software in IBM SPSS Categories <span class="citation">(<a href="#ref-meulman_heiser_12" role="doc-biblioref">J. M. Meulman and Heiser 2012</a>)</span> or in the R package homals <span class="citation">(<a href="#ref-deleeuw_mair_A_09a" role="doc-biblioref">J. De Leeuw and Mair 2009a</a>)</span>. In this paper we extend the current MVAOS software using <em>B-spline bases</em>, which provide a form of fuzzy non-binary coding suitable for both categorical and numerical variables <span class="citation">(<a href="#ref-vanrijckevorsel_deleeuw_B_88" role="doc-biblioref">Van Rijckevorsel and De Leeuw 1988</a>)</span>. These generalizations were already discussed in <span class="citation"><a href="#ref-deleeuw_vanrijckevorsel_vanderwouden_A_81" role="doc-biblioref">J. De Leeuw, Van Rijckevorsel, and Van der Wouden</a> (<a href="#ref-deleeuw_vanrijckevorsel_vanderwouden_A_81" role="doc-biblioref">1981</a>)</span> and <span class="citation"><a href="#ref-gifi_B_90" role="doc-biblioref">Gifi</a> (<a href="#ref-gifi_B_90" role="doc-biblioref">1990</a>)</span>, but corresponding easily accessible software was never released.</p>
+<p>In this book we continue to use <em>indicators</em> for bases. Thus bases <span class="math inline">\(G_j\)</span> must be non-negative, with rows that add up to one. If there is only one non-zero entry in each row, which of course is then equal to one, the indicator is <em>crisp</em>, otherwise it is <em>fuzzy</em>. B-spline bases are the prime example of fuzzy indicators, but other examples are discussed in <span class="citation"><a href="#ref-vanrijckevorsel_deleeuw_B_88" role="doc-biblioref">Van Rijckevorsel and De Leeuw</a> (<a href="#ref-vanrijckevorsel_deleeuw_B_88" role="doc-biblioref">1988</a>)</span>. Only B-spline bases are implemented in our software, however.</p>
 <p>Note that the identity matrix is a crisp indicator. This is of importance in connection with missing data and orthoblocks.</p>
 </div>
 <div id="copies-and-rank" class="section level2" number="2.5">
 <h2><span class="header-section-number">2.5</span> Copies and Rank</h2>
-<p>Within a block there can be more than one version of the same variable. These multiple versions are called <em>copies</em>. They were first introduced into the Gifi framework by <span class="citation"><a href="discriminant-analysis-and-criminals.html#ref-deleeuw_C_84c" role="doc-biblioref">J. De Leeuw</a> (<a href="discriminant-analysis-and-criminals.html#ref-deleeuw_C_84c" role="doc-biblioref">1984b</a>)</span>. Since MVAOS transforms variables, having more than one copy is not necessarily redundant, because different copies can and will be transformed differently. As a simple example of copies, think of using different monomials or orthogonal polynomials of a single variable <span class="math inline">\(x\)</span> in a polynomial regression. The difference between copies and simply including a variable more than once is that copies have the same basis <span class="math inline">\(G_j\)</span>.</p>
+<p>Within a block there can be more than one version of the same variable. These multiple versions are called <em>copies</em>. They were first introduced into the Gifi framework by <span class="citation"><a href="#ref-deleeuw_C_84c" role="doc-biblioref">J. De Leeuw</a> (<a href="#ref-deleeuw_C_84c" role="doc-biblioref">1984b</a>)</span>. Since MVAOS transforms variables, having more than one copy is not necessarily redundant, because different copies can and will be transformed differently. As a simple example of copies, think of using different monomials or orthogonal polynomials of a single variable <span class="math inline">\(x\)</span> in a polynomial regression. The difference between copies and simply including a variable more than once is that copies have the same basis <span class="math inline">\(G_j\)</span>.</p>
 <p>In the algorithm copies of a variable are just treated in exactly the same way as other variables. The notion of copies replaces the notion of the <em>rank of a quantification</em> used in traditional Gifi, which in turn generalizes the distinction between <em>single</em> and <em>multiple</em> quantifications. A single variable has only one copy in its block, a multiple variable has the maximum number of copies.</p>
 <p>In our software the copies of a variable by definition have the same basis. It is possible, of course, to include the same variable multiple times, but with different bases. This must be done, however, at the input level. In terms of the structures defined in the software, a gifiVariable can have multiple copies but it only has one basis. If there is more than one basis for a variable, then we need to define an additional gifiVariable. Also note that copies of a variable are all in the same block. If you want different versions of a variable in different blocks, then that requires you to create different gifiVariables.</p>
 <p>Defining copies is thus basically a coding problem. It can be handled simply by adding a variable multiple times to a data set, and giving each variable the same bases. In our algorithm we use the fact that copies belong to the same variable to create some special shortcuts and handling routines.</p>
@@ -241,11 +265,11 @@ generalizes this distinction, because both numerical and nominal can be implemen
 the degree of the spline and the location of the knots.</p>
 <p>Choice of degree and knots is basically up to the user, but the programs have some defaults. In most cases the default is to use crisp indicators with knots at the data points. Of course for truly categorical variables (i.e. for factors in R) crisp indicators are simply constructed by using the levels of the factor. We include some utilities to place knots at percentiles, or equally spaced on the range, or to have no interior knots at all (in which case we fit polynomials).</p>
 <p>And finally the user decides, for all variables, if she wants the transformations (step functions, splines, and polynomials) to be monotonic with the data. Default is not requiring monotonicity.</p>
-<p>Note that we require the spline to be monotonic in the non-missing data points – this does not mean the spline is monotonic outside the range of the data (think, for example, of a quadratic polynomial), it does not even mean the spline is monotonic between data points. This makes our spline transformations different from the integrated B-splines, or I-splines, used by <span class="citation"><a href="discriminant-analysis-and-criminals.html#ref-winsberg_ramsay_83" role="doc-biblioref">Winsberg and Ramsay</a> (<a href="discriminant-analysis-and-criminals.html#ref-winsberg_ramsay_83" role="doc-biblioref">1983</a>)</span>, which are monotone on the whole real line. Because each variable has a finite image we are not really fitting a spline, we are fitting a number of discrete points that are required to be on a spline, and optionally to be monotonic with the data. In <span class="citation"><a href="discriminant-analysis-and-criminals.html#ref-winsberg_ramsay_83" role="doc-biblioref">Winsberg and Ramsay</a> (<a href="discriminant-analysis-and-criminals.html#ref-winsberg_ramsay_83" role="doc-biblioref">1983</a>)</span> the requirement is that the fitted points are on an I-spline, which automatically makes them monotonic with the data. Clearly our approach is the less restrictive one.</p>
+<p>Note that we require the spline to be monotonic in the non-missing data points – this does not mean the spline is monotonic outside the range of the data (think, for example, of a quadratic polynomial), it does not even mean the spline is monotonic between data points. This makes our spline transformations different from the integrated B-splines, or I-splines, used by <span class="citation"><a href="#ref-winsberg_ramsay_83" role="doc-biblioref">Winsberg and Ramsay</a> (<a href="#ref-winsberg_ramsay_83" role="doc-biblioref">1983</a>)</span>, which are monotone on the whole real line. Because each variable has a finite image we are not really fitting a spline, we are fitting a number of discrete points that are required to be on a spline, and optionally to be monotonic with the data. In <span class="citation"><a href="#ref-winsberg_ramsay_83" role="doc-biblioref">Winsberg and Ramsay</a> (<a href="#ref-winsberg_ramsay_83" role="doc-biblioref">1983</a>)</span> the requirement is that the fitted points are on an I-spline, which automatically makes them monotonic with the data. Clearly our approach is the less restrictive one.</p>
 </div>
 <div id="missing-data" class="section level2" number="2.8">
 <h2><span class="header-section-number">2.8</span> Missing Data</h2>
-<p>The utility <code>makeMissing()</code> expands the basis for the non-missing data in various ways. Option “m” (for “multiple”) is the default. It replaces the basis with the direct sum of the non-missing basis and an identity matrix for the missing elements. Option “s” (for “single”) adds a single binary column to the basis indicating which elements are missing. Option “a” (for “average”) codes missing data by having all the elements in rows of the basis corresponding with missing data equal to one over the number of rows. With all three options the basis remains an indicator. Some of these options make most sense in the context of crisp indicators, where they are compared in <span class="citation"><a href="discriminant-analysis-and-criminals.html#ref-meulman_82" role="doc-biblioref">J. J. Meulman</a> (<a href="discriminant-analysis-and-criminals.html#ref-meulman_82" role="doc-biblioref">1982</a>)</span>.</p>
+<p>The utility <code>makeMissing()</code> expands the basis for the non-missing data in various ways. Option “m” (for “multiple”) is the default. It replaces the basis with the direct sum of the non-missing basis and an identity matrix for the missing elements. Option “s” (for “single”) adds a single binary column to the basis indicating which elements are missing. Option “a” (for “average”) codes missing data by having all the elements in rows of the basis corresponding with missing data equal to one over the number of rows. With all three options the basis remains an indicator. Some of these options make most sense in the context of crisp indicators, where they are compared in <span class="citation"><a href="#ref-meulman_82" role="doc-biblioref">J. J. Meulman</a> (<a href="#ref-meulman_82" role="doc-biblioref">1982</a>)</span>.</p>
 <p>So suppose the data are</p>
 <pre><code>##      [,1] 
 ## [1,] -0.50
@@ -331,6 +355,42 @@ for singletons, if the single variable in the block is passive.</p>
 ##  [9,]  0.00  0.00  0.00  0.00  0.00  1.00</code></pre>
 </div>
 </div>
+<h3>References</h3>
+<div id="refs" class="references csl-bib-body hanging-indent">
+<div id="ref-deleeuw_C_84c" class="csl-entry">
+———. 1984b. <span>“The Gifi System of Nonlinear Multivariate Analysis.”</span> In <em>Data Analysis and Informatics</em>, edited by E. Diday et al. Vol. III. Amsterdam: North Holland Publishing Company. <a href="http://deleeuwpdx.net/janspubs/1984/chapters/deleeuw_C_84c.pdf">http://deleeuwpdx.net/janspubs/1984/chapters/deleeuw_C_84c.pdf</a>.
+</div>
+<div id="ref-deleeuw_C_04a" class="csl-entry">
+———. 2004. <span>“Least Squares Optimal Scaling of Partially Observed Linear Systems.”</span> In <em>Recent Developments in Structural Equation Models</em>, edited by K. van Montfort, J. Oud, and A. Satorra. Dordrecht, Netherlands: Kluwer Academic Publishers. <a href="http://deleeuwpdx.net/janspubs/2004/chapters/deleeuw_C_04a.pdf">http://deleeuwpdx.net/janspubs/2004/chapters/deleeuw_C_04a.pdf</a>.
+</div>
+<div id="ref-deleeuw_mair_A_09a" class="csl-entry">
+De Leeuw, J., and P. Mair. 2009a. <span>“Homogeneity Analysis in r: The Package Homals.”</span> <em>Journal of Statistical Software</em> 31 (4): 1–21. <a href="http://deleeuwpdx.net/janspubs/2009/articles/deleeuw_mair_A_09a.pdf">http://deleeuwpdx.net/janspubs/2009/articles/deleeuw_mair_A_09a.pdf</a>.
+</div>
+<div id="ref-deleeuw_vanrijckevorsel_vanderwouden_A_81" class="csl-entry">
+De Leeuw, J., J. L. A. Van Rijckevorsel, and H. Van der Wouden. 1981. <span>“Nonlinear Principal Component Analysis Using b-Splines.”</span> <em>Methods of Operations Research</em> 43: 379–94. <a href="http://deleeuwpdx.net/janspubs/1981/articles/deleeuw_vanrijckevorsel_vanderwouden_A_81.pdf">http://deleeuwpdx.net/janspubs/1981/articles/deleeuw_vanrijckevorsel_vanderwouden_A_81.pdf</a>.
+</div>
+<div id="ref-gifi_B_90" class="csl-entry">
+———. 1990. <em>Nonlinear Multivariate Analysis</em>. New York, N.Y.: Wiley.
+</div>
+<div id="ref-holland_79" class="csl-entry">
+Holland, P. W. 1979. <span>“<span class="nocase">The Tyranny of Continuous Models in a World of Discrete Data</span>.”</span> <em>IHS-Journal</em> 3: 29–42.
+</div>
+<div id="ref-meulman_82" class="csl-entry">
+Meulman, J. J. 1982. <em><span class="nocase">Homogeneity Analysis of Incomplete Data</span></em>. Leiden, The Netherlands: <span>DSWO</span> Press.
+</div>
+<div id="ref-meulman_heiser_12" class="csl-entry">
+Meulman, J. M., and W. J. Heiser. 2012. <em>IBM SPSS Categories 21</em>. IBM Corporation.
+</div>
+<div id="ref-michailidis_deleeuw_A_98" class="csl-entry">
+Michailidis, G., and J. De Leeuw. 1998. <span>“The Gifi System for Descriptive Multivariate Analysis.”</span> <em>Statistical Science</em> 13: 307–36. <a href="http://deleeuwpdx.net/janspubs/1998/articles/michailidis_deleeuw_A_98.pdf">http://deleeuwpdx.net/janspubs/1998/articles/michailidis_deleeuw_A_98.pdf</a>.
+</div>
+<div id="ref-vanrijckevorsel_deleeuw_B_88" class="csl-entry">
+Van Rijckevorsel, J. L. A., and J. De Leeuw, eds. 1988. <em>Component and Correspondence Analysis</em>. Wiley. <a href="http://deleeuwpdx.net/janspubs/1988/books/vanrijckevorsel_deleeuw_B_88.pdf">http://deleeuwpdx.net/janspubs/1988/books/vanrijckevorsel_deleeuw_B_88.pdf</a>.
+</div>
+<div id="ref-winsberg_ramsay_83" class="csl-entry">
+———. 1983. <span>“<span class="nocase">Monotone Spline Transformations for Dimension Reduction</span>.”</span> <em>Psychometrika</em> 48: 575–95.
+</div>
+</div>
             </section>
 
           </div>
@@ -360,6 +420,7 @@ gitbook.start({
 "weibo": false,
 "instapaper": false,
 "vk": false,
+"whatsapp": false,
 "all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
 },
 "fontsettings": {

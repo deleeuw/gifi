@@ -1,2 +1,4 @@
 base
 captioner
+knitr
+microbenchmark

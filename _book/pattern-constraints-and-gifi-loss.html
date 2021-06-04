@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>4 Pattern Constraints and Gifi Loss | Gifi Analysis of Multivariate Data</title>
   <meta name="description" content="null" />
-  <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.22.3 and GitBook 2.6.7" />
 
   <meta property="og:title" content="4 Pattern Constraints and Gifi Loss | Gifi Analysis of Multivariate Data" />
   <meta property="og:type" content="book" />
@@ -32,7 +32,7 @@
   
 <link rel="prev" href="aspects.html"/>
 <link rel="next" href="algorithm.html"/>
-<script src="libs/header-attrs-2.5/header-attrs.js"></script>
+<script src="libs/header-attrs-2.8.6/header-attrs.js"></script>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -50,14 +50,15 @@
 
 
 
-<link href="libs/anchor-sections-1.0/anchor-sections.css" rel="stylesheet" />
-<script src="libs/anchor-sections-1.0/anchor-sections.js"></script>
+<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
 
 
 <style type="text/css">
 pre > code.sourceCode { white-space: pre; position: relative; }
 pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
 pre.sourceCode { margin: 0; }
 @media screen {
@@ -116,6 +117,29 @@ code span.st { color: #4070a0; } /* String */
 code span.va { color: #19177c; } /* Variable */
 code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
 </style>
 
 </head>
@@ -269,7 +293,7 @@ in this case object scores. Since both <span class="math inline">\(X\)</span> an
 </div>
 <div id="associated-eigenvalue-problems" class="section level2" number="4.3">
 <h2><span class="header-section-number">4.3</span> Associated Eigenvalue Problems</h2>
-<p>Associated with the problem of minimizing loss function <span class="math inline">\(\eqref{E:gifiloss}\)</span> are some eigenvalue and singular value problems defined by the matrices <span class="math inline">\(H_j\)</span>. This has been discussed in detail in <span class="citation"><a href="discriminant-analysis-and-criminals.html#ref-gifi_B_90" role="doc-biblioref">Gifi</a> (<a href="discriminant-analysis-and-criminals.html#ref-gifi_B_90" role="doc-biblioref">1990</a>)</span>, and there are some more recent discussions in <span class="citation"><a href="discriminant-analysis-and-criminals.html#ref-tenenhaus_tenenhaus_11" role="doc-biblioref">A. Tenenhaus and Tenenhaus</a> (<a href="discriminant-analysis-and-criminals.html#ref-tenenhaus_tenenhaus_11" role="doc-biblioref">2011</a>)</span> and <span class="citation"><a href="discriminant-analysis-and-criminals.html#ref-vandervelden_takane_12" role="doc-biblioref">Van der Velden and Takane</a> (<a href="discriminant-analysis-and-criminals.html#ref-vandervelden_takane_12" role="doc-biblioref">2012</a>)</span>.</p>
+<p>Associated with the problem of minimizing loss function <span class="math inline">\(\eqref{E:gifiloss}\)</span> are some eigenvalue and singular value problems defined by the matrices <span class="math inline">\(H_j\)</span>. This has been discussed in detail in <span class="citation"><a href="#ref-gifi_B_90" role="doc-biblioref">Gifi</a> (<a href="#ref-gifi_B_90" role="doc-biblioref">1990</a>)</span>, and there are some more recent discussions in <span class="citation"><a href="#ref-tenenhaus_tenenhaus_11" role="doc-biblioref">A. Tenenhaus and Tenenhaus</a> (<a href="#ref-tenenhaus_tenenhaus_11" role="doc-biblioref">2011</a>)</span> and <span class="citation"><a href="#ref-vandervelden_takane_12" role="doc-biblioref">Van der Velden and Takane</a> (<a href="#ref-vandervelden_takane_12" role="doc-biblioref">2012</a>)</span>.</p>
 <p>We begin the section with some definitions, which are more or less standard in MVAOS. First <span class="math inline">\(H=:(H_1\mid H_2\mid\cdots\mid H_m),\)</span> and
 <span class="math inline">\(C=:H&#39;H\)</span>. The matrix <span class="math inline">\(C\)</span>, which is called the <em>Burt matrix</em> in correspondence analysis, is a <span class="math inline">\(p\times p\)</span> block matrix, with <span class="math inline">\(m\times m\)</span> blocks define by <span class="math inline">\(C_{j\ell}=:H_j&#39;H_\ell\)</span>. We also use separate notation <span class="math inline">\(D_j=:C_{jj}=H_j&#39;H_j\)</span> for the diagonal blocks in <span class="math inline">\(C\)</span>, and for their direct sum <span class="math inline">\(D=:D_1\oplus\cdots\oplus D_m\)</span>. Finally <span class="math inline">\(A\)</span> stacks the <span class="math inline">\(A_j\)</span> on top of each other.</p>
 <p>The stationary equations for minimizing <span class="math inline">\(\sigma\)</span> over <span class="math inline">\(X&#39;X=I\)</span> and <span class="math inline">\(A\)</span>, for given <span class="math inline">\(H\)</span>, are
@@ -297,28 +321,79 @@ The eigenvalues in <span class="math inline">\(\Lambda\)</span> are all between 
 </div>
 <div id="history" class="section level2" number="4.4">
 <h2><span class="header-section-number">4.4</span> History</h2>
-<p>The history of loss function <span class="math inline">\(\eqref{E:newloss}\)</span> is simple. Although numerous special cases have been used over the years, in its general form it only occurs, as far as we know, in <span class="citation"><a href="discriminant-analysis-and-criminals.html#ref-deleeuw_C_04a" role="doc-biblioref">J. De Leeuw</a> (<a href="discriminant-analysis-and-criminals.html#ref-deleeuw_C_04a" role="doc-biblioref">2004</a>)</span>. It was designed to bridge the gap between <span class="math inline">\(\eqref{E:gifiloss}\)</span> and linear systems such as RRR, MIMIC, EFA, and LISREL/EQS.
+<p>The history of loss function <span class="math inline">\(\eqref{E:newloss}\)</span> is simple. Although numerous special cases have been used over the years, in its general form it only occurs, as far as we know, in <span class="citation"><a href="#ref-deleeuw_C_04a" role="doc-biblioref">J. De Leeuw</a> (<a href="#ref-deleeuw_C_04a" role="doc-biblioref">2004</a>)</span>. It was designed to bridge the gap between <span class="math inline">\(\eqref{E:gifiloss}\)</span> and linear systems such as RRR, MIMIC, EFA, and LISREL/EQS.
 It mainly differs from <span class="math inline">\(\eqref{E:gifiloss}\)</span> in its systematic use of copies and orthoblocks.</p>
 <p>The history of <span class="math inline">\(\eqref{E:gifiloss}\)</span>, on the other hand, is complicated. It is easiest to start with the special case in which all variables are numerical (in our system that means no internal knots and degree equal to one). In that case MVAOS is a form of <em>Generalized Canonical Correlation Analysis (GCCA)</em>, which extends canonical correlation analysis (CCA) to two or more blocks of variables.</p>
 <p>The various GCCA techniques proposed over the years for computing p-dimensional solutions are either <em>simultaneous</em> or <em>successive</em>. In a successive algorithm the loss function is only defined for <span class="math inline">\(p=1\)</span>. It is first optimized over all one-dimensional solutions. And then, for a subsequent dimension <span class="math inline">\(q\)</span>, the one-dimensional criterion is optimized over all solutions that are orthogonal to solutions <span class="math inline">\(1,\cdots,q-1\)</span>. In a simultaneous technique the loss function is defined for all <span class="math inline">\(p\)</span>, and the solution is computed by minimizing over all p-dimensional solutions. In a successive solution the first <span class="math inline">\(p\)</span> dimensions of a <span class="math inline">\(p+1\)</span> dimensional solution are the <span class="math inline">\(p\)</span> dimensional soution, i.e. successive solutions are <em>nested</em>. Simultaneous solutions are generally not nested. On the other hand the successive <span class="math inline">\(p\)</span> dimensional solution is usually not the best possible <span class="math inline">\(p\)</span> dimensional solution.</p>
-<p>GCCA starts with <span class="citation"><a href="discriminant-analysis-and-criminals.html#ref-horst_61a" role="doc-biblioref">Horst</a> (<a href="discriminant-analysis-and-criminals.html#ref-horst_61a" role="doc-biblioref">1961b</a>)</span>, <span class="citation"><a href="discriminant-analysis-and-criminals.html#ref-horst_61b" role="doc-biblioref">Horst</a> (<a href="discriminant-analysis-and-criminals.html#ref-horst_61b" role="doc-biblioref">1961a</a>)</span>. The techniques proposed by Horst are successive, which means his loss
+<p>GCCA starts with <span class="citation"><a href="#ref-horst_61a" role="doc-biblioref">Horst</a> (<a href="#ref-horst_61a" role="doc-biblioref">1961b</a>)</span>, <span class="citation"><a href="#ref-horst_61b" role="doc-biblioref">Horst</a> (<a href="#ref-horst_61b" role="doc-biblioref">1961a</a>)</span>. The techniques proposed by Horst are successive, which means his loss
 functions are only defined for one-dimensional solutions, specifically one-dimensional block scores <span class="math inline">\(u_j=H_ja_j\)</span>.
-In <span class="citation"><a href="discriminant-analysis-and-criminals.html#ref-horst_61b" role="doc-biblioref">Horst</a> (<a href="discriminant-analysis-and-criminals.html#ref-horst_61b" role="doc-biblioref">1961a</a>)</span> four different techniques are proposed, with different loss functions, all defined as functions
-of the <em>induced correlation matrix</em> of the block scores. For our purposes, the interesting one is his method 2, in which the largest eigenvalue of the induced correlation matrix is maximized. <span class="citation"><a href="discriminant-analysis-and-criminals.html#ref-horst_61a" role="doc-biblioref">Horst</a> (<a href="discriminant-analysis-and-criminals.html#ref-horst_61a" role="doc-biblioref">1961b</a>)</span> uses a different criterium,
+In <span class="citation"><a href="#ref-horst_61b" role="doc-biblioref">Horst</a> (<a href="#ref-horst_61b" role="doc-biblioref">1961a</a>)</span> four different techniques are proposed, with different loss functions, all defined as functions
+of the <em>induced correlation matrix</em> of the block scores. For our purposes, the interesting one is his method 2, in which the largest eigenvalue of the induced correlation matrix is maximized. <span class="citation"><a href="#ref-horst_61a" role="doc-biblioref">Horst</a> (<a href="#ref-horst_61a" role="doc-biblioref">1961b</a>)</span> uses a different criterium,
 the sum of the correlation coefficients, which is not related to the Gifi loss function in any simple way.</p>
-<p>In a small paper, hidden away in a large proceedings volume, <span class="citation"><a href="discriminant-analysis-and-criminals.html#ref-carroll_68" role="doc-biblioref">Carroll</a> (<a href="discriminant-analysis-and-criminals.html#ref-carroll_68" role="doc-biblioref">1968</a>)</span> proposed a successive method maximizing
-<span class="math inline">\(\sum_{j=1}^m\mathbf{cor}^2(x,H_ja_j)\)</span> over <span class="math inline">\(a_j\)</span> and the auxilary variable <span class="math inline">\(x\)</span>. This turns out to be equivalent to method 2 of Horst. The work of Horst and Carroll was extended by <span class="citation"><a href="discriminant-analysis-and-criminals.html#ref-kettenring_71" role="doc-biblioref">Kettenring</a> (<a href="discriminant-analysis-and-criminals.html#ref-kettenring_71" role="doc-biblioref">1971</a>)</span> (in greater detail in <span class="citation"><a href="discriminant-analysis-and-criminals.html#ref-kettenring_69" role="doc-biblioref">Kettenring</a> (<a href="discriminant-analysis-and-criminals.html#ref-kettenring_69" role="doc-biblioref">1969</a>)</span>), who introduced several additional criteria, and baptized the Horst-Carroll method MAXVAR. In later work, it was shown by <span class="citation"><a href="discriminant-analysis-and-criminals.html#ref-gifi_B_80" role="doc-biblioref">Gifi</a> (<a href="discriminant-analysis-and-criminals.html#ref-gifi_B_80" role="doc-biblioref">1980</a>)</span> that minimizing <span class="math inline">\(\sum_{s=1}^p\sum_{j=1}^m\mathbf{cor}^2(x_s,H_ja_{js})\)</span> over
-<span class="math inline">\(X&#39;X=I\)</span> and <span class="math inline">\(A\)</span> gives the same result as successive MAXVAR. Also see <span class="citation"><a href="discriminant-analysis-and-criminals.html#ref-tenenhaus_young_85" role="doc-biblioref">M. Tenenhaus and Young</a> (<a href="discriminant-analysis-and-criminals.html#ref-tenenhaus_young_85" role="doc-biblioref">1985</a>)</span>. We need one important qualification, using terminology introduced by <span class="citation"><a href="discriminant-analysis-and-criminals.html#ref-dauxois_pousse_76" role="doc-biblioref">Dauxois and Pousse</a> (<a href="discriminant-analysis-and-criminals.html#ref-dauxois_pousse_76" role="doc-biblioref">1976</a>)</span>, which is that the successive method should use <em>weak orthogonality</em> <span class="math inline">\(\sum_{j=1}^m a_{js}&#39;H_jH_ja_{jt}=\delta^{st}\)</span>, with <span class="math inline">\(\delta^{st}\)</span> the Kronecker delta, and not <em>strong orthogonality</em>, which says that <span class="math inline">\(a_{js}&#39;H_jH_ja_{jt}=\delta^{st}\)</span> for all <span class="math inline">\(j,s,t\)</span>. More recently
-<span class="citation"><a href="discriminant-analysis-and-criminals.html#ref-kiers_cleroux_tenberge_94" role="doc-biblioref">Kiers, Cléroux, and Ten Berge</a> (<a href="discriminant-analysis-and-criminals.html#ref-kiers_cleroux_tenberge_94" role="doc-biblioref">1994</a>)</span> have shown that simultaneous/successive MAXVAR also optimizes various measures of correlation defined on matrix space.</p>
-<p>The most important contribution of Gifi, however, is the switch from correlations and quadratic forms to least squares loss functions and Euclidean distances, ultimately leading to the loss function <span class="math inline">\(\eqref{E:gifiloss}\)</span>. Undoubtedly this was partly due to the heavily geometrical approach to MVA we were taught by John van de Geer, the father of Albert Gifi (<span class="citation"><a href="discriminant-analysis-and-criminals.html#ref-vandegeer_71" role="doc-biblioref">Van de Geer</a> (<a href="discriminant-analysis-and-criminals.html#ref-vandegeer_71" role="doc-biblioref">1971</a>)</span>). Van de Geer was influenced in turn by
-<span class="citation"><a href="discriminant-analysis-and-criminals.html#ref-coombs_64" role="doc-biblioref">Coombs</a> (<a href="discriminant-analysis-and-criminals.html#ref-coombs_64" role="doc-biblioref">1964</a>)</span>, who introduced another basically geometric approach for the representation of data. On the computational side there was the influence of multidimensional scaling, with its emphasis on distance, breaking through in in the late sixties and early seventies.
+<p>In a small paper, hidden away in a large proceedings volume, <span class="citation"><a href="#ref-carroll_68" role="doc-biblioref">Carroll</a> (<a href="#ref-carroll_68" role="doc-biblioref">1968</a>)</span> proposed a successive method maximizing
+<span class="math inline">\(\sum_{j=1}^m\mathbf{cor}^2(x,H_ja_j)\)</span> over <span class="math inline">\(a_j\)</span> and the auxilary variable <span class="math inline">\(x\)</span>. This turns out to be equivalent to method 2 of Horst. The work of Horst and Carroll was extended by <span class="citation"><a href="#ref-kettenring_71" role="doc-biblioref">Kettenring</a> (<a href="#ref-kettenring_71" role="doc-biblioref">1971</a>)</span> (in greater detail in <span class="citation"><a href="#ref-kettenring_69" role="doc-biblioref">Kettenring</a> (<a href="#ref-kettenring_69" role="doc-biblioref">1969</a>)</span>), who introduced several additional criteria, and baptized the Horst-Carroll method MAXVAR. In later work, it was shown by <span class="citation"><a href="#ref-gifi_B_80" role="doc-biblioref">Gifi</a> (<a href="#ref-gifi_B_80" role="doc-biblioref">1980</a>)</span> that minimizing <span class="math inline">\(\sum_{s=1}^p\sum_{j=1}^m\mathbf{cor}^2(x_s,H_ja_{js})\)</span> over
+<span class="math inline">\(X&#39;X=I\)</span> and <span class="math inline">\(A\)</span> gives the same result as successive MAXVAR. Also see <span class="citation"><a href="#ref-tenenhaus_young_85" role="doc-biblioref">M. Tenenhaus and Young</a> (<a href="#ref-tenenhaus_young_85" role="doc-biblioref">1985</a>)</span>. We need one important qualification, using terminology introduced by <span class="citation"><a href="#ref-dauxois_pousse_76" role="doc-biblioref">Dauxois and Pousse</a> (<a href="#ref-dauxois_pousse_76" role="doc-biblioref">1976</a>)</span>, which is that the successive method should use <em>weak orthogonality</em> <span class="math inline">\(\sum_{j=1}^m a_{js}&#39;H_jH_ja_{jt}=\delta^{st}\)</span>, with <span class="math inline">\(\delta^{st}\)</span> the Kronecker delta, and not <em>strong orthogonality</em>, which says that <span class="math inline">\(a_{js}&#39;H_jH_ja_{jt}=\delta^{st}\)</span> for all <span class="math inline">\(j,s,t\)</span>. More recently
+<span class="citation"><a href="#ref-kiers_cleroux_tenberge_94" role="doc-biblioref">Kiers, Cléroux, and Ten Berge</a> (<a href="#ref-kiers_cleroux_tenberge_94" role="doc-biblioref">1994</a>)</span> have shown that simultaneous/successive MAXVAR also optimizes various measures of correlation defined on matrix space.</p>
+<p>The most important contribution of Gifi, however, is the switch from correlations and quadratic forms to least squares loss functions and Euclidean distances, ultimately leading to the loss function <span class="math inline">\(\eqref{E:gifiloss}\)</span>. Undoubtedly this was partly due to the heavily geometrical approach to MVA we were taught by John van de Geer, the father of Albert Gifi (<span class="citation"><a href="#ref-vandegeer_71" role="doc-biblioref">Van de Geer</a> (<a href="#ref-vandegeer_71" role="doc-biblioref">1971</a>)</span>). Van de Geer was influenced in turn by
+<span class="citation"><a href="#ref-coombs_64" role="doc-biblioref">Coombs</a> (<a href="#ref-coombs_64" role="doc-biblioref">1964</a>)</span>, who introduced another basically geometric approach for the representation of data. On the computational side there was the influence of multidimensional scaling, with its emphasis on distance, breaking through in in the late sixties and early seventies.
 Shepard, Kruskal, Gnanadesikan, and Kettenring all worked at Bell Telephone Laboratories in Murray Hill, and both De Leeuw and Benzécri had visiting positions there around that time.</p>
-<p>In the classical Gifi system (<span class="citation"><a href="discriminant-analysis-and-criminals.html#ref-gifi_B_90" role="doc-biblioref">Gifi</a> (<a href="discriminant-analysis-and-criminals.html#ref-gifi_B_90" role="doc-biblioref">1990</a>)</span>, <span class="citation"><a href="discriminant-analysis-and-criminals.html#ref-michailidis_deleeuw_A_98" role="doc-biblioref">Michailidis and De Leeuw</a> (<a href="discriminant-analysis-and-criminals.html#ref-michailidis_deleeuw_A_98" role="doc-biblioref">1998</a>)</span>) a slightly different parametrization of Gifi loss, and a correspondingly different ALS algorithm, were used. The loss function used by Gifi is
+<p>In the classical Gifi system (<span class="citation"><a href="#ref-gifi_B_90" role="doc-biblioref">Gifi</a> (<a href="#ref-gifi_B_90" role="doc-biblioref">1990</a>)</span>, <span class="citation"><a href="#ref-michailidis_deleeuw_A_98" role="doc-biblioref">Michailidis and De Leeuw</a> (<a href="#ref-michailidis_deleeuw_A_98" role="doc-biblioref">1998</a>)</span>) a slightly different parametrization of Gifi loss, and a correspondingly different ALS algorithm, were used. The loss function used by Gifi is
 <span class="math display">\[\begin{equation}
 \sigma(X,Y)=\frac{1}{m}\sum_{j=1}^m\mathbf{SSQ}\ (X-\sum_{\ell\in K_j}G_\ell Y_\ell),\label{E:oldloss}
 \end{equation}\]</span>
 where the <span class="math inline">\(G_\ell\)</span> are known spanning matrices for the cones of transformations, and the <span class="math inline">\(Y_\ell\)</span> are matrices of <em>category quantifications</em>. Loss function <span class="math inline">\(\eqref{E:oldloss}\)</span> is geared more towards quantification of discrete categorical variables.</p>
 <p>Because of the full rank decompositions <span class="math inline">\(Y_{j\ell}=Z_{j\ell}A_{j\ell}\)</span> it follows that <span class="math inline">\(\eqref{E:gifiloss}\)</span> and <span class="math inline">\(\eqref{E:oldloss}\)</span> are essentially the same. Simply define <span class="math inline">\(H_j=G_jZ_j\)</span>. We feel that the alternative parametrization in terms of <span class="math inline">\(H_j\)</span> and <span class="math inline">\(A_j\)</span> has some conceptual and computational advantages.</p>
+</div>
+</div>
+<h3>References</h3>
+<div id="refs" class="references csl-bib-body hanging-indent">
+<div id="ref-carroll_68" class="csl-entry">
+Carroll, J. D. 1968. <span>“<span class="nocase">A Generalization of Canonical Correlation Analysis to Three or More Sets of Variables</span>.”</span> In <em>Proceedings of the 76th Annual Convention of the American Psychological Association</em>, 227–28. Washington, D.C.: American Psychological Association.
+</div>
+<div id="ref-coombs_64" class="csl-entry">
+Coombs, C. H. 1964. <em><span class="nocase">A Theory of Data</span></em>. Wiley.
+</div>
+<div id="ref-dauxois_pousse_76" class="csl-entry">
+Dauxois, J., and A. Pousse. 1976. <span>“<span class="nocase">Les Analyses Factorielles en Calcul des Probabilités et en Statistique: Essai d’Étude Synthetique</span>.”</span> PhD thesis, Université Paul-Sabatier, Toulouse, France.
+</div>
+<div id="ref-deleeuw_C_04a" class="csl-entry">
+———. 2004. <span>“Least Squares Optimal Scaling of Partially Observed Linear Systems.”</span> In <em>Recent Developments in Structural Equation Models</em>, edited by K. van Montfort, J. Oud, and A. Satorra. Dordrecht, Netherlands: Kluwer Academic Publishers. <a href="http://deleeuwpdx.net/janspubs/2004/chapters/deleeuw_C_04a.pdf">http://deleeuwpdx.net/janspubs/2004/chapters/deleeuw_C_04a.pdf</a>.
+</div>
+<div id="ref-gifi_B_80" class="csl-entry">
+Gifi, A. 1980. <em>Niet-Lineaire Multivariate Analyse [Nonlinear Multivariate Analysis]</em>. Leiden, The Netherlands: Department of Data Theory FSW/RUL. <a href="http://deleeuwpdx.net/janspubs/1980/books/gifi_B_80.pdf">http://deleeuwpdx.net/janspubs/1980/books/gifi_B_80.pdf</a>.
+</div>
+<div id="ref-gifi_B_90" class="csl-entry">
+———. 1990. <em>Nonlinear Multivariate Analysis</em>. New York, N.Y.: Wiley.
+</div>
+<div id="ref-horst_61b" class="csl-entry">
+Horst, P. 1961a. <span>“<span class="nocase">Generalized Canonical Correlations and their Applications to Experimental Data</span>.”</span> <em>Journal of Clinical Psychology</em> 17: 331–47.
+</div>
+<div id="ref-horst_61a" class="csl-entry">
+———. 1961b. <span>“<span class="nocase">Relations Among m Sets of Measures</span>.”</span> <em>Psychometrika</em> 26: 129–49.
+</div>
+<div id="ref-kettenring_69" class="csl-entry">
+Kettenring, J. R. 1969. <span>“<span class="nocase">Canonical Analysis of Several Sets of Variables</span>.”</span> Institute of Statistics Mimeo Series 615. University of North Carolina at Chapell Hill.
+</div>
+<div id="ref-kettenring_71" class="csl-entry">
+———. 1971. <span>“<span class="nocase">Canonical Analysis of Several Sets of Variables</span>.”</span> <em>Biometrika</em> 58: 433–51.
+</div>
+<div id="ref-kiers_cleroux_tenberge_94" class="csl-entry">
+Kiers, H. A. L, R. Cléroux, and J. M. F Ten Berge. 1994. <span>“<span class="nocase">Generalized Canonical Analysis Based on Optimizing Matrix Correlations and a Relation with IDIOSCAL</span>.”</span> <em>Computational Statistics and Data Analysis</em> 18: 331–40.
+</div>
+<div id="ref-michailidis_deleeuw_A_98" class="csl-entry">
+Michailidis, G., and J. De Leeuw. 1998. <span>“The Gifi System for Descriptive Multivariate Analysis.”</span> <em>Statistical Science</em> 13: 307–36. <a href="http://deleeuwpdx.net/janspubs/1998/articles/michailidis_deleeuw_A_98.pdf">http://deleeuwpdx.net/janspubs/1998/articles/michailidis_deleeuw_A_98.pdf</a>.
+</div>
+<div id="ref-tenenhaus_tenenhaus_11" class="csl-entry">
+Tenenhaus, A., and M. Tenenhaus. 2011. <span>“<span>Regularized Generalized Canonical Correlation Analysis</span>.”</span> <em>Psychometrika</em> 76: 257–84.
+</div>
+<div id="ref-tenenhaus_young_85" class="csl-entry">
+Tenenhaus, M., and F. W. Young. 1985. <span>“<span class="nocase">An Analysis and Synthesis of Multiple Correspondence Analysis, Optimal Scaling, Dual Scaling, Homogeneity Analysis and Other Methods for Quantifying Categorical Multivariate Data</span>.”</span> <em>Psychometrika</em> 50: 91–119.
+</div>
+<div id="ref-vandegeer_71" class="csl-entry">
+Van de Geer, J. P. 1971. <em><span class="nocase">Introduction to Multivariate Analysis for the Social Sciences</span></em>. San Francisco, CA: Freeman.
+</div>
+<div id="ref-vandervelden_takane_12" class="csl-entry">
+Van der Velden, M., and Y. Takane. 2012. <span>“<span class="nocase">Generalized Canonical Correlation Analysis with Missing Values</span>.”</span> <em>Computational Statistics</em> 27: 551–71.
 </div>
 </div>
             </section>
@@ -350,6 +425,7 @@ gitbook.start({
 "weibo": false,
 "instapaper": false,
 "vk": false,
+"whatsapp": false,
 "all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
 },
 "fontsettings": {

@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>5 Algorithm | Gifi Analysis of Multivariate Data</title>
   <meta name="description" content="null" />
-  <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.22.3 and GitBook 2.6.7" />
 
   <meta property="og:title" content="5 Algorithm | Gifi Analysis of Multivariate Data" />
   <meta property="og:type" content="book" />
@@ -32,7 +32,7 @@
   
 <link rel="prev" href="pattern-constraints-and-gifi-loss.html"/>
 <link rel="next" href="multiple-correspondence-analysis-and-homals.html"/>
-<script src="libs/header-attrs-2.5/header-attrs.js"></script>
+<script src="libs/header-attrs-2.8.6/header-attrs.js"></script>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -50,14 +50,15 @@
 
 
 
-<link href="libs/anchor-sections-1.0/anchor-sections.css" rel="stylesheet" />
-<script src="libs/anchor-sections-1.0/anchor-sections.js"></script>
+<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
 
 
 <style type="text/css">
 pre > code.sourceCode { white-space: pre; position: relative; }
 pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
 pre.sourceCode { margin: 0; }
 @media screen {
@@ -116,6 +117,29 @@ code span.st { color: #4070a0; } /* String */
 code span.va { color: #19177c; } /* Variable */
 code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
 </style>
 
 </head>
@@ -203,7 +227,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="block-relaxation" class="section level2" number="5.1">
 <h2><span class="header-section-number">5.1</span> Block Relaxation</h2>
 <p>Our task is to minimize <span class="math inline">\(\sigma(H,A)\)</span> over <span class="math inline">\(H\)</span> and <span class="math inline">\(A\)</span>, suitably constrained. Write the constraints as <span class="math inline">\(H\in\mathcal{H}\)</span> and <span class="math inline">\(A\in\mathcal{A}\)</span>. The strategy we
-use is block relaxation (<span class="citation"><a href="discriminant-analysis-and-criminals.html#ref-deleeuw_B_15" role="doc-biblioref">J. De Leeuw</a> (<a href="discriminant-analysis-and-criminals.html#ref-deleeuw_B_15" role="doc-biblioref">2015b</a>)</span>). Thus we iterate as follows.</p>
+use is block relaxation (<span class="citation"><a href="#ref-deleeuw_B_15" role="doc-biblioref">J. De Leeuw</a> (<a href="#ref-deleeuw_B_15" role="doc-biblioref">2015c</a>)</span>). Thus we iterate as follows.</p>
 <ol start="0" style="list-style-type: decimal">
 <li>Set <span class="math inline">\(k=0\)</span> and start with some <span class="math inline">\(H^{(0)}\)</span>.</li>
 <li><span class="math inline">\(A^{(k)}\in\mathop{\mathbf{argmin}}\limits_{A\in\mathcal{A}}\ \sigma(H^{(k)},A)\)</span>.</li>
@@ -226,7 +250,7 @@ B_{ij}(A)=\sum_{\ell=1}^LA_{j\ell}A_{i\ell}&#39;
 \mathbf{tr}\ H&#39;\tilde HG(\tilde H)
 \]</span></p>
 <p>##Alternating Least Squares</p>
-<p>The standard way to minimize loss function <span class="math inline">\(\eqref{E:oldloss}\)</span> is implemented in the <code>OVERALS</code> program <span class="citation"><a href="discriminant-analysis-and-criminals.html#ref-meulman_heiser_12" role="doc-biblioref">J. M. Meulman and Heiser</a> (<a href="discriminant-analysis-and-criminals.html#ref-meulman_heiser_12" role="doc-biblioref">2012</a>)</span>. It is also the one used in the <code>homals</code> package <span class="citation">(<a href="discriminant-analysis-and-criminals.html#ref-deleeuw_mair_A_09a" role="doc-biblioref">J. De Leeuw and Mair 2009a</a>)</span>.</p>
+<p>The standard way to minimize loss function <span class="math inline">\(\eqref{E:oldloss}\)</span> is implemented in the <code>OVERALS</code> program <span class="citation"><a href="#ref-meulman_heiser_12" role="doc-biblioref">J. M. Meulman and Heiser</a> (<a href="#ref-meulman_heiser_12" role="doc-biblioref">2012</a>)</span>. It is also the one used in the <code>homals</code> package <span class="citation">(<a href="#ref-deleeuw_mair_A_09a" role="doc-biblioref">J. De Leeuw and Mair 2009a</a>)</span>.</p>
 <p>In this paper the algorithm is different because we use the loss function <span class="math inline">\(\eqref{E:gifiloss}\)</span>. We still use ALS, which means in this case that we cycle through three substeps in each iteration. We update <span class="math inline">\(A\)</span> for given <span class="math inline">\(X\)</span> and <span class="math inline">\(H\)</span>, we then update <span class="math inline">\(X\)</span> for given <span class="math inline">\(H\)</span> and <span class="math inline">\(A\)</span>, and finally we update <span class="math inline">\(H\)</span> for given <span class="math inline">\(X\)</span> and <span class="math inline">\(A\)</span>. Algorithm A goes as follows.</p>
 <ol start="0" style="list-style-type: decimal">
 <li>Set <span class="math inline">\(k=0\)</span> and start with some <span class="math inline">\(X^{(0)},H^{(0)},A^{(0)}\)</span>.</li>
@@ -238,7 +262,7 @@ B_{ij}(A)=\sum_{\ell=1}^LA_{j\ell}A_{i\ell}&#39;
 <p>In step 1 we use superscript + for the Moore-Penrose inverse. In step 2 the center operator does column centering, the ortho operator finds an orthonormal basis for the column space of its argument.</p>
 <p>The complicated part is step 4, the <em>optimal scaling</em>, i.e. the updating of <span class="math inline">\(H_j\)</span> for given <span class="math inline">\(X\)</span> and <span class="math inline">\(A_j\)</span>. We cycle through the variables in the block, each time projecting a single column on the cone of admissible transformations of the variable, and then normalizing the projection to length one.
 The <em>target</em>, i.e. the vector we are projecting, is complicated, because the other variables in the same block must be taken into account.</p>
-<p>In order to simplify the optimal scaling computations within an iteration we can use majorization <span class="citation"><a href="discriminant-analysis-and-criminals.html#ref-deleeuw_B_15" role="doc-biblioref">J. De Leeuw</a> (<a href="discriminant-analysis-and-criminals.html#ref-deleeuw_B_15" role="doc-biblioref">2015b</a>)</span>. This has the additional benefit that the optimal scaling step becomes embarassingly parallel. We expand the loss for block <span class="math inline">\(j\)</span> around a previous solution <span class="math inline">\(\tilde H_j\)</span>.
+<p>In order to simplify the optimal scaling computations within an iteration we can use majorization <span class="citation"><a href="#ref-deleeuw_B_15" role="doc-biblioref">J. De Leeuw</a> (<a href="#ref-deleeuw_B_15" role="doc-biblioref">2015c</a>)</span>. This has the additional benefit that the optimal scaling step becomes embarassingly parallel. We expand the loss for block <span class="math inline">\(j\)</span> around a previous solution <span class="math inline">\(\tilde H_j\)</span>.
 <span class="math display">\[
 \mathbf{SSQ}(X-H_jA_j)=
 \mathbf{SSQ}(X-\tilde H_jA_j)-2\mathbf{tr}\ (H_j-\tilde H_j)&#39;(X-\tilde H_jA_j)A_j&#39;
@@ -257,7 +281,7 @@ where <span class="math inline">\(U_j\)</span> is the <em>target</em>
 U_j=\tilde H_j+\frac{1}{\kappa_j}(X-\tilde H_jA_j)A_j&#39;.\tag{3}
 \]</span>
 It follows we can update the optimal scaling of the variables by projecting the columns of <span class="math inline">\(U_j\)</span>
-on their respective cones and then normalizing. See <span class="citation"><a href="discriminant-analysis-and-criminals.html#ref-deleeuw_U_75a" role="doc-biblioref">J. De Leeuw</a> (<a href="discriminant-analysis-and-criminals.html#ref-deleeuw_U_75a" role="doc-biblioref">1975</a>)</span> for results on normalized cone regression. This can be done for all variables in the block separately, without taking any of the other variables in the block (or in any of the other blocks) into account. Thus the optimal scaling is easy to parallellize. The resulting algorithm B is as follows.</p>
+on their respective cones and then normalizing. See <span class="citation"><a href="#ref-deleeuw_U_75a" role="doc-biblioref">J. De Leeuw</a> (<a href="#ref-deleeuw_U_75a" role="doc-biblioref">1975</a>)</span> for results on normalized cone regression. This can be done for all variables in the block separately, without taking any of the other variables in the block (or in any of the other blocks) into account. Thus the optimal scaling is easy to parallellize. The resulting algorithm B is as follows.</p>
 <ol start="0" style="list-style-type: decimal">
 <li>Set <span class="math inline">\(k=0\)</span> and start with some <span class="math inline">\(X^{(0)},H^{(0)},A^{(0)}\)</span>.</li>
 <li><span class="math inline">\(X^{(k+1)}=\mathbf{ortho}(\mathbf{center}(H^{(k)}A^{(k)})\)</span>.</li>
@@ -266,26 +290,26 @@ on their respective cones and then normalizing. See <span class="citation"><a hr
 <li>If converged stop. Else <span class="math inline">\(k\leftarrow k+1\)</span> and go to step 1.</li>
 </ol>
 <p>##Implementation Details</p>
-<p>If we follow the ALS strategy strictly the <span class="math inline">\(\mathbf{ortho}()\)</span> operator should be implemented using Procrustus rotation <span class="citation">(<a href="discriminant-analysis-and-criminals.html#ref-gibson_62" role="doc-biblioref">Gibson 1962</a>)</span>. Thus if <span class="math inline">\(Z=K\Lambda L&#39;\)</span> is the singular value decomposition of <span class="math inline">\(X\)</span>, then <span class="math inline">\(\mathbf{ortho}(Z)=KL&#39;\)</span>. Note, however, that any other basis for the column space of <span class="math inline">\(Z\)</span> merely differs from the Procrustus basis by a rotation. And this rotation matrix will carry unmodified into the upgrade of <span class="math inline">\(A_j\)</span> in step 2 of the algorithm, and thus after steps 1 and 2 the loss will be the same, no matter whch rotation we select. In our algorithm we use the QR decomposition to find the basis, using the Gram-Schmidt code from <span class="citation"><a href="discriminant-analysis-and-criminals.html#ref-deleeuw_E_15d" role="doc-biblioref">J. De Leeuw</a> (<a href="discriminant-analysis-and-criminals.html#ref-deleeuw_E_15d" role="doc-biblioref">2015</a>)</span>.</p>
-<p>In actual computation we column-center the basis and compute a full rank QR decomposition, using the code in <span class="citation"><a href="discriminant-analysis-and-criminals.html#ref-deleeuw_E_15d" role="doc-biblioref">J. De Leeuw</a> (<a href="discriminant-analysis-and-criminals.html#ref-deleeuw_E_15d" role="doc-biblioref">2015</a>)</span>. Thus <span class="math inline">\(G_\ell=Q_\ell R_\ell\)</span>,</p>
+<p>If we follow the ALS strategy strictly the <span class="math inline">\(\mathbf{ortho}()\)</span> operator should be implemented using Procrustus rotation <span class="citation">(<a href="#ref-gibson_62" role="doc-biblioref">Gibson 1962</a>)</span>. Thus if <span class="math inline">\(Z=K\Lambda L&#39;\)</span> is the singular value decomposition of <span class="math inline">\(X\)</span>, then <span class="math inline">\(\mathbf{ortho}(Z)=KL&#39;\)</span>. Note, however, that any other basis for the column space of <span class="math inline">\(Z\)</span> merely differs from the Procrustus basis by a rotation. And this rotation matrix will carry unmodified into the upgrade of <span class="math inline">\(A_j\)</span> in step 2 of the algorithm, and thus after steps 1 and 2 the loss will be the same, no matter whch rotation we select. In our algorithm we use the QR decomposition to find the basis, using the Gram-Schmidt code from <span class="citation"><a href="#ref-deleeuw_E_15d" role="doc-biblioref">J. De Leeuw</a> (<a href="#ref-deleeuw_E_15d" role="doc-biblioref">2015a</a>)</span>.</p>
+<p>In actual computation we column-center the basis and compute a full rank QR decomposition, using the code in <span class="citation"><a href="#ref-deleeuw_E_15d" role="doc-biblioref">J. De Leeuw</a> (<a href="#ref-deleeuw_E_15d" role="doc-biblioref">2015a</a>)</span>. Thus <span class="math inline">\(G_\ell=Q_\ell R_\ell\)</span>,</p>
 <p>We implement the cone restrictions by the constraints <span class="math inline">\(h_{js}=G_{js}z_s\)</span> in combination with <span class="math inline">\(T_{js}h_{js}\geq 0\)</span>. Thus the transformed variables must be in the intersection of the subspace spanned by the columns of the <em>transformation basis</em> <span class="math inline">\(G_{js}\)</span> and the polyhedral convex cones of all vectors <span class="math inline">\(h\)</span> such that <span class="math inline">\(T_{js}h\geq 0\)</span>. We suppose that all columns of the <span class="math inline">\(G_{js}\)</span> add up to zero, and we require, in addition, the normalization <span class="math inline">\(SSQ(h_{js})=1\)</span>.</p>
-<p>We use the code described in <span class="citation"><a href="discriminant-analysis-and-criminals.html#ref-deleeuw_E_15e" role="doc-biblioref">J. De Leeuw</a> (<a href="discriminant-analysis-and-criminals.html#ref-deleeuw_E_15e" role="doc-biblioref">2015c</a>)</span> to generate B-spline bases. Note that for coding purposes binary indicators are B-splines of degree zero, while polynomials are B-splines without interior knots. We include the utility functions to generate lists of knots. There is <code>knotsQ()</code> for knots at the quantiles, <code>knotsR()</code> for knots equally spaced on the range, <code>knotsD()</code> for knots at the data points, and <code>knotsE()</code> for no interior knots. Also note that binary indicators can be created for qualitative non-numerical variables, for which B-splines are not defined. We have added the option using degree -1 to bypass the B-spline code and generate an indicator matrix,
-using the utility <code>makeIndicator()</code>. Note that <code>'makeIndicator(foo)</code> is equivalent to <code>bsplineBasis(foo, degree = 0, innerknots = sort(unique(foo)))</code>. Throughout we first orthonormalize the basis matrices <span class="math inline">\(G_{js}\)</span>, using the Gram-Schmidt code from <span class="citation"><a href="discriminant-analysis-and-criminals.html#ref-deleeuw_E_15d" role="doc-biblioref">J. De Leeuw</a> (<a href="discriminant-analysis-and-criminals.html#ref-deleeuw_E_15d" role="doc-biblioref">2015</a>)</span>.</p>
+<p>We use the code described in <span class="citation"><a href="#ref-deleeuw_E_15e" role="doc-biblioref">J. De Leeuw</a> (<a href="#ref-deleeuw_E_15e" role="doc-biblioref">2015d</a>)</span> to generate B-spline bases. Note that for coding purposes binary indicators are B-splines of degree zero, while polynomials are B-splines without interior knots. We include the utility functions to generate lists of knots. There is <code>knotsQ()</code> for knots at the quantiles, <code>knotsR()</code> for knots equally spaced on the range, <code>knotsD()</code> for knots at the data points, and <code>knotsE()</code> for no interior knots. Also note that binary indicators can be created for qualitative non-numerical variables, for which B-splines are not defined. We have added the option using degree -1 to bypass the B-spline code and generate an indicator matrix,
+using the utility <code>makeIndicator()</code>. Note that <code>'makeIndicator(foo)</code> is equivalent to <code>bsplineBasis(foo, degree = 0, innerknots = sort(unique(foo)))</code>. Throughout we first orthonormalize the basis matrices <span class="math inline">\(G_{js}\)</span>, using the Gram-Schmidt code from <span class="citation"><a href="#ref-deleeuw_E_15d" role="doc-biblioref">J. De Leeuw</a> (<a href="#ref-deleeuw_E_15d" role="doc-biblioref">2015a</a>)</span>.</p>
 <p>The matrices <span class="math inline">\(T_{js}\)</span> in the homogeneous linear inequality restrictions that define the cones <span class="math inline">\(\mathcal{K}_{js}\)</span> can be used to define monotonicity or convexity of the resulting transformations. In the current implementation we merely allow for monotonicity, which means the <span class="math inline">\(T_{js}\)</span> do not have to be stored. The transformations for each variable can be restricted to be increasing, or they can be unrestricted. By using splines without interior knots we allow in addition for polynomial transformations, which again can be restricted to be either monotonic or not. Note that it is somewhat misleading to say we are fitting monotone splines or polynomials, we are mainly requiring monotonicity at the data points.</p>
 <p>If there are multiple copies of a variable in a block then requiring the transformation to be ordinal means that we want the transformation of the first copy to be monotonic. The transformations of the other copies are not constrained to be monotonic. If you want all copies to
 be transformed monotonically, you have to explicitly introduce them as separate variables.</p>
 <p>For variables with copies there is yet another complication. For copies we have <span class="math inline">\(H_jA_j=G_j(Z_jA_j)=G_jY_j\)</span>. If we require monotonicity in MVAOS we constrain a column of <span class="math inline">\(H_j\)</span> (in fact, the first one) to be monotonic. In classic Gifi, in which the <span class="math inline">\(G_j\)</span> are binary indicators, we constrain the first column of <span class="math inline">\(Y_j\)</span>, which automatically implies the first column of <span class="math inline">\(G_jY_j\)</span> is monotonic as well. In previous Gifi work with B-splines, we also constrained the first column of <span class="math inline">\(Y_j\)</span>, which again implied the first column of <span class="math inline">\(G_jY_j\)</span> was monotnic as well. But in our current MVAOS implementation monotonicity of the first column of <span class="math inline">\(H_j\)</span> does not imply monotonicity of the first column of <span class="math inline">\(H_jA_j\)</span>,
 even if the basis <span class="math inline">\(G_j\)</span> is a binary indicator. This discrepancy between the old and the new Gifi only comes into play for ordinal variables with multiple copies.</p>
-<p>Missing data are incorporated in the definition of the cones of transformations by using a <span class="math inline">\(G_{js}\)</span> which is the direct sum of a spline basis for the non-missing and an identity matrix for the missing data. This is called <em>missing data multiple</em> in <span class="citation"><a href="discriminant-analysis-and-criminals.html#ref-gifi_B_90" role="doc-biblioref">Gifi</a> (<a href="discriminant-analysis-and-criminals.html#ref-gifi_B_90" role="doc-biblioref">1990</a>)</span>. There are no linear inequality restrictions on the quantifications of the missing data.</p>
+<p>Missing data are incorporated in the definition of the cones of transformations by using a <span class="math inline">\(G_{js}\)</span> which is the direct sum of a spline basis for the non-missing and an identity matrix for the missing data. This is called <em>missing data multiple</em> in <span class="citation"><a href="#ref-gifi_B_90" role="doc-biblioref">Gifi</a> (<a href="#ref-gifi_B_90" role="doc-biblioref">1990</a>)</span>. There are no linear inequality restrictions on the quantifications of the missing data.</p>
 <p>##Wrappers</p>
-<p>The <code>homals()</code> implementation in <span class="citation"><a href="discriminant-analysis-and-criminals.html#ref-deleeuw_mair_A_09a" role="doc-biblioref">J. De Leeuw and Mair</a> (<a href="discriminant-analysis-and-criminals.html#ref-deleeuw_mair_A_09a" role="doc-biblioref">2009a</a>)</span> is a single monolithic program in R, which specializes to the various MVAOS techniques by a suitable choice of its parameters. This approach has some disadvantages. If we want principal component analysis, we already know all blocks are singletons. If we want multiple correspondence analysis we know each variable has <span class="math inline">\(p\)</span> copies. If we want multiple regression, we know
+<p>The <code>homals()</code> implementation in <span class="citation"><a href="#ref-deleeuw_mair_A_09a" role="doc-biblioref">J. De Leeuw and Mair</a> (<a href="#ref-deleeuw_mair_A_09a" role="doc-biblioref">2009a</a>)</span> is a single monolithic program in R, which specializes to the various MVAOS techniques by a suitable choice of its parameters. This approach has some disadvantages. If we want principal component analysis, we already know all blocks are singletons. If we want multiple correspondence analysis we know each variable has <span class="math inline">\(p\)</span> copies. If we want multiple regression, we know
 there are two blocks, and one is a singleton. So it is somewhat tedious to specify all parameters all of the time. Also, some of the output, graphical and otherwise,
-is specific to a particular technique. For regression we want residuals and fitted values, in canonical analysis we want block scores and loadings. And, more generally, we may want the output in a form familiar from the classical MVA techniques. It is indeed possible to transform the <code>homals()</code> output to more familar forms (<span class="citation"><a href="discriminant-analysis-and-criminals.html#ref-deleeuw_R_09c" role="doc-biblioref">J. De Leeuw</a> (<a href="discriminant-analysis-and-criminals.html#ref-deleeuw_R_09c" role="doc-biblioref">2009</a>)</span>), but this requires some extra effort.</p>
-<p>In this book we go back to the original approach of <span class="citation"><a href="discriminant-analysis-and-criminals.html#ref-gifi_B_90" role="doc-biblioref">Gifi</a> (<a href="discriminant-analysis-and-criminals.html#ref-gifi_B_90" role="doc-biblioref">1990</a>)</span> and write separate programs for nonlinear versions principal component analysis, multiple regression, canonical analysis, discriminant analysis, and so on.</p>
+is specific to a particular technique. For regression we want residuals and fitted values, in canonical analysis we want block scores and loadings. And, more generally, we may want the output in a form familiar from the classical MVA techniques. It is indeed possible to transform the <code>homals()</code> output to more familar forms (<span class="citation"><a href="#ref-deleeuw_R_09c" role="doc-biblioref">J. De Leeuw</a> (<a href="#ref-deleeuw_R_09c" role="doc-biblioref">2009</a>)</span>), but this requires some extra effort.</p>
+<p>In this book we go back to the original approach of <span class="citation"><a href="#ref-gifi_B_90" role="doc-biblioref">Gifi</a> (<a href="#ref-gifi_B_90" role="doc-biblioref">1990</a>)</span> and write separate programs for nonlinear versions principal component analysis, multiple regression, canonical analysis, discriminant analysis, and so on.</p>
 <p>These programs, now written in R and no longer in FORTRAN, are wrappers for the main computational core, the program <code>gifiEngine()</code>. The wrappers, which have the familiar names <code>morals()</code>, <code>corals()</code>, <code>princals()</code>, <code>homals()</code>, <code>criminals()</code>, <code>overals()</code>, <code>primals()</code>, and <code>canals()</code>, create a gifi object from the data and parameters, and then pass this to <code>gifiEngine()</code>. Computations are itereated to convergence, and result are stored in a xGifi object. Then the output is transformed to a format familiar from the corresponding technique from classical MVA. Each wrapper <code>foo</code> returns a structure of class <code>foo</code>.</p>
 <p>This modular approach saves code, because both <code>makeGifi()</code> and <code>gifiEngine()</code> are common to all programs. It
 also makes it comparatively easy to add new wrappers not currently included, possibly even contributed by others.</p>
-<p>Although we like the above quotation from <span class="citation"><a href="discriminant-analysis-and-criminals.html#ref-hill_90" role="doc-biblioref">Hill</a> (<a href="discriminant-analysis-and-criminals.html#ref-hill_90" role="doc-biblioref">1990</a>)</span>, it is not quite accurate. Our current generation of wrappers can use B-spline bases, it can use an arbitrary number of copies of a variable, and each copy can be either categorical, ordinal, polynomial, or splinical. Thus, even more so than the original gifi programs, we have a substantial generalization of the classical techniques, not merely a sequence of synonyms.</p>
+<p>Although we like the above quotation from <span class="citation"><a href="#ref-hill_90" role="doc-biblioref">Hill</a> (<a href="#ref-hill_90" role="doc-biblioref">1990</a>)</span>, it is not quite accurate. Our current generation of wrappers can use B-spline bases, it can use an arbitrary number of copies of a variable, and each copy can be either categorical, ordinal, polynomial, or splinical. Thus, even more so than the original gifi programs, we have a substantial generalization of the classical techniques, not merely a sequence of synonyms.</p>
 <p>##Structures</p>
 <p>The computations are controlled by the arguments to the wrappers. These arguments are used to construct three structures: the gifi, the gifiBlock, and the gifiVariable. A gifi is just a list of gifiBlocks, and a gifiBlock is a list of gifiVariables. This reflects the partitioning of the variables into blocks. A gifiVariable contains a great deal of information about the variable. The function <code>makeGifiVariable()</code> is a constructor that returns a structure of class <code>gifiVariable</code>. The contents of a <code>gifiVariable</code> remain the same throughout the computations.</p>
 <div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="algorithm.html#cb16-1" aria-hidden="true" tabindex="-1"></a>    <span class="fu">return</span> (<span class="fu">structure</span> (</span>
@@ -317,6 +341,39 @@ xGifi is a list of xGifiBlocks, and an xGifiBlock is a list of xGifiVariables. T
 <span id="cb17-9"><a href="algorithm.html#cb17-9" aria-hidden="true" tabindex="-1"></a>  ))</span></code></pre></div>
 </div>
 </div>
+<h3>References</h3>
+<div id="refs" class="references csl-bib-body hanging-indent">
+<div id="ref-deleeuw_E_15d" class="csl-entry">
+De Leeuw, J. 2015a. <span>“Exceedingly Simple b-Spline Code.”</span> <a href="http://rpubs.com/deleeuw/79161">http://rpubs.com/deleeuw/79161</a>.
+</div>
+<div id="ref-deleeuw_U_75a" class="csl-entry">
+———. 1975. <span>“<span class="nocase">A Normalized Cone Regression Approach to Alternating Least Squares Algorithms</span>.”</span> Department of Data Theory FSW/RUL. <a href="http://deleeuwpdx.net/janspubs/1975/notes/deleeuw_U_75a.pdf">http://deleeuwpdx.net/janspubs/1975/notes/deleeuw_U_75a.pdf</a>.
+</div>
+<div id="ref-deleeuw_R_09c" class="csl-entry">
+———. 2009. <span>“<span class="nocase">Regression, Discriminant Analysis, and Canonical Analysis with homals</span>.”</span> Preprint Series 562. Los Angeles, CA: UCLA Department of Statistics. <a href="http://deleeuwpdx.net/janspubs/2009/reports/deleeuw_R_09c.pdf">http://deleeuwpdx.net/janspubs/2009/reports/deleeuw_R_09c.pdf</a>.
+</div>
+<div id="ref-deleeuw_B_15" class="csl-entry">
+———. 2015c. <em><span class="nocase">Block Relaxation Algorithms in Statistics</span></em>. Bookdown. <a href="https://bookdown.org/jandeleeuw6/bras/">https://bookdown.org/jandeleeuw6/bras/</a>.
+</div>
+<div id="ref-deleeuw_E_15e" class="csl-entry">
+———. 2015d. <span>“Regression with Linear Inequality Restrictions on Predicted Values.”</span> <a href="http://rpubs.com/deleeuw/78897">http://rpubs.com/deleeuw/78897</a>.
+</div>
+<div id="ref-deleeuw_mair_A_09a" class="csl-entry">
+De Leeuw, J., and P. Mair. 2009a. <span>“Homogeneity Analysis in r: The Package Homals.”</span> <em>Journal of Statistical Software</em> 31 (4): 1–21. <a href="http://deleeuwpdx.net/janspubs/2009/articles/deleeuw_mair_A_09a.pdf">http://deleeuwpdx.net/janspubs/2009/articles/deleeuw_mair_A_09a.pdf</a>.
+</div>
+<div id="ref-gibson_62" class="csl-entry">
+Gibson, W. A. 1962. <span>“<span class="nocase">On the Least Squares Orthogonalization of an Oblique Transformation</span>.”</span> <em>Psychometrika</em> 27: 193–95.
+</div>
+<div id="ref-gifi_B_90" class="csl-entry">
+———. 1990. <em>Nonlinear Multivariate Analysis</em>. New York, N.Y.: Wiley.
+</div>
+<div id="ref-hill_90" class="csl-entry">
+———. 1990. <span>“<span class="nocase">Review of A. Gifi, Multivariate Analysis</span>.”</span> <em>Journal of Ecology</em> 78 (4): 1148–49.
+</div>
+<div id="ref-meulman_heiser_12" class="csl-entry">
+Meulman, J. M., and W. J. Heiser. 2012. <em>IBM SPSS Categories 21</em>. IBM Corporation.
+</div>
+</div>
             </section>
 
           </div>
@@ -346,6 +403,7 @@ gitbook.start({
 "weibo": false,
 "instapaper": false,
 "vk": false,
+"whatsapp": false,
 "all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
 },
 "fontsettings": {

@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>7 Discriminant Analysis and criminals() | Gifi Analysis of Multivariate Data</title>
   <meta name="description" content="null" />
-  <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.22.3 and GitBook 2.6.7" />
 
   <meta property="og:title" content="7 Discriminant Analysis and criminals() | Gifi Analysis of Multivariate Data" />
   <meta property="og:type" content="book" />
@@ -32,7 +32,7 @@
   
 <link rel="prev" href="multiple-correspondence-analysis-and-homals.html"/>
 
-<script src="libs/header-attrs-2.5/header-attrs.js"></script>
+<script src="libs/header-attrs-2.8.6/header-attrs.js"></script>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -50,14 +50,15 @@
 
 
 
-<link href="libs/anchor-sections-1.0/anchor-sections.css" rel="stylesheet" />
-<script src="libs/anchor-sections-1.0/anchor-sections.js"></script>
+<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
 
 
 <style type="text/css">
 pre > code.sourceCode { white-space: pre; position: relative; }
 pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
 pre.sourceCode { margin: 0; }
 @media screen {
@@ -116,6 +117,29 @@ code span.st { color: #4070a0; } /* String */
 code span.va { color: #19177c; } /* Variable */
 code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
 </style>
 
 </head>
@@ -1913,449 +1937,449 @@ Figure 26: Personality Scales, Multi-Set, , Transformations
 <p>##C Code</p>
 <p>###Splines</p>
 <div class="sourceCode" id="cb66"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb66-1"><a href="discriminant-analysis-and-criminals.html#cb66-1" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb66-2"><a href="discriminant-analysis-and-criminals.html#cb66-2" aria-hidden="true" tabindex="-1"></a><span class="dt">double</span> bs (<span class="dt">int</span> nknots, <span class="dt">int</span> nspline, <span class="dt">int</span> degree, <span class="dt">double</span> x, <span class="dt">double</span> * knots);</span>
-<span id="cb66-3"><a href="discriminant-analysis-and-criminals.html#cb66-3" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> mindex (<span class="dt">int</span> i, <span class="dt">int</span> j, <span class="dt">int</span> nrow);</span>
+<span id="cb66-2"><a href="discriminant-analysis-and-criminals.html#cb66-2" aria-hidden="true" tabindex="-1"></a><span class="dt">double</span> bs <span class="op">(</span><span class="dt">int</span> nknots<span class="op">,</span> <span class="dt">int</span> nspline<span class="op">,</span> <span class="dt">int</span> degree<span class="op">,</span> <span class="dt">double</span> x<span class="op">,</span> <span class="dt">double</span> <span class="op">*</span> knots<span class="op">);</span></span>
+<span id="cb66-3"><a href="discriminant-analysis-and-criminals.html#cb66-3" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> mindex <span class="op">(</span><span class="dt">int</span> i<span class="op">,</span> <span class="dt">int</span> j<span class="op">,</span> <span class="dt">int</span> nrow<span class="op">);</span></span>
 <span id="cb66-4"><a href="discriminant-analysis-and-criminals.html#cb66-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb66-5"><a href="discriminant-analysis-and-criminals.html#cb66-5" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> splinebasis (<span class="dt">int</span> *d, <span class="dt">int</span> *n, <span class="dt">int</span> *m, <span class="dt">double</span> * x, <span class="dt">double</span> * knots, <span class="dt">double</span> * basis) {</span>
-<span id="cb66-6"><a href="discriminant-analysis-and-criminals.html#cb66-6" aria-hidden="true" tabindex="-1"></a>    <span class="dt">int</span> mm = *m, dd = *d, nn = *n;</span>
-<span id="cb66-7"><a href="discriminant-analysis-and-criminals.html#cb66-7" aria-hidden="true" tabindex="-1"></a>    <span class="dt">int</span> k = mm - dd - <span class="dv">1</span>, i , j, ir, jr;</span>
-<span id="cb66-8"><a href="discriminant-analysis-and-criminals.html#cb66-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> (i = <span class="dv">0</span>; i &lt; nn; i++) {</span>
-<span id="cb66-9"><a href="discriminant-analysis-and-criminals.html#cb66-9" aria-hidden="true" tabindex="-1"></a>        ir = i + <span class="dv">1</span>;</span>
-<span id="cb66-10"><a href="discriminant-analysis-and-criminals.html#cb66-10" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> (x[i] == knots[mm - <span class="dv">1</span>]) {</span>
-<span id="cb66-11"><a href="discriminant-analysis-and-criminals.html#cb66-11" aria-hidden="true" tabindex="-1"></a>           basis [mindex (ir, k, nn) - <span class="dv">1</span>] =  <span class="fl">1.0</span>;</span>
-<span id="cb66-12"><a href="discriminant-analysis-and-criminals.html#cb66-12" aria-hidden="true" tabindex="-1"></a>            <span class="cf">for</span> (j = <span class="dv">0</span>; j &lt;  (k - <span class="dv">1</span>);  j++) {</span>
-<span id="cb66-13"><a href="discriminant-analysis-and-criminals.html#cb66-13" aria-hidden="true" tabindex="-1"></a>                jr = j + <span class="dv">1</span>;</span>
-<span id="cb66-14"><a href="discriminant-analysis-and-criminals.html#cb66-14" aria-hidden="true" tabindex="-1"></a>                basis [mindex (ir, jr, nn) - <span class="dv">1</span>] = <span class="fl">0.0</span>;</span>
-<span id="cb66-15"><a href="discriminant-analysis-and-criminals.html#cb66-15" aria-hidden="true" tabindex="-1"></a>            }</span>
-<span id="cb66-16"><a href="discriminant-analysis-and-criminals.html#cb66-16" aria-hidden="true" tabindex="-1"></a>        } <span class="cf">else</span> {</span>
-<span id="cb66-17"><a href="discriminant-analysis-and-criminals.html#cb66-17" aria-hidden="true" tabindex="-1"></a>            <span class="cf">for</span> (j = <span class="dv">0</span>; j &lt; k ; j++) {</span>
-<span id="cb66-18"><a href="discriminant-analysis-and-criminals.html#cb66-18" aria-hidden="true" tabindex="-1"></a>                jr = j + <span class="dv">1</span>;</span>
-<span id="cb66-19"><a href="discriminant-analysis-and-criminals.html#cb66-19" aria-hidden="true" tabindex="-1"></a>                basis [mindex (ir, jr, nn) - <span class="dv">1</span>] = bs (mm, jr, dd + <span class="dv">1</span>, x[i], knots);</span>
-<span id="cb66-20"><a href="discriminant-analysis-and-criminals.html#cb66-20" aria-hidden="true" tabindex="-1"></a>            }</span>
-<span id="cb66-21"><a href="discriminant-analysis-and-criminals.html#cb66-21" aria-hidden="true" tabindex="-1"></a>        }</span>
-<span id="cb66-22"><a href="discriminant-analysis-and-criminals.html#cb66-22" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb66-23"><a href="discriminant-analysis-and-criminals.html#cb66-23" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb66-5"><a href="discriminant-analysis-and-criminals.html#cb66-5" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> splinebasis <span class="op">(</span><span class="dt">int</span> <span class="op">*</span>d<span class="op">,</span> <span class="dt">int</span> <span class="op">*</span>n<span class="op">,</span> <span class="dt">int</span> <span class="op">*</span>m<span class="op">,</span> <span class="dt">double</span> <span class="op">*</span> x<span class="op">,</span> <span class="dt">double</span> <span class="op">*</span> knots<span class="op">,</span> <span class="dt">double</span> <span class="op">*</span> basis<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb66-6"><a href="discriminant-analysis-and-criminals.html#cb66-6" aria-hidden="true" tabindex="-1"></a>    <span class="dt">int</span> mm <span class="op">=</span> <span class="op">*</span>m<span class="op">,</span> dd <span class="op">=</span> <span class="op">*</span>d<span class="op">,</span> nn <span class="op">=</span> <span class="op">*</span>n<span class="op">;</span></span>
+<span id="cb66-7"><a href="discriminant-analysis-and-criminals.html#cb66-7" aria-hidden="true" tabindex="-1"></a>    <span class="dt">int</span> k <span class="op">=</span> mm <span class="op">-</span> dd <span class="op">-</span> <span class="dv">1</span><span class="op">,</span> i <span class="op">,</span> j<span class="op">,</span> ir<span class="op">,</span> jr<span class="op">;</span></span>
+<span id="cb66-8"><a href="discriminant-analysis-and-criminals.html#cb66-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> <span class="op">(</span>i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> nn<span class="op">;</span> i<span class="op">++)</span> <span class="op">{</span></span>
+<span id="cb66-9"><a href="discriminant-analysis-and-criminals.html#cb66-9" aria-hidden="true" tabindex="-1"></a>        ir <span class="op">=</span> i <span class="op">+</span> <span class="dv">1</span><span class="op">;</span></span>
+<span id="cb66-10"><a href="discriminant-analysis-and-criminals.html#cb66-10" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="op">(</span>x<span class="op">[</span>i<span class="op">]</span> <span class="op">==</span> knots<span class="op">[</span>mm <span class="op">-</span> <span class="dv">1</span><span class="op">])</span> <span class="op">{</span></span>
+<span id="cb66-11"><a href="discriminant-analysis-and-criminals.html#cb66-11" aria-hidden="true" tabindex="-1"></a>           basis <span class="op">[</span>mindex <span class="op">(</span>ir<span class="op">,</span> k<span class="op">,</span> nn<span class="op">)</span> <span class="op">-</span> <span class="dv">1</span><span class="op">]</span> <span class="op">=</span>  <span class="fl">1.0</span><span class="op">;</span></span>
+<span id="cb66-12"><a href="discriminant-analysis-and-criminals.html#cb66-12" aria-hidden="true" tabindex="-1"></a>            <span class="cf">for</span> <span class="op">(</span>j <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> j <span class="op">&lt;</span>  <span class="op">(</span>k <span class="op">-</span> <span class="dv">1</span><span class="op">);</span>  j<span class="op">++)</span> <span class="op">{</span></span>
+<span id="cb66-13"><a href="discriminant-analysis-and-criminals.html#cb66-13" aria-hidden="true" tabindex="-1"></a>                jr <span class="op">=</span> j <span class="op">+</span> <span class="dv">1</span><span class="op">;</span></span>
+<span id="cb66-14"><a href="discriminant-analysis-and-criminals.html#cb66-14" aria-hidden="true" tabindex="-1"></a>                basis <span class="op">[</span>mindex <span class="op">(</span>ir<span class="op">,</span> jr<span class="op">,</span> nn<span class="op">)</span> <span class="op">-</span> <span class="dv">1</span><span class="op">]</span> <span class="op">=</span> <span class="fl">0.0</span><span class="op">;</span></span>
+<span id="cb66-15"><a href="discriminant-analysis-and-criminals.html#cb66-15" aria-hidden="true" tabindex="-1"></a>            <span class="op">}</span></span>
+<span id="cb66-16"><a href="discriminant-analysis-and-criminals.html#cb66-16" aria-hidden="true" tabindex="-1"></a>        <span class="op">}</span> <span class="cf">else</span> <span class="op">{</span></span>
+<span id="cb66-17"><a href="discriminant-analysis-and-criminals.html#cb66-17" aria-hidden="true" tabindex="-1"></a>            <span class="cf">for</span> <span class="op">(</span>j <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> j <span class="op">&lt;</span> k <span class="op">;</span> j<span class="op">++)</span> <span class="op">{</span></span>
+<span id="cb66-18"><a href="discriminant-analysis-and-criminals.html#cb66-18" aria-hidden="true" tabindex="-1"></a>                jr <span class="op">=</span> j <span class="op">+</span> <span class="dv">1</span><span class="op">;</span></span>
+<span id="cb66-19"><a href="discriminant-analysis-and-criminals.html#cb66-19" aria-hidden="true" tabindex="-1"></a>                basis <span class="op">[</span>mindex <span class="op">(</span>ir<span class="op">,</span> jr<span class="op">,</span> nn<span class="op">)</span> <span class="op">-</span> <span class="dv">1</span><span class="op">]</span> <span class="op">=</span> bs <span class="op">(</span>mm<span class="op">,</span> jr<span class="op">,</span> dd <span class="op">+</span> <span class="dv">1</span><span class="op">,</span> x<span class="op">[</span>i<span class="op">],</span> knots<span class="op">);</span></span>
+<span id="cb66-20"><a href="discriminant-analysis-and-criminals.html#cb66-20" aria-hidden="true" tabindex="-1"></a>            <span class="op">}</span></span>
+<span id="cb66-21"><a href="discriminant-analysis-and-criminals.html#cb66-21" aria-hidden="true" tabindex="-1"></a>        <span class="op">}</span></span>
+<span id="cb66-22"><a href="discriminant-analysis-and-criminals.html#cb66-22" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb66-23"><a href="discriminant-analysis-and-criminals.html#cb66-23" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
 <span id="cb66-24"><a href="discriminant-analysis-and-criminals.html#cb66-24" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb66-25"><a href="discriminant-analysis-and-criminals.html#cb66-25" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> mindex (<span class="dt">int</span> i, <span class="dt">int</span> j, <span class="dt">int</span> nrow) {</span>
-<span id="cb66-26"><a href="discriminant-analysis-and-criminals.html#cb66-26" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> (j - <span class="dv">1</span>) * nrow + i;</span>
-<span id="cb66-27"><a href="discriminant-analysis-and-criminals.html#cb66-27" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb66-25"><a href="discriminant-analysis-and-criminals.html#cb66-25" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> mindex <span class="op">(</span><span class="dt">int</span> i<span class="op">,</span> <span class="dt">int</span> j<span class="op">,</span> <span class="dt">int</span> nrow<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb66-26"><a href="discriminant-analysis-and-criminals.html#cb66-26" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="op">(</span>j <span class="op">-</span> <span class="dv">1</span><span class="op">)</span> <span class="op">*</span> nrow <span class="op">+</span> i<span class="op">;</span></span>
+<span id="cb66-27"><a href="discriminant-analysis-and-criminals.html#cb66-27" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
 <span id="cb66-28"><a href="discriminant-analysis-and-criminals.html#cb66-28" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb66-29"><a href="discriminant-analysis-and-criminals.html#cb66-29" aria-hidden="true" tabindex="-1"></a><span class="dt">double</span> bs (<span class="dt">int</span> nknots, <span class="dt">int</span> nspline, <span class="dt">int</span> updegree, <span class="dt">double</span> x, <span class="dt">double</span> * knots) {</span>
-<span id="cb66-30"><a href="discriminant-analysis-and-criminals.html#cb66-30" aria-hidden="true" tabindex="-1"></a>    <span class="dt">double</span> y, y1, y2, temp1, temp2;</span>
-<span id="cb66-31"><a href="discriminant-analysis-and-criminals.html#cb66-31" aria-hidden="true" tabindex="-1"></a>     <span class="cf">if</span> (updegree == <span class="dv">1</span>) {</span>
-<span id="cb66-32"><a href="discriminant-analysis-and-criminals.html#cb66-32" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> ((x &gt;= knots[nspline - <span class="dv">1</span>]) &amp;&amp; (x &lt; knots[nspline]))</span>
-<span id="cb66-33"><a href="discriminant-analysis-and-criminals.html#cb66-33" aria-hidden="true" tabindex="-1"></a>            y = <span class="fl">1.0</span>;</span>
+<span id="cb66-29"><a href="discriminant-analysis-and-criminals.html#cb66-29" aria-hidden="true" tabindex="-1"></a><span class="dt">double</span> bs <span class="op">(</span><span class="dt">int</span> nknots<span class="op">,</span> <span class="dt">int</span> nspline<span class="op">,</span> <span class="dt">int</span> updegree<span class="op">,</span> <span class="dt">double</span> x<span class="op">,</span> <span class="dt">double</span> <span class="op">*</span> knots<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb66-30"><a href="discriminant-analysis-and-criminals.html#cb66-30" aria-hidden="true" tabindex="-1"></a>    <span class="dt">double</span> y<span class="op">,</span> y1<span class="op">,</span> y2<span class="op">,</span> temp1<span class="op">,</span> temp2<span class="op">;</span></span>
+<span id="cb66-31"><a href="discriminant-analysis-and-criminals.html#cb66-31" aria-hidden="true" tabindex="-1"></a>     <span class="cf">if</span> <span class="op">(</span>updegree <span class="op">==</span> <span class="dv">1</span><span class="op">)</span> <span class="op">{</span></span>
+<span id="cb66-32"><a href="discriminant-analysis-and-criminals.html#cb66-32" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="op">((</span>x <span class="op">&gt;=</span> knots<span class="op">[</span>nspline <span class="op">-</span> <span class="dv">1</span><span class="op">])</span> <span class="op">&amp;&amp;</span> <span class="op">(</span>x <span class="op">&lt;</span> knots<span class="op">[</span>nspline<span class="op">]))</span></span>
+<span id="cb66-33"><a href="discriminant-analysis-and-criminals.html#cb66-33" aria-hidden="true" tabindex="-1"></a>            y <span class="op">=</span> <span class="fl">1.0</span><span class="op">;</span></span>
 <span id="cb66-34"><a href="discriminant-analysis-and-criminals.html#cb66-34" aria-hidden="true" tabindex="-1"></a>        <span class="cf">else</span></span>
-<span id="cb66-35"><a href="discriminant-analysis-and-criminals.html#cb66-35" aria-hidden="true" tabindex="-1"></a>            y = <span class="fl">0.0</span>;</span>
-<span id="cb66-36"><a href="discriminant-analysis-and-criminals.html#cb66-36" aria-hidden="true" tabindex="-1"></a>     }</span>
-<span id="cb66-37"><a href="discriminant-analysis-and-criminals.html#cb66-37" aria-hidden="true" tabindex="-1"></a>     <span class="cf">else</span> {</span>
-<span id="cb66-38"><a href="discriminant-analysis-and-criminals.html#cb66-38" aria-hidden="true" tabindex="-1"></a>        temp1 = <span class="fl">0.0</span>;</span>
-<span id="cb66-39"><a href="discriminant-analysis-and-criminals.html#cb66-39" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> ((knots[nspline + updegree - <span class="dv">2</span>] - knots[nspline - <span class="dv">1</span>]) &gt; <span class="dv">0</span>)</span>
-<span id="cb66-40"><a href="discriminant-analysis-and-criminals.html#cb66-40" aria-hidden="true" tabindex="-1"></a>            temp1 = (x - knots[nspline - <span class="dv">1</span>]) / (knots[nspline + updegree - <span class="dv">2</span>] - knots[nspline - <span class="dv">1</span>]);</span>
-<span id="cb66-41"><a href="discriminant-analysis-and-criminals.html#cb66-41" aria-hidden="true" tabindex="-1"></a>        temp2 = <span class="fl">0.0</span>;</span>
-<span id="cb66-42"><a href="discriminant-analysis-and-criminals.html#cb66-42" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> ((knots[nspline + updegree - <span class="dv">1</span>] - knots[nspline]) &gt; <span class="dv">0</span>)</span>
-<span id="cb66-43"><a href="discriminant-analysis-and-criminals.html#cb66-43" aria-hidden="true" tabindex="-1"></a>            temp2 = (knots[nspline + updegree - <span class="dv">1</span>] - x) / (knots[nspline + updegree - <span class="dv">1</span>] - knots[nspline]);</span>
-<span id="cb66-44"><a href="discriminant-analysis-and-criminals.html#cb66-44" aria-hidden="true" tabindex="-1"></a>        y1 = bs(nknots, nspline, updegree - <span class="dv">1</span>, x, knots);</span>
-<span id="cb66-45"><a href="discriminant-analysis-and-criminals.html#cb66-45" aria-hidden="true" tabindex="-1"></a>        y2 = bs(nknots, nspline + <span class="dv">1</span>, updegree - <span class="dv">1</span>, x, knots);</span>
-<span id="cb66-46"><a href="discriminant-analysis-and-criminals.html#cb66-46" aria-hidden="true" tabindex="-1"></a>        y =  temp1 * y1 + temp2 * y2;</span>
-<span id="cb66-47"><a href="discriminant-analysis-and-criminals.html#cb66-47" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb66-48"><a href="discriminant-analysis-and-criminals.html#cb66-48" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> y;</span>
-<span id="cb66-49"><a href="discriminant-analysis-and-criminals.html#cb66-49" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<span id="cb66-35"><a href="discriminant-analysis-and-criminals.html#cb66-35" aria-hidden="true" tabindex="-1"></a>            y <span class="op">=</span> <span class="fl">0.0</span><span class="op">;</span></span>
+<span id="cb66-36"><a href="discriminant-analysis-and-criminals.html#cb66-36" aria-hidden="true" tabindex="-1"></a>     <span class="op">}</span></span>
+<span id="cb66-37"><a href="discriminant-analysis-and-criminals.html#cb66-37" aria-hidden="true" tabindex="-1"></a>     <span class="cf">else</span> <span class="op">{</span></span>
+<span id="cb66-38"><a href="discriminant-analysis-and-criminals.html#cb66-38" aria-hidden="true" tabindex="-1"></a>        temp1 <span class="op">=</span> <span class="fl">0.0</span><span class="op">;</span></span>
+<span id="cb66-39"><a href="discriminant-analysis-and-criminals.html#cb66-39" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="op">((</span>knots<span class="op">[</span>nspline <span class="op">+</span> updegree <span class="op">-</span> <span class="dv">2</span><span class="op">]</span> <span class="op">-</span> knots<span class="op">[</span>nspline <span class="op">-</span> <span class="dv">1</span><span class="op">])</span> <span class="op">&gt;</span> <span class="dv">0</span><span class="op">)</span></span>
+<span id="cb66-40"><a href="discriminant-analysis-and-criminals.html#cb66-40" aria-hidden="true" tabindex="-1"></a>            temp1 <span class="op">=</span> <span class="op">(</span>x <span class="op">-</span> knots<span class="op">[</span>nspline <span class="op">-</span> <span class="dv">1</span><span class="op">])</span> <span class="op">/</span> <span class="op">(</span>knots<span class="op">[</span>nspline <span class="op">+</span> updegree <span class="op">-</span> <span class="dv">2</span><span class="op">]</span> <span class="op">-</span> knots<span class="op">[</span>nspline <span class="op">-</span> <span class="dv">1</span><span class="op">]);</span></span>
+<span id="cb66-41"><a href="discriminant-analysis-and-criminals.html#cb66-41" aria-hidden="true" tabindex="-1"></a>        temp2 <span class="op">=</span> <span class="fl">0.0</span><span class="op">;</span></span>
+<span id="cb66-42"><a href="discriminant-analysis-and-criminals.html#cb66-42" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="op">((</span>knots<span class="op">[</span>nspline <span class="op">+</span> updegree <span class="op">-</span> <span class="dv">1</span><span class="op">]</span> <span class="op">-</span> knots<span class="op">[</span>nspline<span class="op">])</span> <span class="op">&gt;</span> <span class="dv">0</span><span class="op">)</span></span>
+<span id="cb66-43"><a href="discriminant-analysis-and-criminals.html#cb66-43" aria-hidden="true" tabindex="-1"></a>            temp2 <span class="op">=</span> <span class="op">(</span>knots<span class="op">[</span>nspline <span class="op">+</span> updegree <span class="op">-</span> <span class="dv">1</span><span class="op">]</span> <span class="op">-</span> x<span class="op">)</span> <span class="op">/</span> <span class="op">(</span>knots<span class="op">[</span>nspline <span class="op">+</span> updegree <span class="op">-</span> <span class="dv">1</span><span class="op">]</span> <span class="op">-</span> knots<span class="op">[</span>nspline<span class="op">]);</span></span>
+<span id="cb66-44"><a href="discriminant-analysis-and-criminals.html#cb66-44" aria-hidden="true" tabindex="-1"></a>        y1 <span class="op">=</span> bs<span class="op">(</span>nknots<span class="op">,</span> nspline<span class="op">,</span> updegree <span class="op">-</span> <span class="dv">1</span><span class="op">,</span> x<span class="op">,</span> knots<span class="op">);</span></span>
+<span id="cb66-45"><a href="discriminant-analysis-and-criminals.html#cb66-45" aria-hidden="true" tabindex="-1"></a>        y2 <span class="op">=</span> bs<span class="op">(</span>nknots<span class="op">,</span> nspline <span class="op">+</span> <span class="dv">1</span><span class="op">,</span> updegree <span class="op">-</span> <span class="dv">1</span><span class="op">,</span> x<span class="op">,</span> knots<span class="op">);</span></span>
+<span id="cb66-46"><a href="discriminant-analysis-and-criminals.html#cb66-46" aria-hidden="true" tabindex="-1"></a>        y <span class="op">=</span>  temp1 <span class="op">*</span> y1 <span class="op">+</span> temp2 <span class="op">*</span> y2<span class="op">;</span></span>
+<span id="cb66-47"><a href="discriminant-analysis-and-criminals.html#cb66-47" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb66-48"><a href="discriminant-analysis-and-criminals.html#cb66-48" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> y<span class="op">;</span></span>
+<span id="cb66-49"><a href="discriminant-analysis-and-criminals.html#cb66-49" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
 <p>###Gram-Schmidt</p>
 <div class="sourceCode" id="cb67"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb67-1"><a href="discriminant-analysis-and-criminals.html#cb67-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;math.h&gt;</span></span>
 <span id="cb67-2"><a href="discriminant-analysis-and-criminals.html#cb67-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb67-3"><a href="discriminant-analysis-and-criminals.html#cb67-3" aria-hidden="true" tabindex="-1"></a><span class="pp">#define MINDEX(i, j, n) (((j)-1) * (n) + (i)-1)</span></span>
 <span id="cb67-4"><a href="discriminant-analysis-and-criminals.html#cb67-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb67-5"><a href="discriminant-analysis-and-criminals.html#cb67-5" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> gsC(<span class="dt">double</span> *, <span class="dt">double</span> *, <span class="dt">int</span> *, <span class="dt">int</span> *, <span class="dt">int</span> *, <span class="dt">int</span> *, <span class="dt">double</span> *);</span>
+<span id="cb67-5"><a href="discriminant-analysis-and-criminals.html#cb67-5" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> gsC<span class="op">(</span><span class="dt">double</span> <span class="op">*,</span> <span class="dt">double</span> <span class="op">*,</span> <span class="dt">int</span> <span class="op">*,</span> <span class="dt">int</span> <span class="op">*,</span> <span class="dt">int</span> <span class="op">*,</span> <span class="dt">int</span> <span class="op">*,</span> <span class="dt">double</span> <span class="op">*);</span></span>
 <span id="cb67-6"><a href="discriminant-analysis-and-criminals.html#cb67-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb67-7"><a href="discriminant-analysis-and-criminals.html#cb67-7" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> gsC(<span class="dt">double</span> *x, <span class="dt">double</span> *r, <span class="dt">int</span> *n, <span class="dt">int</span> *m, <span class="dt">int</span> *rank, <span class="dt">int</span> *pivot,</span>
-<span id="cb67-8"><a href="discriminant-analysis-and-criminals.html#cb67-8" aria-hidden="true" tabindex="-1"></a>         <span class="dt">double</span> *eps) {</span>
-<span id="cb67-9"><a href="discriminant-analysis-and-criminals.html#cb67-9" aria-hidden="true" tabindex="-1"></a>  <span class="dt">int</span> i, j, ip, nn = *n, mm = *m, rk = *m, jwork = <span class="dv">1</span>;</span>
-<span id="cb67-10"><a href="discriminant-analysis-and-criminals.html#cb67-10" aria-hidden="true" tabindex="-1"></a>  <span class="dt">double</span> s = <span class="fl">0.0</span>, p;</span>
-<span id="cb67-11"><a href="discriminant-analysis-and-criminals.html#cb67-11" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (j = <span class="dv">1</span>; j &lt;= mm; j++) {</span>
-<span id="cb67-12"><a href="discriminant-analysis-and-criminals.html#cb67-12" aria-hidden="true" tabindex="-1"></a>    pivot[j - <span class="dv">1</span>] = j;</span>
-<span id="cb67-13"><a href="discriminant-analysis-and-criminals.html#cb67-13" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb67-14"><a href="discriminant-analysis-and-criminals.html#cb67-14" aria-hidden="true" tabindex="-1"></a>  <span class="cf">while</span> (jwork &lt;= rk) {</span>
-<span id="cb67-15"><a href="discriminant-analysis-and-criminals.html#cb67-15" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> (j = <span class="dv">1</span>; j &lt; jwork; j++) {</span>
-<span id="cb67-16"><a href="discriminant-analysis-and-criminals.html#cb67-16" aria-hidden="true" tabindex="-1"></a>      s = <span class="fl">0.0</span>;</span>
-<span id="cb67-17"><a href="discriminant-analysis-and-criminals.html#cb67-17" aria-hidden="true" tabindex="-1"></a>      <span class="cf">for</span> (i = <span class="dv">1</span>; i &lt;= nn; i++) {</span>
-<span id="cb67-18"><a href="discriminant-analysis-and-criminals.html#cb67-18" aria-hidden="true" tabindex="-1"></a>        s += x[MINDEX(i, jwork, nn)] * x[MINDEX(i, j, nn)];</span>
-<span id="cb67-19"><a href="discriminant-analysis-and-criminals.html#cb67-19" aria-hidden="true" tabindex="-1"></a>      }</span>
-<span id="cb67-20"><a href="discriminant-analysis-and-criminals.html#cb67-20" aria-hidden="true" tabindex="-1"></a>      r[MINDEX(j, jwork, mm)] = s;</span>
-<span id="cb67-21"><a href="discriminant-analysis-and-criminals.html#cb67-21" aria-hidden="true" tabindex="-1"></a>      <span class="cf">for</span> (i = <span class="dv">1</span>; i &lt;= nn; i++) {</span>
-<span id="cb67-22"><a href="discriminant-analysis-and-criminals.html#cb67-22" aria-hidden="true" tabindex="-1"></a>        x[MINDEX(i, jwork, nn)] -= s * x[MINDEX(i, j, nn)];</span>
-<span id="cb67-23"><a href="discriminant-analysis-and-criminals.html#cb67-23" aria-hidden="true" tabindex="-1"></a>      }</span>
-<span id="cb67-24"><a href="discriminant-analysis-and-criminals.html#cb67-24" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb67-25"><a href="discriminant-analysis-and-criminals.html#cb67-25" aria-hidden="true" tabindex="-1"></a>    s = <span class="fl">0.0</span>;</span>
-<span id="cb67-26"><a href="discriminant-analysis-and-criminals.html#cb67-26" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> (i = <span class="dv">1</span>; i &lt;= nn; i++) {</span>
-<span id="cb67-27"><a href="discriminant-analysis-and-criminals.html#cb67-27" aria-hidden="true" tabindex="-1"></a>      s += x[MINDEX(i, jwork, nn)] * x[MINDEX(i, jwork, nn)];</span>
-<span id="cb67-28"><a href="discriminant-analysis-and-criminals.html#cb67-28" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb67-29"><a href="discriminant-analysis-and-criminals.html#cb67-29" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (s &gt; *eps) {</span>
-<span id="cb67-30"><a href="discriminant-analysis-and-criminals.html#cb67-30" aria-hidden="true" tabindex="-1"></a>      s = sqrt(s);</span>
-<span id="cb67-31"><a href="discriminant-analysis-and-criminals.html#cb67-31" aria-hidden="true" tabindex="-1"></a>      r[MINDEX(jwork, jwork, mm)] = s;</span>
-<span id="cb67-32"><a href="discriminant-analysis-and-criminals.html#cb67-32" aria-hidden="true" tabindex="-1"></a>      <span class="cf">for</span> (i = <span class="dv">1</span>; i &lt;= nn; i++) {</span>
-<span id="cb67-33"><a href="discriminant-analysis-and-criminals.html#cb67-33" aria-hidden="true" tabindex="-1"></a>        x[MINDEX(i, jwork, nn)] /= s;</span>
-<span id="cb67-34"><a href="discriminant-analysis-and-criminals.html#cb67-34" aria-hidden="true" tabindex="-1"></a>      }</span>
-<span id="cb67-35"><a href="discriminant-analysis-and-criminals.html#cb67-35" aria-hidden="true" tabindex="-1"></a>      jwork += <span class="dv">1</span>;</span>
-<span id="cb67-36"><a href="discriminant-analysis-and-criminals.html#cb67-36" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb67-37"><a href="discriminant-analysis-and-criminals.html#cb67-37" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (s &lt;= *eps) {</span>
-<span id="cb67-38"><a href="discriminant-analysis-and-criminals.html#cb67-38" aria-hidden="true" tabindex="-1"></a>      ip = pivot [rk - <span class="dv">1</span>];</span>
-<span id="cb67-39"><a href="discriminant-analysis-and-criminals.html#cb67-39" aria-hidden="true" tabindex="-1"></a>      pivot[rk - <span class="dv">1</span>] = pivot[jwork - <span class="dv">1</span>];</span>
-<span id="cb67-40"><a href="discriminant-analysis-and-criminals.html#cb67-40" aria-hidden="true" tabindex="-1"></a>      pivot[jwork - <span class="dv">1</span>] = ip;</span>
-<span id="cb67-41"><a href="discriminant-analysis-and-criminals.html#cb67-41" aria-hidden="true" tabindex="-1"></a>      <span class="cf">for</span> (i = <span class="dv">1</span>; i &lt;= nn; i++) {</span>
-<span id="cb67-42"><a href="discriminant-analysis-and-criminals.html#cb67-42" aria-hidden="true" tabindex="-1"></a>        p = x[MINDEX(i, rk, nn)];</span>
-<span id="cb67-43"><a href="discriminant-analysis-and-criminals.html#cb67-43" aria-hidden="true" tabindex="-1"></a>        x[MINDEX(i, rk, nn)] = x[MINDEX(i, jwork, nn)];</span>
-<span id="cb67-44"><a href="discriminant-analysis-and-criminals.html#cb67-44" aria-hidden="true" tabindex="-1"></a>        x[MINDEX(i, jwork, nn)] = p;</span>
-<span id="cb67-45"><a href="discriminant-analysis-and-criminals.html#cb67-45" aria-hidden="true" tabindex="-1"></a>      }</span>
-<span id="cb67-46"><a href="discriminant-analysis-and-criminals.html#cb67-46" aria-hidden="true" tabindex="-1"></a>      <span class="cf">for</span> (j = <span class="dv">1</span>; j &lt;= mm; j++) {</span>
-<span id="cb67-47"><a href="discriminant-analysis-and-criminals.html#cb67-47" aria-hidden="true" tabindex="-1"></a>        p = r[MINDEX(j, rk, mm)];</span>
-<span id="cb67-48"><a href="discriminant-analysis-and-criminals.html#cb67-48" aria-hidden="true" tabindex="-1"></a>        r[MINDEX(j, rk, mm)] = r[MINDEX(j, jwork, mm)];</span>
-<span id="cb67-49"><a href="discriminant-analysis-and-criminals.html#cb67-49" aria-hidden="true" tabindex="-1"></a>        r[MINDEX(j, jwork, mm)] = p;</span>
-<span id="cb67-50"><a href="discriminant-analysis-and-criminals.html#cb67-50" aria-hidden="true" tabindex="-1"></a>      }</span>
-<span id="cb67-51"><a href="discriminant-analysis-and-criminals.html#cb67-51" aria-hidden="true" tabindex="-1"></a>      rk -= <span class="dv">1</span>;</span>
-<span id="cb67-52"><a href="discriminant-analysis-and-criminals.html#cb67-52" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb67-53"><a href="discriminant-analysis-and-criminals.html#cb67-53" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb67-54"><a href="discriminant-analysis-and-criminals.html#cb67-54" aria-hidden="true" tabindex="-1"></a>  *rank = rk;</span>
-<span id="cb67-55"><a href="discriminant-analysis-and-criminals.html#cb67-55" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<span id="cb67-7"><a href="discriminant-analysis-and-criminals.html#cb67-7" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> gsC<span class="op">(</span><span class="dt">double</span> <span class="op">*</span>x<span class="op">,</span> <span class="dt">double</span> <span class="op">*</span>r<span class="op">,</span> <span class="dt">int</span> <span class="op">*</span>n<span class="op">,</span> <span class="dt">int</span> <span class="op">*</span>m<span class="op">,</span> <span class="dt">int</span> <span class="op">*</span>rank<span class="op">,</span> <span class="dt">int</span> <span class="op">*</span>pivot<span class="op">,</span></span>
+<span id="cb67-8"><a href="discriminant-analysis-and-criminals.html#cb67-8" aria-hidden="true" tabindex="-1"></a>         <span class="dt">double</span> <span class="op">*</span>eps<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb67-9"><a href="discriminant-analysis-and-criminals.html#cb67-9" aria-hidden="true" tabindex="-1"></a>  <span class="dt">int</span> i<span class="op">,</span> j<span class="op">,</span> ip<span class="op">,</span> nn <span class="op">=</span> <span class="op">*</span>n<span class="op">,</span> mm <span class="op">=</span> <span class="op">*</span>m<span class="op">,</span> rk <span class="op">=</span> <span class="op">*</span>m<span class="op">,</span> jwork <span class="op">=</span> <span class="dv">1</span><span class="op">;</span></span>
+<span id="cb67-10"><a href="discriminant-analysis-and-criminals.html#cb67-10" aria-hidden="true" tabindex="-1"></a>  <span class="dt">double</span> s <span class="op">=</span> <span class="fl">0.0</span><span class="op">,</span> p<span class="op">;</span></span>
+<span id="cb67-11"><a href="discriminant-analysis-and-criminals.html#cb67-11" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> <span class="op">(</span>j <span class="op">=</span> <span class="dv">1</span><span class="op">;</span> j <span class="op">&lt;=</span> mm<span class="op">;</span> j<span class="op">++)</span> <span class="op">{</span></span>
+<span id="cb67-12"><a href="discriminant-analysis-and-criminals.html#cb67-12" aria-hidden="true" tabindex="-1"></a>    pivot<span class="op">[</span>j <span class="op">-</span> <span class="dv">1</span><span class="op">]</span> <span class="op">=</span> j<span class="op">;</span></span>
+<span id="cb67-13"><a href="discriminant-analysis-and-criminals.html#cb67-13" aria-hidden="true" tabindex="-1"></a>  <span class="op">}</span></span>
+<span id="cb67-14"><a href="discriminant-analysis-and-criminals.html#cb67-14" aria-hidden="true" tabindex="-1"></a>  <span class="cf">while</span> <span class="op">(</span>jwork <span class="op">&lt;=</span> rk<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb67-15"><a href="discriminant-analysis-and-criminals.html#cb67-15" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> <span class="op">(</span>j <span class="op">=</span> <span class="dv">1</span><span class="op">;</span> j <span class="op">&lt;</span> jwork<span class="op">;</span> j<span class="op">++)</span> <span class="op">{</span></span>
+<span id="cb67-16"><a href="discriminant-analysis-and-criminals.html#cb67-16" aria-hidden="true" tabindex="-1"></a>      s <span class="op">=</span> <span class="fl">0.0</span><span class="op">;</span></span>
+<span id="cb67-17"><a href="discriminant-analysis-and-criminals.html#cb67-17" aria-hidden="true" tabindex="-1"></a>      <span class="cf">for</span> <span class="op">(</span>i <span class="op">=</span> <span class="dv">1</span><span class="op">;</span> i <span class="op">&lt;=</span> nn<span class="op">;</span> i<span class="op">++)</span> <span class="op">{</span></span>
+<span id="cb67-18"><a href="discriminant-analysis-and-criminals.html#cb67-18" aria-hidden="true" tabindex="-1"></a>        s <span class="op">+=</span> x<span class="op">[</span>MINDEX<span class="op">(</span>i<span class="op">,</span> jwork<span class="op">,</span> nn<span class="op">)]</span> <span class="op">*</span> x<span class="op">[</span>MINDEX<span class="op">(</span>i<span class="op">,</span> j<span class="op">,</span> nn<span class="op">)];</span></span>
+<span id="cb67-19"><a href="discriminant-analysis-and-criminals.html#cb67-19" aria-hidden="true" tabindex="-1"></a>      <span class="op">}</span></span>
+<span id="cb67-20"><a href="discriminant-analysis-and-criminals.html#cb67-20" aria-hidden="true" tabindex="-1"></a>      r<span class="op">[</span>MINDEX<span class="op">(</span>j<span class="op">,</span> jwork<span class="op">,</span> mm<span class="op">)]</span> <span class="op">=</span> s<span class="op">;</span></span>
+<span id="cb67-21"><a href="discriminant-analysis-and-criminals.html#cb67-21" aria-hidden="true" tabindex="-1"></a>      <span class="cf">for</span> <span class="op">(</span>i <span class="op">=</span> <span class="dv">1</span><span class="op">;</span> i <span class="op">&lt;=</span> nn<span class="op">;</span> i<span class="op">++)</span> <span class="op">{</span></span>
+<span id="cb67-22"><a href="discriminant-analysis-and-criminals.html#cb67-22" aria-hidden="true" tabindex="-1"></a>        x<span class="op">[</span>MINDEX<span class="op">(</span>i<span class="op">,</span> jwork<span class="op">,</span> nn<span class="op">)]</span> <span class="op">-=</span> s <span class="op">*</span> x<span class="op">[</span>MINDEX<span class="op">(</span>i<span class="op">,</span> j<span class="op">,</span> nn<span class="op">)];</span></span>
+<span id="cb67-23"><a href="discriminant-analysis-and-criminals.html#cb67-23" aria-hidden="true" tabindex="-1"></a>      <span class="op">}</span></span>
+<span id="cb67-24"><a href="discriminant-analysis-and-criminals.html#cb67-24" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb67-25"><a href="discriminant-analysis-and-criminals.html#cb67-25" aria-hidden="true" tabindex="-1"></a>    s <span class="op">=</span> <span class="fl">0.0</span><span class="op">;</span></span>
+<span id="cb67-26"><a href="discriminant-analysis-and-criminals.html#cb67-26" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> <span class="op">(</span>i <span class="op">=</span> <span class="dv">1</span><span class="op">;</span> i <span class="op">&lt;=</span> nn<span class="op">;</span> i<span class="op">++)</span> <span class="op">{</span></span>
+<span id="cb67-27"><a href="discriminant-analysis-and-criminals.html#cb67-27" aria-hidden="true" tabindex="-1"></a>      s <span class="op">+=</span> x<span class="op">[</span>MINDEX<span class="op">(</span>i<span class="op">,</span> jwork<span class="op">,</span> nn<span class="op">)]</span> <span class="op">*</span> x<span class="op">[</span>MINDEX<span class="op">(</span>i<span class="op">,</span> jwork<span class="op">,</span> nn<span class="op">)];</span></span>
+<span id="cb67-28"><a href="discriminant-analysis-and-criminals.html#cb67-28" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb67-29"><a href="discriminant-analysis-and-criminals.html#cb67-29" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="op">(</span>s <span class="op">&gt;</span> <span class="op">*</span>eps<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb67-30"><a href="discriminant-analysis-and-criminals.html#cb67-30" aria-hidden="true" tabindex="-1"></a>      s <span class="op">=</span> sqrt<span class="op">(</span>s<span class="op">);</span></span>
+<span id="cb67-31"><a href="discriminant-analysis-and-criminals.html#cb67-31" aria-hidden="true" tabindex="-1"></a>      r<span class="op">[</span>MINDEX<span class="op">(</span>jwork<span class="op">,</span> jwork<span class="op">,</span> mm<span class="op">)]</span> <span class="op">=</span> s<span class="op">;</span></span>
+<span id="cb67-32"><a href="discriminant-analysis-and-criminals.html#cb67-32" aria-hidden="true" tabindex="-1"></a>      <span class="cf">for</span> <span class="op">(</span>i <span class="op">=</span> <span class="dv">1</span><span class="op">;</span> i <span class="op">&lt;=</span> nn<span class="op">;</span> i<span class="op">++)</span> <span class="op">{</span></span>
+<span id="cb67-33"><a href="discriminant-analysis-and-criminals.html#cb67-33" aria-hidden="true" tabindex="-1"></a>        x<span class="op">[</span>MINDEX<span class="op">(</span>i<span class="op">,</span> jwork<span class="op">,</span> nn<span class="op">)]</span> <span class="op">/=</span> s<span class="op">;</span></span>
+<span id="cb67-34"><a href="discriminant-analysis-and-criminals.html#cb67-34" aria-hidden="true" tabindex="-1"></a>      <span class="op">}</span></span>
+<span id="cb67-35"><a href="discriminant-analysis-and-criminals.html#cb67-35" aria-hidden="true" tabindex="-1"></a>      jwork <span class="op">+=</span> <span class="dv">1</span><span class="op">;</span></span>
+<span id="cb67-36"><a href="discriminant-analysis-and-criminals.html#cb67-36" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb67-37"><a href="discriminant-analysis-and-criminals.html#cb67-37" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="op">(</span>s <span class="op">&lt;=</span> <span class="op">*</span>eps<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb67-38"><a href="discriminant-analysis-and-criminals.html#cb67-38" aria-hidden="true" tabindex="-1"></a>      ip <span class="op">=</span> pivot <span class="op">[</span>rk <span class="op">-</span> <span class="dv">1</span><span class="op">];</span></span>
+<span id="cb67-39"><a href="discriminant-analysis-and-criminals.html#cb67-39" aria-hidden="true" tabindex="-1"></a>      pivot<span class="op">[</span>rk <span class="op">-</span> <span class="dv">1</span><span class="op">]</span> <span class="op">=</span> pivot<span class="op">[</span>jwork <span class="op">-</span> <span class="dv">1</span><span class="op">];</span></span>
+<span id="cb67-40"><a href="discriminant-analysis-and-criminals.html#cb67-40" aria-hidden="true" tabindex="-1"></a>      pivot<span class="op">[</span>jwork <span class="op">-</span> <span class="dv">1</span><span class="op">]</span> <span class="op">=</span> ip<span class="op">;</span></span>
+<span id="cb67-41"><a href="discriminant-analysis-and-criminals.html#cb67-41" aria-hidden="true" tabindex="-1"></a>      <span class="cf">for</span> <span class="op">(</span>i <span class="op">=</span> <span class="dv">1</span><span class="op">;</span> i <span class="op">&lt;=</span> nn<span class="op">;</span> i<span class="op">++)</span> <span class="op">{</span></span>
+<span id="cb67-42"><a href="discriminant-analysis-and-criminals.html#cb67-42" aria-hidden="true" tabindex="-1"></a>        p <span class="op">=</span> x<span class="op">[</span>MINDEX<span class="op">(</span>i<span class="op">,</span> rk<span class="op">,</span> nn<span class="op">)];</span></span>
+<span id="cb67-43"><a href="discriminant-analysis-and-criminals.html#cb67-43" aria-hidden="true" tabindex="-1"></a>        x<span class="op">[</span>MINDEX<span class="op">(</span>i<span class="op">,</span> rk<span class="op">,</span> nn<span class="op">)]</span> <span class="op">=</span> x<span class="op">[</span>MINDEX<span class="op">(</span>i<span class="op">,</span> jwork<span class="op">,</span> nn<span class="op">)];</span></span>
+<span id="cb67-44"><a href="discriminant-analysis-and-criminals.html#cb67-44" aria-hidden="true" tabindex="-1"></a>        x<span class="op">[</span>MINDEX<span class="op">(</span>i<span class="op">,</span> jwork<span class="op">,</span> nn<span class="op">)]</span> <span class="op">=</span> p<span class="op">;</span></span>
+<span id="cb67-45"><a href="discriminant-analysis-and-criminals.html#cb67-45" aria-hidden="true" tabindex="-1"></a>      <span class="op">}</span></span>
+<span id="cb67-46"><a href="discriminant-analysis-and-criminals.html#cb67-46" aria-hidden="true" tabindex="-1"></a>      <span class="cf">for</span> <span class="op">(</span>j <span class="op">=</span> <span class="dv">1</span><span class="op">;</span> j <span class="op">&lt;=</span> mm<span class="op">;</span> j<span class="op">++)</span> <span class="op">{</span></span>
+<span id="cb67-47"><a href="discriminant-analysis-and-criminals.html#cb67-47" aria-hidden="true" tabindex="-1"></a>        p <span class="op">=</span> r<span class="op">[</span>MINDEX<span class="op">(</span>j<span class="op">,</span> rk<span class="op">,</span> mm<span class="op">)];</span></span>
+<span id="cb67-48"><a href="discriminant-analysis-and-criminals.html#cb67-48" aria-hidden="true" tabindex="-1"></a>        r<span class="op">[</span>MINDEX<span class="op">(</span>j<span class="op">,</span> rk<span class="op">,</span> mm<span class="op">)]</span> <span class="op">=</span> r<span class="op">[</span>MINDEX<span class="op">(</span>j<span class="op">,</span> jwork<span class="op">,</span> mm<span class="op">)];</span></span>
+<span id="cb67-49"><a href="discriminant-analysis-and-criminals.html#cb67-49" aria-hidden="true" tabindex="-1"></a>        r<span class="op">[</span>MINDEX<span class="op">(</span>j<span class="op">,</span> jwork<span class="op">,</span> mm<span class="op">)]</span> <span class="op">=</span> p<span class="op">;</span></span>
+<span id="cb67-50"><a href="discriminant-analysis-and-criminals.html#cb67-50" aria-hidden="true" tabindex="-1"></a>      <span class="op">}</span></span>
+<span id="cb67-51"><a href="discriminant-analysis-and-criminals.html#cb67-51" aria-hidden="true" tabindex="-1"></a>      rk <span class="op">-=</span> <span class="dv">1</span><span class="op">;</span></span>
+<span id="cb67-52"><a href="discriminant-analysis-and-criminals.html#cb67-52" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb67-53"><a href="discriminant-analysis-and-criminals.html#cb67-53" aria-hidden="true" tabindex="-1"></a>  <span class="op">}</span></span>
+<span id="cb67-54"><a href="discriminant-analysis-and-criminals.html#cb67-54" aria-hidden="true" tabindex="-1"></a>  <span class="op">*</span>rank <span class="op">=</span> rk<span class="op">;</span></span>
+<span id="cb67-55"><a href="discriminant-analysis-and-criminals.html#cb67-55" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
 <p>###Coding</p>
 <div class="sourceCode" id="cb68"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb68-1"><a href="discriminant-analysis-and-criminals.html#cb68-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;R.h&gt;</span></span>
 <span id="cb68-2"><a href="discriminant-analysis-and-criminals.html#cb68-2" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;Rinternals.h&gt;</span></span>
 <span id="cb68-3"><a href="discriminant-analysis-and-criminals.html#cb68-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb68-4"><a href="discriminant-analysis-and-criminals.html#cb68-4" aria-hidden="true" tabindex="-1"></a>SEXP DECODE( SEXP, SEXP );</span>
-<span id="cb68-5"><a href="discriminant-analysis-and-criminals.html#cb68-5" aria-hidden="true" tabindex="-1"></a>SEXP ENCODE( SEXP, SEXP );</span>
+<span id="cb68-4"><a href="discriminant-analysis-and-criminals.html#cb68-4" aria-hidden="true" tabindex="-1"></a>SEXP DECODE<span class="op">(</span> SEXP<span class="op">,</span> SEXP <span class="op">);</span></span>
+<span id="cb68-5"><a href="discriminant-analysis-and-criminals.html#cb68-5" aria-hidden="true" tabindex="-1"></a>SEXP ENCODE<span class="op">(</span> SEXP<span class="op">,</span> SEXP <span class="op">);</span></span>
 <span id="cb68-6"><a href="discriminant-analysis-and-criminals.html#cb68-6" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb68-7"><a href="discriminant-analysis-and-criminals.html#cb68-7" aria-hidden="true" tabindex="-1"></a>SEXP</span>
-<span id="cb68-8"><a href="discriminant-analysis-and-criminals.html#cb68-8" aria-hidden="true" tabindex="-1"></a>  DECODE( SEXP cell, SEXP dims )</span>
-<span id="cb68-9"><a href="discriminant-analysis-and-criminals.html#cb68-9" aria-hidden="true" tabindex="-1"></a>  {</span>
-<span id="cb68-10"><a href="discriminant-analysis-and-criminals.html#cb68-10" aria-hidden="true" tabindex="-1"></a>    <span class="dt">int</span>             aux = <span class="dv">1</span>, n = length(dims);</span>
-<span id="cb68-11"><a href="discriminant-analysis-and-criminals.html#cb68-11" aria-hidden="true" tabindex="-1"></a>    SEXP            ind;</span>
-<span id="cb68-12"><a href="discriminant-analysis-and-criminals.html#cb68-12" aria-hidden="true" tabindex="-1"></a>    PROTECT( ind = allocVector( INTSXP, <span class="dv">1</span> ) );</span>
-<span id="cb68-13"><a href="discriminant-analysis-and-criminals.html#cb68-13" aria-hidden="true" tabindex="-1"></a>    INTEGER( ind )[<span class="dv">0</span>] = <span class="dv">1</span>;</span>
-<span id="cb68-14"><a href="discriminant-analysis-and-criminals.html#cb68-14" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span>( <span class="dt">int</span> i = <span class="dv">0</span>; i &lt; n; i++ ) {</span>
-<span id="cb68-15"><a href="discriminant-analysis-and-criminals.html#cb68-15" aria-hidden="true" tabindex="-1"></a>      INTEGER( ind )[<span class="dv">0</span>] += aux * ( INTEGER( cell )[i] - <span class="dv">1</span> );</span>
-<span id="cb68-16"><a href="discriminant-analysis-and-criminals.html#cb68-16" aria-hidden="true" tabindex="-1"></a>      aux *= INTEGER(dims)[i];</span>
-<span id="cb68-17"><a href="discriminant-analysis-and-criminals.html#cb68-17" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb68-18"><a href="discriminant-analysis-and-criminals.html#cb68-18" aria-hidden="true" tabindex="-1"></a>    UNPROTECT( <span class="dv">1</span> );</span>
-<span id="cb68-19"><a href="discriminant-analysis-and-criminals.html#cb68-19" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> (ind);</span>
-<span id="cb68-20"><a href="discriminant-analysis-and-criminals.html#cb68-20" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb68-8"><a href="discriminant-analysis-and-criminals.html#cb68-8" aria-hidden="true" tabindex="-1"></a>  DECODE<span class="op">(</span> SEXP cell<span class="op">,</span> SEXP dims <span class="op">)</span></span>
+<span id="cb68-9"><a href="discriminant-analysis-and-criminals.html#cb68-9" aria-hidden="true" tabindex="-1"></a>  <span class="op">{</span></span>
+<span id="cb68-10"><a href="discriminant-analysis-and-criminals.html#cb68-10" aria-hidden="true" tabindex="-1"></a>    <span class="dt">int</span>             aux <span class="op">=</span> <span class="dv">1</span><span class="op">,</span> n <span class="op">=</span> length<span class="op">(</span>dims<span class="op">);</span></span>
+<span id="cb68-11"><a href="discriminant-analysis-and-criminals.html#cb68-11" aria-hidden="true" tabindex="-1"></a>    SEXP            ind<span class="op">;</span></span>
+<span id="cb68-12"><a href="discriminant-analysis-and-criminals.html#cb68-12" aria-hidden="true" tabindex="-1"></a>    PROTECT<span class="op">(</span> ind <span class="op">=</span> allocVector<span class="op">(</span> INTSXP<span class="op">,</span> <span class="dv">1</span> <span class="op">)</span> <span class="op">);</span></span>
+<span id="cb68-13"><a href="discriminant-analysis-and-criminals.html#cb68-13" aria-hidden="true" tabindex="-1"></a>    INTEGER<span class="op">(</span> ind <span class="op">)[</span><span class="dv">0</span><span class="op">]</span> <span class="op">=</span> <span class="dv">1</span><span class="op">;</span></span>
+<span id="cb68-14"><a href="discriminant-analysis-and-criminals.html#cb68-14" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span><span class="op">(</span> <span class="dt">int</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> n<span class="op">;</span> i<span class="op">++</span> <span class="op">)</span> <span class="op">{</span></span>
+<span id="cb68-15"><a href="discriminant-analysis-and-criminals.html#cb68-15" aria-hidden="true" tabindex="-1"></a>      INTEGER<span class="op">(</span> ind <span class="op">)[</span><span class="dv">0</span><span class="op">]</span> <span class="op">+=</span> aux <span class="op">*</span> <span class="op">(</span> INTEGER<span class="op">(</span> cell <span class="op">)[</span>i<span class="op">]</span> <span class="op">-</span> <span class="dv">1</span> <span class="op">);</span></span>
+<span id="cb68-16"><a href="discriminant-analysis-and-criminals.html#cb68-16" aria-hidden="true" tabindex="-1"></a>      aux <span class="op">*=</span> INTEGER<span class="op">(</span>dims<span class="op">)[</span>i<span class="op">];</span></span>
+<span id="cb68-17"><a href="discriminant-analysis-and-criminals.html#cb68-17" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb68-18"><a href="discriminant-analysis-and-criminals.html#cb68-18" aria-hidden="true" tabindex="-1"></a>    UNPROTECT<span class="op">(</span> <span class="dv">1</span> <span class="op">);</span></span>
+<span id="cb68-19"><a href="discriminant-analysis-and-criminals.html#cb68-19" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="op">(</span>ind<span class="op">);</span></span>
+<span id="cb68-20"><a href="discriminant-analysis-and-criminals.html#cb68-20" aria-hidden="true" tabindex="-1"></a>  <span class="op">}</span></span>
 <span id="cb68-21"><a href="discriminant-analysis-and-criminals.html#cb68-21" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb68-22"><a href="discriminant-analysis-and-criminals.html#cb68-22" aria-hidden="true" tabindex="-1"></a>SEXP</span>
-<span id="cb68-23"><a href="discriminant-analysis-and-criminals.html#cb68-23" aria-hidden="true" tabindex="-1"></a>  ENCODE( SEXP ind, SEXP dims )</span>
-<span id="cb68-24"><a href="discriminant-analysis-and-criminals.html#cb68-24" aria-hidden="true" tabindex="-1"></a>  {</span>
-<span id="cb68-25"><a href="discriminant-analysis-and-criminals.html#cb68-25" aria-hidden="true" tabindex="-1"></a>    <span class="dt">int</span>             n = length(dims), aux = INTEGER(ind)[<span class="dv">0</span>], pdim = <span class="dv">1</span>;</span>
-<span id="cb68-26"><a href="discriminant-analysis-and-criminals.html#cb68-26" aria-hidden="true" tabindex="-1"></a>    SEXP            cell;</span>
-<span id="cb68-27"><a href="discriminant-analysis-and-criminals.html#cb68-27" aria-hidden="true" tabindex="-1"></a>    PROTECT( cell = allocVector( INTSXP, n ) );</span>
-<span id="cb68-28"><a href="discriminant-analysis-and-criminals.html#cb68-28" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> ( <span class="dt">int</span> i = <span class="dv">0</span>; i &lt; n - <span class="dv">1</span>; i++ )</span>
-<span id="cb68-29"><a href="discriminant-analysis-and-criminals.html#cb68-29" aria-hidden="true" tabindex="-1"></a>      pdim *= INTEGER( dims )[i];</span>
-<span id="cb68-30"><a href="discriminant-analysis-and-criminals.html#cb68-30" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> ( <span class="dt">int</span> i = n - <span class="dv">1</span>; i &gt; <span class="dv">0</span>; i-- ){</span>
-<span id="cb68-31"><a href="discriminant-analysis-and-criminals.html#cb68-31" aria-hidden="true" tabindex="-1"></a>      INTEGER( cell )[i] = ( aux - <span class="dv">1</span> ) / pdim;</span>
-<span id="cb68-32"><a href="discriminant-analysis-and-criminals.html#cb68-32" aria-hidden="true" tabindex="-1"></a>      aux -= pdim * INTEGER( cell )[i];</span>
-<span id="cb68-33"><a href="discriminant-analysis-and-criminals.html#cb68-33" aria-hidden="true" tabindex="-1"></a>      pdim /= INTEGER( dims )[i - <span class="dv">1</span>];</span>
-<span id="cb68-34"><a href="discriminant-analysis-and-criminals.html#cb68-34" aria-hidden="true" tabindex="-1"></a>      INTEGER( cell )[i] += <span class="dv">1</span>;</span>
-<span id="cb68-35"><a href="discriminant-analysis-and-criminals.html#cb68-35" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb68-36"><a href="discriminant-analysis-and-criminals.html#cb68-36" aria-hidden="true" tabindex="-1"></a>    INTEGER( cell )[<span class="dv">0</span>] = aux;</span>
-<span id="cb68-37"><a href="discriminant-analysis-and-criminals.html#cb68-37" aria-hidden="true" tabindex="-1"></a>    UNPROTECT( <span class="dv">1</span> );</span>
-<span id="cb68-38"><a href="discriminant-analysis-and-criminals.html#cb68-38" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> cell;</span>
-<span id="cb68-39"><a href="discriminant-analysis-and-criminals.html#cb68-39" aria-hidden="true" tabindex="-1"></a>  }</span></code></pre></div>
+<span id="cb68-23"><a href="discriminant-analysis-and-criminals.html#cb68-23" aria-hidden="true" tabindex="-1"></a>  ENCODE<span class="op">(</span> SEXP ind<span class="op">,</span> SEXP dims <span class="op">)</span></span>
+<span id="cb68-24"><a href="discriminant-analysis-and-criminals.html#cb68-24" aria-hidden="true" tabindex="-1"></a>  <span class="op">{</span></span>
+<span id="cb68-25"><a href="discriminant-analysis-and-criminals.html#cb68-25" aria-hidden="true" tabindex="-1"></a>    <span class="dt">int</span>             n <span class="op">=</span> length<span class="op">(</span>dims<span class="op">),</span> aux <span class="op">=</span> INTEGER<span class="op">(</span>ind<span class="op">)[</span><span class="dv">0</span><span class="op">],</span> pdim <span class="op">=</span> <span class="dv">1</span><span class="op">;</span></span>
+<span id="cb68-26"><a href="discriminant-analysis-and-criminals.html#cb68-26" aria-hidden="true" tabindex="-1"></a>    SEXP            cell<span class="op">;</span></span>
+<span id="cb68-27"><a href="discriminant-analysis-and-criminals.html#cb68-27" aria-hidden="true" tabindex="-1"></a>    PROTECT<span class="op">(</span> cell <span class="op">=</span> allocVector<span class="op">(</span> INTSXP<span class="op">,</span> n <span class="op">)</span> <span class="op">);</span></span>
+<span id="cb68-28"><a href="discriminant-analysis-and-criminals.html#cb68-28" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> <span class="op">(</span> <span class="dt">int</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> n <span class="op">-</span> <span class="dv">1</span><span class="op">;</span> i<span class="op">++</span> <span class="op">)</span></span>
+<span id="cb68-29"><a href="discriminant-analysis-and-criminals.html#cb68-29" aria-hidden="true" tabindex="-1"></a>      pdim <span class="op">*=</span> INTEGER<span class="op">(</span> dims <span class="op">)[</span>i<span class="op">];</span></span>
+<span id="cb68-30"><a href="discriminant-analysis-and-criminals.html#cb68-30" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> <span class="op">(</span> <span class="dt">int</span> i <span class="op">=</span> n <span class="op">-</span> <span class="dv">1</span><span class="op">;</span> i <span class="op">&gt;</span> <span class="dv">0</span><span class="op">;</span> i<span class="op">--</span> <span class="op">){</span></span>
+<span id="cb68-31"><a href="discriminant-analysis-and-criminals.html#cb68-31" aria-hidden="true" tabindex="-1"></a>      INTEGER<span class="op">(</span> cell <span class="op">)[</span>i<span class="op">]</span> <span class="op">=</span> <span class="op">(</span> aux <span class="op">-</span> <span class="dv">1</span> <span class="op">)</span> <span class="op">/</span> pdim<span class="op">;</span></span>
+<span id="cb68-32"><a href="discriminant-analysis-and-criminals.html#cb68-32" aria-hidden="true" tabindex="-1"></a>      aux <span class="op">-=</span> pdim <span class="op">*</span> INTEGER<span class="op">(</span> cell <span class="op">)[</span>i<span class="op">];</span></span>
+<span id="cb68-33"><a href="discriminant-analysis-and-criminals.html#cb68-33" aria-hidden="true" tabindex="-1"></a>      pdim <span class="op">/=</span> INTEGER<span class="op">(</span> dims <span class="op">)[</span>i <span class="op">-</span> <span class="dv">1</span><span class="op">];</span></span>
+<span id="cb68-34"><a href="discriminant-analysis-and-criminals.html#cb68-34" aria-hidden="true" tabindex="-1"></a>      INTEGER<span class="op">(</span> cell <span class="op">)[</span>i<span class="op">]</span> <span class="op">+=</span> <span class="dv">1</span><span class="op">;</span></span>
+<span id="cb68-35"><a href="discriminant-analysis-and-criminals.html#cb68-35" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb68-36"><a href="discriminant-analysis-and-criminals.html#cb68-36" aria-hidden="true" tabindex="-1"></a>    INTEGER<span class="op">(</span> cell <span class="op">)[</span><span class="dv">0</span><span class="op">]</span> <span class="op">=</span> aux<span class="op">;</span></span>
+<span id="cb68-37"><a href="discriminant-analysis-and-criminals.html#cb68-37" aria-hidden="true" tabindex="-1"></a>    UNPROTECT<span class="op">(</span> <span class="dv">1</span> <span class="op">);</span></span>
+<span id="cb68-38"><a href="discriminant-analysis-and-criminals.html#cb68-38" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> cell<span class="op">;</span></span>
+<span id="cb68-39"><a href="discriminant-analysis-and-criminals.html#cb68-39" aria-hidden="true" tabindex="-1"></a>  <span class="op">}</span></span></code></pre></div>
 <p>#Key Names and Symbols</p>
 <p>#References</p>
 
 <div id="refs" class="references csl-bib-body hanging-indent">
-<div id="ref-asa_14" class="csl-entry">
+<div class="csl-entry">
 Association, American Statistical. 2014. <span>“<span class="nocase">Discovery with Data: Leveraging Statistics with Computer Science to Transform Science and Society</span>.”</span> 2014. <a href="http://www.amstat.org/policy/pdfs/BigDataStatisticsJune2014.pdf">http://www.amstat.org/policy/pdfs/BigDataStatisticsJune2014.pdf</a>.
 </div>
-<div id="ref-bijleveld_deleeuw_A_91" class="csl-entry">
+<div class="csl-entry">
 Bijleveld, C. C. J. H., and J. De Leeuw. 1991. <span>“<span class="nocase">Fitting Longitudinal Reduced-Rank Regression Models by Alternating Least Squares</span>.”</span> <em>Psychometrika</em> 56 (3): 433–47. <a href="http://deleeuwpdx.net/janspubs/1991/articles/bijleveld_deleeuw_A_91.pdf">http://deleeuwpdx.net/janspubs/1991/articles/bijleveld_deleeuw_A_91.pdf</a>.
 </div>
-<div id="ref-bock_60" class="csl-entry">
+<div class="csl-entry">
 Bock, R. D. 1960. <span>“<span class="nocase">Methods and Applications of Optimal Scaling</span>.”</span> Psychometric Laboratory Report 25. Chapell Hill, N.C.: L.L. Thurstone Psychometric Laboratory, University of North Carolina.
 </div>
-<div id="ref-breiman_01" class="csl-entry">
+<div class="csl-entry">
 Breiman, L. 2001. <span>“<span>Statistical Modeling: The Two Cultures</span>.”</span> <em>Statistical Science</em> 16 (3): 199–231.
 </div>
-<div id="ref-breiman_friedman_85" class="csl-entry">
+<div class="csl-entry">
 Breiman, L., and J. H. Friedman. 1985. <span>“<span class="nocase">Estimating Optimal Transformations for Multiple Regression and Correlation</span>.”</span> <em>Journal of the American Statistical Association</em> 80: 580–619.
 </div>
-<div id="ref-carroll_68" class="csl-entry">
+<div class="csl-entry">
 Carroll, J. D. 1968. <span>“<span class="nocase">A Generalization of Canonical Correlation Analysis to Three or More Sets of Variables</span>.”</span> In <em>Proceedings of the 76th Annual Convention of the American Psychological Association</em>, 227–28. Washington, D.C.: American Psychological Association.
 </div>
-<div id="ref-cleveland_14" class="csl-entry">
+<div class="csl-entry">
 Cleveland, W. S. 2014. <span>“<span class="nocase">Data Science: An Action Plan for Expanding the Technical Areas of the Field of Statistics</span>.”</span> <em>Statistical Analysis and Data Mining</em> 7: 414–17.
 </div>
-<div id="ref-coolen_deleeuw_R_87" class="csl-entry">
+<div class="csl-entry">
 Coolen, H., and J. De Leeuw. 1987. <span>“<span class="nocase">Least Squares Path Analysis with Optimal Scaling</span>.”</span> Research Report RR-87-03. Leiden, The Netherlands: Department of Data Theory FSW/RUL. <a href="http://deleeuwpdx.net/janspubs/1987/reports/coolen_deleeuw_R_87.pdf">http://deleeuwpdx.net/janspubs/1987/reports/coolen_deleeuw_R_87.pdf</a>.
 </div>
-<div id="ref-coombs_64" class="csl-entry">
+<div class="csl-entry">
 Coombs, C. H. 1964. <em><span class="nocase">A Theory of Data</span></em>. Wiley.
 </div>
-<div id="ref-cordier_65" class="csl-entry">
-Cordier, B. 1965. <span>“<span class="nocase">L’Analyse Factorielle des Correspondances</span>.”</span> Thèse de Troisieme Cycle, Université de Rennes; Faculté des Sciences.
+<div class="csl-entry">
+Cordier, B. 1965. <span>“<span class="nocase">L’Analyse Factorielle des Correspondances</span>.”</span> {Th\`ese de Troisieme Cycle}, Université de Rennes; Faculté des Sciences.
 </div>
-<div id="ref-dauxois_pousse_76" class="csl-entry">
+<div class="csl-entry">
 Dauxois, J., and A. Pousse. 1976. <span>“<span class="nocase">Les Analyses Factorielles en Calcul des Probabilités et en Statistique: Essai d’Étude Synthetique</span>.”</span> PhD thesis, Université Paul-Sabatier, Toulouse, France.
 </div>
-<div id="ref-davies_95" class="csl-entry">
+<div class="csl-entry">
 Davies, P. L. 1995. <span>“<span>Data Features</span>.”</span> <em>Statistica Neerlandica</em> 49 (2): 185–245.
 </div>
-<div id="ref-davies_08" class="csl-entry">
+<div class="csl-entry">
 ———. 2008. <span>“<span>Approximating Data</span>.”</span> <em>Journal of the Korean Statistical Society</em> 37: 191–211.
 </div>
-<div id="ref-deleeuw_R_68e" class="csl-entry">
+<div class="csl-entry">
+De Leeuw, J. 2015a. <span>“Exceedingly Simple b-Spline Code.”</span> <a href="http://rpubs.com/deleeuw/79161">http://rpubs.com/deleeuw/79161</a>.
+</div>
+<div class="csl-entry">
 De Leeuw, J. 1968a. <span>“Canonical Discriminant Analysis of Relational Data.”</span> Research Note 007-68. Department of Data Theory FSW/RUL. <a href="http://deleeuwpdx.net/janspubs/1968/reports/deleeuw_R_68e.pdf">http://deleeuwpdx.net/janspubs/1968/reports/deleeuw_R_68e.pdf</a>.
 </div>
-<div id="ref-deleeuw_R_68d" class="csl-entry">
+<div class="csl-entry">
 ———. 1968b. <span>“Nonmetric Discriminant Analysis.”</span> Research Note 06-68. Department of Data Theory, University of Leiden. <a href="http://deleeuwpdx.net/janspubs/1968/reports/deleeuw_R_68d.pdf">http://deleeuwpdx.net/janspubs/1968/reports/deleeuw_R_68d.pdf</a>.
 </div>
-<div id="ref-deleeuw_B_74" class="csl-entry">
+<div class="csl-entry">
 ———. 1974. <em>Canonical Analysis of Categorical Data</em>. Leiden, The Netherlands: Psychological Institute, Leiden University. <a href="http://deleeuwpdx.net/janspubs/1974/books/deleeuw_B_74.pdf">http://deleeuwpdx.net/janspubs/1974/books/deleeuw_B_74.pdf</a>.
 </div>
-<div id="ref-deleeuw_U_75a" class="csl-entry">
+<div class="csl-entry">
 ———. 1975. <span>“<span class="nocase">A Normalized Cone Regression Approach to Alternating Least Squares Algorithms</span>.”</span> Department of Data Theory FSW/RUL. <a href="http://deleeuwpdx.net/janspubs/1975/notes/deleeuw_U_75a.pdf">http://deleeuwpdx.net/janspubs/1975/notes/deleeuw_U_75a.pdf</a>.
 </div>
-<div id="ref-deleeuw_A_83b" class="csl-entry">
+<div class="csl-entry">
 ———. 1983. <span>“On the Prehistory of Correspondence Analysis.”</span> <em>Statistica Neerlandica</em> 37: 161–64. <a href="http://deleeuwpdx.net/janspubs/1983/articles/deleeuw_A_83b.pdf">http://deleeuwpdx.net/janspubs/1983/articles/deleeuw_A_83b.pdf</a>.
 </div>
-<div id="ref-deleeuw_A_84c" class="csl-entry">
+<div class="csl-entry">
 ———. 1984a. <span>“Models of Data.”</span> <em>Kwantitatieve Methoden</em> 5: 17–30. <a href="http://deleeuwpdx.net/janspubs/1984/articles/deleeuw_A_84c.pdf">http://deleeuwpdx.net/janspubs/1984/articles/deleeuw_A_84c.pdf</a>.
 </div>
-<div id="ref-deleeuw_C_84c" class="csl-entry">
+<div class="csl-entry">
 ———. 1984b. <span>“The Gifi System of Nonlinear Multivariate Analysis.”</span> In <em>Data Analysis and Informatics</em>, edited by E. Diday et al. Vol. III. Amsterdam: North Holland Publishing Company. <a href="http://deleeuwpdx.net/janspubs/1984/chapters/deleeuw_C_84c.pdf">http://deleeuwpdx.net/janspubs/1984/chapters/deleeuw_C_84c.pdf</a>.
 </div>
-<div id="ref-deleeuw_A_88c" class="csl-entry">
+<div class="csl-entry">
 ———. 1988a. <span>“Models and Techniques.”</span> <em>Statistica Neerlandica</em> 42: 91–98. <a href="http://deleeuwpdx.net/janspubs/1988/articles/deleeuw_A_88c.pdf">http://deleeuwpdx.net/janspubs/1988/articles/deleeuw_A_88c.pdf</a>.
 </div>
-<div id="ref-deleeuw_A_88a" class="csl-entry">
+<div class="csl-entry">
 ———. 1988b. <span>“Multivariate Analysis with Linearizable Regressions.”</span> <em>Psychometrika</em> 53: 437–54. <a href="http://deleeuwpdx.net/janspubs/1988/articles/deleeuw_A_88a.pdf">http://deleeuwpdx.net/janspubs/1988/articles/deleeuw_A_88a.pdf</a>.
 </div>
-<div id="ref-deleeuw_C_88b" class="csl-entry">
+<div class="csl-entry">
 ———. 1988c. <span>“<span class="nocase">Multivariate Analysis with Optimal Scaling</span>.”</span> In <em>Proceedings of the International Conference on Advances in Multivariate Statistical Analysis</em>, edited by S. Das Gupta and J. K. Ghosh, 127–60. Calcutta, India: Indian Statistical Institute. <a href="http://deleeuwpdx.net/janspubs/1988/chapters/deleeuw_C_88b.pdf">http://deleeuwpdx.net/janspubs/1988/chapters/deleeuw_C_88b.pdf</a>.
 </div>
-<div id="ref-deleeuw_C_90b" class="csl-entry">
+<div class="csl-entry">
 ———. 1990. <span>“Data Modeling and Theory Construction.”</span> In <em>Operationalization and Research Strategy</em>, edited by J. J. Hox and J. De Jong-Gierveld. Amsterdam, The Netherlands: Swets; Zeitlinger. <a href="http://deleeuwpdx.net/janspubs/1990/chapters/deleeuw_C_90b.pdf">http://deleeuwpdx.net/janspubs/1990/chapters/deleeuw_C_90b.pdf</a>.
 </div>
-<div id="ref-deleeuw_C_94c" class="csl-entry">
+<div class="csl-entry">
 ———. 1994. <span>“<span class="nocase">Block Relaxation Algorithms in Statistics</span>.”</span> In <em>Information Systems and Data Analysis</em>, edited by H. H. Bock, W. Lenski, and M. M. Richter, 308–24. Berlin: Springer Verlag. <a href="http://deleeuwpdx.net/janspubs/1994/chapters/deleeuw_C_94c.pdf">http://deleeuwpdx.net/janspubs/1994/chapters/deleeuw_C_94c.pdf</a>.
 </div>
-<div id="ref-deleeuw_C_04a" class="csl-entry">
+<div class="csl-entry">
 ———. 2004. <span>“Least Squares Optimal Scaling of Partially Observed Linear Systems.”</span> In <em>Recent Developments in Structural Equation Models</em>, edited by K. van Montfort, J. Oud, and A. Satorra. Dordrecht, Netherlands: Kluwer Academic Publishers. <a href="http://deleeuwpdx.net/janspubs/2004/chapters/deleeuw_C_04a.pdf">http://deleeuwpdx.net/janspubs/2004/chapters/deleeuw_C_04a.pdf</a>.
 </div>
-<div id="ref-deleeuw_R_09c" class="csl-entry">
+<div class="csl-entry">
 ———. 2009. <span>“<span class="nocase">Regression, Discriminant Analysis, and Canonical Analysis with homals</span>.”</span> Preprint Series 562. Los Angeles, CA: UCLA Department of Statistics. <a href="http://deleeuwpdx.net/janspubs/2009/reports/deleeuw_R_09c.pdf">http://deleeuwpdx.net/janspubs/2009/reports/deleeuw_R_09c.pdf</a>.
 </div>
-<div id="ref-deleeuw_C_14" class="csl-entry">
+<div class="csl-entry">
 ———. 2014. <span>“<span class="nocase">History of Nonlinear Principal Component Analysis</span>.”</span> In <em><span class="nocase">The Visualization and Verbalization of Data</span></em>, edited by J. Blasius and M. Greenacre. Chapman; Hall. <a href="http://deleeuwpdx.net/janspubs/2014/chapters/deleeuw_C_14.pdf">http://deleeuwpdx.net/janspubs/2014/chapters/deleeuw_C_14.pdf</a>.
 </div>
-<div id="ref-deleeuw_E_15b" class="csl-entry">
-———. 2015a. <span>“<span class="nocase">Aspects of Correlation Matrices</span>.”</span> <a href="http://deleeuwpdx.net/pubfolders/aspect/aspect.pdf">http://deleeuwpdx.net/pubfolders/aspect/aspect.pdf</a>.
+<div class="csl-entry">
+———. 2015b. <span>“<span class="nocase">Aspects of Correlation Matrices</span>.”</span> <a href="http://deleeuwpdx.net/pubfolders/aspect/aspect.pdf">http://deleeuwpdx.net/pubfolders/aspect/aspect.pdf</a>.
 </div>
-<div id="ref-deleeuw_B_15" class="csl-entry">
-———. 2015b. <em><span class="nocase">Block Relaxation Algorithms in Statistics</span></em>. Bookdown. <a href="https://bookdown.org/jandeleeuw6/bras/">https://bookdown.org/jandeleeuw6/bras/</a>.
+<div class="csl-entry">
+———. 2015c. <em><span class="nocase">Block Relaxation Algorithms in Statistics</span></em>. Bookdown. <a href="https://bookdown.org/jandeleeuw6/bras/">https://bookdown.org/jandeleeuw6/bras/</a>.
 </div>
-<div id="ref-deleeuw_E_15d" class="csl-entry">
-De Leeuw, J. 2015. <span>“Exceedingly Simple b-Spline Code.”</span> <a href="http://rpubs.com/deleeuw/79161">http://rpubs.com/deleeuw/79161</a>.
+<div class="csl-entry">
+———. 2015d. <span>“Regression with Linear Inequality Restrictions on Predicted Values.”</span> <a href="http://rpubs.com/deleeuw/78897">http://rpubs.com/deleeuw/78897</a>.
 </div>
-<div id="ref-deleeuw_E_15e" class="csl-entry">
-De Leeuw, J. 2015c. <span>“Regression with Linear Inequality Restrictions on Predicted Values.”</span> <a href="http://rpubs.com/deleeuw/78897">http://rpubs.com/deleeuw/78897</a>.
-</div>
-<div id="ref-deleeuw_mair_A_09a" class="csl-entry">
+<div class="csl-entry">
 De Leeuw, J., and P. Mair. 2009a. <span>“Homogeneity Analysis in r: The Package Homals.”</span> <em>Journal of Statistical Software</em> 31 (4): 1–21. <a href="http://deleeuwpdx.net/janspubs/2009/articles/deleeuw_mair_A_09a.pdf">http://deleeuwpdx.net/janspubs/2009/articles/deleeuw_mair_A_09a.pdf</a>.
 </div>
-<div id="ref-deleeuw_mair_A_09b" class="csl-entry">
+<div class="csl-entry">
 ———. 2009b. <span>“Simple and Canonical Correspondence Analysis Using the r Package Anacor.”</span> <em>Journal of Statistical Software</em> 31 (5): 1–18. <a href="http://deleeuwpdx.net/janspubs/2009/articles/deleeuw_mair_A_09b.pdf">http://deleeuwpdx.net/janspubs/2009/articles/deleeuw_mair_A_09b.pdf</a>.
 </div>
-<div id="ref-deleeuw_michailidis_wang_C_99" class="csl-entry">
+<div class="csl-entry">
 De Leeuw, J., G. Michailidis, and D. Y. Wang. 1999. <span>“Correspondence Analysis Techniques.”</span> In <em>Multivariate Analysis, Design of Experiments, and Survey Sampling</em>, edited by S. Ghosh, 523–47. Marcel Dekker. <a href="http://deleeuwpdx.net/janspubs/1999/chapters/deleeuw_michailidis_wang_C_99.pdf">http://deleeuwpdx.net/janspubs/1999/chapters/deleeuw_michailidis_wang_C_99.pdf</a>.
 </div>
-<div id="ref-deleeuw_vanrijckevorsel_C_80" class="csl-entry">
+<div class="csl-entry">
 De Leeuw, J., and J. L. A. Van Rijckevorsel. 1980. <span>“HOMALS and PRINCALS: Some Generalizations of Principal Components Analysis.”</span> In <em>Data Analysis and Informatics</em>. Amsterdam: North Holland Publishing Company. <a href="http://deleeuwpdx.net/janspubs/1980/chapters/deleeuw_vanrijckevorsel_C_80.pdf">http://deleeuwpdx.net/janspubs/1980/chapters/deleeuw_vanrijckevorsel_C_80.pdf</a>.
 </div>
-<div id="ref-deleeuw_vanrijckevorsel_C_88" class="csl-entry">
+<div class="csl-entry">
 ———. 1988. <span>“Beyond Homogeneity Analysis.”</span> In <em>Component and Correspondence Analysis</em>, edited by J. L. A. Van Rijckevorsel and J. De Leeuw, 55–80. Chichester, England: Wiley. <a href="http://deleeuwpdx.net/janspubs/1988/chapters/deleeuw_vanrijckevorsel_C_88.pdf">http://deleeuwpdx.net/janspubs/1988/chapters/deleeuw_vanrijckevorsel_C_88.pdf</a>.
 </div>
-<div id="ref-deleeuw_vanrijckevorsel_vanderwouden_A_81" class="csl-entry">
+<div class="csl-entry">
 De Leeuw, J., J. L. A. Van Rijckevorsel, and H. Van der Wouden. 1981. <span>“Nonlinear Principal Component Analysis Using b-Splines.”</span> <em>Methods of Operations Research</em> 43: 379–94. <a href="http://deleeuwpdx.net/janspubs/1981/articles/deleeuw_vanrijckevorsel_vanderwouden_A_81.pdf">http://deleeuwpdx.net/janspubs/1981/articles/deleeuw_vanrijckevorsel_vanderwouden_A_81.pdf</a>.
 </div>
-<div id="ref-galton_89" class="csl-entry">
+<div class="csl-entry">
 Galton, F. 1889. <em><span>Natural Inheritance</span></em>. MacMillan; Co.
 </div>
-<div id="ref-gibson_62" class="csl-entry">
+<div class="csl-entry">
 Gibson, W. A. 1962. <span>“<span class="nocase">On the Least Squares Orthogonalization of an Oblique Transformation</span>.”</span> <em>Psychometrika</em> 27: 193–95.
 </div>
-<div id="ref-gifi_B_80" class="csl-entry">
+<div class="csl-entry">
 Gifi, A. 1980. <em>Niet-Lineaire Multivariate Analyse [Nonlinear Multivariate Analysis]</em>. Leiden, The Netherlands: Department of Data Theory FSW/RUL. <a href="http://deleeuwpdx.net/janspubs/1980/books/gifi_B_80.pdf">http://deleeuwpdx.net/janspubs/1980/books/gifi_B_80.pdf</a>.
 </div>
-<div id="ref-gifi_B_81" class="csl-entry">
+<div class="csl-entry">
 ———. 1981. <em>Nonlinear Multivariate Analysis</em>. Leiden, The Netherlands: Department of Data Theory FSW/RUL. <a href="http://deleeuwpdx.net/janspubs/1981/books/gifi_B_81.pdf">http://deleeuwpdx.net/janspubs/1981/books/gifi_B_81.pdf</a>.
 </div>
-<div id="ref-gifi_B_90" class="csl-entry">
+<div class="csl-entry">
 ———. 1990. <em>Nonlinear Multivariate Analysis</em>. New York, N.Y.: Wiley.
 </div>
-<div id="ref-glass_54" class="csl-entry">
+<div class="csl-entry">
 Glass, D. V. 1954. <em><span class="nocase">Social Mobility in Britain</span></em>. Free Press.
 </div>
-<div id="ref-gower_90" class="csl-entry">
+<div class="csl-entry">
 Gower, J. C. 1990. <span>“<span class="nocase">Fisher’s Optimal Scores and Multiple Correspondence Analysis</span>.”</span> <em>Biometrics</em> 46: 947–61.
 </div>
-<div id="ref-gower_hand_96" class="csl-entry">
+<div class="csl-entry">
 Gower, J. C., and D. J. Hand. 1996. <em><span>Biplots</span></em>. Monographs on Statistics and Applied Probability 54. Chapman; Hall.
 </div>
-<div id="ref-gower_leroux_gardnerlubbe_15" class="csl-entry">
+<div class="csl-entry">
 Gower, J. C., N. J. Le Roux, and S. Gardner-Lubbe. 2015. <span>“<span>Biplots: Quantitative Data</span>.”</span> <em>WIREs Computational Statistics</em> 7: 42–62. <a href="https://doi.org/10.1002/wics.1338">https://doi.org/10.1002/wics.1338</a>.
 </div>
-<div id="ref-gower_leroux_gardnerlubbe_16" class="csl-entry">
+<div class="csl-entry">
 ———. 2016. <span>“<span>Biplots: Qualitative Data</span>.”</span> <em>WIREs Computational Statistics</em> 8: 82–111. <a href="https://doi.org/10.1002/wics.1377">https://doi.org/10.1002/wics.1377</a>.
 </div>
-<div id="ref-guttman_41" class="csl-entry">
+<div class="csl-entry">
 Guttman, L. 1941. <span>“<span class="nocase">The Quantification of a Class of Attributes: A Theory and Method of Scale Construction</span>.”</span> In <em>The Prediction of Personal Adjustment</em>, edited by P. Horst, 321–48. New York: Social Science Research Council.
 </div>
-<div id="ref-hartigan_75" class="csl-entry">
+<div class="csl-entry">
 Hartigan, J. 1975. <em>Clustering Algorithms</em>. Wiley.
 </div>
-<div id="ref-heiser_95" class="csl-entry">
+<div class="csl-entry">
 Heiser, W. J. 1995. <span>“<span class="nocase">Convergent Computing by Iterative Majorization: Theory and Applications in Multidimensional Data Analysis</span>.”</span> In <em>Recent Advances in Descriptive Multivariate Analysis</em>, edited by W. J. Krzasnowski. Oxford, England: Clarendon Press.
 </div>
-<div id="ref-hill_74" class="csl-entry">
+<div class="csl-entry">
 Hill, M. O. 1974. <span>“<span class="nocase">Correspondence Analysis: a Neglected Multivariate Method</span>.”</span> <em>Applied Statistics</em> 23: 340–54.
 </div>
-<div id="ref-hill_90" class="csl-entry">
+<div class="csl-entry">
 ———. 1990. <span>“<span class="nocase">Review of A. Gifi, Multivariate Analysis</span>.”</span> <em>Journal of Ecology</em> 78 (4): 1148–49.
 </div>
-<div id="ref-holland_79" class="csl-entry">
+<div class="csl-entry">
 Holland, P. W. 1979. <span>“<span class="nocase">The Tyranny of Continuous Models in a World of Discrete Data</span>.”</span> <em>IHS-Journal</em> 3: 29–42.
 </div>
-<div id="ref-horst_61b" class="csl-entry">
+<div class="csl-entry">
 Horst, P. 1961a. <span>“<span class="nocase">Generalized Canonical Correlations and their Applications to Experimental Data</span>.”</span> <em>Journal of Clinical Psychology</em> 17: 331–47.
 </div>
-<div id="ref-horst_61a" class="csl-entry">
+<div class="csl-entry">
 ———. 1961b. <span>“<span class="nocase">Relations Among m Sets of Measures</span>.”</span> <em>Psychometrika</em> 26: 129–49.
 </div>
-<div id="ref-ibm_15" class="csl-entry">
+<div class="csl-entry">
 IBM. 2015. <em>IBM SPSS Categories 23</em>. IBM Corporation.
 </div>
-<div id="ref-kettenring_69" class="csl-entry">
+<div class="csl-entry">
 Kettenring, J. R. 1969. <span>“<span class="nocase">Canonical Analysis of Several Sets of Variables</span>.”</span> Institute of Statistics Mimeo Series 615. University of North Carolina at Chapell Hill.
 </div>
-<div id="ref-kettenring_71" class="csl-entry">
+<div class="csl-entry">
 ———. 1971. <span>“<span class="nocase">Canonical Analysis of Several Sets of Variables</span>.”</span> <em>Biometrika</em> 58: 433–51.
 </div>
-<div id="ref-kiers_cleroux_tenberge_94" class="csl-entry">
+<div class="csl-entry">
 Kiers, H. A. L, R. Cléroux, and J. M. F Ten Berge. 1994. <span>“<span class="nocase">Generalized Canonical Analysis Based on Optimizing Matrix Correlations and a Relation with IDIOSCAL</span>.”</span> <em>Computational Statistics and Data Analysis</em> 18: 331–40.
 </div>
-<div id="ref-koyak_87" class="csl-entry">
+<div class="csl-entry">
 Koyak, R. 1987. <span>“<span class="nocase">On Measuring Internal Dependence in a Set of Random Variables</span>.”</span> <em>Annals of Statistics</em> 15: 1215–28.
 </div>
-<div id="ref-kruskal_64a" class="csl-entry">
+<div class="csl-entry">
 Kruskal, J. B. 1964a. <span>“<span class="nocase">Multidimensional Scaling by Optimizing Goodness of Fit to a Nonmetric Hypothesis</span>.”</span> <em>Psychometrika</em> 29: 1–27.
 </div>
-<div id="ref-kruskal_64b" class="csl-entry">
+<div class="csl-entry">
 ———. 1964b. <span>“<span class="nocase">Nonmetric Multidimensional Scaling: a Numerical Method</span>.”</span> <em>Psychometrika</em> 29: 115–29.
 </div>
-<div id="ref-kruskal_65" class="csl-entry">
+<div class="csl-entry">
 ———. 1965. <span>“<span class="nocase">Analysis of Factorial Experiments by Estimating Monotone Transformations of the Data</span>.”</span> <em>Journal of the Royal Statistical Society</em> B27: 251–63.
 </div>
-<div id="ref-kruskal_shepard_74" class="csl-entry">
+<div class="csl-entry">
 Kruskal, J. B., and R. N. Shepard. 1974. <span>“<span class="nocase">A Nonmetric Variety of Linear Factor Analysis</span>.”</span> <em>Psychometrika</em> 39: 123–57.
 </div>
-<div id="ref-lange_hunter_yang_00" class="csl-entry">
+<div class="csl-entry">
 Lange, K., D. R. Hunter, and I. Yang. 2000. <span>“<span>Optimization Transfer Using Surrogate Objective Functions</span>.”</span> <em>Journal of Computational and Graphical Statistics</em> 9: 1–20.
 </div>
-<div id="ref-lingoes_73" class="csl-entry">
+<div class="csl-entry">
 Lingoes, J. C. 1973. <em><span>The Guttman-Lingoes Nonmetric Program Series</span></em>. Mathesis Press.
 </div>
-<div id="ref-mackenzie_78" class="csl-entry">
+<div class="csl-entry">
 Mackenzie, D. 1978. <span>“<span class="nocase">Statistical Theory and Social Interests: A Case-Study</span>.”</span> <em>Social Studies of Science</em> 8: 35–83.
 </div>
-<div id="ref-mair_deleeuw_A_10" class="csl-entry">
+<div class="csl-entry">
 Mair, P., and J. De Leeuw. 2010. <span>“A General Framework for Multivariate Analysis with Optimal Scaling: The r Package Aspect.”</span> <em>Journal of Statistical Software</em> 32 (9): 1–23. <a href="http://deleeuwpdx.net/janspubs/2010/articles/mair_deleeuw_A_10.pdf">http://deleeuwpdx.net/janspubs/2010/articles/mair_deleeuw_A_10.pdf</a>.
 </div>
-<div id="ref-marvell_53" class="csl-entry">
+<div class="csl-entry">
 Marvell, A. 1653. <span>“The Character of Holland.”</span> <a href="https://ebooks.adelaide.edu.au/m/marvell/andrew/poems/poem58.html">https://ebooks.adelaide.edu.au/m/marvell/andrew/poems/poem58.html</a>.
 </div>
-<div id="ref-meulman_82" class="csl-entry">
+<div class="csl-entry">
 Meulman, J. J. 1982. <em><span class="nocase">Homogeneity Analysis of Incomplete Data</span></em>. Leiden, The Netherlands: <span>DSWO</span> Press.
 </div>
-<div id="ref-meulman_heiser_12" class="csl-entry">
+<div class="csl-entry">
 Meulman, J. M., and W. J. Heiser. 2012. <em>IBM SPSS Categories 21</em>. IBM Corporation.
 </div>
-<div id="ref-michailidis_deleeuw_A_98" class="csl-entry">
+<div class="csl-entry">
 Michailidis, G., and J. De Leeuw. 1998. <span>“The Gifi System for Descriptive Multivariate Analysis.”</span> <em>Statistical Science</em> 13: 307–36. <a href="http://deleeuwpdx.net/janspubs/1998/articles/michailidis_deleeuw_A_98.pdf">http://deleeuwpdx.net/janspubs/1998/articles/michailidis_deleeuw_A_98.pdf</a>.
 </div>
-<div id="ref-nenadic_greenacre_07" class="csl-entry">
+<div class="csl-entry">
 Nenadic, O., and M. Greenacre. 2007. <span>“<span class="nocase">Correspondence Analysis in R, with two- and three-dimensional graphics: The ca package</span>.”</span> <em>Journal of Statistical Software</em> 20 (3): 1–13.
 </div>
-<div id="ref-peschar_75" class="csl-entry">
+<div class="csl-entry">
 Peschar, J. L. 1975. <em><span>School, Milieu, Beroep</span></em>. Groningen, The Netherlands: Tjeek Willink.
 </div>
-<div id="ref-r_core_team_16" class="csl-entry">
+<div class="csl-entry">
 R Core Team. 2016. <em>R: A Language and Environment for Statistical Computing</em>. <span>Vienna, Austria</span>: R Foundation for Statistical Computing. <a href="https://www.R-project.org/">https://www.R-project.org/</a>.
 </div>
-<div id="ref-revelle_15" class="csl-entry">
+<div class="csl-entry">
 Revelle, William. 2015. <em>Psych: Procedures for Psychological, Psychometric, and Personality Research</em>. Evanston, Illinois: Northwestern University. <a href="http://CRAN.R-project.org/package=psych">http://CRAN.R-project.org/package=psych</a>.
 </div>
-<div id="ref-roskam_68" class="csl-entry">
+<div class="csl-entry">
 Roskam, E. E. 1968. <span>“<span class="nocase">Metric Analysis of Ordinal Data in Psychology</span>.”</span> PhD thesis, University of Leiden.
 </div>
-<div id="ref-shmueli_10" class="csl-entry">
+<div class="csl-entry">
 Shmueli, G. 2010. <span>“<span class="nocase">To Explain or to Predict ?</span>”</span> <em>Statistical Science</em> 25: 289–310.
 </div>
-<div id="ref-spss_89" class="csl-entry">
+<div class="csl-entry">
 SPSS. 1989. <em>SPSS Categories</em>. SPSS Inc.
 </div>
-<div id="ref-takane_92" class="csl-entry">
+<div class="csl-entry">
 Takane, Y. 1992. <span>“<span class="nocase">Review of Albert Gifi, Nonlinear Multivariate Analysis</span>.”</span> <em>Journal of the American Statistical Association</em> 87: 587–88.
 </div>
-<div id="ref-tanaka_79" class="csl-entry">
+<div class="csl-entry">
 Tanaka, Y. 1979. <span>“<span class="nocase">Review of the Methods of Quantification</span>.”</span> <em>Environmental Health Perspectives</em> 32: 113–23.
 </div>
-<div id="ref-tenenhaus_tenenhaus_11" class="csl-entry">
+<div class="csl-entry">
 Tenenhaus, A., and M. Tenenhaus. 2011. <span>“<span>Regularized Generalized Canonical Correlation Analysis</span>.”</span> <em>Psychometrika</em> 76: 257–84.
 </div>
-<div id="ref-tenenhaus_young_85" class="csl-entry">
+<div class="csl-entry">
 Tenenhaus, M., and F. W. Young. 1985. <span>“<span class="nocase">An Analysis and Synthesis of Multiple Correspondence Analysis, Optimal Scaling, Dual Scaling, Homogeneity Analysis and Other Methods for Quantifying Categorical Multivariate Data</span>.”</span> <em>Psychometrika</em> 50: 91–119.
 </div>
-<div id="ref-tukey_62" class="csl-entry">
+<div class="csl-entry">
 Tukey, J. W. 1962. <span>“<span class="nocase">The Future of Data Analysis</span>.”</span> <em>Annals of Mathematical Statistics</em> 33: 1–79.
 </div>
-<div id="ref-vandegeer_71" class="csl-entry">
+<div class="csl-entry">
 Van de Geer, J. P. 1971. <em><span class="nocase">Introduction to Multivariate Analysis for the Social Sciences</span></em>. San Francisco, CA: Freeman.
 </div>
-<div id="ref-vanderburg_deleeuw_verdegaal_A_88" class="csl-entry">
+<div class="csl-entry">
 Van der Burg, E., J. De Leeuw, and R. Verdegaal. 1988. <span>“Homogeneity Analysis with k Sets of Variables: An Alternating Least Squares Approach with Optimal Scaling Features.”</span> <em>Psychometrika</em> 53: 177–97. <a href="http://deleeuwpdx.net/janspubs/1988/articles/vanderburg_deleeuw_verdegaal_A_88.pdf">http://deleeuwpdx.net/janspubs/1988/articles/vanderburg_deleeuw_verdegaal_A_88.pdf</a>.
 </div>
-<div id="ref-vanderheijden_vanbuuren_16" class="csl-entry">
+<div class="csl-entry">
 Van der Heijden, P. G. M., and S. Van Buuren. 1916. <span>“Looking Back at the Gifi System of Nonlinear Multivariate Analysis.”</span> <em>Journal of Statistical Software</em> 73 (4).
 </div>
-<div id="ref-vandervelden_12" class="csl-entry">
+<div class="csl-entry">
 Van der Velden, M. 2012. <span>“On Generalized Canonical Correlation Analysis.”</span> In <em>Proceedings 58th World Statistical Congress, 2011, Dublin</em>, 758–65. The Hague: International Statiatical Instutute.
 </div>
-<div id="ref-vandervelden_takane_12" class="csl-entry">
+<div class="csl-entry">
 Van der Velden, M., and Y. Takane. 2012. <span>“<span class="nocase">Generalized Canonical Correlation Analysis with Missing Values</span>.”</span> <em>Computational Statistics</em> 27: 551–71.
 </div>
-<div id="ref-vanrijckevorsel_deleeuw_B_88" class="csl-entry">
+<div class="csl-entry">
 Van Rijckevorsel, J. L. A., and J. De Leeuw, eds. 1988. <em>Component and Correspondence Analysis</em>. Wiley. <a href="http://deleeuwpdx.net/janspubs/1988/books/vanrijckevorsel_deleeuw_B_88.pdf">http://deleeuwpdx.net/janspubs/1988/books/vanrijckevorsel_deleeuw_B_88.pdf</a>.
 </div>
-<div id="ref-wilson_26" class="csl-entry">
+<div class="csl-entry">
 Wilson, E. B. 1926. <span>“<span class="nocase">Empiricism and Rationalism</span>.”</span> <em>Science</em> 64: 47–57.
 </div>
-<div id="ref-winsberg_ramsay_80" class="csl-entry">
+<div class="csl-entry">
 Winsberg, S., and J. O. Ramsay. 1980. <span>“<span class="nocase">Monotone Transformations to Additivity</span>.”</span> <em>Biometrika</em> 67: 669–74.
 </div>
-<div id="ref-winsberg_ramsay_83" class="csl-entry">
+<div class="csl-entry">
 ———. 1983. <span>“<span class="nocase">Monotone Spline Transformations for Dimension Reduction</span>.”</span> <em>Psychometrika</em> 48: 575–95.
 </div>
-<div id="ref-xie_15" class="csl-entry">
+<div class="csl-entry">
 Xie, Y. 2015. <em>Dynamic Documents with r and Knitr</em>. Second Edition. CRC Press.
 </div>
-<div id="ref-xie_16" class="csl-entry">
+<div class="csl-entry">
 ———. 2016. <em>Bookdown: Authoring Books with r Markdown.</em> <a href="https://github.com/rstudio/bookdown">https://github.com/rstudio/bookdown</a>.
 </div>
-<div id="ref-young_81" class="csl-entry">
+<div class="csl-entry">
 Young, F. W. 1981. <span>“<span class="nocase">Quantitative Analysis of Qualitative Data</span>.”</span> <em>Psychometrika</em> 46: 357–88.
 </div>
-<div id="ref-young_deleeuw_takane_C_80" class="csl-entry">
+<div class="csl-entry">
 Young, F. W., J. De Leeuw, and Y. Takane. 1980. <span>“Quantifying Qualitative Data.”</span> In <em>Similarity and Choice. Papers in Honor of Clyde Coombs</em>, edited by E. D. Lantermann and H. Feger. Bern: Hans Huber. <a href="http://deleeuwpdx.net/janspubs/1980/chapters/young_deleeuw_takane_C_80.pdf">http://deleeuwpdx.net/janspubs/1980/chapters/young_deleeuw_takane_C_80.pdf</a>.
 </div>
-<div id="ref-yu_14" class="csl-entry">
+<div class="csl-entry">
 Yu, B. 2014. <span>“<span>Let Us Own Data Science</span>.”</span> <em>IMS Bulletin</em> 43: 1, 13–16.
 </div>
 </div>
@@ -2390,6 +2414,7 @@ gitbook.start({
 "weibo": false,
 "instapaper": false,
 "vk": false,
+"whatsapp": false,
 "all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
 },
 "fontsettings": {

@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>6 Multiple Correspondence Analysis and homals() | Gifi Analysis of Multivariate Data</title>
   <meta name="description" content="null" />
-  <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.22.3 and GitBook 2.6.7" />
 
   <meta property="og:title" content="6 Multiple Correspondence Analysis and homals() | Gifi Analysis of Multivariate Data" />
   <meta property="og:type" content="book" />
@@ -32,7 +32,7 @@
   
 <link rel="prev" href="algorithm.html"/>
 <link rel="next" href="discriminant-analysis-and-criminals.html"/>
-<script src="libs/header-attrs-2.5/header-attrs.js"></script>
+<script src="libs/header-attrs-2.8.6/header-attrs.js"></script>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -50,14 +50,15 @@
 
 
 
-<link href="libs/anchor-sections-1.0/anchor-sections.css" rel="stylesheet" />
-<script src="libs/anchor-sections-1.0/anchor-sections.js"></script>
+<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
 
 
 <style type="text/css">
 pre > code.sourceCode { white-space: pre; position: relative; }
 pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
 pre.sourceCode { margin: 0; }
 @media screen {
@@ -116,6 +117,29 @@ code span.st { color: #4070a0; } /* String */
 code span.va { color: #19177c; } /* Variable */
 code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
 </style>
 
 </head>
@@ -245,7 +269,7 @@ at least partially, by using the QR decomposition <span class="math inline">\(H_
 <h2><span class="header-section-number">6.2</span> Examples</h2>
 <div id="hartigans-hardware" class="section level3" number="6.2.1">
 <h3><span class="header-section-number">6.2.1</span> Hartigan’s Hardware</h3>
-<p>Our first example are semi-serious data from <span class="citation"><a href="discriminant-analysis-and-criminals.html#ref-hartigan_75" role="doc-biblioref">Hartigan</a> (<a href="discriminant-analysis-and-criminals.html#ref-hartigan_75" role="doc-biblioref">1975</a>)</span> (p. 228), also analyzed in <span class="citation"><a href="discriminant-analysis-and-criminals.html#ref-gifi_B_90" role="doc-biblioref">Gifi</a> (<a href="discriminant-analysis-and-criminals.html#ref-gifi_B_90" role="doc-biblioref">1990</a>)</span> (p. 128-135). A number of screws, tacks, nails, and bolts are classified by six variables. The data are</p>
+<p>Our first example are semi-serious data from <span class="citation"><a href="#ref-hartigan_75" role="doc-biblioref">Hartigan</a> (<a href="#ref-hartigan_75" role="doc-biblioref">1975</a>)</span> (p. 228), also analyzed in <span class="citation"><a href="#ref-gifi_B_90" role="doc-biblioref">Gifi</a> (<a href="#ref-gifi_B_90" role="doc-biblioref">1990</a>)</span> (p. 128-135). A number of screws, tacks, nails, and bolts are classified by six variables. The data are</p>
 <pre><code>##        thread head indentation bottom length brass
 ## tack        N    F           N      S      1     N
 ## nail1       N    F           N      S      4     N
@@ -328,7 +352,7 @@ induced correlation matrix (divided by the number of variables, not the number o
 <pre><code>## [1]  0.60  0.37  0.21  0.13  0.10  0.07  0.02  0.00 -0.00</code></pre>
 <p>Note that the two dominant eigenvalues are again equal to the diagonal elements of <span class="math inline">\(\Lambda\)</span>.</p>
 <p>###GALO</p>
-<p>The second example is somewhat more realistic. In the GALO dataset (<span class="citation"><a href="discriminant-analysis-and-criminals.html#ref-peschar_75" role="doc-biblioref">Peschar</a> (<a href="discriminant-analysis-and-criminals.html#ref-peschar_75" role="doc-biblioref">1975</a>)</span>) data on 1290 school children in the sixth grade of an elementary school in 1959 in the city of Groningen (Netherlands) were collected. The variables are gender, IQ (categorized into 9 ordered categories), advice (teacher categorized the children into 7 possible forms of secondary education, i.e., Agr = agricultural; Ext = extended primary education; Gen = general; Grls = secondary school for girls; Man = manual, including housekeeping; None = no further education; Uni = pre- University), SES (parent’s profession in 6 categories) and school (37 different schools). The data have been analyzed previously in many Gifi publications, for example in <span class="citation"><a href="discriminant-analysis-and-criminals.html#ref-deleeuw_mair_A_09a" role="doc-biblioref">J. De Leeuw and Mair</a> (<a href="discriminant-analysis-and-criminals.html#ref-deleeuw_mair_A_09a" role="doc-biblioref">2009a</a>)</span>. For our MCA we only make the first four variables, school is treated as passive</p>
+<p>The second example is somewhat more realistic. In the GALO dataset (<span class="citation"><a href="#ref-peschar_75" role="doc-biblioref">Peschar</a> (<a href="#ref-peschar_75" role="doc-biblioref">1975</a>)</span>) data on 1290 school children in the sixth grade of an elementary school in 1959 in the city of Groningen (Netherlands) were collected. The variables are gender, IQ (categorized into 9 ordered categories), advice (teacher categorized the children into 7 possible forms of secondary education, i.e., Agr = agricultural; Ext = extended primary education; Gen = general; Grls = secondary school for girls; Man = manual, including housekeeping; None = no further education; Uni = pre- University), SES (parent’s profession in 6 categories) and school (37 different schools). The data have been analyzed previously in many Gifi publications, for example in <span class="citation"><a href="#ref-deleeuw_mair_A_09a" role="doc-biblioref">J. De Leeuw and Mair</a> (<a href="#ref-deleeuw_mair_A_09a" role="doc-biblioref">2009a</a>)</span>. For our MCA we only make the first four variables, school is treated as passive</p>
 <p>We use this example to illustrate some of the constraints on transformations. Two copies are used for all variables (although gender effectively only has one, of course). IQ is treated as ordinal, using a piecewise linear spline with knots at the nine data points.</p>
 <div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="multiple-correspondence-analysis-and-homals.html#cb26-1" aria-hidden="true" tabindex="-1"></a>galo_knots <span class="ot">&lt;-</span> <span class="fu">knotsD</span>(galo)</span>
 <span id="cb26-2"><a href="multiple-correspondence-analysis-and-homals.html#cb26-2" aria-hidden="true" tabindex="-1"></a>galo_degrees <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>,<span class="dv">1</span>,<span class="sc">-</span><span class="dv">1</span>,<span class="sc">-</span><span class="dv">1</span>,<span class="sc">-</span><span class="dv">1</span>)</span>
@@ -342,7 +366,7 @@ Figure 4: Galo Data, Transformations
 </center>
 <hr>
 The four star plots for the active variables, together with the four category quantification plots, are in figure 5. Note that <code>homals()</code> does not compute category quantifications, we have to compute them from the <code>homals()</code> output. Also note that
-for gender, advice and SES the object scores are connected to the category centroids of the variables. For IQ object scores are connected to points on the line connecting adjacent category quantifications. See <span class="citation"><a href="discriminant-analysis-and-criminals.html#ref-deleeuw_vanrijckevorsel_C_88" role="doc-biblioref">J. De Leeuw and Van Rijckevorsel</a> (<a href="discriminant-analysis-and-criminals.html#ref-deleeuw_vanrijckevorsel_C_88" role="doc-biblioref">1988</a>)</span> for category plots using forms of fuzzy coding (of which B-splines are an example).
+for gender, advice and SES the object scores are connected to the category centroids of the variables. For IQ object scores are connected to points on the line connecting adjacent category quantifications. See <span class="citation"><a href="#ref-deleeuw_vanrijckevorsel_C_88" role="doc-biblioref">J. De Leeuw and Van Rijckevorsel</a> (<a href="#ref-deleeuw_vanrijckevorsel_C_88" role="doc-biblioref">1988</a>)</span> for category plots using forms of fuzzy coding (of which B-splines are an example).
 <hr>
 <img src="_main_files/figure-html/plot_galo_quant_stars-1.png" width="672" style="display: block; margin: auto;" /><img src="_main_files/figure-html/plot_galo_quant_stars-2.png" width="672" style="display: block; margin: auto;" /><img src="_main_files/figure-html/plot_galo_quant_stars-3.png" width="672" style="display: block; margin: auto;" /><img src="_main_files/figure-html/plot_galo_quant_stars-4.png" width="672" style="display: block; margin: auto;" />
 <center>
@@ -369,7 +393,7 @@ Figure 6: Galo Data, Schools as Passive
 </div>
 <div id="thirteen-personality-scales" class="section level3" number="6.2.2">
 <h3><span class="header-section-number">6.2.2</span> Thirteen Personality Scales</h3>
-<p>Our next example is a small data block from the <code>psych</code> package <span class="citation">(<a href="discriminant-analysis-and-criminals.html#ref-revelle_15" role="doc-biblioref">Revelle 2015</a>)</span> of five scales from the Eysenck Personality Inventory, five from a Big Five inventory, a Beck Depression Inventory, and State and Trait Anxiety measures.</p>
+<p>Our next example is a small data block from the <code>psych</code> package <span class="citation">(<a href="#ref-revelle_15" role="doc-biblioref">Revelle 2015</a>)</span> of five scales from the Eysenck Personality Inventory, five from a Big Five inventory, a Beck Depression Inventory, and State and Trait Anxiety measures.</p>
 <div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="multiple-correspondence-analysis-and-homals.html#cb31-1" aria-hidden="true" tabindex="-1"></a>epi<span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;data/epi.bfi.csv&quot;</span>)</span>
 <span id="cb31-2"><a href="multiple-correspondence-analysis-and-homals.html#cb31-2" aria-hidden="true" tabindex="-1"></a>epi_knots <span class="ot">&lt;-</span> <span class="fu">knotsQ</span>(epi)</span>
 <span id="cb31-3"><a href="multiple-correspondence-analysis-and-homals.html#cb31-3" aria-hidden="true" tabindex="-1"></a>epi_degrees <span class="ot">&lt;-</span> <span class="fu">rep</span> (<span class="dv">0</span>, <span class="dv">13</span>)</span>
@@ -416,7 +440,7 @@ Figure 11: Personality Scales, Transformations, Multiple Nominal, Degree Two
 <p>#Correspondence Analysis and corals()</p>
 <p>##Introduction</p>
 <p>Ordinary correspondence analysis (OCA) is the special case of MCA in which there are only two variables, and both variables have the maximum number of copies. Consequently the <code>homals()</code> wrapper can be used to compute a CA. Because input and output can be organized a bit differently for OCA we have written the separate wrapper <code>corals()</code>.</p>
-<p>Note that <code>corals()</code> is not really intended for routine OCA computation. There are many packages in R which do that job much more efficiently. We mention, for example, <code>anacor</code> (<span class="citation"><a href="discriminant-analysis-and-criminals.html#ref-deleeuw_mair_A_09b" role="doc-biblioref">J. De Leeuw and Mair</a> (<a href="discriminant-analysis-and-criminals.html#ref-deleeuw_mair_A_09b" role="doc-biblioref">2009b</a>)</span>) and <code>ca</code> (<span class="citation"><a href="discriminant-analysis-and-criminals.html#ref-nenadic_greenacre_07" role="doc-biblioref">Nenadic and Greenacre</a> (<a href="discriminant-analysis-and-criminals.html#ref-nenadic_greenacre_07" role="doc-biblioref">2007</a>)</span>).
+<p>Note that <code>corals()</code> is not really intended for routine OCA computation. There are many packages in R which do that job much more efficiently. We mention, for example, <code>anacor</code> (<span class="citation"><a href="#ref-deleeuw_mair_A_09b" role="doc-biblioref">J. De Leeuw and Mair</a> (<a href="#ref-deleeuw_mair_A_09b" role="doc-biblioref">2009b</a>)</span>) and <code>ca</code> (<span class="citation"><a href="#ref-nenadic_greenacre_07" role="doc-biblioref">Nenadic and Greenacre</a> (<a href="#ref-nenadic_greenacre_07" role="doc-biblioref">2007</a>)</span>).
 However, <code>corals()</code> can be used for a number of cases which the usual OCA packages do not cover.</p>
 <p>In <code>corals()</code>, as in the other packages, the default input is a single non-negative matrix <span class="math inline">\(F\)</span>. Although any non-negative matrix will do, the most common, and the most natural, input is an <span class="math inline">\(r\times c\)</span> <em>cross table</em> with bivariate frequencies. Suppose the frequencies add up to the total number of observations <span class="math inline">\(n\)</span>. Then <code>gifiEngine()</code>, which is called by <code>corals()</code>, requires input in the form of an <span class="math inline">\(n\times 2\)</span> matrix. Thus a <span class="math inline">\(2\times 2\)</span> table with 1000 observations becomes a <span class="math inline">\(1000\times 2\)</span> matrix. The utility <code>preCorals()</code> makes the conversion, but of course the representation is embarrassingly inefficient, both in terms of memory and in terms of computation. After the computations are done, the utility <code>postCorals()</code> restores transformations and scores to the appropriate row and column dimensions.</p>
 <p>Here are the arguments and their defaults.</p>
@@ -452,7 +476,7 @@ and thus for the discrimination matrices <span class="math inline">\(\tilde Y_1&
 between <span class="math inline">\(X\)</span> and the <span class="math inline">\(G_j\tilde Y_j\)</span> are more interesting. Since <span class="math inline">\(X&#39;G_j\tilde Y_j=\tilde\Lambda\)</span>, we see these correlations are equal to <span class="math inline">\(\tilde\Lambda^\frac12\)</span>.</p>
 <p>##Examples</p>
 <p>###Glass</p>
-<p>We start with a classical OCA example that was also used by <span class="citation"><a href="discriminant-analysis-and-criminals.html#ref-gifi_B_90" role="doc-biblioref">Gifi</a> (<a href="discriminant-analysis-and-criminals.html#ref-gifi_B_90" role="doc-biblioref">1990</a>)</span> (p 277-280) and by <span class="citation"><a href="discriminant-analysis-and-criminals.html#ref-deleeuw_mair_A_09b" role="doc-biblioref">J. De Leeuw and Mair</a> (<a href="discriminant-analysis-and-criminals.html#ref-deleeuw_mair_A_09b" role="doc-biblioref">2009b</a>)</span>. Data are from <span class="citation"><a href="discriminant-analysis-and-criminals.html#ref-glass_54" role="doc-biblioref">Glass</a> (<a href="discriminant-analysis-and-criminals.html#ref-glass_54" role="doc-biblioref">1954</a>)</span>. Occupational status of the fathers is crossed with occupational status of the son, for 3497 British families. The row (father) and column (son) categories are</p>
+<p>We start with a classical OCA example that was also used by <span class="citation"><a href="#ref-gifi_B_90" role="doc-biblioref">Gifi</a> (<a href="#ref-gifi_B_90" role="doc-biblioref">1990</a>)</span> (p 277-280) and by <span class="citation"><a href="#ref-deleeuw_mair_A_09b" role="doc-biblioref">J. De Leeuw and Mair</a> (<a href="#ref-deleeuw_mair_A_09b" role="doc-biblioref">2009b</a>)</span>. Data are from <span class="citation"><a href="#ref-glass_54" role="doc-biblioref">Glass</a> (<a href="#ref-glass_54" role="doc-biblioref">1954</a>)</span>. Occupational status of the fathers is crossed with occupational status of the son, for 3497 British families. The row (father) and column (son) categories are</p>
 <ul>
 <li>PROF professional and high administrative</li>
 <li>EXEC managerial and executive</li>
@@ -515,7 +539,7 @@ Figure 14: Glass Data, Regression Plots
 </center>
 <hr>
 <p>###Galton</p>
-<p>To illustrate some of the additional <code>corals()</code> options we use the classical father-child RFF height data of <span class="citation"><a href="discriminant-analysis-and-criminals.html#ref-galton_89" role="doc-biblioref">Galton</a> (<a href="discriminant-analysis-and-criminals.html#ref-galton_89" role="doc-biblioref">1889</a>)</span>. It has mid-parent height in the rows and mid-adult-child height in the columns.</p>
+<p>To illustrate some of the additional <code>corals()</code> options we use the classical father-child RFF height data of <span class="citation"><a href="#ref-galton_89" role="doc-biblioref">Galton</a> (<a href="#ref-galton_89" role="doc-biblioref">1889</a>)</span>. It has mid-parent height in the rows and mid-adult-child height in the columns.</p>
 <div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="multiple-correspondence-analysis-and-homals.html#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span> (galton, <span class="at">package =</span> <span class="st">&quot;anacor&quot;</span>)</span>
 <span id="cb40-2"><a href="multiple-correspondence-analysis-and-homals.html#cb40-2" aria-hidden="true" tabindex="-1"></a>galton <span class="ot">&lt;-</span> <span class="fu">as.matrix</span> (galton)</span>
 <span id="cb40-3"><a href="multiple-correspondence-analysis-and-homals.html#cb40-3" aria-hidden="true" tabindex="-1"></a>galton <span class="ot">&lt;-</span> galton[<span class="fu">nrow</span> (galton)<span class="sc">:</span><span class="dv">1</span>, ]</span>
@@ -580,7 +604,7 @@ Figure 16: Galton Data, Transformation Plots
 <p>##Introduction</p>
 <p>princals, principals, Shepard-Kruskal, mdrace, history</p>
 <p>##Equations</p>
-<p>Suppose all <span class="math inline">\(m\)</span> blocks each contain only a single variable. Then the Burt matrix is the correlation matrix of the <span class="math inline">\(H_j\)</span>, which are all <span class="math inline">\(n\times 1\)</span> matrices in this case. It follows that MVAOS maximizes the sum of the <span class="math inline">\(r\)</span> largest eigenvalues of the correlation matrix over transformations, i.e. MVAOS is <em>nonlinear principal component analysis</em> <span class="citation">(<a href="discriminant-analysis-and-criminals.html#ref-deleeuw_C_14" role="doc-biblioref">J. De Leeuw 2014</a>)</span>.</p>
+<p>Suppose all <span class="math inline">\(m\)</span> blocks each contain only a single variable. Then the Burt matrix is the correlation matrix of the <span class="math inline">\(H_j\)</span>, which are all <span class="math inline">\(n\times 1\)</span> matrices in this case. It follows that MVAOS maximizes the sum of the <span class="math inline">\(r\)</span> largest eigenvalues of the correlation matrix over transformations, i.e. MVAOS is <em>nonlinear principal component analysis</em> <span class="citation">(<a href="#ref-deleeuw_C_14" role="doc-biblioref">J. De Leeuw 2014</a>)</span>.</p>
 <p>##Examples</p>
 <p>###Thirteen Personality Scales</p>
 <p>We use the same data as before for an NLPCA with all blocks of rank one, all variables ordinal, and splines of degree 2.</p>
@@ -641,7 +665,7 @@ C_{12}a_2&amp;=(2\lambda-1)D_1a_1,\\
 C_{21}a_1&amp;=(2\lambda-1)D_2a_2,
 \end{split}
 \]</span>
-from which we see that MVAOS maximizes the sum of the <span class="math inline">\(r\)</span> largest canonical correlations between <span class="math inline">\(H_1\)</span> and <span class="math inline">\(H_2\)</span>. See also <span class="citation"><a href="discriminant-analysis-and-criminals.html#ref-vandervelden_12" role="doc-biblioref">Van der Velden</a> (<a href="discriminant-analysis-and-criminals.html#ref-vandervelden_12" role="doc-biblioref">2012</a>)</span>.</p>
+from which we see that MVAOS maximizes the sum of the <span class="math inline">\(r\)</span> largest canonical correlations between <span class="math inline">\(H_1\)</span> and <span class="math inline">\(H_2\)</span>. See also <span class="citation"><a href="#ref-vandervelden_12" role="doc-biblioref">Van der Velden</a> (<a href="#ref-vandervelden_12" role="doc-biblioref">2012</a>)</span>.</p>
 <p>##Examples</p>
 <p>#Multiple Regression and morals()</p>
 <p>If the second block only contains a single copy of a single variable then we choose transformations that maximize the multiple correlation of that variable and the variables in the first block.</p>
@@ -659,7 +683,7 @@ from which we see that MVAOS maximizes the sum of the <span class="math inline">
 <span id="cb48-2"><a href="multiple-correspondence-analysis-and-homals.html#cb48-2" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span> (x, h<span class="sc">$</span>ypred)</span></code></pre></div>
 <p><img src="_main_files/figure-html/polynom_data-3.png" width="672" /></p>
 <p>###Gases with Convertible Components</p>
-<p>We analyze a regression example, using data from Neumann, previously used by Willard Gibbs, and analyzed with regression in a still quite readable article by <span class="citation"><a href="discriminant-analysis-and-criminals.html#ref-wilson_26" role="doc-biblioref">Wilson</a> (<a href="discriminant-analysis-and-criminals.html#ref-wilson_26" role="doc-biblioref">1926</a>)</span>. Wilson’s analysis was discussed and modified using splines in <span class="citation"><a href="discriminant-analysis-and-criminals.html#ref-gifi_B_90" role="doc-biblioref">Gifi</a> (<a href="discriminant-analysis-and-criminals.html#ref-gifi_B_90" role="doc-biblioref">1990</a>)</span> (pages 370-376). In the regression analysis in this section we use two copies of temperature, with spline degree zero, and the first copy ordinal. For pressure and the dependent variable density we use a single ordinal copy with spline degree two.</p>
+<p>We analyze a regression example, using data from Neumann, previously used by Willard Gibbs, and analyzed with regression in a still quite readable article by <span class="citation"><a href="#ref-wilson_26" role="doc-biblioref">Wilson</a> (<a href="#ref-wilson_26" role="doc-biblioref">1926</a>)</span>. Wilson’s analysis was discussed and modified using splines in <span class="citation"><a href="#ref-gifi_B_90" role="doc-biblioref">Gifi</a> (<a href="#ref-gifi_B_90" role="doc-biblioref">1990</a>)</span> (pages 370-376). In the regression analysis in this section we use two copies of temperature, with spline degree zero, and the first copy ordinal. For pressure and the dependent variable density we use a single ordinal copy with spline degree two.</p>
 <div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb49-1"><a href="multiple-correspondence-analysis-and-homals.html#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span> (neumann, <span class="at">package =</span> <span class="st">&quot;homals&quot;</span>)</span>
 <span id="cb49-2"><a href="multiple-correspondence-analysis-and-homals.html#cb49-2" aria-hidden="true" tabindex="-1"></a>xneumann <span class="ot">&lt;-</span> neumann[, <span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>]</span>
 <span id="cb49-3"><a href="multiple-correspondence-analysis-and-homals.html#cb49-3" aria-hidden="true" tabindex="-1"></a>yneumann <span class="ot">&lt;-</span> neumann[, <span class="dv">3</span>, drop <span class="ot">=</span> <span class="cn">FALSE</span>]</span>
@@ -682,6 +706,48 @@ Figure 22: Gases with Convertible Components, Transformations
 <hr>
 <p>#Conjoint Analysis and addals()</p>
 </div>
+</div>
+</div>
+<h3>References</h3>
+<div id="refs" class="references csl-bib-body hanging-indent">
+<div id="ref-deleeuw_C_14" class="csl-entry">
+———. 2014. <span>“<span class="nocase">History of Nonlinear Principal Component Analysis</span>.”</span> In <em><span class="nocase">The Visualization and Verbalization of Data</span></em>, edited by J. Blasius and M. Greenacre. Chapman; Hall. <a href="http://deleeuwpdx.net/janspubs/2014/chapters/deleeuw_C_14.pdf">http://deleeuwpdx.net/janspubs/2014/chapters/deleeuw_C_14.pdf</a>.
+</div>
+<div id="ref-deleeuw_mair_A_09a" class="csl-entry">
+De Leeuw, J., and P. Mair. 2009a. <span>“Homogeneity Analysis in r: The Package Homals.”</span> <em>Journal of Statistical Software</em> 31 (4): 1–21. <a href="http://deleeuwpdx.net/janspubs/2009/articles/deleeuw_mair_A_09a.pdf">http://deleeuwpdx.net/janspubs/2009/articles/deleeuw_mair_A_09a.pdf</a>.
+</div>
+<div id="ref-deleeuw_mair_A_09b" class="csl-entry">
+———. 2009b. <span>“Simple and Canonical Correspondence Analysis Using the r Package Anacor.”</span> <em>Journal of Statistical Software</em> 31 (5): 1–18. <a href="http://deleeuwpdx.net/janspubs/2009/articles/deleeuw_mair_A_09b.pdf">http://deleeuwpdx.net/janspubs/2009/articles/deleeuw_mair_A_09b.pdf</a>.
+</div>
+<div id="ref-deleeuw_vanrijckevorsel_C_88" class="csl-entry">
+———. 1988. <span>“Beyond Homogeneity Analysis.”</span> In <em>Component and Correspondence Analysis</em>, edited by J. L. A. Van Rijckevorsel and J. De Leeuw, 55–80. Chichester, England: Wiley. <a href="http://deleeuwpdx.net/janspubs/1988/chapters/deleeuw_vanrijckevorsel_C_88.pdf">http://deleeuwpdx.net/janspubs/1988/chapters/deleeuw_vanrijckevorsel_C_88.pdf</a>.
+</div>
+<div id="ref-galton_89" class="csl-entry">
+Galton, F. 1889. <em><span>Natural Inheritance</span></em>. MacMillan; Co.
+</div>
+<div id="ref-gifi_B_90" class="csl-entry">
+———. 1990. <em>Nonlinear Multivariate Analysis</em>. New York, N.Y.: Wiley.
+</div>
+<div id="ref-glass_54" class="csl-entry">
+Glass, D. V. 1954. <em><span class="nocase">Social Mobility in Britain</span></em>. Free Press.
+</div>
+<div id="ref-hartigan_75" class="csl-entry">
+Hartigan, J. 1975. <em>Clustering Algorithms</em>. Wiley.
+</div>
+<div id="ref-nenadic_greenacre_07" class="csl-entry">
+Nenadic, O., and M. Greenacre. 2007. <span>“<span class="nocase">Correspondence Analysis in R, with two- and three-dimensional graphics: The ca package</span>.”</span> <em>Journal of Statistical Software</em> 20 (3): 1–13.
+</div>
+<div id="ref-peschar_75" class="csl-entry">
+Peschar, J. L. 1975. <em><span>School, Milieu, Beroep</span></em>. Groningen, The Netherlands: Tjeek Willink.
+</div>
+<div id="ref-revelle_15" class="csl-entry">
+Revelle, William. 2015. <em>Psych: Procedures for Psychological, Psychometric, and Personality Research</em>. Evanston, Illinois: Northwestern University. <a href="http://CRAN.R-project.org/package=psych">http://CRAN.R-project.org/package=psych</a>.
+</div>
+<div id="ref-vandervelden_12" class="csl-entry">
+Van der Velden, M. 2012. <span>“On Generalized Canonical Correlation Analysis.”</span> In <em>Proceedings 58th World Statistical Congress, 2011, Dublin</em>, 758–65. The Hague: International Statiatical Instutute.
+</div>
+<div id="ref-wilson_26" class="csl-entry">
+Wilson, E. B. 1926. <span>“<span class="nocase">Empiricism and Rationalism</span>.”</span> <em>Science</em> 64: 47–57.
 </div>
 </div>
             </section>
@@ -713,6 +779,7 @@ gitbook.start({
 "weibo": false,
 "instapaper": false,
 "vk": false,
+"whatsapp": false,
 "all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
 },
 "fontsettings": {

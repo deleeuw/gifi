@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>1 Introduction | Gifi Analysis of Multivariate Data</title>
   <meta name="description" content="null" />
-  <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.22.3 and GitBook 2.6.7" />
 
   <meta property="og:title" content="1 Introduction | Gifi Analysis of Multivariate Data" />
   <meta property="og:type" content="book" />
@@ -32,7 +32,7 @@
   
 <link rel="prev" href="preface.html"/>
 <link rel="next" href="coding-and-transformations.html"/>
-<script src="libs/header-attrs-2.5/header-attrs.js"></script>
+<script src="libs/header-attrs-2.8.6/header-attrs.js"></script>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -50,14 +50,15 @@
 
 
 
-<link href="libs/anchor-sections-1.0/anchor-sections.css" rel="stylesheet" />
-<script src="libs/anchor-sections-1.0/anchor-sections.js"></script>
+<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
 
 
 <style type="text/css">
 pre > code.sourceCode { white-space: pre; position: relative; }
 pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
 pre.sourceCode { margin: 0; }
 @media screen {
@@ -116,6 +117,29 @@ code span.st { color: #4070a0; } /* String */
 code span.va { color: #19177c; } /* Variable */
 code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
 </style>
 
 </head>
@@ -203,42 +227,42 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="some-dualisms" class="section level2" number="1.1">
 <h2><span class="header-section-number">1.1</span> Some Dualisms</h2>
 <p>The type of multivariate analysis (MVA) we discuss in this book is sometimes called <em>descriptive</em> or <em>exploratory</em>, as opposed to <em>inferential</em> or <em>confirmatory</em>. It is located somewhere on the line between computational linear algebra and statistics, and it is probably close to data analysis, Big Data, machine learning, knowledge discovery, data mining, business analytics, or whatever other ill-defined label is used for the <em>mode du jour</em>.
-In the days of <span class="citation"><a href="discriminant-analysis-and-criminals.html#ref-gifi_B_90" role="doc-biblioref">Gifi</a> (<a href="discriminant-analysis-and-criminals.html#ref-gifi_B_90" role="doc-biblioref">1990</a>)</span> there was a small-scale civil war between the mathematical statistical (confirmatory) approach to MVA and the data analytical (exploratory) approach. This is not a new conflict, because it has its roots in the Pearson-Yule debate (<span class="citation"><a href="discriminant-analysis-and-criminals.html#ref-mackenzie_78" role="doc-biblioref">Mackenzie</a> (<a href="discriminant-analysis-and-criminals.html#ref-mackenzie_78" role="doc-biblioref">1978</a>)</span>). The first shots in modern times were probably fired by <span class="citation"><a href="discriminant-analysis-and-criminals.html#ref-tukey_62" role="doc-biblioref">Tukey</a> (<a href="discriminant-analysis-and-criminals.html#ref-tukey_62" role="doc-biblioref">1962</a>)</span>, but much additional polemic heat was generated in the 50 years since Tukey’s famous paper. In order to stand our ground we were forced to participate, for example with <span class="citation"><a href="discriminant-analysis-and-criminals.html#ref-deleeuw_A_84c" role="doc-biblioref">J. De Leeuw</a> (<a href="discriminant-analysis-and-criminals.html#ref-deleeuw_A_84c" role="doc-biblioref">1984a</a>)</span>, <span class="citation"><a href="discriminant-analysis-and-criminals.html#ref-deleeuw_A_88c" role="doc-biblioref">J. De Leeuw</a> (<a href="discriminant-analysis-and-criminals.html#ref-deleeuw_A_88c" role="doc-biblioref">1988a</a>)</span>, <span class="citation"><a href="discriminant-analysis-and-criminals.html#ref-deleeuw_C_90b" role="doc-biblioref">J. De Leeuw</a> (<a href="discriminant-analysis-and-criminals.html#ref-deleeuw_C_90b" role="doc-biblioref">1990</a>)</span>.</p>
-<p>Here is what <span class="citation"><a href="discriminant-analysis-and-criminals.html#ref-gifi_B_90" role="doc-biblioref">Gifi</a> (<a href="discriminant-analysis-and-criminals.html#ref-gifi_B_90" role="doc-biblioref">1990</a>)</span> says, clearly with some intent to provoke.</p>
+In the days of <span class="citation"><a href="#ref-gifi_B_90" role="doc-biblioref">Gifi</a> (<a href="#ref-gifi_B_90" role="doc-biblioref">1990</a>)</span> there was a small-scale civil war between the mathematical statistical (confirmatory) approach to MVA and the data analytical (exploratory) approach. This is not a new conflict, because it has its roots in the Pearson-Yule debate (<span class="citation"><a href="#ref-mackenzie_78" role="doc-biblioref">Mackenzie</a> (<a href="#ref-mackenzie_78" role="doc-biblioref">1978</a>)</span>). The first shots in modern times were probably fired by <span class="citation"><a href="#ref-tukey_62" role="doc-biblioref">Tukey</a> (<a href="#ref-tukey_62" role="doc-biblioref">1962</a>)</span>, but much additional polemic heat was generated in the 50 years since Tukey’s famous paper. In order to stand our ground we were forced to participate, for example with <span class="citation"><a href="#ref-deleeuw_A_84c" role="doc-biblioref">J. De Leeuw</a> (<a href="#ref-deleeuw_A_84c" role="doc-biblioref">1984a</a>)</span>, <span class="citation"><a href="#ref-deleeuw_A_88c" role="doc-biblioref">J. De Leeuw</a> (<a href="#ref-deleeuw_A_88c" role="doc-biblioref">1988a</a>)</span>, <span class="citation"><a href="#ref-deleeuw_C_90b" role="doc-biblioref">J. De Leeuw</a> (<a href="#ref-deleeuw_C_90b" role="doc-biblioref">1990</a>)</span>.</p>
+<p>Here is what <span class="citation"><a href="#ref-gifi_B_90" role="doc-biblioref">Gifi</a> (<a href="#ref-gifi_B_90" role="doc-biblioref">1990</a>)</span> says, clearly with some intent to provoke.</p>
 <blockquote>
 <p>The statistical approach starts with a statistical model, usually based on the
 multinormal distribution. The model is assumed to be true, and within the model
 certain parametric hypotheses are constructed. The remaining free parameters are
-estimated and the hypotheses are tested. (<span class="citation"><a href="discriminant-analysis-and-criminals.html#ref-gifi_B_90" role="doc-biblioref">Gifi</a> (<a href="discriminant-analysis-and-criminals.html#ref-gifi_B_90" role="doc-biblioref">1990</a>)</span>, p. 19)</p>
+estimated and the hypotheses are tested. (<span class="citation"><a href="#ref-gifi_B_90" role="doc-biblioref">Gifi</a> (<a href="#ref-gifi_B_90" role="doc-biblioref">1990</a>)</span>, p. 19)</p>
 </blockquote>
 <blockquote>
 <p>The data analytic approach does not start with a model, but looks for transformations
 and combinations of the variables with the explicit purpose of representing the data
-in a simple and comprehensive, and usually graphical, way. (<span class="citation"><a href="discriminant-analysis-and-criminals.html#ref-gifi_B_90" role="doc-biblioref">Gifi</a> (<a href="discriminant-analysis-and-criminals.html#ref-gifi_B_90" role="doc-biblioref">1990</a>)</span>, p. 19)</p>
+in a simple and comprehensive, and usually graphical, way. (<span class="citation"><a href="#ref-gifi_B_90" role="doc-biblioref">Gifi</a> (<a href="#ref-gifi_B_90" role="doc-biblioref">1990</a>)</span>, p. 19)</p>
 </blockquote>
 <p>Gifi’s first chapter, in particular his section 1.5, outlines an approach to statistics that emphasizes <em>techniques</em> over <em>models</em>. A technique is a map of data into representations of some sort. Representations can be test statistics, confidence intervals, posterior distributions, tables, graphs. <em>Statistics studies the construction, properties, and performance of techniques</em>. Models are used to <em>gauge</em> techniques, that is to see how they perform on <em>synthetic data</em>, which are data described by equations or generated by sampling. Of course models can also be used to <em>inspire</em> techniques, but data analysis does not deal with the inspirational phase. The models themselves are a part of the client sciences, not of statistics. One of the key characteristics of a technique is its <em>stability</em>, which is studied by using data perturbations of various sorts. Small and unimportant perturbations of the data should lead to small and unimportant changes in the output. A large and
 important class of perturbations is based on sampling from a population, leading to sampling distributions, confidence intervals, hypothesis tests, and standard errors. In Gifi’s branch of statistics the emphasis shifts from equations to algorithms, and from explanation to prediction.</p>
-<p>In related philosophizing <span class="citation"><a href="discriminant-analysis-and-criminals.html#ref-breiman_01" role="doc-biblioref">Breiman</a> (<a href="discriminant-analysis-and-criminals.html#ref-breiman_01" role="doc-biblioref">2001</a>)</span> contrasted the <em>two cultures</em> of data modeling (98% of statisticians) and algorithmic modeling (2% of statistians), and implored statisticians to spend less time and energy in the first culture and more in the second.</p>
+<p>In related philosophizing <span class="citation"><a href="#ref-breiman_01" role="doc-biblioref">Breiman</a> (<a href="#ref-breiman_01" role="doc-biblioref">2001</a>)</span> contrasted the <em>two cultures</em> of data modeling (98% of statisticians) and algorithmic modeling (2% of statistians), and implored statisticians to spend less time and energy in the first culture and more in the second.</p>
 <blockquote>
 <p>Reading a preprint of Gifi’s book (1990) many years ago uncovered a kindred spirit.
-(<span class="citation"><a href="discriminant-analysis-and-criminals.html#ref-breiman_01" role="doc-biblioref">Breiman</a> (<a href="discriminant-analysis-and-criminals.html#ref-breiman_01" role="doc-biblioref">2001</a>)</span>, p. 205)</p>
+(<span class="citation"><a href="#ref-breiman_01" role="doc-biblioref">Breiman</a> (<a href="#ref-breiman_01" role="doc-biblioref">2001</a>)</span>, p. 205)</p>
 </blockquote>
-<p>This was written some time after the influential paper by <span class="citation"><a href="discriminant-analysis-and-criminals.html#ref-breiman_friedman_85" role="doc-biblioref">Breiman and Friedman</a> (<a href="discriminant-analysis-and-criminals.html#ref-breiman_friedman_85" role="doc-biblioref">1985</a>)</span>, which introduced the Gifi-like ACE technique for multiple regression.</p>
-<p>The emphasis in the data modeling culture is on explanation or information, the emphasis in the algorithmic modeling culture on prediction. There are various ways to present and evaluate this distinction. A good overview, from the philosophy of science point of view, is <span class="citation"><a href="discriminant-analysis-and-criminals.html#ref-shmueli_10" role="doc-biblioref">Shmueli</a> (<a href="discriminant-analysis-and-criminals.html#ref-shmueli_10" role="doc-biblioref">2010</a>)</span>. From the lofty heights of Academia we hear</p>
+<p>This was written some time after the influential paper by <span class="citation"><a href="#ref-breiman_friedman_85" role="doc-biblioref">Breiman and Friedman</a> (<a href="#ref-breiman_friedman_85" role="doc-biblioref">1985</a>)</span>, which introduced the Gifi-like ACE technique for multiple regression.</p>
+<p>The emphasis in the data modeling culture is on explanation or information, the emphasis in the algorithmic modeling culture on prediction. There are various ways to present and evaluate this distinction. A good overview, from the philosophy of science point of view, is <span class="citation"><a href="#ref-shmueli_10" role="doc-biblioref">Shmueli</a> (<a href="#ref-shmueli_10" role="doc-biblioref">2010</a>)</span>. From the lofty heights of Academia we hear</p>
 <blockquote>
 <p>The two goals in analyzing data which Leo calls prediction and information I prefer to describe as “management”
 and “science.” Management seeks <em>profit</em>, practical answers (predictions) useful for decision making in the short
 run. Science seeks <em>truth</em>, fundamental knowledge about nature which provides understanding and control in the
-long run. (Parzen, in the discussion of <span class="citation"><a href="discriminant-analysis-and-criminals.html#ref-breiman_01" role="doc-biblioref">Breiman</a> (<a href="discriminant-analysis-and-criminals.html#ref-breiman_01" role="doc-biblioref">2001</a>)</span>, p. 224)</p>
+long run. (Parzen, in the discussion of <span class="citation"><a href="#ref-breiman_01" role="doc-biblioref">Breiman</a> (<a href="#ref-breiman_01" role="doc-biblioref">2001</a>)</span>, p. 224)</p>
 </blockquote>
-<p>The emphasis on techniques was also shared by <span class="citation"><a href="discriminant-analysis-and-criminals.html#ref-cleveland_14" role="doc-biblioref">Cleveland</a> (<a href="discriminant-analysis-and-criminals.html#ref-cleveland_14" role="doc-biblioref">2014</a>)</span>, who proposed a new curriculum for statistics departments with more emphasis on computing with data and tool evaluation. Another early ally was Laurie Davis, see the interesting papers by <span class="citation"><a href="discriminant-analysis-and-criminals.html#ref-davies_95" role="doc-biblioref">Davies</a> (<a href="discriminant-analysis-and-criminals.html#ref-davies_95" role="doc-biblioref">1995</a>)</span> and <span class="citation"><a href="discriminant-analysis-and-criminals.html#ref-davies_08" role="doc-biblioref">Davies</a> (<a href="discriminant-analysis-and-criminals.html#ref-davies_08" role="doc-biblioref">2008</a>)</span>.</p>
+<p>The emphasis on techniques was also shared by <span class="citation"><a href="#ref-cleveland_14" role="doc-biblioref">Cleveland</a> (<a href="#ref-cleveland_14" role="doc-biblioref">2014</a>)</span>, who proposed a new curriculum for statistics departments with more emphasis on computing with data and tool evaluation. Another early ally was Laurie Davis, see the interesting papers by <span class="citation"><a href="#ref-davies_95" role="doc-biblioref">Davies</a> (<a href="#ref-davies_95" role="doc-biblioref">1995</a>)</span> and <span class="citation"><a href="#ref-davies_08" role="doc-biblioref">Davies</a> (<a href="#ref-davies_08" role="doc-biblioref">2008</a>)</span>.</p>
 <blockquote>
 <p>The first chapter of Gifi (1990) contains an interesting discussion of statistical
 practice with special reference to multivariate data. The point of view taken there,
 with its emphasis on ‘techniques,’ has points of contact with the present paper
-where we use Tukey’s nomenclature and refer to ‘procedure.’ (<span class="citation"><a href="discriminant-analysis-and-criminals.html#ref-davies_08" role="doc-biblioref">Davies</a> (<a href="discriminant-analysis-and-criminals.html#ref-davies_08" role="doc-biblioref">2008</a>)</span>, p. 192)</p>
+where we use Tukey’s nomenclature and refer to ‘procedure.’ (<span class="citation"><a href="#ref-davies_08" role="doc-biblioref">Davies</a> (<a href="#ref-davies_08" role="doc-biblioref">2008</a>)</span>, p. 192)</p>
 </blockquote>
-<p>Of course currently the big discussion is if Data Science is actually statistics under a new name. And, more importantly, who should teach it. And, even more importantly, which department should receive the grant money. Parzen may believe that statisticians seek the Truth, whatever that is, but the current situation in Academia is that there is no truth if you do not consider profit. Statistics departments are typically small, and they feel threatened by gigantic Schools of Engineering looming over them (<span class="citation"><a href="discriminant-analysis-and-criminals.html#ref-asa_14" role="doc-biblioref">Association</a> (<a href="discriminant-analysis-and-criminals.html#ref-asa_14" role="doc-biblioref">2014</a>)</span>, <span class="citation"><a href="discriminant-analysis-and-criminals.html#ref-yu_14" role="doc-biblioref">Yu</a> (<a href="discriminant-analysis-and-criminals.html#ref-yu_14" role="doc-biblioref">2014</a>)</span>). It is partly a question of scale: there are too many data to fit into statistics departments. Numerous new graduate Data Science programs are popping up, in many cases geared toward management and not so much toward science. Statistics departments are seriously considering changing their names, before the levies break and they are flooded by the inevitable rise of data.</p>
+<p>Of course currently the big discussion is if Data Science is actually statistics under a new name. And, more importantly, who should teach it. And, even more importantly, which department should receive the grant money. Parzen may believe that statisticians seek the Truth, whatever that is, but the current situation in Academia is that there is no truth if you do not consider profit. Statistics departments are typically small, and they feel threatened by gigantic Schools of Engineering looming over them (<span class="citation"><a href="#ref-asa_14" role="doc-biblioref">Association</a> (<a href="#ref-asa_14" role="doc-biblioref">2014</a>)</span>, <span class="citation"><a href="#ref-yu_14" role="doc-biblioref">Yu</a> (<a href="#ref-yu_14" role="doc-biblioref">2014</a>)</span>). It is partly a question of scale: there are too many data to fit into statistics departments. Numerous new graduate Data Science programs are popping up, in many cases geared toward management and not so much toward science. Statistics departments are seriously considering changing their names, before the levies break and they are flooded by the inevitable rise of data.</p>
 <p>We shall not pay much attention any more to these turf and culture wars, because basically they are over. Data analysis, in its multitude of disguises and appearances, is the winner. Classical statistics departments are gone, or on their way out. They may not have changed their name, but their curricula and hiring practices are very different from what they were 20 or even 10 years ago.</p>
 <blockquote>
 <p>Neither do men put new wine into old bottles: else the bottles break, and the wine runneth out, and the bottles
@@ -249,32 +273,182 @@ perish: but they put new wine into new bottles, and both are preserved. (Matthew
 <div id="quantifying-qualitative-data" class="section level2" number="1.2">
 <h2><span class="header-section-number">1.2</span> Quantifying Qualitative Data</h2>
 <p>One way of looking at <em>Multivariate Analysis with Optimal Scaling</em>, or <em>MVAOS</em>, is as an extension of classical linear multivariate analysis to variables that are binary, ordered, or even unordered categorical. In R terminology, classical MVA techniques can thus be applied if some or all of the variables in the dataframe are <em>factors</em>. Categorical variables are <em>quantified</em> and numerical variables are <em>transformed</em> to optimize the linear or bilinear least squares fit.</p>
-<p>Least squares and eigenvalue methods for quantifying multivariate qualitative data were first introduced by <span class="citation"><a href="discriminant-analysis-and-criminals.html#ref-guttman_41" role="doc-biblioref">Guttman</a> (<a href="discriminant-analysis-and-criminals.html#ref-guttman_41" role="doc-biblioref">1941</a>)</span>, although there were some bivariate predecessors in the work of Pearson, Fisher, Maung, and Hirschfeld (see <span class="citation"><a href="discriminant-analysis-and-criminals.html#ref-deleeuw_A_83b" role="doc-biblioref">J. De Leeuw</a> (<a href="discriminant-analysis-and-criminals.html#ref-deleeuw_A_83b" role="doc-biblioref">1983</a>)</span> or <span class="citation"><a href="discriminant-analysis-and-criminals.html#ref-gower_90" role="doc-biblioref">Gower</a> (<a href="discriminant-analysis-and-criminals.html#ref-gower_90" role="doc-biblioref">1990</a>)</span> for a historical overview). In this earlier work the emphasis was often on optimizing quadratic forms, or ratios of quadratic forms, and not so much on least squares, distance geometry, and graphical representations such as <em>biplots</em> (<span class="citation"><a href="discriminant-analysis-and-criminals.html#ref-gower_hand_96" role="doc-biblioref">Gower and Hand</a> (<a href="discriminant-analysis-and-criminals.html#ref-gower_hand_96" role="doc-biblioref">1996</a>)</span>, <span class="citation"><a href="discriminant-analysis-and-criminals.html#ref-gower_leroux_gardnerlubbe_15" role="doc-biblioref">Gower, Le Roux, and Gardner-Lubbe</a> (<a href="discriminant-analysis-and-criminals.html#ref-gower_leroux_gardnerlubbe_15" role="doc-biblioref">2015</a>)</span>, <span class="citation"><a href="discriminant-analysis-and-criminals.html#ref-gower_leroux_gardnerlubbe_16" role="doc-biblioref">Gower, Le Roux, and Gardner-Lubbe</a> (<a href="discriminant-analysis-and-criminals.html#ref-gower_leroux_gardnerlubbe_16" role="doc-biblioref">2016</a>)</span>). They were taken up by, among others, <span class="citation"><a href="discriminant-analysis-and-criminals.html#ref-deleeuw_R_68e" role="doc-biblioref">J. De Leeuw</a> (<a href="discriminant-analysis-and-criminals.html#ref-deleeuw_R_68e" role="doc-biblioref">1968a</a>)</span>, by Benzécri and his students in France (see <span class="citation"><a href="discriminant-analysis-and-criminals.html#ref-cordier_65" role="doc-biblioref">Cordier</a> (<a href="discriminant-analysis-and-criminals.html#ref-cordier_65" role="doc-biblioref">1965</a>)</span>), and by Hayashi and his students in Japan (see <span class="citation"><a href="discriminant-analysis-and-criminals.html#ref-tanaka_79" role="doc-biblioref">Tanaka</a> (<a href="discriminant-analysis-and-criminals.html#ref-tanaka_79" role="doc-biblioref">1979</a>)</span>). Early applications can be found in ecology, following an influential paper by <span class="citation"><a href="discriminant-analysis-and-criminals.html#ref-hill_74" role="doc-biblioref">Hill</a> (<a href="discriminant-analysis-and-criminals.html#ref-hill_74" role="doc-biblioref">1974</a>)</span>. With increasing emphasis on software the role of graphical representations has increased and continues to increase.</p>
-<p>In <span class="citation"><a href="discriminant-analysis-and-criminals.html#ref-deleeuw_B_74" role="doc-biblioref">J. De Leeuw</a> (<a href="discriminant-analysis-and-criminals.html#ref-deleeuw_B_74" role="doc-biblioref">1974</a>)</span> a first attempt was made to unify most classical descriptive multivariate techniques using a single least squares loss function and a corresponding <em>alternating least squares (ALS)</em> optimization method. His work then bifurcated to the <em>ALSOS project</em>, with Young and Takane at the University of North Carolina Chapell Hill, and the <em>Gifi project</em>, at the Department of Data Theory of Leiden University.</p>
-<p>The ALSOS project was started in 1973-1974, when De Leeuw was visiting Bell Telephone Labs in Murray Hill. ALSOS stands for Alternating Least Squares with Optimal Scaling. The ALS part of the name was provided by <span class="citation"><a href="discriminant-analysis-and-criminals.html#ref-deleeuw_R_68d" role="doc-biblioref">J. De Leeuw</a> (<a href="discriminant-analysis-and-criminals.html#ref-deleeuw_R_68d" role="doc-biblioref">1968b</a>)</span> and the OS part by <span class="citation"><a href="discriminant-analysis-and-criminals.html#ref-bock_60" role="doc-biblioref">Bock</a> (<a href="discriminant-analysis-and-criminals.html#ref-bock_60" role="doc-biblioref">1960</a>)</span>. At early meetings of the Psychometric Society some members were offended by our use of “Optimal Scaling,” because they took it to imply that their methods of scaling were supposedly inferior to ours. But the “optimal” merely refers to optimality in the context of a specific least squares loss function.</p>
-<p>Young, De Leeuw, and Takane applied the basic ALS and OS methodology to conjoint analysis, regression, principal component analysis, multidimensional scaling, and factor analysis, producing computer programs (and SAS modules) for each of the techniques. An overview of the project, basically at the end of its lifetime, is in <span class="citation"><a href="discriminant-analysis-and-criminals.html#ref-young_deleeuw_takane_C_80" role="doc-biblioref">Young, De Leeuw, and Takane</a> (<a href="discriminant-analysis-and-criminals.html#ref-young_deleeuw_takane_C_80" role="doc-biblioref">1980</a>)</span> and <span class="citation"><a href="discriminant-analysis-and-criminals.html#ref-young_81" role="doc-biblioref">Young</a> (<a href="discriminant-analysis-and-criminals.html#ref-young_81" role="doc-biblioref">1981</a>)</span>.</p>
-<p>The ALSOS project was clearly inspired by the path-breaking work of <span class="citation"><a href="discriminant-analysis-and-criminals.html#ref-kruskal_64a" role="doc-biblioref">Kruskal</a> (<a href="discriminant-analysis-and-criminals.html#ref-kruskal_64a" role="doc-biblioref">1964a</a>)</span> and <span class="citation"><a href="discriminant-analysis-and-criminals.html#ref-kruskal_64b" role="doc-biblioref">Kruskal</a> (<a href="discriminant-analysis-and-criminals.html#ref-kruskal_64b" role="doc-biblioref">1964b</a>)</span>, who designed a general way to turn metric multivariate analysis techniques into non-metric ones. In fact, Kruskal applied the basic methodology developed for multidimensional scaling to linear models in <span class="citation"><a href="discriminant-analysis-and-criminals.html#ref-kruskal_65" role="doc-biblioref">Kruskal</a> (<a href="discriminant-analysis-and-criminals.html#ref-kruskal_65" role="doc-biblioref">1965</a>)</span>, and to principal component analysis in <span class="citation"><a href="discriminant-analysis-and-criminals.html#ref-kruskal_shepard_74" role="doc-biblioref">Kruskal and Shepard</a> (<a href="discriminant-analysis-and-criminals.html#ref-kruskal_shepard_74" role="doc-biblioref">1974</a>)</span> (which was actually written around 1965 as well). In parallel developments closely related nonmetric methods were developed by <span class="citation"><a href="discriminant-analysis-and-criminals.html#ref-roskam_68" role="doc-biblioref">Roskam</a> (<a href="discriminant-analysis-and-criminals.html#ref-roskam_68" role="doc-biblioref">1968</a>)</span> and by Guttman and Lingoes (see <span class="citation"><a href="discriminant-analysis-and-criminals.html#ref-lingoes_73" role="doc-biblioref">Lingoes</a> (<a href="discriminant-analysis-and-criminals.html#ref-lingoes_73" role="doc-biblioref">1973</a>)</span>).</p>
-<p>The Gifi project took its inspiration from Kruskal, but perhaps even more from <span class="citation"><a href="discriminant-analysis-and-criminals.html#ref-guttman_41" role="doc-biblioref">Guttman</a> (<a href="discriminant-analysis-and-criminals.html#ref-guttman_41" role="doc-biblioref">1941</a>)</span> (and to a lesser extent from the optimal scaling work of Fisher, see <span class="citation"><a href="discriminant-analysis-and-criminals.html#ref-gower_90" role="doc-biblioref">Gower</a> (<a href="discriminant-analysis-and-criminals.html#ref-gower_90" role="doc-biblioref">1990</a>)</span>). Guttman’s quantification method, which later became known as <em>multiple correspondence analysis</em>, was merged with linear and nonlinear principal component analysis in the HOMALS/PRINCALS techniques and programs (<span class="citation"><a href="discriminant-analysis-and-criminals.html#ref-deleeuw_vanrijckevorsel_C_80" role="doc-biblioref">J. De Leeuw and Van Rijckevorsel</a> (<a href="discriminant-analysis-and-criminals.html#ref-deleeuw_vanrijckevorsel_C_80" role="doc-biblioref">1980</a>)</span>). The MVAOS loss function that was chosen ultimately, for example in the work of <span class="citation"><a href="discriminant-analysis-and-criminals.html#ref-vanderburg_deleeuw_verdegaal_A_88" role="doc-biblioref">Van der Burg, De Leeuw, and Verdegaal</a> (<a href="discriminant-analysis-and-criminals.html#ref-vanderburg_deleeuw_verdegaal_A_88" role="doc-biblioref">1988</a>)</span>, had been used earlier by <span class="citation"><a href="discriminant-analysis-and-criminals.html#ref-carroll_68" role="doc-biblioref">Carroll</a> (<a href="discriminant-analysis-and-criminals.html#ref-carroll_68" role="doc-biblioref">1968</a>)</span> in multi-set canonical correlation analysis of numerical variables.</p>
-<p>A project similar to ALSOS/Gifi was ACE, short for <em>Alternating Conditional Expectations</em>. The ACE method for regression was introduced by <span class="citation"><a href="discriminant-analysis-and-criminals.html#ref-breiman_friedman_85" role="doc-biblioref">Breiman and Friedman</a> (<a href="discriminant-analysis-and-criminals.html#ref-breiman_friedman_85" role="doc-biblioref">1985</a>)</span> and the ACE method for principal component analysis by
-<span class="citation"><a href="discriminant-analysis-and-criminals.html#ref-koyak_87" role="doc-biblioref">Koyak</a> (<a href="discriminant-analysis-and-criminals.html#ref-koyak_87" role="doc-biblioref">1987</a>)</span>. Both techniques use the same ALS block relaxation methods, but instead of projecting on a cone or subspace of possible transformation, they apply a smoother (typically Friedman’s supersmoother) to find the
+<p>Least squares and eigenvalue methods for quantifying multivariate qualitative data were first introduced by <span class="citation"><a href="#ref-guttman_41" role="doc-biblioref">Guttman</a> (<a href="#ref-guttman_41" role="doc-biblioref">1941</a>)</span>, although there were some bivariate predecessors in the work of Pearson, Fisher, Maung, and Hirschfeld (see <span class="citation"><a href="#ref-deleeuw_A_83b" role="doc-biblioref">J. De Leeuw</a> (<a href="#ref-deleeuw_A_83b" role="doc-biblioref">1983</a>)</span> or <span class="citation"><a href="#ref-gower_90" role="doc-biblioref">Gower</a> (<a href="#ref-gower_90" role="doc-biblioref">1990</a>)</span> for a historical overview). In this earlier work the emphasis was often on optimizing quadratic forms, or ratios of quadratic forms, and not so much on least squares, distance geometry, and graphical representations such as <em>biplots</em> (<span class="citation"><a href="#ref-gower_hand_96" role="doc-biblioref">Gower and Hand</a> (<a href="#ref-gower_hand_96" role="doc-biblioref">1996</a>)</span>, <span class="citation"><a href="#ref-gower_leroux_gardnerlubbe_15" role="doc-biblioref">Gower, Le Roux, and Gardner-Lubbe</a> (<a href="#ref-gower_leroux_gardnerlubbe_15" role="doc-biblioref">2015</a>)</span>, <span class="citation"><a href="#ref-gower_leroux_gardnerlubbe_16" role="doc-biblioref">Gower, Le Roux, and Gardner-Lubbe</a> (<a href="#ref-gower_leroux_gardnerlubbe_16" role="doc-biblioref">2016</a>)</span>). They were taken up by, among others, <span class="citation"><a href="#ref-deleeuw_R_68e" role="doc-biblioref">J. De Leeuw</a> (<a href="#ref-deleeuw_R_68e" role="doc-biblioref">1968a</a>)</span>, by Benzécri and his students in France (see <span class="citation"><a href="#ref-cordier_65" role="doc-biblioref">Cordier</a> (<a href="#ref-cordier_65" role="doc-biblioref">1965</a>)</span>), and by Hayashi and his students in Japan (see <span class="citation"><a href="#ref-tanaka_79" role="doc-biblioref">Tanaka</a> (<a href="#ref-tanaka_79" role="doc-biblioref">1979</a>)</span>). Early applications can be found in ecology, following an influential paper by <span class="citation"><a href="#ref-hill_74" role="doc-biblioref">Hill</a> (<a href="#ref-hill_74" role="doc-biblioref">1974</a>)</span>. With increasing emphasis on software the role of graphical representations has increased and continues to increase.</p>
+<p>In <span class="citation"><a href="#ref-deleeuw_B_74" role="doc-biblioref">J. De Leeuw</a> (<a href="#ref-deleeuw_B_74" role="doc-biblioref">1974</a>)</span> a first attempt was made to unify most classical descriptive multivariate techniques using a single least squares loss function and a corresponding <em>alternating least squares (ALS)</em> optimization method. His work then bifurcated to the <em>ALSOS project</em>, with Young and Takane at the University of North Carolina Chapell Hill, and the <em>Gifi project</em>, at the Department of Data Theory of Leiden University.</p>
+<p>The ALSOS project was started in 1973-1974, when De Leeuw was visiting Bell Telephone Labs in Murray Hill. ALSOS stands for Alternating Least Squares with Optimal Scaling. The ALS part of the name was provided by <span class="citation"><a href="#ref-deleeuw_R_68d" role="doc-biblioref">J. De Leeuw</a> (<a href="#ref-deleeuw_R_68d" role="doc-biblioref">1968b</a>)</span> and the OS part by <span class="citation"><a href="#ref-bock_60" role="doc-biblioref">Bock</a> (<a href="#ref-bock_60" role="doc-biblioref">1960</a>)</span>. At early meetings of the Psychometric Society some members were offended by our use of “Optimal Scaling,” because they took it to imply that their methods of scaling were supposedly inferior to ours. But the “optimal” merely refers to optimality in the context of a specific least squares loss function.</p>
+<p>Young, De Leeuw, and Takane applied the basic ALS and OS methodology to conjoint analysis, regression, principal component analysis, multidimensional scaling, and factor analysis, producing computer programs (and SAS modules) for each of the techniques. An overview of the project, basically at the end of its lifetime, is in <span class="citation"><a href="#ref-young_deleeuw_takane_C_80" role="doc-biblioref">Young, De Leeuw, and Takane</a> (<a href="#ref-young_deleeuw_takane_C_80" role="doc-biblioref">1980</a>)</span> and <span class="citation"><a href="#ref-young_81" role="doc-biblioref">Young</a> (<a href="#ref-young_81" role="doc-biblioref">1981</a>)</span>.</p>
+<p>The ALSOS project was clearly inspired by the path-breaking work of <span class="citation"><a href="#ref-kruskal_64a" role="doc-biblioref">Kruskal</a> (<a href="#ref-kruskal_64a" role="doc-biblioref">1964a</a>)</span> and <span class="citation"><a href="#ref-kruskal_64b" role="doc-biblioref">Kruskal</a> (<a href="#ref-kruskal_64b" role="doc-biblioref">1964b</a>)</span>, who designed a general way to turn metric multivariate analysis techniques into non-metric ones. In fact, Kruskal applied the basic methodology developed for multidimensional scaling to linear models in <span class="citation"><a href="#ref-kruskal_65" role="doc-biblioref">Kruskal</a> (<a href="#ref-kruskal_65" role="doc-biblioref">1965</a>)</span>, and to principal component analysis in <span class="citation"><a href="#ref-kruskal_shepard_74" role="doc-biblioref">Kruskal and Shepard</a> (<a href="#ref-kruskal_shepard_74" role="doc-biblioref">1974</a>)</span> (which was actually written around 1965 as well). In parallel developments closely related nonmetric methods were developed by <span class="citation"><a href="#ref-roskam_68" role="doc-biblioref">Roskam</a> (<a href="#ref-roskam_68" role="doc-biblioref">1968</a>)</span> and by Guttman and Lingoes (see <span class="citation"><a href="#ref-lingoes_73" role="doc-biblioref">Lingoes</a> (<a href="#ref-lingoes_73" role="doc-biblioref">1973</a>)</span>).</p>
+<p>The Gifi project took its inspiration from Kruskal, but perhaps even more from <span class="citation"><a href="#ref-guttman_41" role="doc-biblioref">Guttman</a> (<a href="#ref-guttman_41" role="doc-biblioref">1941</a>)</span> (and to a lesser extent from the optimal scaling work of Fisher, see <span class="citation"><a href="#ref-gower_90" role="doc-biblioref">Gower</a> (<a href="#ref-gower_90" role="doc-biblioref">1990</a>)</span>). Guttman’s quantification method, which later became known as <em>multiple correspondence analysis</em>, was merged with linear and nonlinear principal component analysis in the HOMALS/PRINCALS techniques and programs (<span class="citation"><a href="#ref-deleeuw_vanrijckevorsel_C_80" role="doc-biblioref">J. De Leeuw and Van Rijckevorsel</a> (<a href="#ref-deleeuw_vanrijckevorsel_C_80" role="doc-biblioref">1980</a>)</span>). The MVAOS loss function that was chosen ultimately, for example in the work of <span class="citation"><a href="#ref-vanderburg_deleeuw_verdegaal_A_88" role="doc-biblioref">Van der Burg, De Leeuw, and Verdegaal</a> (<a href="#ref-vanderburg_deleeuw_verdegaal_A_88" role="doc-biblioref">1988</a>)</span>, had been used earlier by <span class="citation"><a href="#ref-carroll_68" role="doc-biblioref">Carroll</a> (<a href="#ref-carroll_68" role="doc-biblioref">1968</a>)</span> in multi-set canonical correlation analysis of numerical variables.</p>
+<p>A project similar to ALSOS/Gifi was ACE, short for <em>Alternating Conditional Expectations</em>. The ACE method for regression was introduced by <span class="citation"><a href="#ref-breiman_friedman_85" role="doc-biblioref">Breiman and Friedman</a> (<a href="#ref-breiman_friedman_85" role="doc-biblioref">1985</a>)</span> and the ACE method for principal component analysis by
+<span class="citation"><a href="#ref-koyak_87" role="doc-biblioref">Koyak</a> (<a href="#ref-koyak_87" role="doc-biblioref">1987</a>)</span>. Both techniques use the same ALS block relaxation methods, but instead of projecting on a cone or subspace of possible transformation, they apply a smoother (typically Friedman’s supersmoother) to find the
 optimal transformation. This implies that the method is intended primarily for continuous variables, and that the convergence properties of the ACE algorithm are more complicated than those of a proper ALS algorithms.</p>
 <p>An even more closely related project, by Winsberg and Ramsay, uses the cone of I-splines (integrated B-splines)
-to define the optimal transformations. The technique for linear models is in <span class="citation"><a href="discriminant-analysis-and-criminals.html#ref-winsberg_ramsay_80" role="doc-biblioref">Winsberg and Ramsay</a> (<a href="discriminant-analysis-and-criminals.html#ref-winsberg_ramsay_80" role="doc-biblioref">1980</a>)</span> and the one for
-principal component analysis in <span class="citation"><a href="discriminant-analysis-and-criminals.html#ref-winsberg_ramsay_83" role="doc-biblioref">Winsberg and Ramsay</a> (<a href="discriminant-analysis-and-criminals.html#ref-winsberg_ramsay_83" role="doc-biblioref">1983</a>)</span>. Again, the emphasis on monotonic splines indicates that
+to define the optimal transformations. The technique for linear models is in <span class="citation"><a href="#ref-winsberg_ramsay_80" role="doc-biblioref">Winsberg and Ramsay</a> (<a href="#ref-winsberg_ramsay_80" role="doc-biblioref">1980</a>)</span> and the one for
+principal component analysis in <span class="citation"><a href="#ref-winsberg_ramsay_83" role="doc-biblioref">Winsberg and Ramsay</a> (<a href="#ref-winsberg_ramsay_83" role="doc-biblioref">1983</a>)</span>. Again, the emphasis on monotonic splines indicates that
 continuous variables play a larger role than in the ALSOS or Gifi system.</p>
 <p>So generally there have been a number of projects over the last 50 years that differ in detail, but apply basically the same methodology (alternating least squares and optimal scaling) to generalize classical MVA techniques. Some of them emphasize transformation of continuous variables, some emphasize quantification of discrete variables. Some emphasize monotonicity, some smoothness. Usually these projects include techniques for regression and principal component analysis, but in the case of Gifi the various forms of correspondence analysis and canonical analysis are also included.</p>
 </div>
 <div id="beyond-gifi" class="section level2" number="1.3">
 <h2><span class="header-section-number">1.3</span> Beyond Gifi</h2>
-<p>The techniques discussed in <span class="citation"><a href="discriminant-analysis-and-criminals.html#ref-gifi_B_90" role="doc-biblioref">Gifi</a> (<a href="discriminant-analysis-and-criminals.html#ref-gifi_B_90" role="doc-biblioref">1990</a>)</span>, and implemented in the corresponding computer programs, use a particular least squares loss function and minimize it by alternating least squares algorithms. All techniques use what Gifi calls <em>meet loss</em>, which is basically the loss function proposed by <span class="citation"><a href="discriminant-analysis-and-criminals.html#ref-carroll_68" role="doc-biblioref">Carroll</a> (<a href="discriminant-analysis-and-criminals.html#ref-carroll_68" role="doc-biblioref">1968</a>)</span> for multiset canonical correlation analysis. Carroll’s work was extended in Gifi by using optimal scaling to transform or quantify variables coded with indicators, and to use constraints on the parameters to adapt the basic technique, often called <em>homogeneity analysis</em>, to different classical MVA techniques.</p>
+<p>The techniques discussed in <span class="citation"><a href="#ref-gifi_B_90" role="doc-biblioref">Gifi</a> (<a href="#ref-gifi_B_90" role="doc-biblioref">1990</a>)</span>, and implemented in the corresponding computer programs, use a particular least squares loss function and minimize it by alternating least squares algorithms. All techniques use what Gifi calls <em>meet loss</em>, which is basically the loss function proposed by <span class="citation"><a href="#ref-carroll_68" role="doc-biblioref">Carroll</a> (<a href="#ref-carroll_68" role="doc-biblioref">1968</a>)</span> for multiset canonical correlation analysis. Carroll’s work was extended in Gifi by using optimal scaling to transform or quantify variables coded with indicators, and to use constraints on the parameters to adapt the basic technique, often called <em>homogeneity analysis</em>, to different classical MVA techniques.</p>
 <p>There have been various extensions of the classical Gifi repertoire by adding
-techniques that do not readily fit into meet loss. Examples are path analysis (<span class="citation"><a href="discriminant-analysis-and-criminals.html#ref-coolen_deleeuw_R_87" role="doc-biblioref">Coolen and De Leeuw</a> (<a href="discriminant-analysis-and-criminals.html#ref-coolen_deleeuw_R_87" role="doc-biblioref">1987</a>)</span>), linear dynamic systems (<span class="citation"><a href="discriminant-analysis-and-criminals.html#ref-bijleveld_deleeuw_A_91" role="doc-biblioref">Bijleveld and De Leeuw</a> (<a href="discriminant-analysis-and-criminals.html#ref-bijleveld_deleeuw_A_91" role="doc-biblioref">1991</a>)</span>), and factor analysis (<span class="citation"><a href="discriminant-analysis-and-criminals.html#ref-deleeuw_C_04a" role="doc-biblioref">J. De Leeuw</a> (<a href="discriminant-analysis-and-criminals.html#ref-deleeuw_C_04a" role="doc-biblioref">2004</a>)</span>). But adding these techniques does not really add up to a new framework.</p>
-<p>Somewhat more importantly, <span class="citation"><a href="discriminant-analysis-and-criminals.html#ref-deleeuw_vanrijckevorsel_C_88" role="doc-biblioref">J. De Leeuw and Van Rijckevorsel</a> (<a href="discriminant-analysis-and-criminals.html#ref-deleeuw_vanrijckevorsel_C_88" role="doc-biblioref">1988</a>)</span> discuss various ways to generalize meet loss by using <em>fuzzy coding</em>. Transformations are no longer step functions, and coding can be done with fuzzy indicators, such as B-spline bases.
+techniques that do not readily fit into meet loss. Examples are path analysis (<span class="citation"><a href="#ref-coolen_deleeuw_R_87" role="doc-biblioref">Coolen and De Leeuw</a> (<a href="#ref-coolen_deleeuw_R_87" role="doc-biblioref">1987</a>)</span>), linear dynamic systems (<span class="citation"><a href="#ref-bijleveld_deleeuw_A_91" role="doc-biblioref">Bijleveld and De Leeuw</a> (<a href="#ref-bijleveld_deleeuw_A_91" role="doc-biblioref">1991</a>)</span>), and factor analysis (<span class="citation"><a href="#ref-deleeuw_C_04a" role="doc-biblioref">J. De Leeuw</a> (<a href="#ref-deleeuw_C_04a" role="doc-biblioref">2004</a>)</span>). But adding these techniques does not really add up to a new framework.</p>
+<p>Somewhat more importantly, <span class="citation"><a href="#ref-deleeuw_vanrijckevorsel_C_88" role="doc-biblioref">J. De Leeuw and Van Rijckevorsel</a> (<a href="#ref-deleeuw_vanrijckevorsel_C_88" role="doc-biblioref">1988</a>)</span> discuss various ways to generalize meet loss by using <em>fuzzy coding</em>. Transformations are no longer step functions, and coding can be done with fuzzy indicators, such as B-spline bases.
 This makes it easier to deal with variables that have many ordered categories. Although this is a substantial generalization the basic framework remains the same.</p>
-<p>One of the outgrowths of the Gifi project was the <em>aspect</em> approach, first discussed systematically by <span class="citation"><a href="discriminant-analysis-and-criminals.html#ref-deleeuw_C_88b" role="doc-biblioref">J. De Leeuw</a> (<a href="discriminant-analysis-and-criminals.html#ref-deleeuw_C_88b" role="doc-biblioref">1988c</a>)</span>, and implemented in the R package
-<code>aspect</code> by <span class="citation"><a href="discriminant-analysis-and-criminals.html#ref-mair_deleeuw_A_10" role="doc-biblioref">Mair and De Leeuw</a> (<a href="discriminant-analysis-and-criminals.html#ref-mair_deleeuw_A_10" role="doc-biblioref">2010</a>)</span>. In its original formulation it uses <em>majorization</em> to optimize functions defined on the space of correlation matrices, where the correlations are computed over transformed variables, coded by indicators. Thus we optimize aspects of the correlation matrix over transformations of the variables. The <code>aspect</code> software was recently updated to allow for B-spline transformations (<span class="citation"><a href="discriminant-analysis-and-criminals.html#ref-deleeuw_E_15b" role="doc-biblioref">J. De Leeuw</a> (<a href="discriminant-analysis-and-criminals.html#ref-deleeuw_E_15b" role="doc-biblioref">2015a</a>)</span>). Many different aspects were implemented, based on eigenvalues, determinants, multiple correlations, and sums of powers of correlation coefficients. Unformately, aspects defined in terms of canonical correlations, or generalized canonical correlations, were not covered. Thus the range of techniques covered by the <code>aspect</code> approach has multiple regression and principal component analysis in common with the range of the Gifi system, but is otherwise disjoint from it.</p>
-<p>In <span class="citation"><a href="discriminant-analysis-and-criminals.html#ref-deleeuw_C_04a" role="doc-biblioref">J. De Leeuw</a> (<a href="discriminant-analysis-and-criminals.html#ref-deleeuw_C_04a" role="doc-biblioref">2004</a>)</span> a particular correlation aspect was singled out that could bridge the gap between the aspect approach and the Gifi approach, provided <em>orthoblocks</em> of transformations were introduced. This is combined with the notion of <em>copies</em>, introduced in <span class="citation"><a href="discriminant-analysis-and-criminals.html#ref-deleeuw_C_84c" role="doc-biblioref">J. De Leeuw</a> (<a href="discriminant-analysis-and-criminals.html#ref-deleeuw_C_84c" role="doc-biblioref">1984b</a>)</span>, to design a new class of techniques that encompasses all of Gifi and that brings generalized canonical correlation analysis in the aspect framework. Thus correlation aspects, and the majorization algorithms to optimize them, are now a true generalization of the Gifi system.</p>
+<p>One of the outgrowths of the Gifi project was the <em>aspect</em> approach, first discussed systematically by <span class="citation"><a href="#ref-deleeuw_C_88b" role="doc-biblioref">J. De Leeuw</a> (<a href="#ref-deleeuw_C_88b" role="doc-biblioref">1988c</a>)</span>, and implemented in the R package
+<code>aspect</code> by <span class="citation"><a href="#ref-mair_deleeuw_A_10" role="doc-biblioref">Mair and De Leeuw</a> (<a href="#ref-mair_deleeuw_A_10" role="doc-biblioref">2010</a>)</span>. In its original formulation it uses <em>majorization</em> to optimize functions defined on the space of correlation matrices, where the correlations are computed over transformed variables, coded by indicators. Thus we optimize aspects of the correlation matrix over transformations of the variables. The <code>aspect</code> software was recently updated to allow for B-spline transformations (<span class="citation"><a href="#ref-deleeuw_E_15b" role="doc-biblioref">J. De Leeuw</a> (<a href="#ref-deleeuw_E_15b" role="doc-biblioref">2015b</a>)</span>). Many different aspects were implemented, based on eigenvalues, determinants, multiple correlations, and sums of powers of correlation coefficients. Unformately, aspects defined in terms of canonical correlations, or generalized canonical correlations, were not covered. Thus the range of techniques covered by the <code>aspect</code> approach has multiple regression and principal component analysis in common with the range of the Gifi system, but is otherwise disjoint from it.</p>
+<p>In <span class="citation"><a href="#ref-deleeuw_C_04a" role="doc-biblioref">J. De Leeuw</a> (<a href="#ref-deleeuw_C_04a" role="doc-biblioref">2004</a>)</span> a particular correlation aspect was singled out that could bridge the gap between the aspect approach and the Gifi approach, provided <em>orthoblocks</em> of transformations were introduced. This is combined with the notion of <em>copies</em>, introduced in <span class="citation"><a href="#ref-deleeuw_C_84c" role="doc-biblioref">J. De Leeuw</a> (<a href="#ref-deleeuw_C_84c" role="doc-biblioref">1984b</a>)</span>, to design a new class of techniques that encompasses all of Gifi and that brings generalized canonical correlation analysis in the aspect framework. Thus correlation aspects, and the majorization algorithms to optimize them, are now a true generalization of the Gifi system.</p>
 <p>*** This is the system we discuss in this book.</p>
+</div>
+</div>
+<h3>References</h3>
+<div id="refs" class="references csl-bib-body hanging-indent">
+<div id="ref-asa_14" class="csl-entry">
+Association, American Statistical. 2014. <span>“<span class="nocase">Discovery with Data: Leveraging Statistics with Computer Science to Transform Science and Society</span>.”</span> 2014. <a href="http://www.amstat.org/policy/pdfs/BigDataStatisticsJune2014.pdf">http://www.amstat.org/policy/pdfs/BigDataStatisticsJune2014.pdf</a>.
+</div>
+<div id="ref-bijleveld_deleeuw_A_91" class="csl-entry">
+Bijleveld, C. C. J. H., and J. De Leeuw. 1991. <span>“<span class="nocase">Fitting Longitudinal Reduced-Rank Regression Models by Alternating Least Squares</span>.”</span> <em>Psychometrika</em> 56 (3): 433–47. <a href="http://deleeuwpdx.net/janspubs/1991/articles/bijleveld_deleeuw_A_91.pdf">http://deleeuwpdx.net/janspubs/1991/articles/bijleveld_deleeuw_A_91.pdf</a>.
+</div>
+<div id="ref-bock_60" class="csl-entry">
+Bock, R. D. 1960. <span>“<span class="nocase">Methods and Applications of Optimal Scaling</span>.”</span> Psychometric Laboratory Report 25. Chapell Hill, N.C.: L.L. Thurstone Psychometric Laboratory, University of North Carolina.
+</div>
+<div id="ref-breiman_01" class="csl-entry">
+Breiman, L. 2001. <span>“<span>Statistical Modeling: The Two Cultures</span>.”</span> <em>Statistical Science</em> 16 (3): 199–231.
+</div>
+<div id="ref-breiman_friedman_85" class="csl-entry">
+Breiman, L., and J. H. Friedman. 1985. <span>“<span class="nocase">Estimating Optimal Transformations for Multiple Regression and Correlation</span>.”</span> <em>Journal of the American Statistical Association</em> 80: 580–619.
+</div>
+<div id="ref-carroll_68" class="csl-entry">
+Carroll, J. D. 1968. <span>“<span class="nocase">A Generalization of Canonical Correlation Analysis to Three or More Sets of Variables</span>.”</span> In <em>Proceedings of the 76th Annual Convention of the American Psychological Association</em>, 227–28. Washington, D.C.: American Psychological Association.
+</div>
+<div id="ref-cleveland_14" class="csl-entry">
+Cleveland, W. S. 2014. <span>“<span class="nocase">Data Science: An Action Plan for Expanding the Technical Areas of the Field of Statistics</span>.”</span> <em>Statistical Analysis and Data Mining</em> 7: 414–17.
+</div>
+<div id="ref-coolen_deleeuw_R_87" class="csl-entry">
+Coolen, H., and J. De Leeuw. 1987. <span>“<span class="nocase">Least Squares Path Analysis with Optimal Scaling</span>.”</span> Research Report RR-87-03. Leiden, The Netherlands: Department of Data Theory FSW/RUL. <a href="http://deleeuwpdx.net/janspubs/1987/reports/coolen_deleeuw_R_87.pdf">http://deleeuwpdx.net/janspubs/1987/reports/coolen_deleeuw_R_87.pdf</a>.
+</div>
+<div id="ref-cordier_65" class="csl-entry">
+Cordier, B. 1965. <span>“<span class="nocase">L’Analyse Factorielle des Correspondances</span>.”</span> {Th\`ese de Troisieme Cycle}, Université de Rennes; Faculté des Sciences.
+</div>
+<div id="ref-davies_95" class="csl-entry">
+Davies, P. L. 1995. <span>“<span>Data Features</span>.”</span> <em>Statistica Neerlandica</em> 49 (2): 185–245.
+</div>
+<div id="ref-davies_08" class="csl-entry">
+———. 2008. <span>“<span>Approximating Data</span>.”</span> <em>Journal of the Korean Statistical Society</em> 37: 191–211.
+</div>
+<div id="ref-deleeuw_R_68e" class="csl-entry">
+De Leeuw, J. 1968a. <span>“Canonical Discriminant Analysis of Relational Data.”</span> Research Note 007-68. Department of Data Theory FSW/RUL. <a href="http://deleeuwpdx.net/janspubs/1968/reports/deleeuw_R_68e.pdf">http://deleeuwpdx.net/janspubs/1968/reports/deleeuw_R_68e.pdf</a>.
+</div>
+<div id="ref-deleeuw_R_68d" class="csl-entry">
+———. 1968b. <span>“Nonmetric Discriminant Analysis.”</span> Research Note 06-68. Department of Data Theory, University of Leiden. <a href="http://deleeuwpdx.net/janspubs/1968/reports/deleeuw_R_68d.pdf">http://deleeuwpdx.net/janspubs/1968/reports/deleeuw_R_68d.pdf</a>.
+</div>
+<div id="ref-deleeuw_B_74" class="csl-entry">
+———. 1974. <em>Canonical Analysis of Categorical Data</em>. Leiden, The Netherlands: Psychological Institute, Leiden University. <a href="http://deleeuwpdx.net/janspubs/1974/books/deleeuw_B_74.pdf">http://deleeuwpdx.net/janspubs/1974/books/deleeuw_B_74.pdf</a>.
+</div>
+<div id="ref-deleeuw_A_83b" class="csl-entry">
+———. 1983. <span>“On the Prehistory of Correspondence Analysis.”</span> <em>Statistica Neerlandica</em> 37: 161–64. <a href="http://deleeuwpdx.net/janspubs/1983/articles/deleeuw_A_83b.pdf">http://deleeuwpdx.net/janspubs/1983/articles/deleeuw_A_83b.pdf</a>.
+</div>
+<div id="ref-deleeuw_A_84c" class="csl-entry">
+———. 1984a. <span>“Models of Data.”</span> <em>Kwantitatieve Methoden</em> 5: 17–30. <a href="http://deleeuwpdx.net/janspubs/1984/articles/deleeuw_A_84c.pdf">http://deleeuwpdx.net/janspubs/1984/articles/deleeuw_A_84c.pdf</a>.
+</div>
+<div id="ref-deleeuw_C_84c" class="csl-entry">
+———. 1984b. <span>“The Gifi System of Nonlinear Multivariate Analysis.”</span> In <em>Data Analysis and Informatics</em>, edited by E. Diday et al. Vol. III. Amsterdam: North Holland Publishing Company. <a href="http://deleeuwpdx.net/janspubs/1984/chapters/deleeuw_C_84c.pdf">http://deleeuwpdx.net/janspubs/1984/chapters/deleeuw_C_84c.pdf</a>.
+</div>
+<div id="ref-deleeuw_A_88c" class="csl-entry">
+———. 1988a. <span>“Models and Techniques.”</span> <em>Statistica Neerlandica</em> 42: 91–98. <a href="http://deleeuwpdx.net/janspubs/1988/articles/deleeuw_A_88c.pdf">http://deleeuwpdx.net/janspubs/1988/articles/deleeuw_A_88c.pdf</a>.
+</div>
+<div id="ref-deleeuw_C_88b" class="csl-entry">
+———. 1988c. <span>“<span class="nocase">Multivariate Analysis with Optimal Scaling</span>.”</span> In <em>Proceedings of the International Conference on Advances in Multivariate Statistical Analysis</em>, edited by S. Das Gupta and J. K. Ghosh, 127–60. Calcutta, India: Indian Statistical Institute. <a href="http://deleeuwpdx.net/janspubs/1988/chapters/deleeuw_C_88b.pdf">http://deleeuwpdx.net/janspubs/1988/chapters/deleeuw_C_88b.pdf</a>.
+</div>
+<div id="ref-deleeuw_C_90b" class="csl-entry">
+———. 1990. <span>“Data Modeling and Theory Construction.”</span> In <em>Operationalization and Research Strategy</em>, edited by J. J. Hox and J. De Jong-Gierveld. Amsterdam, The Netherlands: Swets; Zeitlinger. <a href="http://deleeuwpdx.net/janspubs/1990/chapters/deleeuw_C_90b.pdf">http://deleeuwpdx.net/janspubs/1990/chapters/deleeuw_C_90b.pdf</a>.
+</div>
+<div id="ref-deleeuw_C_04a" class="csl-entry">
+———. 2004. <span>“Least Squares Optimal Scaling of Partially Observed Linear Systems.”</span> In <em>Recent Developments in Structural Equation Models</em>, edited by K. van Montfort, J. Oud, and A. Satorra. Dordrecht, Netherlands: Kluwer Academic Publishers. <a href="http://deleeuwpdx.net/janspubs/2004/chapters/deleeuw_C_04a.pdf">http://deleeuwpdx.net/janspubs/2004/chapters/deleeuw_C_04a.pdf</a>.
+</div>
+<div id="ref-deleeuw_E_15b" class="csl-entry">
+———. 2015b. <span>“<span class="nocase">Aspects of Correlation Matrices</span>.”</span> <a href="http://deleeuwpdx.net/pubfolders/aspect/aspect.pdf">http://deleeuwpdx.net/pubfolders/aspect/aspect.pdf</a>.
+</div>
+<div id="ref-deleeuw_vanrijckevorsel_C_80" class="csl-entry">
+De Leeuw, J., and J. L. A. Van Rijckevorsel. 1980. <span>“HOMALS and PRINCALS: Some Generalizations of Principal Components Analysis.”</span> In <em>Data Analysis and Informatics</em>. Amsterdam: North Holland Publishing Company. <a href="http://deleeuwpdx.net/janspubs/1980/chapters/deleeuw_vanrijckevorsel_C_80.pdf">http://deleeuwpdx.net/janspubs/1980/chapters/deleeuw_vanrijckevorsel_C_80.pdf</a>.
+</div>
+<div id="ref-deleeuw_vanrijckevorsel_C_88" class="csl-entry">
+———. 1988. <span>“Beyond Homogeneity Analysis.”</span> In <em>Component and Correspondence Analysis</em>, edited by J. L. A. Van Rijckevorsel and J. De Leeuw, 55–80. Chichester, England: Wiley. <a href="http://deleeuwpdx.net/janspubs/1988/chapters/deleeuw_vanrijckevorsel_C_88.pdf">http://deleeuwpdx.net/janspubs/1988/chapters/deleeuw_vanrijckevorsel_C_88.pdf</a>.
+</div>
+<div id="ref-gifi_B_90" class="csl-entry">
+———. 1990. <em>Nonlinear Multivariate Analysis</em>. New York, N.Y.: Wiley.
+</div>
+<div id="ref-gower_90" class="csl-entry">
+Gower, J. C. 1990. <span>“<span class="nocase">Fisher’s Optimal Scores and Multiple Correspondence Analysis</span>.”</span> <em>Biometrics</em> 46: 947–61.
+</div>
+<div id="ref-gower_hand_96" class="csl-entry">
+Gower, J. C., and D. J. Hand. 1996. <em><span>Biplots</span></em>. Monographs on Statistics and Applied Probability 54. Chapman; Hall.
+</div>
+<div id="ref-gower_leroux_gardnerlubbe_15" class="csl-entry">
+Gower, J. C., N. J. Le Roux, and S. Gardner-Lubbe. 2015. <span>“<span>Biplots: Quantitative Data</span>.”</span> <em>WIREs Computational Statistics</em> 7: 42–62. <a href="https://doi.org/10.1002/wics.1338">https://doi.org/10.1002/wics.1338</a>.
+</div>
+<div id="ref-gower_leroux_gardnerlubbe_16" class="csl-entry">
+———. 2016. <span>“<span>Biplots: Qualitative Data</span>.”</span> <em>WIREs Computational Statistics</em> 8: 82–111. <a href="https://doi.org/10.1002/wics.1377">https://doi.org/10.1002/wics.1377</a>.
+</div>
+<div id="ref-guttman_41" class="csl-entry">
+Guttman, L. 1941. <span>“<span class="nocase">The Quantification of a Class of Attributes: A Theory and Method of Scale Construction</span>.”</span> In <em>The Prediction of Personal Adjustment</em>, edited by P. Horst, 321–48. New York: Social Science Research Council.
+</div>
+<div id="ref-hill_74" class="csl-entry">
+Hill, M. O. 1974. <span>“<span class="nocase">Correspondence Analysis: a Neglected Multivariate Method</span>.”</span> <em>Applied Statistics</em> 23: 340–54.
+</div>
+<div id="ref-koyak_87" class="csl-entry">
+Koyak, R. 1987. <span>“<span class="nocase">On Measuring Internal Dependence in a Set of Random Variables</span>.”</span> <em>Annals of Statistics</em> 15: 1215–28.
+</div>
+<div id="ref-kruskal_64a" class="csl-entry">
+Kruskal, J. B. 1964a. <span>“<span class="nocase">Multidimensional Scaling by Optimizing Goodness of Fit to a Nonmetric Hypothesis</span>.”</span> <em>Psychometrika</em> 29: 1–27.
+</div>
+<div id="ref-kruskal_64b" class="csl-entry">
+———. 1964b. <span>“<span class="nocase">Nonmetric Multidimensional Scaling: a Numerical Method</span>.”</span> <em>Psychometrika</em> 29: 115–29.
+</div>
+<div id="ref-kruskal_65" class="csl-entry">
+———. 1965. <span>“<span class="nocase">Analysis of Factorial Experiments by Estimating Monotone Transformations of the Data</span>.”</span> <em>Journal of the Royal Statistical Society</em> B27: 251–63.
+</div>
+<div id="ref-kruskal_shepard_74" class="csl-entry">
+Kruskal, J. B., and R. N. Shepard. 1974. <span>“<span class="nocase">A Nonmetric Variety of Linear Factor Analysis</span>.”</span> <em>Psychometrika</em> 39: 123–57.
+</div>
+<div id="ref-lingoes_73" class="csl-entry">
+Lingoes, J. C. 1973. <em><span>The Guttman-Lingoes Nonmetric Program Series</span></em>. Mathesis Press.
+</div>
+<div id="ref-mackenzie_78" class="csl-entry">
+Mackenzie, D. 1978. <span>“<span class="nocase">Statistical Theory and Social Interests: A Case-Study</span>.”</span> <em>Social Studies of Science</em> 8: 35–83.
+</div>
+<div id="ref-mair_deleeuw_A_10" class="csl-entry">
+Mair, P., and J. De Leeuw. 2010. <span>“A General Framework for Multivariate Analysis with Optimal Scaling: The r Package Aspect.”</span> <em>Journal of Statistical Software</em> 32 (9): 1–23. <a href="http://deleeuwpdx.net/janspubs/2010/articles/mair_deleeuw_A_10.pdf">http://deleeuwpdx.net/janspubs/2010/articles/mair_deleeuw_A_10.pdf</a>.
+</div>
+<div id="ref-roskam_68" class="csl-entry">
+Roskam, E. E. 1968. <span>“<span class="nocase">Metric Analysis of Ordinal Data in Psychology</span>.”</span> PhD thesis, University of Leiden.
+</div>
+<div id="ref-shmueli_10" class="csl-entry">
+Shmueli, G. 2010. <span>“<span class="nocase">To Explain or to Predict ?</span>”</span> <em>Statistical Science</em> 25: 289–310.
+</div>
+<div id="ref-tanaka_79" class="csl-entry">
+Tanaka, Y. 1979. <span>“<span class="nocase">Review of the Methods of Quantification</span>.”</span> <em>Environmental Health Perspectives</em> 32: 113–23.
+</div>
+<div id="ref-tukey_62" class="csl-entry">
+Tukey, J. W. 1962. <span>“<span class="nocase">The Future of Data Analysis</span>.”</span> <em>Annals of Mathematical Statistics</em> 33: 1–79.
+</div>
+<div id="ref-vanderburg_deleeuw_verdegaal_A_88" class="csl-entry">
+Van der Burg, E., J. De Leeuw, and R. Verdegaal. 1988. <span>“Homogeneity Analysis with k Sets of Variables: An Alternating Least Squares Approach with Optimal Scaling Features.”</span> <em>Psychometrika</em> 53: 177–97. <a href="http://deleeuwpdx.net/janspubs/1988/articles/vanderburg_deleeuw_verdegaal_A_88.pdf">http://deleeuwpdx.net/janspubs/1988/articles/vanderburg_deleeuw_verdegaal_A_88.pdf</a>.
+</div>
+<div id="ref-winsberg_ramsay_80" class="csl-entry">
+Winsberg, S., and J. O. Ramsay. 1980. <span>“<span class="nocase">Monotone Transformations to Additivity</span>.”</span> <em>Biometrika</em> 67: 669–74.
+</div>
+<div id="ref-winsberg_ramsay_83" class="csl-entry">
+———. 1983. <span>“<span class="nocase">Monotone Spline Transformations for Dimension Reduction</span>.”</span> <em>Psychometrika</em> 48: 575–95.
+</div>
+<div id="ref-young_81" class="csl-entry">
+Young, F. W. 1981. <span>“<span class="nocase">Quantitative Analysis of Qualitative Data</span>.”</span> <em>Psychometrika</em> 46: 357–88.
+</div>
+<div id="ref-young_deleeuw_takane_C_80" class="csl-entry">
+Young, F. W., J. De Leeuw, and Y. Takane. 1980. <span>“Quantifying Qualitative Data.”</span> In <em>Similarity and Choice. Papers in Honor of Clyde Coombs</em>, edited by E. D. Lantermann and H. Feger. Bern: Hans Huber. <a href="http://deleeuwpdx.net/janspubs/1980/chapters/young_deleeuw_takane_C_80.pdf">http://deleeuwpdx.net/janspubs/1980/chapters/young_deleeuw_takane_C_80.pdf</a>.
+</div>
+<div id="ref-yu_14" class="csl-entry">
+Yu, B. 2014. <span>“<span>Let Us Own Data Science</span>.”</span> <em>IMS Bulletin</em> 43: 1, 13–16.
 </div>
 </div>
             </section>
@@ -306,6 +480,7 @@ gitbook.start({
 "weibo": false,
 "instapaper": false,
 "vk": false,
+"whatsapp": false,
 "all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
 },
 "fontsettings": {
