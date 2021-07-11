@@ -3,6 +3,12 @@ title: "Gifi Analysis of Multivariate Data"
 author: "Jan de Leeuw"
 date: '`r paste("First created May 04, 2016. Last update", format(Sys.Date(),"%B %d, %Y"))`'
 output:
+  bookdown::pdf_book:
+    keep_tex: yes
+    latex_engine: pdflatex
+    number_sections: yes  
+    toc: yes
+    toc_depth: '4'
   bookdown::gitbook:
     config:
      keep_md: yes
@@ -10,12 +16,6 @@ output:
        position: fixed
      toc: 
       collapse: none
-  bookdown::pdf_book:
-    keep_tex: yes
-    latex_engine: pdflatex
-    number_sections: yes  
-    toc: yes
-    toc_depth: '4'
 description: null
 documentclass: book
 fontsize: 12pt
@@ -401,6 +401,8 @@ mprint (y <- makeIndicator (c (rep (1, 5), rep (2, 4))))
 ```{r interactive_example_xy}
 mprint (makeColumnProduct (list (x, y)))
 ```
+
+# Meet-Loss
 
 # Aspects
 

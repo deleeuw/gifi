@@ -5,14 +5,10 @@
 \documentclass[
   12pt,
 ]{book}
-\title{Gifi Analysis of Multivariate Data}
-\author{Jan de Leeuw}
-\date{First created May 04, 2016. Last update June 04, 2021}
-
 \usepackage{amsmath,amssymb}
 \usepackage{lmodern}
-\usepackage{iftex}
-\ifPDFTeX
+\usepackage{ifxetex,ifluatex}
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
   \usepackage[T1]{fontenc}
   \usepackage[utf8]{inputenc}
   \usepackage{textcomp} % provide euro and other symbols
@@ -114,22 +110,22 @@
 \providecommand{\tightlist}{%
   \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
 \setcounter{secnumdepth}{5}
+\ifluatex
+  \usepackage{selnolig}  % disable illegal ligatures
+\fi
 \newlength{\cslhangindent}
 \setlength{\cslhangindent}{1.5em}
 \newlength{\csllabelwidth}
 \setlength{\csllabelwidth}{3em}
-\newlength{\cslentryspacingunit} % times entry-spacing
-\setlength{\cslentryspacingunit}{\parskip}
 \newenvironment{CSLReferences}[2] % #1 hanging-ident, #2 entry spacing
  {% don't indent paragraphs
   \setlength{\parindent}{0pt}
   % turn on hanging indent if param 1 is 1
-  \ifodd #1
-  \let\oldpar\par
-  \def\par{\hangindent=\cslhangindent\oldpar}
-  \fi
+  \ifodd #1 \everypar{\setlength{\hangindent}{\cslhangindent}}\ignorespaces\fi
   % set entry spacing
-  \setlength{\parskip}{#2\cslentryspacingunit}
+  \ifnum #2 > 0
+  \setlength{\parskip}{#2\baselineskip}
+  \fi
  }%
  {}
 \usepackage{calc}
@@ -137,9 +133,10 @@
 \newcommand{\CSLLeftMargin}[1]{\parbox[t]{\csllabelwidth}{#1}}
 \newcommand{\CSLRightInline}[1]{\parbox[t]{\linewidth - \csllabelwidth}{#1}\break}
 \newcommand{\CSLIndent}[1]{\hspace{\cslhangindent}#1}
-\ifLuaTeX
-  \usepackage{selnolig}  % disable illegal ligatures
-\fi
+
+\title{Gifi Analysis of Multivariate Data}
+\author{Jan de Leeuw}
+\date{First created May 04, 2016. Last update July 10, 2021}
 
 \begin{document}
 \maketitle
@@ -220,9 +217,9 @@ Nevertheless there is much original material in \protect\hyperlink{ref-gifi_B_90
 
 The book was published by a prestiguous publisher in a prestiguous series, but it is fair to say it never really caught on. It is not hard to understand why. The content, and the style, are unfamiliar to statisticians and mathematicians. There is no inference, no probability, and very little rigor. The content is in multivariate data analysis, which would be most at home these days, if anywhere, in a computer science department. The Gifi group did not have the resources of, say, Benzécri in France or Hayashi in Japan. The members were mostly active in psychometrics, a small and insular field, and they were from The Netherlands, a small country prone to overestimate its importance (\protect\hyperlink{ref-marvell_53}{Marvell} (\protect\hyperlink{ref-marvell_53}{1653})). They also did not have the evangelical zeal necessary for creating and sustaining a large impact.
 
-There have been some other major publication events in the Gifi saga. Around the same time as the Wiley book there was the publication of \protect\hyperlink{ref-spss_89}{SPSS} (\protect\hyperlink{ref-spss_89}{1989}). Starting in the late seventies the Gifi FORTRAN programs had been embedded in the SPSS system. The \emph{SPSS Categories} manual was updated many times, in fact every time SPSS or IBM SPSS had a new release. Over the years other programs produced by the Department of Data Theory were added. A recent version is, for example, \protect\hyperlink{ref-meulman_heiser_12}{J. M. Meulman and Heiser} (\protect\hyperlink{ref-meulman_heiser_12}{2012}), corresponding to IBM SPSS 21. It acknowledges the contributions of some of the members of the Gifi team -- but in \protect\hyperlink{ref-ibm_15}{IBM} (\protect\hyperlink{ref-ibm_15}{2015}), the version for IBM SPSS 23, these acknowledgements and the names of the authors have disappeared. Sic transit gloria mundi.
+There have been some other major publication events in the Gifi saga. Around the same time as the Wiley book there was the publication of \protect\hyperlink{ref-spss_89}{SPSS} (\protect\hyperlink{ref-spss_89}{1989}). Starting in the late seventies the Gifi FORTRAN programs had been embedded in the SPSS system. The \emph{SPSS Categories} manual was updated many times, in fact every time SPSS or IBM SPSS had a new release. Over the years other programs produced by the Department of Data Theory were added. A recent version is, for example, \protect\hyperlink{ref-meulman_heiser_12}{Meulman and Heiser} (\protect\hyperlink{ref-meulman_heiser_12}{2012}), corresponding to IBM SPSS 21. It acknowledges the contributions of some of the members of the Gifi team -- but in \protect\hyperlink{ref-ibm_15}{IBM} (\protect\hyperlink{ref-ibm_15}{2015}), the version for IBM SPSS 23, these acknowledgements and the names of the authors have disappeared. Sic transit gloria mundi.
 
-\protect\hyperlink{ref-michailidis_deleeuw_A_98}{Michailidis and De Leeuw} (\protect\hyperlink{ref-michailidis_deleeuw_A_98}{1998}) made an attempt to make the Gifi material somewhat more accessible by publishing a review article in a widely read mainstream statistical journal. Another such attempt is \protect\hyperlink{ref-deleeuw_mair_A_09a}{J. De Leeuw and Mair} (\protect\hyperlink{ref-deleeuw_mair_A_09a}{2009a}), in which the homals package for R is introduced. The homals package is basically a single monolithic R function that can do everything the Gifi programs can do, and then some. In both cases, however, the problem remained that the techniques, and the software, were too convoluted and too different from what both statisticians and users were accustomed to.
+\protect\hyperlink{ref-michailidis_deleeuw_A_98}{Michailidis and De Leeuw} (\protect\hyperlink{ref-michailidis_deleeuw_A_98}{1998}) made an attempt to make the Gifi material somewhat more accessible by publishing a review article in a widely read mainstream statistical journal. Another such attempt is \protect\hyperlink{ref-deleeuw_mair_A_09a}{De Leeuw and Mair} (\protect\hyperlink{ref-deleeuw_mair_A_09a}{2009a}), in which the homals package for R is introduced. The homals package is basically a single monolithic R function that can do everything the Gifi programs can do, and then some. In both cases, however, the problem remained that the techniques, and the software, were too convoluted and too different from what both statisticians and users were accustomed to.
 
 \protect\hyperlink{ref-vanderheijden_vanbuuren_16}{Van der Heijden and Van Buuren} (\protect\hyperlink{ref-vanderheijden_vanbuuren_16}{1916}) give an excellent, though somewhat wistful, historic overview of the Gifi project. It is too early for eulogies, however, and we refuse to give up. This book is yet another reorganization of the Gifi material, with many extensions. We take Yoshio Takane advice seriously, and we organize both the theory and the algorithms around what is called ``meet loss'' in Gifi. In our software we separate the basic computational engine from its various applications that define the techniques of \emph{Multivariate Analysis with Optimal Scaling (MVAOS)}. Hiding the core makes it possible to make the programs behave in much the same way as traditional MVA programs. The software is written in R (\protect\hyperlink{ref-r_core_team_16}{R Core Team} (\protect\hyperlink{ref-r_core_team_16}{2016})), with some parts of the computational engine written in C.
 
@@ -237,7 +234,7 @@ We would like to acknowledge those who have made substantial contributions to th
 \section{Some Dualisms}\label{some-dualisms}}
 
 The type of multivariate analysis (MVA) we discuss in this book is sometimes called \emph{descriptive} or \emph{exploratory}, as opposed to \emph{inferential} or \emph{confirmatory}. It is located somewhere on the line between computational linear algebra and statistics, and it is probably close to data analysis, Big Data, machine learning, knowledge discovery, data mining, business analytics, or whatever other ill-defined label is used for the \emph{mode du jour}.
-In the days of \protect\hyperlink{ref-gifi_B_90}{Gifi} (\protect\hyperlink{ref-gifi_B_90}{1990}) there was a small-scale civil war between the mathematical statistical (confirmatory) approach to MVA and the data analytical (exploratory) approach. This is not a new conflict, because it has its roots in the Pearson-Yule debate (\protect\hyperlink{ref-mackenzie_78}{Mackenzie} (\protect\hyperlink{ref-mackenzie_78}{1978})). The first shots in modern times were probably fired by \protect\hyperlink{ref-tukey_62}{Tukey} (\protect\hyperlink{ref-tukey_62}{1962}), but much additional polemic heat was generated in the 50 years since Tukey's famous paper. In order to stand our ground we were forced to participate, for example with \protect\hyperlink{ref-deleeuw_A_84c}{J. De Leeuw} (\protect\hyperlink{ref-deleeuw_A_84c}{1984a}), \protect\hyperlink{ref-deleeuw_A_88c}{J. De Leeuw} (\protect\hyperlink{ref-deleeuw_A_88c}{1988a}), \protect\hyperlink{ref-deleeuw_C_90b}{J. De Leeuw} (\protect\hyperlink{ref-deleeuw_C_90b}{1990}).
+In the days of \protect\hyperlink{ref-gifi_B_90}{Gifi} (\protect\hyperlink{ref-gifi_B_90}{1990}) there was a small-scale civil war between the mathematical statistical (confirmatory) approach to MVA and the data analytical (exploratory) approach. This is not a new conflict, because it has its roots in the Pearson-Yule debate (\protect\hyperlink{ref-mackenzie_78}{Mackenzie} (\protect\hyperlink{ref-mackenzie_78}{1978})). The first shots in modern times were probably fired by \protect\hyperlink{ref-tukey_62}{Tukey} (\protect\hyperlink{ref-tukey_62}{1962}), but much additional polemic heat was generated in the 50 years since Tukey's famous paper. In order to stand our ground we were forced to participate, for example with \protect\hyperlink{ref-deleeuw_A_84c}{De Leeuw} (\protect\hyperlink{ref-deleeuw_A_84c}{1984a}), \protect\hyperlink{ref-deleeuw_A_88c}{De Leeuw} (\protect\hyperlink{ref-deleeuw_A_88c}{1988a}), \protect\hyperlink{ref-deleeuw_C_90b}{De Leeuw} (\protect\hyperlink{ref-deleeuw_C_90b}{1990}).
 
 Here is what \protect\hyperlink{ref-gifi_B_90}{Gifi} (\protect\hyperlink{ref-gifi_B_90}{1990}) says, clearly with some intent to provoke.
 
@@ -300,17 +297,17 @@ Notwithstanding the monumental changes, inferential statistics remains an import
 
 One way of looking at \emph{Multivariate Analysis with Optimal Scaling}, or \emph{MVAOS}, is as an extension of classical linear multivariate analysis to variables that are binary, ordered, or even unordered categorical. In R terminology, classical MVA techniques can thus be applied if some or all of the variables in the dataframe are \emph{factors}. Categorical variables are \emph{quantified} and numerical variables are \emph{transformed} to optimize the linear or bilinear least squares fit.
 
-Least squares and eigenvalue methods for quantifying multivariate qualitative data were first introduced by \protect\hyperlink{ref-guttman_41}{Guttman} (\protect\hyperlink{ref-guttman_41}{1941}), although there were some bivariate predecessors in the work of Pearson, Fisher, Maung, and Hirschfeld (see \protect\hyperlink{ref-deleeuw_A_83b}{J. De Leeuw} (\protect\hyperlink{ref-deleeuw_A_83b}{1983}) or \protect\hyperlink{ref-gower_90}{Gower} (\protect\hyperlink{ref-gower_90}{1990}) for a historical overview). In this earlier work the emphasis was often on optimizing quadratic forms, or ratios of quadratic forms, and not so much on least squares, distance geometry, and graphical representations such as \emph{biplots} (\protect\hyperlink{ref-gower_hand_96}{Gower and Hand} (\protect\hyperlink{ref-gower_hand_96}{1996}), \protect\hyperlink{ref-gower_leroux_gardnerlubbe_15}{Gower, Le Roux, and Gardner-Lubbe} (\protect\hyperlink{ref-gower_leroux_gardnerlubbe_15}{2015}), \protect\hyperlink{ref-gower_leroux_gardnerlubbe_16}{Gower, Le Roux, and Gardner-Lubbe} (\protect\hyperlink{ref-gower_leroux_gardnerlubbe_16}{2016})). They were taken up by, among others, \protect\hyperlink{ref-deleeuw_R_68e}{J. De Leeuw} (\protect\hyperlink{ref-deleeuw_R_68e}{1968a}), by Benzécri and his students in France (see \protect\hyperlink{ref-cordier_65}{Cordier} (\protect\hyperlink{ref-cordier_65}{1965})), and by Hayashi and his students in Japan (see \protect\hyperlink{ref-tanaka_79}{Tanaka} (\protect\hyperlink{ref-tanaka_79}{1979})). Early applications can be found in ecology, following an influential paper by \protect\hyperlink{ref-hill_74}{Hill} (\protect\hyperlink{ref-hill_74}{1974}). With increasing emphasis on software the role of graphical representations has increased and continues to increase.
+Least squares and eigenvalue methods for quantifying multivariate qualitative data were first introduced by \protect\hyperlink{ref-guttman_41}{Guttman} (\protect\hyperlink{ref-guttman_41}{1941}), although there were some bivariate predecessors in the work of Pearson, Fisher, Maung, and Hirschfeld (see \protect\hyperlink{ref-deleeuw_A_83b}{De Leeuw} (\protect\hyperlink{ref-deleeuw_A_83b}{1983}) or \protect\hyperlink{ref-gower_90}{Gower} (\protect\hyperlink{ref-gower_90}{1990}) for a historical overview). In this earlier work the emphasis was often on optimizing quadratic forms, or ratios of quadratic forms, and not so much on least squares, distance geometry, and graphical representations such as \emph{biplots} (\protect\hyperlink{ref-gower_hand_96}{Gower and Hand} (\protect\hyperlink{ref-gower_hand_96}{1996}), \protect\hyperlink{ref-gower_leroux_gardnerlubbe_15}{Gower, Le Roux, and Gardner-Lubbe} (\protect\hyperlink{ref-gower_leroux_gardnerlubbe_15}{2015}), \protect\hyperlink{ref-gower_leroux_gardnerlubbe_16}{Gower, Le Roux, and Gardner-Lubbe} (\protect\hyperlink{ref-gower_leroux_gardnerlubbe_16}{2016})). They were taken up by, among others, \protect\hyperlink{ref-deleeuw_R_68e}{De Leeuw} (\protect\hyperlink{ref-deleeuw_R_68e}{1968a}), by Benzécri and his students in France (see \protect\hyperlink{ref-cordier_65}{Cordier} (\protect\hyperlink{ref-cordier_65}{1965})), and by Hayashi and his students in Japan (see \protect\hyperlink{ref-tanaka_79}{Tanaka} (\protect\hyperlink{ref-tanaka_79}{1979})). Early applications can be found in ecology, following an influential paper by \protect\hyperlink{ref-hill_74}{Hill} (\protect\hyperlink{ref-hill_74}{1974}). With increasing emphasis on software the role of graphical representations has increased and continues to increase.
 
-In \protect\hyperlink{ref-deleeuw_B_74}{J. De Leeuw} (\protect\hyperlink{ref-deleeuw_B_74}{1974}) a first attempt was made to unify most classical descriptive multivariate techniques using a single least squares loss function and a corresponding \emph{alternating least squares (ALS)} optimization method. His work then bifurcated to the \emph{ALSOS project}, with Young and Takane at the University of North Carolina Chapell Hill, and the \emph{Gifi project}, at the Department of Data Theory of Leiden University.
+In \protect\hyperlink{ref-deleeuw_B_74}{De Leeuw} (\protect\hyperlink{ref-deleeuw_B_74}{1974}) a first attempt was made to unify most classical descriptive multivariate techniques using a single least squares loss function and a corresponding \emph{alternating least squares (ALS)} optimization method. His work then bifurcated to the \emph{ALSOS project}, with Young and Takane at the University of North Carolina Chapell Hill, and the \emph{Gifi project}, at the Department of Data Theory of Leiden University.
 
-The ALSOS project was started in 1973-1974, when De Leeuw was visiting Bell Telephone Labs in Murray Hill. ALSOS stands for Alternating Least Squares with Optimal Scaling. The ALS part of the name was provided by \protect\hyperlink{ref-deleeuw_R_68d}{J. De Leeuw} (\protect\hyperlink{ref-deleeuw_R_68d}{1968b}) and the OS part by \protect\hyperlink{ref-bock_60}{Bock} (\protect\hyperlink{ref-bock_60}{1960}). At early meetings of the Psychometric Society some members were offended by our use of ``Optimal Scaling,'' because they took it to imply that their methods of scaling were supposedly inferior to ours. But the ``optimal'' merely refers to optimality in the context of a specific least squares loss function.
+The ALSOS project was started in 1973-1974, when De Leeuw was visiting Bell Telephone Labs in Murray Hill. ALSOS stands for Alternating Least Squares with Optimal Scaling. The ALS part of the name was provided by \protect\hyperlink{ref-deleeuw_R_68d}{De Leeuw} (\protect\hyperlink{ref-deleeuw_R_68d}{1968b}) and the OS part by \protect\hyperlink{ref-bock_60}{Bock} (\protect\hyperlink{ref-bock_60}{1960}). At early meetings of the Psychometric Society some members were offended by our use of ``Optimal Scaling,'' because they took it to imply that their methods of scaling were supposedly inferior to ours. But the ``optimal'' merely refers to optimality in the context of a specific least squares loss function.
 
 Young, De Leeuw, and Takane applied the basic ALS and OS methodology to conjoint analysis, regression, principal component analysis, multidimensional scaling, and factor analysis, producing computer programs (and SAS modules) for each of the techniques. An overview of the project, basically at the end of its lifetime, is in \protect\hyperlink{ref-young_deleeuw_takane_C_80}{Young, De Leeuw, and Takane} (\protect\hyperlink{ref-young_deleeuw_takane_C_80}{1980}) and \protect\hyperlink{ref-young_81}{Young} (\protect\hyperlink{ref-young_81}{1981}).
 
 The ALSOS project was clearly inspired by the path-breaking work of \protect\hyperlink{ref-kruskal_64a}{Kruskal} (\protect\hyperlink{ref-kruskal_64a}{1964a}) and \protect\hyperlink{ref-kruskal_64b}{Kruskal} (\protect\hyperlink{ref-kruskal_64b}{1964b}), who designed a general way to turn metric multivariate analysis techniques into non-metric ones. In fact, Kruskal applied the basic methodology developed for multidimensional scaling to linear models in \protect\hyperlink{ref-kruskal_65}{Kruskal} (\protect\hyperlink{ref-kruskal_65}{1965}), and to principal component analysis in \protect\hyperlink{ref-kruskal_shepard_74}{Kruskal and Shepard} (\protect\hyperlink{ref-kruskal_shepard_74}{1974}) (which was actually written around 1965 as well). In parallel developments closely related nonmetric methods were developed by \protect\hyperlink{ref-roskam_68}{Roskam} (\protect\hyperlink{ref-roskam_68}{1968}) and by Guttman and Lingoes (see \protect\hyperlink{ref-lingoes_73}{Lingoes} (\protect\hyperlink{ref-lingoes_73}{1973})).
 
-The Gifi project took its inspiration from Kruskal, but perhaps even more from \protect\hyperlink{ref-guttman_41}{Guttman} (\protect\hyperlink{ref-guttman_41}{1941}) (and to a lesser extent from the optimal scaling work of Fisher, see \protect\hyperlink{ref-gower_90}{Gower} (\protect\hyperlink{ref-gower_90}{1990})). Guttman's quantification method, which later became known as \emph{multiple correspondence analysis}, was merged with linear and nonlinear principal component analysis in the HOMALS/PRINCALS techniques and programs (\protect\hyperlink{ref-deleeuw_vanrijckevorsel_C_80}{J. De Leeuw and Van Rijckevorsel} (\protect\hyperlink{ref-deleeuw_vanrijckevorsel_C_80}{1980})). The MVAOS loss function that was chosen ultimately, for example in the work of \protect\hyperlink{ref-vanderburg_deleeuw_verdegaal_A_88}{Van der Burg, De Leeuw, and Verdegaal} (\protect\hyperlink{ref-vanderburg_deleeuw_verdegaal_A_88}{1988}), had been used earlier by \protect\hyperlink{ref-carroll_68}{Carroll} (\protect\hyperlink{ref-carroll_68}{1968}) in multi-set canonical correlation analysis of numerical variables.
+The Gifi project took its inspiration from Kruskal, but perhaps even more from \protect\hyperlink{ref-guttman_41}{Guttman} (\protect\hyperlink{ref-guttman_41}{1941}) (and to a lesser extent from the optimal scaling work of Fisher, see \protect\hyperlink{ref-gower_90}{Gower} (\protect\hyperlink{ref-gower_90}{1990})). Guttman's quantification method, which later became known as \emph{multiple correspondence analysis}, was merged with linear and nonlinear principal component analysis in the HOMALS/PRINCALS techniques and programs (\protect\hyperlink{ref-deleeuw_vanrijckevorsel_C_80}{De Leeuw and Van Rijckevorsel} (\protect\hyperlink{ref-deleeuw_vanrijckevorsel_C_80}{1980})). The MVAOS loss function that was chosen ultimately, for example in the work of \protect\hyperlink{ref-vanderburg_deleeuw_verdegaal_A_88}{Van der Burg, De Leeuw, and Verdegaal} (\protect\hyperlink{ref-vanderburg_deleeuw_verdegaal_A_88}{1988}), had been used earlier by \protect\hyperlink{ref-carroll_68}{Carroll} (\protect\hyperlink{ref-carroll_68}{1968}) in multi-set canonical correlation analysis of numerical variables.
 
 A project similar to ALSOS/Gifi was ACE, short for \emph{Alternating Conditional Expectations}. The ACE method for regression was introduced by \protect\hyperlink{ref-breiman_friedman_85}{Breiman and Friedman} (\protect\hyperlink{ref-breiman_friedman_85}{1985}) and the ACE method for principal component analysis by
 \protect\hyperlink{ref-koyak_87}{Koyak} (\protect\hyperlink{ref-koyak_87}{1987}). Both techniques use the same ALS block relaxation methods, but instead of projecting on a cone or subspace of possible transformation, they apply a smoother (typically Friedman's supersmoother) to find the
@@ -329,15 +326,15 @@ So generally there have been a number of projects over the last 50 years that di
 The techniques discussed in \protect\hyperlink{ref-gifi_B_90}{Gifi} (\protect\hyperlink{ref-gifi_B_90}{1990}), and implemented in the corresponding computer programs, use a particular least squares loss function and minimize it by alternating least squares algorithms. All techniques use what Gifi calls \emph{meet loss}, which is basically the loss function proposed by \protect\hyperlink{ref-carroll_68}{Carroll} (\protect\hyperlink{ref-carroll_68}{1968}) for multiset canonical correlation analysis. Carroll's work was extended in Gifi by using optimal scaling to transform or quantify variables coded with indicators, and to use constraints on the parameters to adapt the basic technique, often called \emph{homogeneity analysis}, to different classical MVA techniques.
 
 There have been various extensions of the classical Gifi repertoire by adding
-techniques that do not readily fit into meet loss. Examples are path analysis (\protect\hyperlink{ref-coolen_deleeuw_R_87}{Coolen and De Leeuw} (\protect\hyperlink{ref-coolen_deleeuw_R_87}{1987})), linear dynamic systems (\protect\hyperlink{ref-bijleveld_deleeuw_A_91}{Bijleveld and De Leeuw} (\protect\hyperlink{ref-bijleveld_deleeuw_A_91}{1991})), and factor analysis (\protect\hyperlink{ref-deleeuw_C_04a}{J. De Leeuw} (\protect\hyperlink{ref-deleeuw_C_04a}{2004})). But adding these techniques does not really add up to a new framework.
+techniques that do not readily fit into meet loss. Examples are path analysis (\protect\hyperlink{ref-coolen_deleeuw_R_87}{Coolen and De Leeuw} (\protect\hyperlink{ref-coolen_deleeuw_R_87}{1987})), linear dynamic systems (\protect\hyperlink{ref-bijleveld_deleeuw_A_91}{Bijleveld and De Leeuw} (\protect\hyperlink{ref-bijleveld_deleeuw_A_91}{1991})), and factor analysis (\protect\hyperlink{ref-deleeuw_C_04a}{De Leeuw} (\protect\hyperlink{ref-deleeuw_C_04a}{2004})). But adding these techniques does not really add up to a new framework.
 
-Somewhat more importantly, \protect\hyperlink{ref-deleeuw_vanrijckevorsel_C_88}{J. De Leeuw and Van Rijckevorsel} (\protect\hyperlink{ref-deleeuw_vanrijckevorsel_C_88}{1988}) discuss various ways to generalize meet loss by using \emph{fuzzy coding}. Transformations are no longer step functions, and coding can be done with fuzzy indicators, such as B-spline bases.
+Somewhat more importantly, \protect\hyperlink{ref-deleeuw_vanrijckevorsel_C_88}{De Leeuw and Van Rijckevorsel} (\protect\hyperlink{ref-deleeuw_vanrijckevorsel_C_88}{1988}) discuss various ways to generalize meet loss by using \emph{fuzzy coding}. Transformations are no longer step functions, and coding can be done with fuzzy indicators, such as B-spline bases.
 This makes it easier to deal with variables that have many ordered categories. Although this is a substantial generalization the basic framework remains the same.
 
-One of the outgrowths of the Gifi project was the \emph{aspect} approach, first discussed systematically by \protect\hyperlink{ref-deleeuw_C_88b}{J. De Leeuw} (\protect\hyperlink{ref-deleeuw_C_88b}{1988c}), and implemented in the R package
-\texttt{aspect} by \protect\hyperlink{ref-mair_deleeuw_A_10}{Mair and De Leeuw} (\protect\hyperlink{ref-mair_deleeuw_A_10}{2010}). In its original formulation it uses \emph{majorization} to optimize functions defined on the space of correlation matrices, where the correlations are computed over transformed variables, coded by indicators. Thus we optimize aspects of the correlation matrix over transformations of the variables. The \texttt{aspect} software was recently updated to allow for B-spline transformations (\protect\hyperlink{ref-deleeuw_E_15b}{J. De Leeuw} (\protect\hyperlink{ref-deleeuw_E_15b}{2015b})). Many different aspects were implemented, based on eigenvalues, determinants, multiple correlations, and sums of powers of correlation coefficients. Unformately, aspects defined in terms of canonical correlations, or generalized canonical correlations, were not covered. Thus the range of techniques covered by the \texttt{aspect} approach has multiple regression and principal component analysis in common with the range of the Gifi system, but is otherwise disjoint from it.
+One of the outgrowths of the Gifi project was the \emph{aspect} approach, first discussed systematically by \protect\hyperlink{ref-deleeuw_C_88b}{De Leeuw} (\protect\hyperlink{ref-deleeuw_C_88b}{1988c}), and implemented in the R package
+\texttt{aspect} by \protect\hyperlink{ref-mair_deleeuw_A_10}{Mair and De Leeuw} (\protect\hyperlink{ref-mair_deleeuw_A_10}{2010}). In its original formulation it uses \emph{majorization} to optimize functions defined on the space of correlation matrices, where the correlations are computed over transformed variables, coded by indicators. Thus we optimize aspects of the correlation matrix over transformations of the variables. The \texttt{aspect} software was recently updated to allow for B-spline transformations (\protect\hyperlink{ref-deleeuw_E_15b}{De Leeuw} (\protect\hyperlink{ref-deleeuw_E_15b}{2015a})). Many different aspects were implemented, based on eigenvalues, determinants, multiple correlations, and sums of powers of correlation coefficients. Unformately, aspects defined in terms of canonical correlations, or generalized canonical correlations, were not covered. Thus the range of techniques covered by the \texttt{aspect} approach has multiple regression and principal component analysis in common with the range of the Gifi system, but is otherwise disjoint from it.
 
-In \protect\hyperlink{ref-deleeuw_C_04a}{J. De Leeuw} (\protect\hyperlink{ref-deleeuw_C_04a}{2004}) a particular correlation aspect was singled out that could bridge the gap between the aspect approach and the Gifi approach, provided \emph{orthoblocks} of transformations were introduced. This is combined with the notion of \emph{copies}, introduced in \protect\hyperlink{ref-deleeuw_C_84c}{J. De Leeuw} (\protect\hyperlink{ref-deleeuw_C_84c}{1984b}), to design a new class of techniques that encompasses all of Gifi and that brings generalized canonical correlation analysis in the aspect framework. Thus correlation aspects, and the majorization algorithms to optimize them, are now a true generalization of the Gifi system.
+In \protect\hyperlink{ref-deleeuw_C_04a}{De Leeuw} (\protect\hyperlink{ref-deleeuw_C_04a}{2004}) a particular correlation aspect was singled out that could bridge the gap between the aspect approach and the Gifi approach, provided \emph{orthoblocks} of transformations were introduced. This is combined with the notion of \emph{copies}, introduced in \protect\hyperlink{ref-deleeuw_C_84c}{De Leeuw} (\protect\hyperlink{ref-deleeuw_C_84c}{1984b}), to design a new class of techniques that encompasses all of Gifi and that brings generalized canonical correlation analysis in the aspect framework. Thus correlation aspects, and the majorization algorithms to optimize them, are now a true generalization of the Gifi system.
 
 *** This is the system we discuss in this book.
 
@@ -362,12 +359,12 @@ If all categorical variablea are quantified and all numerical variable are trans
 
 The data are collected in the \(n\times m\) matrix \(H\), which codes the observations on the \(m\) variables. MVAOS does not operate on the data directly, but on \emph{transformations} or \emph{quantifications} of the variables. Choosing a transformation to minimize a loss function is known as \emph{optimal scaling}. Clearly this so-called optimality is only defined in terms of a specific loss function, with specific constraints. Different constraints will lead to different optimal transformations.
 
-Let us define the types of transformations we are interested in. The \(n\times m\) matrix of \emph{transformed variables} \(H\) has columns \(h_j\), which are constrained by \(h_j=G_jz_j\), where \(G_j\) is a given matrix defining the \emph{basis} for variable \(j\). In addition we require \(h_j\in\mathcal{C}_j\) and \(h_j\in\mathcal{S}\), where \(\mathcal{C}_j\) is a \emph{cone of transformations} and \(\mathcal{S}\) is the unit sphere in \(\mathbb{R}^n\). This will be discussed in more detail in later sections, but for the time being think of the example in which \(h_j\) is required to be a (centered and normalized) monotone polynomial function of the image values of variable \(j\). The whole of \(\mathbb{R}^n\) and a single point in \(\mathbb{R}^n\) are both special cases of these normalized cones. It is important, especially for algorithm construction, that the restrictions are defined for each variable separately. An exception to this rule is the \emph{orthoblock}, using terminology from \protect\hyperlink{ref-deleeuw_C_04a}{J. De Leeuw} (\protect\hyperlink{ref-deleeuw_C_04a}{2004}), which requires that all or some of the columns of \(H\) are not only normalized but also orthogonal to each other. Clearly a normalized variable is an orthoblock of size one.
+Let us define the types of transformations we are interested in. The \(n\times m\) matrix of \emph{transformed variables} \(H\) has columns \(h_j\), which are constrained by \(h_j=G_jz_j\), where \(G_j\) is a given matrix defining the \emph{basis} for variable \(j\). In addition we require \(h_j\in\mathcal{C}_j\) and \(h_j\in\mathcal{S}\), where \(\mathcal{C}_j\) is a \emph{cone of transformations} and \(\mathcal{S}\) is the unit sphere in \(\mathbb{R}^n\). This will be discussed in more detail in later sections, but for the time being think of the example in which \(h_j\) is required to be a (centered and normalized) monotone polynomial function of the image values of variable \(j\). The whole of \(\mathbb{R}^n\) and a single point in \(\mathbb{R}^n\) are both special cases of these normalized cones. It is important, especially for algorithm construction, that the restrictions are defined for each variable separately. An exception to this rule is the \emph{orthoblock}, using terminology from \protect\hyperlink{ref-deleeuw_C_04a}{De Leeuw} (\protect\hyperlink{ref-deleeuw_C_04a}{2004}), which requires that all or some of the columns of \(H\) are not only normalized but also orthogonal to each other. Clearly a normalized variable is an orthoblock of size one.
 
 \hypertarget{bases}{%
 \section{Bases}\label{bases}}
 
-In earlier MVAOS work, summarized for example in \protect\hyperlink{ref-gifi_B_90}{Gifi} (\protect\hyperlink{ref-gifi_B_90}{1990}) or \protect\hyperlink{ref-michailidis_deleeuw_A_98}{Michailidis and De Leeuw} (\protect\hyperlink{ref-michailidis_deleeuw_A_98}{1998}), the basis matrices \(G_j\) were binary zero-one matrices, indicating category membership. The same is true for the software in IBM SPSS Categories (\protect\hyperlink{ref-meulman_heiser_12}{J. M. Meulman and Heiser 2012}) or in the R package homals (\protect\hyperlink{ref-deleeuw_mair_A_09a}{J. De Leeuw and Mair 2009a}). In this paper we extend the current MVAOS software using \emph{B-spline bases}, which provide a form of fuzzy non-binary coding suitable for both categorical and numerical variables (\protect\hyperlink{ref-vanrijckevorsel_deleeuw_B_88}{Van Rijckevorsel and De Leeuw 1988}). These generalizations were already discussed in \protect\hyperlink{ref-deleeuw_vanrijckevorsel_vanderwouden_A_81}{J. De Leeuw, Van Rijckevorsel, and Van der Wouden} (\protect\hyperlink{ref-deleeuw_vanrijckevorsel_vanderwouden_A_81}{1981}) and \protect\hyperlink{ref-gifi_B_90}{Gifi} (\protect\hyperlink{ref-gifi_B_90}{1990}), but corresponding easily accessible software was never released.
+In earlier MVAOS work, summarized for example in \protect\hyperlink{ref-gifi_B_90}{Gifi} (\protect\hyperlink{ref-gifi_B_90}{1990}) or \protect\hyperlink{ref-michailidis_deleeuw_A_98}{Michailidis and De Leeuw} (\protect\hyperlink{ref-michailidis_deleeuw_A_98}{1998}), the basis matrices \(G_j\) were binary zero-one matrices, indicating category membership. The same is true for the software in IBM SPSS Categories (\protect\hyperlink{ref-meulman_heiser_12}{Meulman and Heiser 2012}) or in the R package homals (\protect\hyperlink{ref-deleeuw_mair_A_09a}{De Leeuw and Mair 2009a}). In this paper we extend the current MVAOS software using \emph{B-spline bases}, which provide a form of fuzzy non-binary coding suitable for both categorical and numerical variables (\protect\hyperlink{ref-vanrijckevorsel_deleeuw_B_88}{Van Rijckevorsel and De Leeuw 1988}). These generalizations were already discussed in \protect\hyperlink{ref-deleeuw_vanrijckevorsel_vanderwouden_A_81}{De Leeuw, Van Rijckevorsel, and Van der Wouden} (\protect\hyperlink{ref-deleeuw_vanrijckevorsel_vanderwouden_A_81}{1981}) and \protect\hyperlink{ref-gifi_B_90}{Gifi} (\protect\hyperlink{ref-gifi_B_90}{1990}), but corresponding easily accessible software was never released.
 
 In this book we continue to use \emph{indicators} for bases. Thus bases \(G_j\) must be non-negative, with rows that add up to one. If there is only one non-zero entry in each row, which of course is then equal to one, the indicator is \emph{crisp}, otherwise it is \emph{fuzzy}. B-spline bases are the prime example of fuzzy indicators, but other examples are discussed in \protect\hyperlink{ref-vanrijckevorsel_deleeuw_B_88}{Van Rijckevorsel and De Leeuw} (\protect\hyperlink{ref-vanrijckevorsel_deleeuw_B_88}{1988}). Only B-spline bases are implemented in our software, however.
 
@@ -376,7 +373,7 @@ Note that the identity matrix is a crisp indicator. This is of importance in con
 \hypertarget{copies-and-rank}{%
 \section{Copies and Rank}\label{copies-and-rank}}
 
-Within a block there can be more than one version of the same variable. These multiple versions are called \emph{copies}. They were first introduced into the Gifi framework by \protect\hyperlink{ref-deleeuw_C_84c}{J. De Leeuw} (\protect\hyperlink{ref-deleeuw_C_84c}{1984b}). Since MVAOS transforms variables, having more than one copy is not necessarily redundant, because different copies can and will be transformed differently. As a simple example of copies, think of using different monomials or orthogonal polynomials of a single variable \(x\) in a polynomial regression. The difference between copies and simply including a variable more than once is that copies have the same basis \(G_j\).
+Within a block there can be more than one version of the same variable. These multiple versions are called \emph{copies}. They were first introduced into the Gifi framework by \protect\hyperlink{ref-deleeuw_C_84c}{De Leeuw} (\protect\hyperlink{ref-deleeuw_C_84c}{1984b}). Since MVAOS transforms variables, having more than one copy is not necessarily redundant, because different copies can and will be transformed differently. As a simple example of copies, think of using different monomials or orthogonal polynomials of a single variable \(x\) in a polynomial regression. The difference between copies and simply including a variable more than once is that copies have the same basis \(G_j\).
 
 In the algorithm copies of a variable are just treated in exactly the same way as other variables. The notion of copies replaces the notion of the \emph{rank of a quantification} used in traditional Gifi, which in turn generalizes the distinction between \emph{single} and \emph{multiple} quantifications. A single variable has only one copy in its block, a multiple variable has the maximum number of copies.
 
@@ -408,7 +405,7 @@ Note that we require the spline to be monotonic in the non-missing data points -
 \hypertarget{missing-data}{%
 \section{Missing Data}\label{missing-data}}
 
-The utility \texttt{makeMissing()} expands the basis for the non-missing data in various ways. Option ``m'' (for ``multiple'') is the default. It replaces the basis with the direct sum of the non-missing basis and an identity matrix for the missing elements. Option ``s'' (for ``single'') adds a single binary column to the basis indicating which elements are missing. Option ``a'' (for ``average'') codes missing data by having all the elements in rows of the basis corresponding with missing data equal to one over the number of rows. With all three options the basis remains an indicator. Some of these options make most sense in the context of crisp indicators, where they are compared in \protect\hyperlink{ref-meulman_82}{J. J. Meulman} (\protect\hyperlink{ref-meulman_82}{1982}).
+The utility \texttt{makeMissing()} expands the basis for the non-missing data in various ways. Option ``m'' (for ``multiple'') is the default. It replaces the basis with the direct sum of the non-missing basis and an identity matrix for the missing elements. Option ``s'' (for ``single'') adds a single binary column to the basis indicating which elements are missing. Option ``a'' (for ``average'') codes missing data by having all the elements in rows of the basis corresponding with missing data equal to one over the number of rows. With all three options the basis remains an indicator. Some of these options make most sense in the context of crisp indicators, where they are compared in \protect\hyperlink{ref-meulman_82}{Meulman} (\protect\hyperlink{ref-meulman_82}{1982}).
 
 So suppose the data are
 
@@ -560,6 +557,9 @@ If \(G=\{g_{is}\}\) and \(H=\{h_{it}\}\) are two indicators of dimensions \(n\ti
 ##  [9,]  0.00  0.00  0.00  0.00  0.00  1.00
 \end{verbatim}
 
+\hypertarget{meet-loss}{%
+\chapter{Meet-Loss}\label{meet-loss}}
+
 \hypertarget{aspects}{%
 \chapter{Aspects}\label{aspects}}
 
@@ -568,7 +568,7 @@ If \(G=\{g_{is}\}\) and \(H=\{h_{it}\}\) are two indicators of dimensions \(n\ti
 
 An \emph{aspect} is a real valued function \(\phi\) defined on the compact convex set \(\mathcal{R}^{m\times m}\) of correlation matrices of order \(m\). Note that a \emph{correlation matrix} is a positive semi-definite matrix with ones on the diagonal.
 
-In \protect\hyperlink{ref-deleeuw_C_04a}{J. De Leeuw} (\protect\hyperlink{ref-deleeuw_C_04a}{2004}) a class of MVAOS techniques is defined by optimizing aspects, using majorization algorithms. Optimization is over a set \(\mathcal{R}\) of correlation matrices, usually the correlation matrices that correspond with admissible transformations of the data. See \protect\hyperlink{ref-deleeuw_A_88a}{J. De Leeuw} (\protect\hyperlink{ref-deleeuw_A_88a}{1988b}) and \protect\hyperlink{ref-deleeuw_michailidis_wang_C_99}{J. De Leeuw, Michailidis, and Wang} (\protect\hyperlink{ref-deleeuw_michailidis_wang_C_99}{1999}) for additional results on aspects. Software in R that optimizes general aspects is discussed by \protect\hyperlink{ref-mair_deleeuw_A_10}{Mair and De Leeuw} (\protect\hyperlink{ref-mair_deleeuw_A_10}{2010}).
+In \protect\hyperlink{ref-deleeuw_C_04a}{De Leeuw} (\protect\hyperlink{ref-deleeuw_C_04a}{2004}) a class of MVAOS techniques is defined by optimizing aspects, using majorization algorithms. Optimization is over a set \(\mathcal{R}\) of correlation matrices, usually the correlation matrices that correspond with admissible transformations of the data. See \protect\hyperlink{ref-deleeuw_A_88a}{De Leeuw} (\protect\hyperlink{ref-deleeuw_A_88a}{1988b}) and \protect\hyperlink{ref-deleeuw_michailidis_wang_C_99}{De Leeuw, Michailidis, and Wang} (\protect\hyperlink{ref-deleeuw_michailidis_wang_C_99}{1999}) for additional results on aspects. Software in R that optimizes general aspects is discussed by \protect\hyperlink{ref-mair_deleeuw_A_10}{Mair and De Leeuw} (\protect\hyperlink{ref-mair_deleeuw_A_10}{2010}).
 
 The aspect optimization algorithm is based on majorization, and assumes that the aspect that is maximized is a convex function on the space of correlation matrices (or, equivalently, that the aspect is concave and minimized). Let's give examples of some interesting convex aspects.
 
@@ -725,7 +725,7 @@ In MVAOS the fit of block \(j\) is called the \emph{discrimination matrix}. It i
 \hypertarget{history}{%
 \section{History}\label{history}}
 
-The history of loss function \(\eqref{E:newloss}\) is simple. Although numerous special cases have been used over the years, in its general form it only occurs, as far as we know, in \protect\hyperlink{ref-deleeuw_C_04a}{J. De Leeuw} (\protect\hyperlink{ref-deleeuw_C_04a}{2004}). It was designed to bridge the gap between \(\eqref{E:gifiloss}\) and linear systems such as RRR, MIMIC, EFA, and LISREL/EQS.
+The history of loss function \(\eqref{E:newloss}\) is simple. Although numerous special cases have been used over the years, in its general form it only occurs, as far as we know, in \protect\hyperlink{ref-deleeuw_C_04a}{De Leeuw} (\protect\hyperlink{ref-deleeuw_C_04a}{2004}). It was designed to bridge the gap between \(\eqref{E:gifiloss}\) and linear systems such as RRR, MIMIC, EFA, and LISREL/EQS.
 It mainly differs from \(\eqref{E:gifiloss}\) in its systematic use of copies and orthoblocks.
 
 The history of \(\eqref{E:gifiloss}\), on the other hand, is complicated. It is easiest to start with the special case in which all variables are numerical (in our system that means no internal knots and degree equal to one). In that case MVAOS is a form of \emph{Generalized Canonical Correlation Analysis (GCCA)}, which extends canonical correlation analysis (CCA) to two or more blocks of variables.
@@ -762,7 +762,7 @@ Because of the full rank decompositions \(Y_{j\ell}=Z_{j\ell}A_{j\ell}\) it foll
 \section{Block Relaxation}\label{block-relaxation}}
 
 Our task is to minimize \(\sigma(H,A)\) over \(H\) and \(A\), suitably constrained. Write the constraints as \(H\in\mathcal{H}\) and \(A\in\mathcal{A}\). The strategy we
-use is block relaxation (\protect\hyperlink{ref-deleeuw_B_15}{J. De Leeuw} (\protect\hyperlink{ref-deleeuw_B_15}{2015c})). Thus we iterate as follows.
+use is block relaxation ((\protect\hyperlink{ref-deleeuw_B_15}{\textbf{deleeuw\_B\_15?}})). Thus we iterate as follows.
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
@@ -801,7 +801,7 @@ B_{ij}(A)=\sum_{\ell=1}^LA_{j\ell}A_{i\ell}'
 
 \#\#Alternating Least Squares
 
-The standard way to minimize loss function \(\eqref{E:oldloss}\) is implemented in the \texttt{OVERALS} program \protect\hyperlink{ref-meulman_heiser_12}{J. M. Meulman and Heiser} (\protect\hyperlink{ref-meulman_heiser_12}{2012}). It is also the one used in the \texttt{homals} package (\protect\hyperlink{ref-deleeuw_mair_A_09a}{J. De Leeuw and Mair 2009a}).
+The standard way to minimize loss function \(\eqref{E:oldloss}\) is implemented in the \texttt{OVERALS} program \protect\hyperlink{ref-meulman_heiser_12}{Meulman and Heiser} (\protect\hyperlink{ref-meulman_heiser_12}{2012}). It is also the one used in the \texttt{homals} package (\protect\hyperlink{ref-deleeuw_mair_A_09a}{De Leeuw and Mair 2009a}).
 
 In this paper the algorithm is different because we use the loss function \(\eqref{E:gifiloss}\). We still use ALS, which means in this case that we cycle through three substeps in each iteration. We update \(A\) for given \(X\) and \(H\), we then update \(X\) for given \(H\) and \(A\), and finally we update \(H\) for given \(X\) and \(A\). Algorithm A goes as follows.
 
@@ -826,7 +826,7 @@ In step 1 we use superscript + for the Moore-Penrose inverse. In step 2 the cent
 The complicated part is step 4, the \emph{optimal scaling}, i.e.~the updating of \(H_j\) for given \(X\) and \(A_j\). We cycle through the variables in the block, each time projecting a single column on the cone of admissible transformations of the variable, and then normalizing the projection to length one.
 The \emph{target}, i.e.~the vector we are projecting, is complicated, because the other variables in the same block must be taken into account.
 
-In order to simplify the optimal scaling computations within an iteration we can use majorization \protect\hyperlink{ref-deleeuw_B_15}{J. De Leeuw} (\protect\hyperlink{ref-deleeuw_B_15}{2015c}). This has the additional benefit that the optimal scaling step becomes embarassingly parallel. We expand the loss for block \(j\) around a previous solution \(\tilde H_j\).
+In order to simplify the optimal scaling computations within an iteration we can use majorization (\protect\hyperlink{ref-deleeuw_B_15}{\textbf{deleeuw\_B\_15?}}). This has the additional benefit that the optimal scaling step becomes embarassingly parallel. We expand the loss for block \(j\) around a previous solution \(\tilde H_j\).
 \[
 \mathbf{SSQ}(X-H_jA_j)=
 \mathbf{SSQ}(X-\tilde H_jA_j)-2\mathbf{tr}\ (H_j-\tilde H_j)'(X-\tilde H_jA_j)A_j'
@@ -845,7 +845,7 @@ where \(U_j\) is the \emph{target}
 U_j=\tilde H_j+\frac{1}{\kappa_j}(X-\tilde H_jA_j)A_j'.\tag{3}
 \]
 It follows we can update the optimal scaling of the variables by projecting the columns of \(U_j\)
-on their respective cones and then normalizing. See \protect\hyperlink{ref-deleeuw_U_75a}{J. De Leeuw} (\protect\hyperlink{ref-deleeuw_U_75a}{1975}) for results on normalized cone regression. This can be done for all variables in the block separately, without taking any of the other variables in the block (or in any of the other blocks) into account. Thus the optimal scaling is easy to parallellize. The resulting algorithm B is as follows.
+on their respective cones and then normalizing. See \protect\hyperlink{ref-deleeuw_U_75a}{De Leeuw} (\protect\hyperlink{ref-deleeuw_U_75a}{1975}) for results on normalized cone regression. This can be done for all variables in the block separately, without taking any of the other variables in the block (or in any of the other blocks) into account. Thus the optimal scaling is easy to parallellize. The resulting algorithm B is as follows.
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
@@ -865,14 +865,14 @@ on their respective cones and then normalizing. See \protect\hyperlink{ref-delee
 
 \#\#Implementation Details
 
-If we follow the ALS strategy strictly the \(\mathbf{ortho}()\) operator should be implemented using Procrustus rotation (\protect\hyperlink{ref-gibson_62}{Gibson 1962}). Thus if \(Z=K\Lambda L'\) is the singular value decomposition of \(X\), then \(\mathbf{ortho}(Z)=KL'\). Note, however, that any other basis for the column space of \(Z\) merely differs from the Procrustus basis by a rotation. And this rotation matrix will carry unmodified into the upgrade of \(A_j\) in step 2 of the algorithm, and thus after steps 1 and 2 the loss will be the same, no matter whch rotation we select. In our algorithm we use the QR decomposition to find the basis, using the Gram-Schmidt code from \protect\hyperlink{ref-deleeuw_E_15d}{J. De Leeuw} (\protect\hyperlink{ref-deleeuw_E_15d}{2015a}).
+If we follow the ALS strategy strictly the \(\mathbf{ortho}()\) operator should be implemented using Procrustus rotation (\protect\hyperlink{ref-gibson_62}{Gibson 1962}). Thus if \(Z=K\Lambda L'\) is the singular value decomposition of \(X\), then \(\mathbf{ortho}(Z)=KL'\). Note, however, that any other basis for the column space of \(Z\) merely differs from the Procrustus basis by a rotation. And this rotation matrix will carry unmodified into the upgrade of \(A_j\) in step 2 of the algorithm, and thus after steps 1 and 2 the loss will be the same, no matter whch rotation we select. In our algorithm we use the QR decomposition to find the basis, using the Gram-Schmidt code from \protect\hyperlink{ref-deleeuw_E_15d}{De Leeuw} (\protect\hyperlink{ref-deleeuw_E_15d}{2015b}).
 
-In actual computation we column-center the basis and compute a full rank QR decomposition, using the code in \protect\hyperlink{ref-deleeuw_E_15d}{J. De Leeuw} (\protect\hyperlink{ref-deleeuw_E_15d}{2015a}). Thus \(G_\ell=Q_\ell R_\ell\),
+In actual computation we column-center the basis and compute a full rank QR decomposition, using the code in \protect\hyperlink{ref-deleeuw_E_15d}{De Leeuw} (\protect\hyperlink{ref-deleeuw_E_15d}{2015b}). Thus \(G_\ell=Q_\ell R_\ell\),
 
 We implement the cone restrictions by the constraints \(h_{js}=G_{js}z_s\) in combination with \(T_{js}h_{js}\geq 0\). Thus the transformed variables must be in the intersection of the subspace spanned by the columns of the \emph{transformation basis} \(G_{js}\) and the polyhedral convex cones of all vectors \(h\) such that \(T_{js}h\geq 0\). We suppose that all columns of the \(G_{js}\) add up to zero, and we require, in addition, the normalization \(SSQ(h_{js})=1\).
 
-We use the code described in \protect\hyperlink{ref-deleeuw_E_15e}{J. De Leeuw} (\protect\hyperlink{ref-deleeuw_E_15e}{2015d}) to generate B-spline bases. Note that for coding purposes binary indicators are B-splines of degree zero, while polynomials are B-splines without interior knots. We include the utility functions to generate lists of knots. There is \texttt{knotsQ()} for knots at the quantiles, \texttt{knotsR()} for knots equally spaced on the range, \texttt{knotsD()} for knots at the data points, and \texttt{knotsE()} for no interior knots. Also note that binary indicators can be created for qualitative non-numerical variables, for which B-splines are not defined. We have added the option using degree -1 to bypass the B-spline code and generate an indicator matrix,
-using the utility \texttt{makeIndicator()}. Note that \texttt{\textquotesingle{}makeIndicator(foo)} is equivalent to \texttt{bsplineBasis(foo,\ degree\ =\ 0,\ innerknots\ =\ sort(unique(foo)))}. Throughout we first orthonormalize the basis matrices \(G_{js}\), using the Gram-Schmidt code from \protect\hyperlink{ref-deleeuw_E_15d}{J. De Leeuw} (\protect\hyperlink{ref-deleeuw_E_15d}{2015a}).
+We use the code described in \protect\hyperlink{ref-deleeuw_E_15e}{De Leeuw} (\protect\hyperlink{ref-deleeuw_E_15e}{2015c}) to generate B-spline bases. Note that for coding purposes binary indicators are B-splines of degree zero, while polynomials are B-splines without interior knots. We include the utility functions to generate lists of knots. There is \texttt{knotsQ()} for knots at the quantiles, \texttt{knotsR()} for knots equally spaced on the range, \texttt{knotsD()} for knots at the data points, and \texttt{knotsE()} for no interior knots. Also note that binary indicators can be created for qualitative non-numerical variables, for which B-splines are not defined. We have added the option using degree -1 to bypass the B-spline code and generate an indicator matrix,
+using the utility \texttt{makeIndicator()}. Note that \texttt{\textquotesingle{}makeIndicator(foo)} is equivalent to \texttt{bsplineBasis(foo,\ degree\ =\ 0,\ innerknots\ =\ sort(unique(foo)))}. Throughout we first orthonormalize the basis matrices \(G_{js}\), using the Gram-Schmidt code from \protect\hyperlink{ref-deleeuw_E_15d}{De Leeuw} (\protect\hyperlink{ref-deleeuw_E_15d}{2015b}).
 
 The matrices \(T_{js}\) in the homogeneous linear inequality restrictions that define the cones \(\mathcal{K}_{js}\) can be used to define monotonicity or convexity of the resulting transformations. In the current implementation we merely allow for monotonicity, which means the \(T_{js}\) do not have to be stored. The transformations for each variable can be restricted to be increasing, or they can be unrestricted. By using splines without interior knots we allow in addition for polynomial transformations, which again can be restricted to be either monotonic or not. Note that it is somewhat misleading to say we are fitting monotone splines or polynomials, we are mainly requiring monotonicity at the data points.
 
@@ -886,9 +886,9 @@ Missing data are incorporated in the definition of the cones of transformations 
 
 \#\#Wrappers
 
-The \texttt{homals()} implementation in \protect\hyperlink{ref-deleeuw_mair_A_09a}{J. De Leeuw and Mair} (\protect\hyperlink{ref-deleeuw_mair_A_09a}{2009a}) is a single monolithic program in R, which specializes to the various MVAOS techniques by a suitable choice of its parameters. This approach has some disadvantages. If we want principal component analysis, we already know all blocks are singletons. If we want multiple correspondence analysis we know each variable has \(p\) copies. If we want multiple regression, we know
+The \texttt{homals()} implementation in \protect\hyperlink{ref-deleeuw_mair_A_09a}{De Leeuw and Mair} (\protect\hyperlink{ref-deleeuw_mair_A_09a}{2009a}) is a single monolithic program in R, which specializes to the various MVAOS techniques by a suitable choice of its parameters. This approach has some disadvantages. If we want principal component analysis, we already know all blocks are singletons. If we want multiple correspondence analysis we know each variable has \(p\) copies. If we want multiple regression, we know
 there are two blocks, and one is a singleton. So it is somewhat tedious to specify all parameters all of the time. Also, some of the output, graphical and otherwise,
-is specific to a particular technique. For regression we want residuals and fitted values, in canonical analysis we want block scores and loadings. And, more generally, we may want the output in a form familiar from the classical MVA techniques. It is indeed possible to transform the \texttt{homals()} output to more familar forms (\protect\hyperlink{ref-deleeuw_R_09c}{J. De Leeuw} (\protect\hyperlink{ref-deleeuw_R_09c}{2009})), but this requires some extra effort.
+is specific to a particular technique. For regression we want residuals and fitted values, in canonical analysis we want block scores and loadings. And, more generally, we may want the output in a form familiar from the classical MVA techniques. It is indeed possible to transform the \texttt{homals()} output to more familar forms (\protect\hyperlink{ref-deleeuw_R_09c}{De Leeuw} (\protect\hyperlink{ref-deleeuw_R_09c}{2009})), but this requires some extra effort.
 
 In this book we go back to the original approach of \protect\hyperlink{ref-gifi_B_90}{Gifi} (\protect\hyperlink{ref-gifi_B_90}{1990}) and write separate programs for nonlinear versions principal component analysis, multiple regression, canonical analysis, discriminant analysis, and so on.
 
@@ -1116,7 +1116,7 @@ Note that the two dominant eigenvalues are again equal to the diagonal elements 
 
 \#\#\#GALO
 
-The second example is somewhat more realistic. In the GALO dataset (\protect\hyperlink{ref-peschar_75}{Peschar} (\protect\hyperlink{ref-peschar_75}{1975})) data on 1290 school children in the sixth grade of an elementary school in 1959 in the city of Groningen (Netherlands) were collected. The variables are gender, IQ (categorized into 9 ordered categories), advice (teacher categorized the children into 7 possible forms of secondary education, i.e., Agr = agricultural; Ext = extended primary education; Gen = general; Grls = secondary school for girls; Man = manual, including housekeeping; None = no further education; Uni = pre- University), SES (parent's profession in 6 categories) and school (37 different schools). The data have been analyzed previously in many Gifi publications, for example in \protect\hyperlink{ref-deleeuw_mair_A_09a}{J. De Leeuw and Mair} (\protect\hyperlink{ref-deleeuw_mair_A_09a}{2009a}). For our MCA we only make the first four variables, school is treated as passive
+The second example is somewhat more realistic. In the GALO dataset (\protect\hyperlink{ref-peschar_75}{Peschar} (\protect\hyperlink{ref-peschar_75}{1975})) data on 1290 school children in the sixth grade of an elementary school in 1959 in the city of Groningen (Netherlands) were collected. The variables are gender, IQ (categorized into 9 ordered categories), advice (teacher categorized the children into 7 possible forms of secondary education, i.e., Agr = agricultural; Ext = extended primary education; Gen = general; Grls = secondary school for girls; Man = manual, including housekeeping; None = no further education; Uni = pre- University), SES (parent's profession in 6 categories) and school (37 different schools). The data have been analyzed previously in many Gifi publications, for example in \protect\hyperlink{ref-deleeuw_mair_A_09a}{De Leeuw and Mair} (\protect\hyperlink{ref-deleeuw_mair_A_09a}{2009a}). For our MCA we only make the first four variables, school is treated as passive
 
 We use this example to illustrate some of the constraints on transformations. Two copies are used for all variables (although gender effectively only has one, of course). IQ is treated as ordinal, using a piecewise linear spline with knots at the nine data points.
 
@@ -1142,7 +1142,7 @@ We first give transformations for the active variables (and their copies) in fig
 Figure 4: Galo Data, Transformations
 
 The four star plots for the active variables, together with the four category quantification plots, are in figure 5. Note that \texttt{homals()} does not compute category quantifications, we have to compute them from the \texttt{homals()} output. Also note that
-for gender, advice and SES the object scores are connected to the category centroids of the variables. For IQ object scores are connected to points on the line connecting adjacent category quantifications. See \protect\hyperlink{ref-deleeuw_vanrijckevorsel_C_88}{J. De Leeuw and Van Rijckevorsel} (\protect\hyperlink{ref-deleeuw_vanrijckevorsel_C_88}{1988}) for category plots using forms of fuzzy coding (of which B-splines are an example).
+for gender, advice and SES the object scores are connected to the category centroids of the variables. For IQ object scores are connected to points on the line connecting adjacent category quantifications. See \protect\hyperlink{ref-deleeuw_vanrijckevorsel_C_88}{De Leeuw and Van Rijckevorsel} (\protect\hyperlink{ref-deleeuw_vanrijckevorsel_C_88}{1988}) for category plots using forms of fuzzy coding (of which B-splines are an example).
 
 \begin{center}\includegraphics{_main_files/figure-latex/plot_galo_quant_stars-1} \end{center}
 
@@ -1263,7 +1263,7 @@ Figure 11: Personality Scales, Transformations, Multiple Nominal, Degree Two
 
 Ordinary correspondence analysis (OCA) is the special case of MCA in which there are only two variables, and both variables have the maximum number of copies. Consequently the \texttt{homals()} wrapper can be used to compute a CA. Because input and output can be organized a bit differently for OCA we have written the separate wrapper \texttt{corals()}.
 
-Note that \texttt{corals()} is not really intended for routine OCA computation. There are many packages in R which do that job much more efficiently. We mention, for example, \texttt{anacor} (\protect\hyperlink{ref-deleeuw_mair_A_09b}{J. De Leeuw and Mair} (\protect\hyperlink{ref-deleeuw_mair_A_09b}{2009b})) and \texttt{ca} (\protect\hyperlink{ref-nenadic_greenacre_07}{Nenadic and Greenacre} (\protect\hyperlink{ref-nenadic_greenacre_07}{2007})).
+Note that \texttt{corals()} is not really intended for routine OCA computation. There are many packages in R which do that job much more efficiently. We mention, for example, \texttt{anacor} (\protect\hyperlink{ref-deleeuw_mair_A_09b}{De Leeuw and Mair} (\protect\hyperlink{ref-deleeuw_mair_A_09b}{2009b})) and \texttt{ca} (\protect\hyperlink{ref-nenadic_greenacre_07}{Nenadic and Greenacre} (\protect\hyperlink{ref-nenadic_greenacre_07}{2007})).
 However, \texttt{corals()} can be used for a number of cases which the usual OCA packages do not cover.
 
 In \texttt{corals()}, as in the other packages, the default input is a single non-negative matrix \(F\). Although any non-negative matrix will do, the most common, and the most natural, input is an \(r\times c\) \emph{cross table} with bivariate frequencies. Suppose the frequencies add up to the total number of observations \(n\). Then \texttt{gifiEngine()}, which is called by \texttt{corals()}, requires input in the form of an \(n\times 2\) matrix. Thus a \(2\times 2\) table with 1000 observations becomes a \(1000\times 2\) matrix. The utility \texttt{preCorals()} makes the conversion, but of course the representation is embarrassingly inefficient, both in terms of memory and in terms of computation. After the computations are done, the utility \texttt{postCorals()} restores transformations and scores to the appropriate row and column dimensions.
@@ -1313,7 +1313,7 @@ between \(X\) and the \(G_j\tilde Y_j\) are more interesting. Since \(X'G_j\tild
 
 \#\#\#Glass
 
-We start with a classical OCA example that was also used by \protect\hyperlink{ref-gifi_B_90}{Gifi} (\protect\hyperlink{ref-gifi_B_90}{1990}) (p 277-280) and by \protect\hyperlink{ref-deleeuw_mair_A_09b}{J. De Leeuw and Mair} (\protect\hyperlink{ref-deleeuw_mair_A_09b}{2009b}). Data are from \protect\hyperlink{ref-glass_54}{Glass} (\protect\hyperlink{ref-glass_54}{1954}). Occupational status of the fathers is crossed with occupational status of the son, for 3497 British families. The row (father) and column (son) categories are
+We start with a classical OCA example that was also used by \protect\hyperlink{ref-gifi_B_90}{Gifi} (\protect\hyperlink{ref-gifi_B_90}{1990}) (p 277-280) and by \protect\hyperlink{ref-deleeuw_mair_A_09b}{De Leeuw and Mair} (\protect\hyperlink{ref-deleeuw_mair_A_09b}{2009b}). Data are from \protect\hyperlink{ref-glass_54}{Glass} (\protect\hyperlink{ref-glass_54}{1954}). Occupational status of the fathers is crossed with occupational status of the son, for 3497 British families. The row (father) and column (son) categories are
 
 \begin{itemize}
 \tightlist
@@ -1496,7 +1496,7 @@ princals, principals, Shepard-Kruskal, mdrace, history
 
 \#\#Equations
 
-Suppose all \(m\) blocks each contain only a single variable. Then the Burt matrix is the correlation matrix of the \(H_j\), which are all \(n\times 1\) matrices in this case. It follows that MVAOS maximizes the sum of the \(r\) largest eigenvalues of the correlation matrix over transformations, i.e.~MVAOS is \emph{nonlinear principal component analysis} (\protect\hyperlink{ref-deleeuw_C_14}{J. De Leeuw 2014}).
+Suppose all \(m\) blocks each contain only a single variable. Then the Burt matrix is the correlation matrix of the \(H_j\), which are all \(n\times 1\) matrices in this case. It follows that MVAOS maximizes the sum of the \(r\) largest eigenvalues of the correlation matrix over transformations, i.e.~MVAOS is \emph{nonlinear principal component analysis} (\protect\hyperlink{ref-deleeuw_C_14}{De Leeuw 2014}).
 
 \#\#Examples
 
@@ -3470,54 +3470,54 @@ Figure 26: Personality Scales, Multi-Set, , Transformations
 \begin{Shaded}
 \begin{Highlighting}[]
 
-\DataTypeTok{double}\NormalTok{ bs }\OperatorTok{(}\DataTypeTok{int}\NormalTok{ nknots}\OperatorTok{,} \DataTypeTok{int}\NormalTok{ nspline}\OperatorTok{,} \DataTypeTok{int}\NormalTok{ degree}\OperatorTok{,} \DataTypeTok{double}\NormalTok{ x}\OperatorTok{,} \DataTypeTok{double} \OperatorTok{*}\NormalTok{ knots}\OperatorTok{);}
-\DataTypeTok{int}\NormalTok{ mindex }\OperatorTok{(}\DataTypeTok{int}\NormalTok{ i}\OperatorTok{,} \DataTypeTok{int}\NormalTok{ j}\OperatorTok{,} \DataTypeTok{int}\NormalTok{ nrow}\OperatorTok{);}
+\DataTypeTok{double}\NormalTok{ bs (}\DataTypeTok{int}\NormalTok{ nknots, }\DataTypeTok{int}\NormalTok{ nspline, }\DataTypeTok{int}\NormalTok{ degree, }\DataTypeTok{double}\NormalTok{ x, }\DataTypeTok{double}\NormalTok{ * knots);}
+\DataTypeTok{int}\NormalTok{ mindex (}\DataTypeTok{int}\NormalTok{ i, }\DataTypeTok{int}\NormalTok{ j, }\DataTypeTok{int}\NormalTok{ nrow);}
 
-\DataTypeTok{void}\NormalTok{ splinebasis }\OperatorTok{(}\DataTypeTok{int} \OperatorTok{*}\NormalTok{d}\OperatorTok{,} \DataTypeTok{int} \OperatorTok{*}\NormalTok{n}\OperatorTok{,} \DataTypeTok{int} \OperatorTok{*}\NormalTok{m}\OperatorTok{,} \DataTypeTok{double} \OperatorTok{*}\NormalTok{ x}\OperatorTok{,} \DataTypeTok{double} \OperatorTok{*}\NormalTok{ knots}\OperatorTok{,} \DataTypeTok{double} \OperatorTok{*}\NormalTok{ basis}\OperatorTok{)} \OperatorTok{\{}
-    \DataTypeTok{int}\NormalTok{ mm }\OperatorTok{=} \OperatorTok{*}\NormalTok{m}\OperatorTok{,}\NormalTok{ dd }\OperatorTok{=} \OperatorTok{*}\NormalTok{d}\OperatorTok{,}\NormalTok{ nn }\OperatorTok{=} \OperatorTok{*}\NormalTok{n}\OperatorTok{;}
-    \DataTypeTok{int}\NormalTok{ k }\OperatorTok{=}\NormalTok{ mm }\OperatorTok{{-}}\NormalTok{ dd }\OperatorTok{{-}} \DecValTok{1}\OperatorTok{,}\NormalTok{ i }\OperatorTok{,}\NormalTok{ j}\OperatorTok{,}\NormalTok{ ir}\OperatorTok{,}\NormalTok{ jr}\OperatorTok{;}
-    \ControlFlowTok{for} \OperatorTok{(}\NormalTok{i }\OperatorTok{=} \DecValTok{0}\OperatorTok{;}\NormalTok{ i }\OperatorTok{\textless{}}\NormalTok{ nn}\OperatorTok{;}\NormalTok{ i}\OperatorTok{++)} \OperatorTok{\{}
-\NormalTok{        ir }\OperatorTok{=}\NormalTok{ i }\OperatorTok{+} \DecValTok{1}\OperatorTok{;}
-        \ControlFlowTok{if} \OperatorTok{(}\NormalTok{x}\OperatorTok{[}\NormalTok{i}\OperatorTok{]} \OperatorTok{==}\NormalTok{ knots}\OperatorTok{[}\NormalTok{mm }\OperatorTok{{-}} \DecValTok{1}\OperatorTok{])} \OperatorTok{\{}
-\NormalTok{           basis }\OperatorTok{[}\NormalTok{mindex }\OperatorTok{(}\NormalTok{ir}\OperatorTok{,}\NormalTok{ k}\OperatorTok{,}\NormalTok{ nn}\OperatorTok{)} \OperatorTok{{-}} \DecValTok{1}\OperatorTok{]} \OperatorTok{=}  \FloatTok{1.0}\OperatorTok{;}
-            \ControlFlowTok{for} \OperatorTok{(}\NormalTok{j }\OperatorTok{=} \DecValTok{0}\OperatorTok{;}\NormalTok{ j }\OperatorTok{\textless{}}  \OperatorTok{(}\NormalTok{k }\OperatorTok{{-}} \DecValTok{1}\OperatorTok{);}\NormalTok{  j}\OperatorTok{++)} \OperatorTok{\{}
-\NormalTok{                jr }\OperatorTok{=}\NormalTok{ j }\OperatorTok{+} \DecValTok{1}\OperatorTok{;}
-\NormalTok{                basis }\OperatorTok{[}\NormalTok{mindex }\OperatorTok{(}\NormalTok{ir}\OperatorTok{,}\NormalTok{ jr}\OperatorTok{,}\NormalTok{ nn}\OperatorTok{)} \OperatorTok{{-}} \DecValTok{1}\OperatorTok{]} \OperatorTok{=} \FloatTok{0.0}\OperatorTok{;}
-            \OperatorTok{\}}
-        \OperatorTok{\}} \ControlFlowTok{else} \OperatorTok{\{}
-            \ControlFlowTok{for} \OperatorTok{(}\NormalTok{j }\OperatorTok{=} \DecValTok{0}\OperatorTok{;}\NormalTok{ j }\OperatorTok{\textless{}}\NormalTok{ k }\OperatorTok{;}\NormalTok{ j}\OperatorTok{++)} \OperatorTok{\{}
-\NormalTok{                jr }\OperatorTok{=}\NormalTok{ j }\OperatorTok{+} \DecValTok{1}\OperatorTok{;}
-\NormalTok{                basis }\OperatorTok{[}\NormalTok{mindex }\OperatorTok{(}\NormalTok{ir}\OperatorTok{,}\NormalTok{ jr}\OperatorTok{,}\NormalTok{ nn}\OperatorTok{)} \OperatorTok{{-}} \DecValTok{1}\OperatorTok{]} \OperatorTok{=}\NormalTok{ bs }\OperatorTok{(}\NormalTok{mm}\OperatorTok{,}\NormalTok{ jr}\OperatorTok{,}\NormalTok{ dd }\OperatorTok{+} \DecValTok{1}\OperatorTok{,}\NormalTok{ x}\OperatorTok{[}\NormalTok{i}\OperatorTok{],}\NormalTok{ knots}\OperatorTok{);}
-            \OperatorTok{\}}
-        \OperatorTok{\}}
-    \OperatorTok{\}}
-\OperatorTok{\}}
+\DataTypeTok{void}\NormalTok{ splinebasis (}\DataTypeTok{int}\NormalTok{ *d, }\DataTypeTok{int}\NormalTok{ *n, }\DataTypeTok{int}\NormalTok{ *m, }\DataTypeTok{double}\NormalTok{ * x, }\DataTypeTok{double}\NormalTok{ * knots, }\DataTypeTok{double}\NormalTok{ * basis) \{}
+    \DataTypeTok{int}\NormalTok{ mm = *m, dd = *d, nn = *n;}
+    \DataTypeTok{int}\NormalTok{ k = mm {-} dd {-} }\DecValTok{1}\NormalTok{, i , j, ir, jr;}
+    \ControlFlowTok{for}\NormalTok{ (i = }\DecValTok{0}\NormalTok{; i \textless{} nn; i++) \{}
+\NormalTok{        ir = i + }\DecValTok{1}\NormalTok{;}
+        \ControlFlowTok{if}\NormalTok{ (x[i] == knots[mm {-} }\DecValTok{1}\NormalTok{]) \{}
+\NormalTok{           basis [mindex (ir, k, nn) {-} }\DecValTok{1}\NormalTok{] =  }\FloatTok{1.0}\NormalTok{;}
+            \ControlFlowTok{for}\NormalTok{ (j = }\DecValTok{0}\NormalTok{; j \textless{}  (k {-} }\DecValTok{1}\NormalTok{);  j++) \{}
+\NormalTok{                jr = j + }\DecValTok{1}\NormalTok{;}
+\NormalTok{                basis [mindex (ir, jr, nn) {-} }\DecValTok{1}\NormalTok{] = }\FloatTok{0.0}\NormalTok{;}
+\NormalTok{            \}}
+\NormalTok{        \} }\ControlFlowTok{else}\NormalTok{ \{}
+            \ControlFlowTok{for}\NormalTok{ (j = }\DecValTok{0}\NormalTok{; j \textless{} k ; j++) \{}
+\NormalTok{                jr = j + }\DecValTok{1}\NormalTok{;}
+\NormalTok{                basis [mindex (ir, jr, nn) {-} }\DecValTok{1}\NormalTok{] = bs (mm, jr, dd + }\DecValTok{1}\NormalTok{, x[i], knots);}
+\NormalTok{            \}}
+\NormalTok{        \}}
+\NormalTok{    \}}
+\NormalTok{\}}
 
-\DataTypeTok{int}\NormalTok{ mindex }\OperatorTok{(}\DataTypeTok{int}\NormalTok{ i}\OperatorTok{,} \DataTypeTok{int}\NormalTok{ j}\OperatorTok{,} \DataTypeTok{int}\NormalTok{ nrow}\OperatorTok{)} \OperatorTok{\{}
-    \ControlFlowTok{return} \OperatorTok{(}\NormalTok{j }\OperatorTok{{-}} \DecValTok{1}\OperatorTok{)} \OperatorTok{*}\NormalTok{ nrow }\OperatorTok{+}\NormalTok{ i}\OperatorTok{;}
-\OperatorTok{\}}
+\DataTypeTok{int}\NormalTok{ mindex (}\DataTypeTok{int}\NormalTok{ i, }\DataTypeTok{int}\NormalTok{ j, }\DataTypeTok{int}\NormalTok{ nrow) \{}
+    \ControlFlowTok{return}\NormalTok{ (j {-} }\DecValTok{1}\NormalTok{) * nrow + i;}
+\NormalTok{\}}
 
-\DataTypeTok{double}\NormalTok{ bs }\OperatorTok{(}\DataTypeTok{int}\NormalTok{ nknots}\OperatorTok{,} \DataTypeTok{int}\NormalTok{ nspline}\OperatorTok{,} \DataTypeTok{int}\NormalTok{ updegree}\OperatorTok{,} \DataTypeTok{double}\NormalTok{ x}\OperatorTok{,} \DataTypeTok{double} \OperatorTok{*}\NormalTok{ knots}\OperatorTok{)} \OperatorTok{\{}
-    \DataTypeTok{double}\NormalTok{ y}\OperatorTok{,}\NormalTok{ y1}\OperatorTok{,}\NormalTok{ y2}\OperatorTok{,}\NormalTok{ temp1}\OperatorTok{,}\NormalTok{ temp2}\OperatorTok{;}
-     \ControlFlowTok{if} \OperatorTok{(}\NormalTok{updegree }\OperatorTok{==} \DecValTok{1}\OperatorTok{)} \OperatorTok{\{}
-        \ControlFlowTok{if} \OperatorTok{((}\NormalTok{x }\OperatorTok{\textgreater{}=}\NormalTok{ knots}\OperatorTok{[}\NormalTok{nspline }\OperatorTok{{-}} \DecValTok{1}\OperatorTok{])} \OperatorTok{\&\&} \OperatorTok{(}\NormalTok{x }\OperatorTok{\textless{}}\NormalTok{ knots}\OperatorTok{[}\NormalTok{nspline}\OperatorTok{]))}
-\NormalTok{            y }\OperatorTok{=} \FloatTok{1.0}\OperatorTok{;}
+\DataTypeTok{double}\NormalTok{ bs (}\DataTypeTok{int}\NormalTok{ nknots, }\DataTypeTok{int}\NormalTok{ nspline, }\DataTypeTok{int}\NormalTok{ updegree, }\DataTypeTok{double}\NormalTok{ x, }\DataTypeTok{double}\NormalTok{ * knots) \{}
+    \DataTypeTok{double}\NormalTok{ y, y1, y2, temp1, temp2;}
+     \ControlFlowTok{if}\NormalTok{ (updegree == }\DecValTok{1}\NormalTok{) \{}
+        \ControlFlowTok{if}\NormalTok{ ((x \textgreater{}= knots[nspline {-} }\DecValTok{1}\NormalTok{]) \&\& (x \textless{} knots[nspline]))}
+\NormalTok{            y = }\FloatTok{1.0}\NormalTok{;}
         \ControlFlowTok{else}
-\NormalTok{            y }\OperatorTok{=} \FloatTok{0.0}\OperatorTok{;}
-     \OperatorTok{\}}
-     \ControlFlowTok{else} \OperatorTok{\{}
-\NormalTok{        temp1 }\OperatorTok{=} \FloatTok{0.0}\OperatorTok{;}
-        \ControlFlowTok{if} \OperatorTok{((}\NormalTok{knots}\OperatorTok{[}\NormalTok{nspline }\OperatorTok{+}\NormalTok{ updegree }\OperatorTok{{-}} \DecValTok{2}\OperatorTok{]} \OperatorTok{{-}}\NormalTok{ knots}\OperatorTok{[}\NormalTok{nspline }\OperatorTok{{-}} \DecValTok{1}\OperatorTok{])} \OperatorTok{\textgreater{}} \DecValTok{0}\OperatorTok{)}
-\NormalTok{            temp1 }\OperatorTok{=} \OperatorTok{(}\NormalTok{x }\OperatorTok{{-}}\NormalTok{ knots}\OperatorTok{[}\NormalTok{nspline }\OperatorTok{{-}} \DecValTok{1}\OperatorTok{])} \OperatorTok{/} \OperatorTok{(}\NormalTok{knots}\OperatorTok{[}\NormalTok{nspline }\OperatorTok{+}\NormalTok{ updegree }\OperatorTok{{-}} \DecValTok{2}\OperatorTok{]} \OperatorTok{{-}}\NormalTok{ knots}\OperatorTok{[}\NormalTok{nspline }\OperatorTok{{-}} \DecValTok{1}\OperatorTok{]);}
-\NormalTok{        temp2 }\OperatorTok{=} \FloatTok{0.0}\OperatorTok{;}
-        \ControlFlowTok{if} \OperatorTok{((}\NormalTok{knots}\OperatorTok{[}\NormalTok{nspline }\OperatorTok{+}\NormalTok{ updegree }\OperatorTok{{-}} \DecValTok{1}\OperatorTok{]} \OperatorTok{{-}}\NormalTok{ knots}\OperatorTok{[}\NormalTok{nspline}\OperatorTok{])} \OperatorTok{\textgreater{}} \DecValTok{0}\OperatorTok{)}
-\NormalTok{            temp2 }\OperatorTok{=} \OperatorTok{(}\NormalTok{knots}\OperatorTok{[}\NormalTok{nspline }\OperatorTok{+}\NormalTok{ updegree }\OperatorTok{{-}} \DecValTok{1}\OperatorTok{]} \OperatorTok{{-}}\NormalTok{ x}\OperatorTok{)} \OperatorTok{/} \OperatorTok{(}\NormalTok{knots}\OperatorTok{[}\NormalTok{nspline }\OperatorTok{+}\NormalTok{ updegree }\OperatorTok{{-}} \DecValTok{1}\OperatorTok{]} \OperatorTok{{-}}\NormalTok{ knots}\OperatorTok{[}\NormalTok{nspline}\OperatorTok{]);}
-\NormalTok{        y1 }\OperatorTok{=}\NormalTok{ bs}\OperatorTok{(}\NormalTok{nknots}\OperatorTok{,}\NormalTok{ nspline}\OperatorTok{,}\NormalTok{ updegree }\OperatorTok{{-}} \DecValTok{1}\OperatorTok{,}\NormalTok{ x}\OperatorTok{,}\NormalTok{ knots}\OperatorTok{);}
-\NormalTok{        y2 }\OperatorTok{=}\NormalTok{ bs}\OperatorTok{(}\NormalTok{nknots}\OperatorTok{,}\NormalTok{ nspline }\OperatorTok{+} \DecValTok{1}\OperatorTok{,}\NormalTok{ updegree }\OperatorTok{{-}} \DecValTok{1}\OperatorTok{,}\NormalTok{ x}\OperatorTok{,}\NormalTok{ knots}\OperatorTok{);}
-\NormalTok{        y }\OperatorTok{=}\NormalTok{  temp1 }\OperatorTok{*}\NormalTok{ y1 }\OperatorTok{+}\NormalTok{ temp2 }\OperatorTok{*}\NormalTok{ y2}\OperatorTok{;}
-    \OperatorTok{\}}
-    \ControlFlowTok{return}\NormalTok{ y}\OperatorTok{;}
-\OperatorTok{\}}
+\NormalTok{            y = }\FloatTok{0.0}\NormalTok{;}
+\NormalTok{     \}}
+     \ControlFlowTok{else}\NormalTok{ \{}
+\NormalTok{        temp1 = }\FloatTok{0.0}\NormalTok{;}
+        \ControlFlowTok{if}\NormalTok{ ((knots[nspline + updegree {-} }\DecValTok{2}\NormalTok{] {-} knots[nspline {-} }\DecValTok{1}\NormalTok{]) \textgreater{} }\DecValTok{0}\NormalTok{)}
+\NormalTok{            temp1 = (x {-} knots[nspline {-} }\DecValTok{1}\NormalTok{]) / (knots[nspline + updegree {-} }\DecValTok{2}\NormalTok{] {-} knots[nspline {-} }\DecValTok{1}\NormalTok{]);}
+\NormalTok{        temp2 = }\FloatTok{0.0}\NormalTok{;}
+        \ControlFlowTok{if}\NormalTok{ ((knots[nspline + updegree {-} }\DecValTok{1}\NormalTok{] {-} knots[nspline]) \textgreater{} }\DecValTok{0}\NormalTok{)}
+\NormalTok{            temp2 = (knots[nspline + updegree {-} }\DecValTok{1}\NormalTok{] {-} x) / (knots[nspline + updegree {-} }\DecValTok{1}\NormalTok{] {-} knots[nspline]);}
+\NormalTok{        y1 = bs(nknots, nspline, updegree {-} }\DecValTok{1}\NormalTok{, x, knots);}
+\NormalTok{        y2 = bs(nknots, nspline + }\DecValTok{1}\NormalTok{, updegree {-} }\DecValTok{1}\NormalTok{, x, knots);}
+\NormalTok{        y =  temp1 * y1 + temp2 * y2;}
+\NormalTok{    \}}
+    \ControlFlowTok{return}\NormalTok{ y;}
+\NormalTok{\}}
 \end{Highlighting}
 \end{Shaded}
 
@@ -3529,57 +3529,57 @@ Figure 26: Personality Scales, Multi-Set, , Transformations
 
 \PreprocessorTok{\#define MINDEX(i, j, n) (((j){-}1) * (n) + (i){-}1)}
 
-\DataTypeTok{void}\NormalTok{ gsC}\OperatorTok{(}\DataTypeTok{double} \OperatorTok{*,} \DataTypeTok{double} \OperatorTok{*,} \DataTypeTok{int} \OperatorTok{*,} \DataTypeTok{int} \OperatorTok{*,} \DataTypeTok{int} \OperatorTok{*,} \DataTypeTok{int} \OperatorTok{*,} \DataTypeTok{double} \OperatorTok{*);}
+\DataTypeTok{void}\NormalTok{ gsC(}\DataTypeTok{double}\NormalTok{ *, }\DataTypeTok{double}\NormalTok{ *, }\DataTypeTok{int}\NormalTok{ *, }\DataTypeTok{int}\NormalTok{ *, }\DataTypeTok{int}\NormalTok{ *, }\DataTypeTok{int}\NormalTok{ *, }\DataTypeTok{double}\NormalTok{ *);}
 
-\DataTypeTok{void}\NormalTok{ gsC}\OperatorTok{(}\DataTypeTok{double} \OperatorTok{*}\NormalTok{x}\OperatorTok{,} \DataTypeTok{double} \OperatorTok{*}\NormalTok{r}\OperatorTok{,} \DataTypeTok{int} \OperatorTok{*}\NormalTok{n}\OperatorTok{,} \DataTypeTok{int} \OperatorTok{*}\NormalTok{m}\OperatorTok{,} \DataTypeTok{int} \OperatorTok{*}\NormalTok{rank}\OperatorTok{,} \DataTypeTok{int} \OperatorTok{*}\NormalTok{pivot}\OperatorTok{,}
-         \DataTypeTok{double} \OperatorTok{*}\NormalTok{eps}\OperatorTok{)} \OperatorTok{\{}
-  \DataTypeTok{int}\NormalTok{ i}\OperatorTok{,}\NormalTok{ j}\OperatorTok{,}\NormalTok{ ip}\OperatorTok{,}\NormalTok{ nn }\OperatorTok{=} \OperatorTok{*}\NormalTok{n}\OperatorTok{,}\NormalTok{ mm }\OperatorTok{=} \OperatorTok{*}\NormalTok{m}\OperatorTok{,}\NormalTok{ rk }\OperatorTok{=} \OperatorTok{*}\NormalTok{m}\OperatorTok{,}\NormalTok{ jwork }\OperatorTok{=} \DecValTok{1}\OperatorTok{;}
-  \DataTypeTok{double}\NormalTok{ s }\OperatorTok{=} \FloatTok{0.0}\OperatorTok{,}\NormalTok{ p}\OperatorTok{;}
-  \ControlFlowTok{for} \OperatorTok{(}\NormalTok{j }\OperatorTok{=} \DecValTok{1}\OperatorTok{;}\NormalTok{ j }\OperatorTok{\textless{}=}\NormalTok{ mm}\OperatorTok{;}\NormalTok{ j}\OperatorTok{++)} \OperatorTok{\{}
-\NormalTok{    pivot}\OperatorTok{[}\NormalTok{j }\OperatorTok{{-}} \DecValTok{1}\OperatorTok{]} \OperatorTok{=}\NormalTok{ j}\OperatorTok{;}
-  \OperatorTok{\}}
-  \ControlFlowTok{while} \OperatorTok{(}\NormalTok{jwork }\OperatorTok{\textless{}=}\NormalTok{ rk}\OperatorTok{)} \OperatorTok{\{}
-    \ControlFlowTok{for} \OperatorTok{(}\NormalTok{j }\OperatorTok{=} \DecValTok{1}\OperatorTok{;}\NormalTok{ j }\OperatorTok{\textless{}}\NormalTok{ jwork}\OperatorTok{;}\NormalTok{ j}\OperatorTok{++)} \OperatorTok{\{}
-\NormalTok{      s }\OperatorTok{=} \FloatTok{0.0}\OperatorTok{;}
-      \ControlFlowTok{for} \OperatorTok{(}\NormalTok{i }\OperatorTok{=} \DecValTok{1}\OperatorTok{;}\NormalTok{ i }\OperatorTok{\textless{}=}\NormalTok{ nn}\OperatorTok{;}\NormalTok{ i}\OperatorTok{++)} \OperatorTok{\{}
-\NormalTok{        s }\OperatorTok{+=}\NormalTok{ x}\OperatorTok{[}\NormalTok{MINDEX}\OperatorTok{(}\NormalTok{i}\OperatorTok{,}\NormalTok{ jwork}\OperatorTok{,}\NormalTok{ nn}\OperatorTok{)]} \OperatorTok{*}\NormalTok{ x}\OperatorTok{[}\NormalTok{MINDEX}\OperatorTok{(}\NormalTok{i}\OperatorTok{,}\NormalTok{ j}\OperatorTok{,}\NormalTok{ nn}\OperatorTok{)];}
-      \OperatorTok{\}}
-\NormalTok{      r}\OperatorTok{[}\NormalTok{MINDEX}\OperatorTok{(}\NormalTok{j}\OperatorTok{,}\NormalTok{ jwork}\OperatorTok{,}\NormalTok{ mm}\OperatorTok{)]} \OperatorTok{=}\NormalTok{ s}\OperatorTok{;}
-      \ControlFlowTok{for} \OperatorTok{(}\NormalTok{i }\OperatorTok{=} \DecValTok{1}\OperatorTok{;}\NormalTok{ i }\OperatorTok{\textless{}=}\NormalTok{ nn}\OperatorTok{;}\NormalTok{ i}\OperatorTok{++)} \OperatorTok{\{}
-\NormalTok{        x}\OperatorTok{[}\NormalTok{MINDEX}\OperatorTok{(}\NormalTok{i}\OperatorTok{,}\NormalTok{ jwork}\OperatorTok{,}\NormalTok{ nn}\OperatorTok{)]} \OperatorTok{{-}=}\NormalTok{ s }\OperatorTok{*}\NormalTok{ x}\OperatorTok{[}\NormalTok{MINDEX}\OperatorTok{(}\NormalTok{i}\OperatorTok{,}\NormalTok{ j}\OperatorTok{,}\NormalTok{ nn}\OperatorTok{)];}
-      \OperatorTok{\}}
-    \OperatorTok{\}}
-\NormalTok{    s }\OperatorTok{=} \FloatTok{0.0}\OperatorTok{;}
-    \ControlFlowTok{for} \OperatorTok{(}\NormalTok{i }\OperatorTok{=} \DecValTok{1}\OperatorTok{;}\NormalTok{ i }\OperatorTok{\textless{}=}\NormalTok{ nn}\OperatorTok{;}\NormalTok{ i}\OperatorTok{++)} \OperatorTok{\{}
-\NormalTok{      s }\OperatorTok{+=}\NormalTok{ x}\OperatorTok{[}\NormalTok{MINDEX}\OperatorTok{(}\NormalTok{i}\OperatorTok{,}\NormalTok{ jwork}\OperatorTok{,}\NormalTok{ nn}\OperatorTok{)]} \OperatorTok{*}\NormalTok{ x}\OperatorTok{[}\NormalTok{MINDEX}\OperatorTok{(}\NormalTok{i}\OperatorTok{,}\NormalTok{ jwork}\OperatorTok{,}\NormalTok{ nn}\OperatorTok{)];}
-    \OperatorTok{\}}
-    \ControlFlowTok{if} \OperatorTok{(}\NormalTok{s }\OperatorTok{\textgreater{}} \OperatorTok{*}\NormalTok{eps}\OperatorTok{)} \OperatorTok{\{}
-\NormalTok{      s }\OperatorTok{=}\NormalTok{ sqrt}\OperatorTok{(}\NormalTok{s}\OperatorTok{);}
-\NormalTok{      r}\OperatorTok{[}\NormalTok{MINDEX}\OperatorTok{(}\NormalTok{jwork}\OperatorTok{,}\NormalTok{ jwork}\OperatorTok{,}\NormalTok{ mm}\OperatorTok{)]} \OperatorTok{=}\NormalTok{ s}\OperatorTok{;}
-      \ControlFlowTok{for} \OperatorTok{(}\NormalTok{i }\OperatorTok{=} \DecValTok{1}\OperatorTok{;}\NormalTok{ i }\OperatorTok{\textless{}=}\NormalTok{ nn}\OperatorTok{;}\NormalTok{ i}\OperatorTok{++)} \OperatorTok{\{}
-\NormalTok{        x}\OperatorTok{[}\NormalTok{MINDEX}\OperatorTok{(}\NormalTok{i}\OperatorTok{,}\NormalTok{ jwork}\OperatorTok{,}\NormalTok{ nn}\OperatorTok{)]} \OperatorTok{/=}\NormalTok{ s}\OperatorTok{;}
-      \OperatorTok{\}}
-\NormalTok{      jwork }\OperatorTok{+=} \DecValTok{1}\OperatorTok{;}
-    \OperatorTok{\}}
-    \ControlFlowTok{if} \OperatorTok{(}\NormalTok{s }\OperatorTok{\textless{}=} \OperatorTok{*}\NormalTok{eps}\OperatorTok{)} \OperatorTok{\{}
-\NormalTok{      ip }\OperatorTok{=}\NormalTok{ pivot }\OperatorTok{[}\NormalTok{rk }\OperatorTok{{-}} \DecValTok{1}\OperatorTok{];}
-\NormalTok{      pivot}\OperatorTok{[}\NormalTok{rk }\OperatorTok{{-}} \DecValTok{1}\OperatorTok{]} \OperatorTok{=}\NormalTok{ pivot}\OperatorTok{[}\NormalTok{jwork }\OperatorTok{{-}} \DecValTok{1}\OperatorTok{];}
-\NormalTok{      pivot}\OperatorTok{[}\NormalTok{jwork }\OperatorTok{{-}} \DecValTok{1}\OperatorTok{]} \OperatorTok{=}\NormalTok{ ip}\OperatorTok{;}
-      \ControlFlowTok{for} \OperatorTok{(}\NormalTok{i }\OperatorTok{=} \DecValTok{1}\OperatorTok{;}\NormalTok{ i }\OperatorTok{\textless{}=}\NormalTok{ nn}\OperatorTok{;}\NormalTok{ i}\OperatorTok{++)} \OperatorTok{\{}
-\NormalTok{        p }\OperatorTok{=}\NormalTok{ x}\OperatorTok{[}\NormalTok{MINDEX}\OperatorTok{(}\NormalTok{i}\OperatorTok{,}\NormalTok{ rk}\OperatorTok{,}\NormalTok{ nn}\OperatorTok{)];}
-\NormalTok{        x}\OperatorTok{[}\NormalTok{MINDEX}\OperatorTok{(}\NormalTok{i}\OperatorTok{,}\NormalTok{ rk}\OperatorTok{,}\NormalTok{ nn}\OperatorTok{)]} \OperatorTok{=}\NormalTok{ x}\OperatorTok{[}\NormalTok{MINDEX}\OperatorTok{(}\NormalTok{i}\OperatorTok{,}\NormalTok{ jwork}\OperatorTok{,}\NormalTok{ nn}\OperatorTok{)];}
-\NormalTok{        x}\OperatorTok{[}\NormalTok{MINDEX}\OperatorTok{(}\NormalTok{i}\OperatorTok{,}\NormalTok{ jwork}\OperatorTok{,}\NormalTok{ nn}\OperatorTok{)]} \OperatorTok{=}\NormalTok{ p}\OperatorTok{;}
-      \OperatorTok{\}}
-      \ControlFlowTok{for} \OperatorTok{(}\NormalTok{j }\OperatorTok{=} \DecValTok{1}\OperatorTok{;}\NormalTok{ j }\OperatorTok{\textless{}=}\NormalTok{ mm}\OperatorTok{;}\NormalTok{ j}\OperatorTok{++)} \OperatorTok{\{}
-\NormalTok{        p }\OperatorTok{=}\NormalTok{ r}\OperatorTok{[}\NormalTok{MINDEX}\OperatorTok{(}\NormalTok{j}\OperatorTok{,}\NormalTok{ rk}\OperatorTok{,}\NormalTok{ mm}\OperatorTok{)];}
-\NormalTok{        r}\OperatorTok{[}\NormalTok{MINDEX}\OperatorTok{(}\NormalTok{j}\OperatorTok{,}\NormalTok{ rk}\OperatorTok{,}\NormalTok{ mm}\OperatorTok{)]} \OperatorTok{=}\NormalTok{ r}\OperatorTok{[}\NormalTok{MINDEX}\OperatorTok{(}\NormalTok{j}\OperatorTok{,}\NormalTok{ jwork}\OperatorTok{,}\NormalTok{ mm}\OperatorTok{)];}
-\NormalTok{        r}\OperatorTok{[}\NormalTok{MINDEX}\OperatorTok{(}\NormalTok{j}\OperatorTok{,}\NormalTok{ jwork}\OperatorTok{,}\NormalTok{ mm}\OperatorTok{)]} \OperatorTok{=}\NormalTok{ p}\OperatorTok{;}
-      \OperatorTok{\}}
-\NormalTok{      rk }\OperatorTok{{-}=} \DecValTok{1}\OperatorTok{;}
-    \OperatorTok{\}}
-  \OperatorTok{\}}
-  \OperatorTok{*}\NormalTok{rank }\OperatorTok{=}\NormalTok{ rk}\OperatorTok{;}
-\OperatorTok{\}}
+\DataTypeTok{void}\NormalTok{ gsC(}\DataTypeTok{double}\NormalTok{ *x, }\DataTypeTok{double}\NormalTok{ *r, }\DataTypeTok{int}\NormalTok{ *n, }\DataTypeTok{int}\NormalTok{ *m, }\DataTypeTok{int}\NormalTok{ *rank, }\DataTypeTok{int}\NormalTok{ *pivot,}
+         \DataTypeTok{double}\NormalTok{ *eps) \{}
+  \DataTypeTok{int}\NormalTok{ i, j, ip, nn = *n, mm = *m, rk = *m, jwork = }\DecValTok{1}\NormalTok{;}
+  \DataTypeTok{double}\NormalTok{ s = }\FloatTok{0.0}\NormalTok{, p;}
+  \ControlFlowTok{for}\NormalTok{ (j = }\DecValTok{1}\NormalTok{; j \textless{}= mm; j++) \{}
+\NormalTok{    pivot[j {-} }\DecValTok{1}\NormalTok{] = j;}
+\NormalTok{  \}}
+  \ControlFlowTok{while}\NormalTok{ (jwork \textless{}= rk) \{}
+    \ControlFlowTok{for}\NormalTok{ (j = }\DecValTok{1}\NormalTok{; j \textless{} jwork; j++) \{}
+\NormalTok{      s = }\FloatTok{0.0}\NormalTok{;}
+      \ControlFlowTok{for}\NormalTok{ (i = }\DecValTok{1}\NormalTok{; i \textless{}= nn; i++) \{}
+\NormalTok{        s += x[MINDEX(i, jwork, nn)] * x[MINDEX(i, j, nn)];}
+\NormalTok{      \}}
+\NormalTok{      r[MINDEX(j, jwork, mm)] = s;}
+      \ControlFlowTok{for}\NormalTok{ (i = }\DecValTok{1}\NormalTok{; i \textless{}= nn; i++) \{}
+\NormalTok{        x[MINDEX(i, jwork, nn)] {-}= s * x[MINDEX(i, j, nn)];}
+\NormalTok{      \}}
+\NormalTok{    \}}
+\NormalTok{    s = }\FloatTok{0.0}\NormalTok{;}
+    \ControlFlowTok{for}\NormalTok{ (i = }\DecValTok{1}\NormalTok{; i \textless{}= nn; i++) \{}
+\NormalTok{      s += x[MINDEX(i, jwork, nn)] * x[MINDEX(i, jwork, nn)];}
+\NormalTok{    \}}
+    \ControlFlowTok{if}\NormalTok{ (s \textgreater{} *eps) \{}
+\NormalTok{      s = sqrt(s);}
+\NormalTok{      r[MINDEX(jwork, jwork, mm)] = s;}
+      \ControlFlowTok{for}\NormalTok{ (i = }\DecValTok{1}\NormalTok{; i \textless{}= nn; i++) \{}
+\NormalTok{        x[MINDEX(i, jwork, nn)] /= s;}
+\NormalTok{      \}}
+\NormalTok{      jwork += }\DecValTok{1}\NormalTok{;}
+\NormalTok{    \}}
+    \ControlFlowTok{if}\NormalTok{ (s \textless{}= *eps) \{}
+\NormalTok{      ip = pivot [rk {-} }\DecValTok{1}\NormalTok{];}
+\NormalTok{      pivot[rk {-} }\DecValTok{1}\NormalTok{] = pivot[jwork {-} }\DecValTok{1}\NormalTok{];}
+\NormalTok{      pivot[jwork {-} }\DecValTok{1}\NormalTok{] = ip;}
+      \ControlFlowTok{for}\NormalTok{ (i = }\DecValTok{1}\NormalTok{; i \textless{}= nn; i++) \{}
+\NormalTok{        p = x[MINDEX(i, rk, nn)];}
+\NormalTok{        x[MINDEX(i, rk, nn)] = x[MINDEX(i, jwork, nn)];}
+\NormalTok{        x[MINDEX(i, jwork, nn)] = p;}
+\NormalTok{      \}}
+      \ControlFlowTok{for}\NormalTok{ (j = }\DecValTok{1}\NormalTok{; j \textless{}= mm; j++) \{}
+\NormalTok{        p = r[MINDEX(j, rk, mm)];}
+\NormalTok{        r[MINDEX(j, rk, mm)] = r[MINDEX(j, jwork, mm)];}
+\NormalTok{        r[MINDEX(j, jwork, mm)] = p;}
+\NormalTok{      \}}
+\NormalTok{      rk {-}= }\DecValTok{1}\NormalTok{;}
+\NormalTok{    \}}
+\NormalTok{  \}}
+\NormalTok{  *rank = rk;}
+\NormalTok{\}}
 \end{Highlighting}
 \end{Shaded}
 
@@ -3590,42 +3590,42 @@ Figure 26: Personality Scales, Multi-Set, , Transformations
 \PreprocessorTok{\#include }\ImportTok{\textless{}R.h\textgreater{}}
 \PreprocessorTok{\#include }\ImportTok{\textless{}Rinternals.h\textgreater{}}
 
-\NormalTok{SEXP DECODE}\OperatorTok{(}\NormalTok{ SEXP}\OperatorTok{,}\NormalTok{ SEXP }\OperatorTok{);}
-\NormalTok{SEXP ENCODE}\OperatorTok{(}\NormalTok{ SEXP}\OperatorTok{,}\NormalTok{ SEXP }\OperatorTok{);}
+\NormalTok{SEXP DECODE( SEXP, SEXP );}
+\NormalTok{SEXP ENCODE( SEXP, SEXP );}
 
 \NormalTok{SEXP}
-\NormalTok{  DECODE}\OperatorTok{(}\NormalTok{ SEXP cell}\OperatorTok{,}\NormalTok{ SEXP dims }\OperatorTok{)}
-  \OperatorTok{\{}
-    \DataTypeTok{int}\NormalTok{             aux }\OperatorTok{=} \DecValTok{1}\OperatorTok{,}\NormalTok{ n }\OperatorTok{=}\NormalTok{ length}\OperatorTok{(}\NormalTok{dims}\OperatorTok{);}
-\NormalTok{    SEXP            ind}\OperatorTok{;}
-\NormalTok{    PROTECT}\OperatorTok{(}\NormalTok{ ind }\OperatorTok{=}\NormalTok{ allocVector}\OperatorTok{(}\NormalTok{ INTSXP}\OperatorTok{,} \DecValTok{1} \OperatorTok{)} \OperatorTok{);}
-\NormalTok{    INTEGER}\OperatorTok{(}\NormalTok{ ind }\OperatorTok{)[}\DecValTok{0}\OperatorTok{]} \OperatorTok{=} \DecValTok{1}\OperatorTok{;}
-    \ControlFlowTok{for}\OperatorTok{(} \DataTypeTok{int}\NormalTok{ i }\OperatorTok{=} \DecValTok{0}\OperatorTok{;}\NormalTok{ i }\OperatorTok{\textless{}}\NormalTok{ n}\OperatorTok{;}\NormalTok{ i}\OperatorTok{++} \OperatorTok{)} \OperatorTok{\{}
-\NormalTok{      INTEGER}\OperatorTok{(}\NormalTok{ ind }\OperatorTok{)[}\DecValTok{0}\OperatorTok{]} \OperatorTok{+=}\NormalTok{ aux }\OperatorTok{*} \OperatorTok{(}\NormalTok{ INTEGER}\OperatorTok{(}\NormalTok{ cell }\OperatorTok{)[}\NormalTok{i}\OperatorTok{]} \OperatorTok{{-}} \DecValTok{1} \OperatorTok{);}
-\NormalTok{      aux }\OperatorTok{*=}\NormalTok{ INTEGER}\OperatorTok{(}\NormalTok{dims}\OperatorTok{)[}\NormalTok{i}\OperatorTok{];}
-    \OperatorTok{\}}
-\NormalTok{    UNPROTECT}\OperatorTok{(} \DecValTok{1} \OperatorTok{);}
-    \ControlFlowTok{return} \OperatorTok{(}\NormalTok{ind}\OperatorTok{);}
-  \OperatorTok{\}}
+\NormalTok{  DECODE( SEXP cell, SEXP dims )}
+\NormalTok{  \{}
+    \DataTypeTok{int}\NormalTok{             aux = }\DecValTok{1}\NormalTok{, n = length(dims);}
+\NormalTok{    SEXP            ind;}
+\NormalTok{    PROTECT( ind = allocVector( INTSXP, }\DecValTok{1}\NormalTok{ ) );}
+\NormalTok{    INTEGER( ind )[}\DecValTok{0}\NormalTok{] = }\DecValTok{1}\NormalTok{;}
+    \ControlFlowTok{for}\NormalTok{( }\DataTypeTok{int}\NormalTok{ i = }\DecValTok{0}\NormalTok{; i \textless{} n; i++ ) \{}
+\NormalTok{      INTEGER( ind )[}\DecValTok{0}\NormalTok{] += aux * ( INTEGER( cell )[i] {-} }\DecValTok{1}\NormalTok{ );}
+\NormalTok{      aux *= INTEGER(dims)[i];}
+\NormalTok{    \}}
+\NormalTok{    UNPROTECT( }\DecValTok{1}\NormalTok{ );}
+    \ControlFlowTok{return}\NormalTok{ (ind);}
+\NormalTok{  \}}
 
 \NormalTok{SEXP}
-\NormalTok{  ENCODE}\OperatorTok{(}\NormalTok{ SEXP ind}\OperatorTok{,}\NormalTok{ SEXP dims }\OperatorTok{)}
-  \OperatorTok{\{}
-    \DataTypeTok{int}\NormalTok{             n }\OperatorTok{=}\NormalTok{ length}\OperatorTok{(}\NormalTok{dims}\OperatorTok{),}\NormalTok{ aux }\OperatorTok{=}\NormalTok{ INTEGER}\OperatorTok{(}\NormalTok{ind}\OperatorTok{)[}\DecValTok{0}\OperatorTok{],}\NormalTok{ pdim }\OperatorTok{=} \DecValTok{1}\OperatorTok{;}
-\NormalTok{    SEXP            cell}\OperatorTok{;}
-\NormalTok{    PROTECT}\OperatorTok{(}\NormalTok{ cell }\OperatorTok{=}\NormalTok{ allocVector}\OperatorTok{(}\NormalTok{ INTSXP}\OperatorTok{,}\NormalTok{ n }\OperatorTok{)} \OperatorTok{);}
-    \ControlFlowTok{for} \OperatorTok{(} \DataTypeTok{int}\NormalTok{ i }\OperatorTok{=} \DecValTok{0}\OperatorTok{;}\NormalTok{ i }\OperatorTok{\textless{}}\NormalTok{ n }\OperatorTok{{-}} \DecValTok{1}\OperatorTok{;}\NormalTok{ i}\OperatorTok{++} \OperatorTok{)}
-\NormalTok{      pdim }\OperatorTok{*=}\NormalTok{ INTEGER}\OperatorTok{(}\NormalTok{ dims }\OperatorTok{)[}\NormalTok{i}\OperatorTok{];}
-    \ControlFlowTok{for} \OperatorTok{(} \DataTypeTok{int}\NormalTok{ i }\OperatorTok{=}\NormalTok{ n }\OperatorTok{{-}} \DecValTok{1}\OperatorTok{;}\NormalTok{ i }\OperatorTok{\textgreater{}} \DecValTok{0}\OperatorTok{;}\NormalTok{ i}\OperatorTok{{-}{-}} \OperatorTok{)\{}
-\NormalTok{      INTEGER}\OperatorTok{(}\NormalTok{ cell }\OperatorTok{)[}\NormalTok{i}\OperatorTok{]} \OperatorTok{=} \OperatorTok{(}\NormalTok{ aux }\OperatorTok{{-}} \DecValTok{1} \OperatorTok{)} \OperatorTok{/}\NormalTok{ pdim}\OperatorTok{;}
-\NormalTok{      aux }\OperatorTok{{-}=}\NormalTok{ pdim }\OperatorTok{*}\NormalTok{ INTEGER}\OperatorTok{(}\NormalTok{ cell }\OperatorTok{)[}\NormalTok{i}\OperatorTok{];}
-\NormalTok{      pdim }\OperatorTok{/=}\NormalTok{ INTEGER}\OperatorTok{(}\NormalTok{ dims }\OperatorTok{)[}\NormalTok{i }\OperatorTok{{-}} \DecValTok{1}\OperatorTok{];}
-\NormalTok{      INTEGER}\OperatorTok{(}\NormalTok{ cell }\OperatorTok{)[}\NormalTok{i}\OperatorTok{]} \OperatorTok{+=} \DecValTok{1}\OperatorTok{;}
-    \OperatorTok{\}}
-\NormalTok{    INTEGER}\OperatorTok{(}\NormalTok{ cell }\OperatorTok{)[}\DecValTok{0}\OperatorTok{]} \OperatorTok{=}\NormalTok{ aux}\OperatorTok{;}
-\NormalTok{    UNPROTECT}\OperatorTok{(} \DecValTok{1} \OperatorTok{);}
-    \ControlFlowTok{return}\NormalTok{ cell}\OperatorTok{;}
-  \OperatorTok{\}}
+\NormalTok{  ENCODE( SEXP ind, SEXP dims )}
+\NormalTok{  \{}
+    \DataTypeTok{int}\NormalTok{             n = length(dims), aux = INTEGER(ind)[}\DecValTok{0}\NormalTok{], pdim = }\DecValTok{1}\NormalTok{;}
+\NormalTok{    SEXP            cell;}
+\NormalTok{    PROTECT( cell = allocVector( INTSXP, n ) );}
+    \ControlFlowTok{for}\NormalTok{ ( }\DataTypeTok{int}\NormalTok{ i = }\DecValTok{0}\NormalTok{; i \textless{} n {-} }\DecValTok{1}\NormalTok{; i++ )}
+\NormalTok{      pdim *= INTEGER( dims )[i];}
+    \ControlFlowTok{for}\NormalTok{ ( }\DataTypeTok{int}\NormalTok{ i = n {-} }\DecValTok{1}\NormalTok{; i \textgreater{} }\DecValTok{0}\NormalTok{; i{-}{-} )\{}
+\NormalTok{      INTEGER( cell )[i] = ( aux {-} }\DecValTok{1}\NormalTok{ ) / pdim;}
+\NormalTok{      aux {-}= pdim * INTEGER( cell )[i];}
+\NormalTok{      pdim /= INTEGER( dims )[i {-} }\DecValTok{1}\NormalTok{];}
+\NormalTok{      INTEGER( cell )[i] += }\DecValTok{1}\NormalTok{;}
+\NormalTok{    \}}
+\NormalTok{    INTEGER( cell )[}\DecValTok{0}\NormalTok{] = aux;}
+\NormalTok{    UNPROTECT( }\DecValTok{1}\NormalTok{ );}
+    \ControlFlowTok{return}\NormalTok{ cell;}
+\NormalTok{  \}}
 \end{Highlighting}
 \end{Shaded}
 
@@ -3635,301 +3635,298 @@ Figure 26: Personality Scales, Multi-Set, , Transformations
 
 \hypertarget{refs}{}
 \begin{CSLReferences}{1}{0}
-\leavevmode\vadjust pre{\hypertarget{ref-asa_14}{}}%
+\leavevmode\hypertarget{ref-asa_14}{}%
 Association, American Statistical. 2014. {``{Discovery with Data: Leveraging Statistics with Computer Science to Transform Science and Society}.''} 2014. \url{http://www.amstat.org/policy/pdfs/BigDataStatisticsJune2014.pdf}.
 
-\leavevmode\vadjust pre{\hypertarget{ref-bijleveld_deleeuw_A_91}{}}%
+\leavevmode\hypertarget{ref-bijleveld_deleeuw_A_91}{}%
 Bijleveld, C. C. J. H., and J. De Leeuw. 1991. {``{Fitting Longitudinal Reduced-Rank Regression Models by Alternating Least Squares}.''} \emph{Psychometrika} 56 (3): 433--47. \url{http://deleeuwpdx.net/janspubs/1991/articles/bijleveld_deleeuw_A_91.pdf}.
 
-\leavevmode\vadjust pre{\hypertarget{ref-bock_60}{}}%
+\leavevmode\hypertarget{ref-bock_60}{}%
 Bock, R. D. 1960. {``{Methods and Applications of Optimal Scaling}.''} Psychometric Laboratory Report 25. Chapell Hill, N.C.: L.L. Thurstone Psychometric Laboratory, University of North Carolina.
 
-\leavevmode\vadjust pre{\hypertarget{ref-breiman_01}{}}%
+\leavevmode\hypertarget{ref-breiman_01}{}%
 Breiman, L. 2001. {``{Statistical Modeling: The Two Cultures}.''} \emph{Statistical Science} 16 (3): 199--231.
 
-\leavevmode\vadjust pre{\hypertarget{ref-breiman_friedman_85}{}}%
+\leavevmode\hypertarget{ref-breiman_friedman_85}{}%
 Breiman, L., and J. H. Friedman. 1985. {``{Estimating Optimal Transformations for Multiple Regression and Correlation}.''} \emph{Journal of the American Statistical Association} 80: 580--619.
 
-\leavevmode\vadjust pre{\hypertarget{ref-carroll_68}{}}%
+\leavevmode\hypertarget{ref-carroll_68}{}%
 Carroll, J. D. 1968. {``{A Generalization of Canonical Correlation Analysis to Three or More Sets of Variables}.''} In \emph{Proceedings of the 76th Annual Convention of the American Psychological Association}, 227--28. Washington, D.C.: American Psychological Association.
 
-\leavevmode\vadjust pre{\hypertarget{ref-cleveland_14}{}}%
+\leavevmode\hypertarget{ref-cleveland_14}{}%
 Cleveland, W. S. 2014. {``{Data Science: An Action Plan for Expanding the Technical Areas of the Field of Statistics}.''} \emph{Statistical Analysis and Data Mining} 7: 414--17.
 
-\leavevmode\vadjust pre{\hypertarget{ref-coolen_deleeuw_R_87}{}}%
+\leavevmode\hypertarget{ref-coolen_deleeuw_R_87}{}%
 Coolen, H., and J. De Leeuw. 1987. {``{Least Squares Path Analysis with Optimal Scaling}.''} Research Report RR-87-03. Leiden, The Netherlands: Department of Data Theory FSW/RUL. \url{http://deleeuwpdx.net/janspubs/1987/reports/coolen_deleeuw_R_87.pdf}.
 
-\leavevmode\vadjust pre{\hypertarget{ref-coombs_64}{}}%
+\leavevmode\hypertarget{ref-coombs_64}{}%
 Coombs, C. H. 1964. \emph{{A Theory of Data}}. Wiley.
 
-\leavevmode\vadjust pre{\hypertarget{ref-cordier_65}{}}%
+\leavevmode\hypertarget{ref-cordier_65}{}%
 Cordier, B. 1965. {``{L'Analyse Factorielle des Correspondances}.''} \{Th\textbackslash`ese de Troisieme Cycle\}, Université de Rennes; Faculté des Sciences.
 
-\leavevmode\vadjust pre{\hypertarget{ref-dauxois_pousse_76}{}}%
+\leavevmode\hypertarget{ref-dauxois_pousse_76}{}%
 Dauxois, J., and A. Pousse. 1976. {``{Les Analyses Factorielles en Calcul des Probabilités et en Statistique: Essai d'Étude Synthetique}.''} PhD thesis, Université Paul-Sabatier, Toulouse, France.
 
-\leavevmode\vadjust pre{\hypertarget{ref-davies_95}{}}%
+\leavevmode\hypertarget{ref-davies_95}{}%
 Davies, P. L. 1995. {``{Data Features}.''} \emph{Statistica Neerlandica} 49 (2): 185--245.
 
-\leavevmode\vadjust pre{\hypertarget{ref-davies_08}{}}%
+\leavevmode\hypertarget{ref-davies_08}{}%
 ---------. 2008. {``{Approximating Data}.''} \emph{Journal of the Korean Statistical Society} 37: 191--211.
 
-\leavevmode\vadjust pre{\hypertarget{ref-deleeuw_E_15d}{}}%
-De Leeuw, J. 2015a. {``Exceedingly Simple b-Spline Code.''} \url{http://rpubs.com/deleeuw/79161}.
-
-\leavevmode\vadjust pre{\hypertarget{ref-deleeuw_R_68e}{}}%
+\leavevmode\hypertarget{ref-deleeuw_R_68e}{}%
 De Leeuw, J. 1968a. {``Canonical Discriminant Analysis of Relational Data.''} Research Note 007-68. Department of Data Theory FSW/RUL. \url{http://deleeuwpdx.net/janspubs/1968/reports/deleeuw_R_68e.pdf}.
 
-\leavevmode\vadjust pre{\hypertarget{ref-deleeuw_R_68d}{}}%
+\leavevmode\hypertarget{ref-deleeuw_R_68d}{}%
 ---------. 1968b. {``Nonmetric Discriminant Analysis.''} Research Note 06-68. Department of Data Theory, University of Leiden. \url{http://deleeuwpdx.net/janspubs/1968/reports/deleeuw_R_68d.pdf}.
 
-\leavevmode\vadjust pre{\hypertarget{ref-deleeuw_B_74}{}}%
+\leavevmode\hypertarget{ref-deleeuw_B_74}{}%
 ---------. 1974. \emph{Canonical Analysis of Categorical Data}. Leiden, The Netherlands: Psychological Institute, Leiden University. \url{http://deleeuwpdx.net/janspubs/1974/books/deleeuw_B_74.pdf}.
 
-\leavevmode\vadjust pre{\hypertarget{ref-deleeuw_U_75a}{}}%
+\leavevmode\hypertarget{ref-deleeuw_U_75a}{}%
 ---------. 1975. {``{A Normalized Cone Regression Approach to Alternating Least Squares Algorithms}.''} Department of Data Theory FSW/RUL. \url{http://deleeuwpdx.net/janspubs/1975/notes/deleeuw_U_75a.pdf}.
 
-\leavevmode\vadjust pre{\hypertarget{ref-deleeuw_A_83b}{}}%
+\leavevmode\hypertarget{ref-deleeuw_A_83b}{}%
 ---------. 1983. {``On the Prehistory of Correspondence Analysis.''} \emph{Statistica Neerlandica} 37: 161--64. \url{http://deleeuwpdx.net/janspubs/1983/articles/deleeuw_A_83b.pdf}.
 
-\leavevmode\vadjust pre{\hypertarget{ref-deleeuw_A_84c}{}}%
+\leavevmode\hypertarget{ref-deleeuw_A_84c}{}%
 ---------. 1984a. {``Models of Data.''} \emph{Kwantitatieve Methoden} 5: 17--30. \url{http://deleeuwpdx.net/janspubs/1984/articles/deleeuw_A_84c.pdf}.
 
-\leavevmode\vadjust pre{\hypertarget{ref-deleeuw_C_84c}{}}%
+\leavevmode\hypertarget{ref-deleeuw_C_84c}{}%
 ---------. 1984b. {``The Gifi System of Nonlinear Multivariate Analysis.''} In \emph{Data Analysis and Informatics}, edited by E. Diday et al. Vol. III. Amsterdam: North Holland Publishing Company. \url{http://deleeuwpdx.net/janspubs/1984/chapters/deleeuw_C_84c.pdf}.
 
-\leavevmode\vadjust pre{\hypertarget{ref-deleeuw_A_88c}{}}%
+\leavevmode\hypertarget{ref-deleeuw_A_88c}{}%
 ---------. 1988a. {``Models and Techniques.''} \emph{Statistica Neerlandica} 42: 91--98. \url{http://deleeuwpdx.net/janspubs/1988/articles/deleeuw_A_88c.pdf}.
 
-\leavevmode\vadjust pre{\hypertarget{ref-deleeuw_A_88a}{}}%
+\leavevmode\hypertarget{ref-deleeuw_A_88a}{}%
 ---------. 1988b. {``Multivariate Analysis with Linearizable Regressions.''} \emph{Psychometrika} 53: 437--54. \url{http://deleeuwpdx.net/janspubs/1988/articles/deleeuw_A_88a.pdf}.
 
-\leavevmode\vadjust pre{\hypertarget{ref-deleeuw_C_88b}{}}%
+\leavevmode\hypertarget{ref-deleeuw_C_88b}{}%
 ---------. 1988c. {``{Multivariate Analysis with Optimal Scaling}.''} In \emph{Proceedings of the International Conference on Advances in Multivariate Statistical Analysis}, edited by S. Das Gupta and J. K. Ghosh, 127--60. Calcutta, India: Indian Statistical Institute. \url{http://deleeuwpdx.net/janspubs/1988/chapters/deleeuw_C_88b.pdf}.
 
-\leavevmode\vadjust pre{\hypertarget{ref-deleeuw_C_90b}{}}%
+\leavevmode\hypertarget{ref-deleeuw_C_90b}{}%
 ---------. 1990. {``Data Modeling and Theory Construction.''} In \emph{Operationalization and Research Strategy}, edited by J. J. Hox and J. De Jong-Gierveld. Amsterdam, The Netherlands: Swets; Zeitlinger. \url{http://deleeuwpdx.net/janspubs/1990/chapters/deleeuw_C_90b.pdf}.
 
-\leavevmode\vadjust pre{\hypertarget{ref-deleeuw_C_94c}{}}%
+\leavevmode\hypertarget{ref-deleeuw_C_94c}{}%
 ---------. 1994. {``{Block Relaxation Algorithms in Statistics}.''} In \emph{Information Systems and Data Analysis}, edited by H. H. Bock, W. Lenski, and M. M. Richter, 308--24. Berlin: Springer Verlag. \url{http://deleeuwpdx.net/janspubs/1994/chapters/deleeuw_C_94c.pdf}.
 
-\leavevmode\vadjust pre{\hypertarget{ref-deleeuw_C_04a}{}}%
+\leavevmode\hypertarget{ref-deleeuw_C_04a}{}%
 ---------. 2004. {``Least Squares Optimal Scaling of Partially Observed Linear Systems.''} In \emph{Recent Developments in Structural Equation Models}, edited by K. van Montfort, J. Oud, and A. Satorra. Dordrecht, Netherlands: Kluwer Academic Publishers. \url{http://deleeuwpdx.net/janspubs/2004/chapters/deleeuw_C_04a.pdf}.
 
-\leavevmode\vadjust pre{\hypertarget{ref-deleeuw_R_09c}{}}%
+\leavevmode\hypertarget{ref-deleeuw_R_09c}{}%
 ---------. 2009. {``{Regression, Discriminant Analysis, and Canonical Analysis with homals}.''} Preprint Series 562. Los Angeles, CA: UCLA Department of Statistics. \url{http://deleeuwpdx.net/janspubs/2009/reports/deleeuw_R_09c.pdf}.
 
-\leavevmode\vadjust pre{\hypertarget{ref-deleeuw_C_14}{}}%
+\leavevmode\hypertarget{ref-deleeuw_C_14}{}%
 ---------. 2014. {``{History of Nonlinear Principal Component Analysis}.''} In \emph{{The Visualization and Verbalization of Data}}, edited by J. Blasius and M. Greenacre. Chapman; Hall. \url{http://deleeuwpdx.net/janspubs/2014/chapters/deleeuw_C_14.pdf}.
 
-\leavevmode\vadjust pre{\hypertarget{ref-deleeuw_E_15b}{}}%
----------. 2015b. {``{Aspects of Correlation Matrices}.''} \url{http://deleeuwpdx.net/pubfolders/aspect/aspect.pdf}.
+\leavevmode\hypertarget{ref-deleeuw_E_15b}{}%
+---------. 2015a. {``{Aspects of Correlation Matrices}.''} \url{http://deleeuwpdx.net/pubfolders/aspect/aspect.pdf}.
 
-\leavevmode\vadjust pre{\hypertarget{ref-deleeuw_B_15}{}}%
----------. 2015c. \emph{{Block Relaxation Algorithms in Statistics}}. Bookdown. \url{https://bookdown.org/jandeleeuw6/bras/}.
+\leavevmode\hypertarget{ref-deleeuw_E_15d}{}%
+---------. 2015b. {``Exceedingly Simple b-Spline Code.''} \url{http://rpubs.com/deleeuw/79161}.
 
-\leavevmode\vadjust pre{\hypertarget{ref-deleeuw_E_15e}{}}%
----------. 2015d. {``Regression with Linear Inequality Restrictions on Predicted Values.''} \url{http://rpubs.com/deleeuw/78897}.
+\leavevmode\hypertarget{ref-deleeuw_E_15e}{}%
+---------. 2015c. {``Regression with Linear Inequality Restrictions on Predicted Values.''} \url{http://rpubs.com/deleeuw/78897}.
 
-\leavevmode\vadjust pre{\hypertarget{ref-deleeuw_mair_A_09a}{}}%
+\leavevmode\hypertarget{ref-deleeuw_mair_A_09a}{}%
 De Leeuw, J., and P. Mair. 2009a. {``Homogeneity Analysis in r: The Package Homals.''} \emph{Journal of Statistical Software} 31 (4): 1--21. \url{http://deleeuwpdx.net/janspubs/2009/articles/deleeuw_mair_A_09a.pdf}.
 
-\leavevmode\vadjust pre{\hypertarget{ref-deleeuw_mair_A_09b}{}}%
+\leavevmode\hypertarget{ref-deleeuw_mair_A_09b}{}%
 ---------. 2009b. {``Simple and Canonical Correspondence Analysis Using the r Package Anacor.''} \emph{Journal of Statistical Software} 31 (5): 1--18. \url{http://deleeuwpdx.net/janspubs/2009/articles/deleeuw_mair_A_09b.pdf}.
 
-\leavevmode\vadjust pre{\hypertarget{ref-deleeuw_michailidis_wang_C_99}{}}%
+\leavevmode\hypertarget{ref-deleeuw_michailidis_wang_C_99}{}%
 De Leeuw, J., G. Michailidis, and D. Y. Wang. 1999. {``Correspondence Analysis Techniques.''} In \emph{Multivariate Analysis, Design of Experiments, and Survey Sampling}, edited by S. Ghosh, 523--47. Marcel Dekker. \url{http://deleeuwpdx.net/janspubs/1999/chapters/deleeuw_michailidis_wang_C_99.pdf}.
 
-\leavevmode\vadjust pre{\hypertarget{ref-deleeuw_vanrijckevorsel_C_80}{}}%
+\leavevmode\hypertarget{ref-deleeuw_vanrijckevorsel_C_80}{}%
 De Leeuw, J., and J. L. A. Van Rijckevorsel. 1980. {``HOMALS and PRINCALS: Some Generalizations of Principal Components Analysis.''} In \emph{Data Analysis and Informatics}. Amsterdam: North Holland Publishing Company. \url{http://deleeuwpdx.net/janspubs/1980/chapters/deleeuw_vanrijckevorsel_C_80.pdf}.
 
-\leavevmode\vadjust pre{\hypertarget{ref-deleeuw_vanrijckevorsel_C_88}{}}%
+\leavevmode\hypertarget{ref-deleeuw_vanrijckevorsel_C_88}{}%
 ---------. 1988. {``Beyond Homogeneity Analysis.''} In \emph{Component and Correspondence Analysis}, edited by J. L. A. Van Rijckevorsel and J. De Leeuw, 55--80. Chichester, England: Wiley. \url{http://deleeuwpdx.net/janspubs/1988/chapters/deleeuw_vanrijckevorsel_C_88.pdf}.
 
-\leavevmode\vadjust pre{\hypertarget{ref-deleeuw_vanrijckevorsel_vanderwouden_A_81}{}}%
+\leavevmode\hypertarget{ref-deleeuw_vanrijckevorsel_vanderwouden_A_81}{}%
 De Leeuw, J., J. L. A. Van Rijckevorsel, and H. Van der Wouden. 1981. {``Nonlinear Principal Component Analysis Using b-Splines.''} \emph{Methods of Operations Research} 43: 379--94. \url{http://deleeuwpdx.net/janspubs/1981/articles/deleeuw_vanrijckevorsel_vanderwouden_A_81.pdf}.
 
-\leavevmode\vadjust pre{\hypertarget{ref-galton_89}{}}%
+\leavevmode\hypertarget{ref-galton_89}{}%
 Galton, F. 1889. \emph{{Natural Inheritance}}. MacMillan; Co.
 
-\leavevmode\vadjust pre{\hypertarget{ref-gibson_62}{}}%
+\leavevmode\hypertarget{ref-gibson_62}{}%
 Gibson, W. A. 1962. {``{On the Least Squares Orthogonalization of an Oblique Transformation}.''} \emph{Psychometrika} 27: 193--95.
 
-\leavevmode\vadjust pre{\hypertarget{ref-gifi_B_80}{}}%
+\leavevmode\hypertarget{ref-gifi_B_80}{}%
 Gifi, A. 1980. \emph{Niet-Lineaire Multivariate Analyse {[}Nonlinear Multivariate Analysis{]}}. Leiden, The Netherlands: Department of Data Theory FSW/RUL. \url{http://deleeuwpdx.net/janspubs/1980/books/gifi_B_80.pdf}.
 
-\leavevmode\vadjust pre{\hypertarget{ref-gifi_B_81}{}}%
+\leavevmode\hypertarget{ref-gifi_B_81}{}%
 ---------. 1981. \emph{Nonlinear Multivariate Analysis}. Leiden, The Netherlands: Department of Data Theory FSW/RUL. \url{http://deleeuwpdx.net/janspubs/1981/books/gifi_B_81.pdf}.
 
-\leavevmode\vadjust pre{\hypertarget{ref-gifi_B_90}{}}%
+\leavevmode\hypertarget{ref-gifi_B_90}{}%
 ---------. 1990. \emph{Nonlinear Multivariate Analysis}. New York, N.Y.: Wiley.
 
-\leavevmode\vadjust pre{\hypertarget{ref-glass_54}{}}%
+\leavevmode\hypertarget{ref-glass_54}{}%
 Glass, D. V. 1954. \emph{{Social Mobility in Britain}}. Free Press.
 
-\leavevmode\vadjust pre{\hypertarget{ref-gower_90}{}}%
+\leavevmode\hypertarget{ref-gower_90}{}%
 Gower, J. C. 1990. {``{Fisher's Optimal Scores and Multiple Correspondence Analysis}.''} \emph{Biometrics} 46: 947--61.
 
-\leavevmode\vadjust pre{\hypertarget{ref-gower_hand_96}{}}%
+\leavevmode\hypertarget{ref-gower_hand_96}{}%
 Gower, J. C., and D. J. Hand. 1996. \emph{{Biplots}}. Monographs on Statistics and Applied Probability 54. Chapman; Hall.
 
-\leavevmode\vadjust pre{\hypertarget{ref-gower_leroux_gardnerlubbe_15}{}}%
+\leavevmode\hypertarget{ref-gower_leroux_gardnerlubbe_15}{}%
 Gower, J. C., N. J. Le Roux, and S. Gardner-Lubbe. 2015. {``{Biplots: Quantitative Data}.''} \emph{WIREs Computational Statistics} 7: 42--62. \url{https://doi.org/10.1002/wics.1338}.
 
-\leavevmode\vadjust pre{\hypertarget{ref-gower_leroux_gardnerlubbe_16}{}}%
+\leavevmode\hypertarget{ref-gower_leroux_gardnerlubbe_16}{}%
 ---------. 2016. {``{Biplots: Qualitative Data}.''} \emph{WIREs Computational Statistics} 8: 82--111. \url{https://doi.org/10.1002/wics.1377}.
 
-\leavevmode\vadjust pre{\hypertarget{ref-guttman_41}{}}%
+\leavevmode\hypertarget{ref-guttman_41}{}%
 Guttman, L. 1941. {``{The Quantification of a Class of Attributes: A Theory and Method of Scale Construction}.''} In \emph{The Prediction of Personal Adjustment}, edited by P. Horst, 321--48. New York: Social Science Research Council.
 
-\leavevmode\vadjust pre{\hypertarget{ref-hartigan_75}{}}%
+\leavevmode\hypertarget{ref-hartigan_75}{}%
 Hartigan, J. 1975. \emph{Clustering Algorithms}. Wiley.
 
-\leavevmode\vadjust pre{\hypertarget{ref-heiser_95}{}}%
+\leavevmode\hypertarget{ref-heiser_95}{}%
 Heiser, W. J. 1995. {``{Convergent Computing by Iterative Majorization: Theory and Applications in Multidimensional Data Analysis}.''} In \emph{Recent Advances in Descriptive Multivariate Analysis}, edited by W. J. Krzasnowski. Oxford, England: Clarendon Press.
 
-\leavevmode\vadjust pre{\hypertarget{ref-hill_74}{}}%
+\leavevmode\hypertarget{ref-hill_74}{}%
 Hill, M. O. 1974. {``{Correspondence Analysis: a Neglected Multivariate Method}.''} \emph{Applied Statistics} 23: 340--54.
 
-\leavevmode\vadjust pre{\hypertarget{ref-hill_90}{}}%
+\leavevmode\hypertarget{ref-hill_90}{}%
 ---------. 1990. {``{Review of A. Gifi, Multivariate Analysis}.''} \emph{Journal of Ecology} 78 (4): 1148--49.
 
-\leavevmode\vadjust pre{\hypertarget{ref-holland_79}{}}%
+\leavevmode\hypertarget{ref-holland_79}{}%
 Holland, P. W. 1979. {``{The Tyranny of Continuous Models in a World of Discrete Data}.''} \emph{IHS-Journal} 3: 29--42.
 
-\leavevmode\vadjust pre{\hypertarget{ref-horst_61b}{}}%
+\leavevmode\hypertarget{ref-horst_61b}{}%
 Horst, P. 1961a. {``{Generalized Canonical Correlations and their Applications to Experimental Data}.''} \emph{Journal of Clinical Psychology} 17: 331--47.
 
-\leavevmode\vadjust pre{\hypertarget{ref-horst_61a}{}}%
+\leavevmode\hypertarget{ref-horst_61a}{}%
 ---------. 1961b. {``{Relations Among m Sets of Measures}.''} \emph{Psychometrika} 26: 129--49.
 
-\leavevmode\vadjust pre{\hypertarget{ref-ibm_15}{}}%
+\leavevmode\hypertarget{ref-ibm_15}{}%
 IBM. 2015. \emph{IBM SPSS Categories 23}. IBM Corporation.
 
-\leavevmode\vadjust pre{\hypertarget{ref-kettenring_69}{}}%
+\leavevmode\hypertarget{ref-kettenring_69}{}%
 Kettenring, J. R. 1969. {``{Canonical Analysis of Several Sets of Variables}.''} Institute of Statistics Mimeo Series 615. University of North Carolina at Chapell Hill.
 
-\leavevmode\vadjust pre{\hypertarget{ref-kettenring_71}{}}%
+\leavevmode\hypertarget{ref-kettenring_71}{}%
 ---------. 1971. {``{Canonical Analysis of Several Sets of Variables}.''} \emph{Biometrika} 58: 433--51.
 
-\leavevmode\vadjust pre{\hypertarget{ref-kiers_cleroux_tenberge_94}{}}%
+\leavevmode\hypertarget{ref-kiers_cleroux_tenberge_94}{}%
 Kiers, H. A. L, R. Cléroux, and J. M. F Ten Berge. 1994. {``{Generalized Canonical Analysis Based on Optimizing Matrix Correlations and a Relation with IDIOSCAL}.''} \emph{Computational Statistics and Data Analysis} 18: 331--40.
 
-\leavevmode\vadjust pre{\hypertarget{ref-koyak_87}{}}%
+\leavevmode\hypertarget{ref-koyak_87}{}%
 Koyak, R. 1987. {``{On Measuring Internal Dependence in a Set of Random Variables}.''} \emph{Annals of Statistics} 15: 1215--28.
 
-\leavevmode\vadjust pre{\hypertarget{ref-kruskal_64a}{}}%
+\leavevmode\hypertarget{ref-kruskal_64a}{}%
 Kruskal, J. B. 1964a. {``{Multidimensional Scaling by Optimizing Goodness of Fit to a Nonmetric Hypothesis}.''} \emph{Psychometrika} 29: 1--27.
 
-\leavevmode\vadjust pre{\hypertarget{ref-kruskal_64b}{}}%
+\leavevmode\hypertarget{ref-kruskal_64b}{}%
 ---------. 1964b. {``{Nonmetric Multidimensional Scaling: a Numerical Method}.''} \emph{Psychometrika} 29: 115--29.
 
-\leavevmode\vadjust pre{\hypertarget{ref-kruskal_65}{}}%
+\leavevmode\hypertarget{ref-kruskal_65}{}%
 ---------. 1965. {``{Analysis of Factorial Experiments by Estimating Monotone Transformations of the Data}.''} \emph{Journal of the Royal Statistical Society} B27: 251--63.
 
-\leavevmode\vadjust pre{\hypertarget{ref-kruskal_shepard_74}{}}%
+\leavevmode\hypertarget{ref-kruskal_shepard_74}{}%
 Kruskal, J. B., and R. N. Shepard. 1974. {``{A Nonmetric Variety of Linear Factor Analysis}.''} \emph{Psychometrika} 39: 123--57.
 
-\leavevmode\vadjust pre{\hypertarget{ref-lange_hunter_yang_00}{}}%
+\leavevmode\hypertarget{ref-lange_hunter_yang_00}{}%
 Lange, K., D. R. Hunter, and I. Yang. 2000. {``{Optimization Transfer Using Surrogate Objective Functions}.''} \emph{Journal of Computational and Graphical Statistics} 9: 1--20.
 
-\leavevmode\vadjust pre{\hypertarget{ref-lingoes_73}{}}%
+\leavevmode\hypertarget{ref-lingoes_73}{}%
 Lingoes, J. C. 1973. \emph{{The Guttman-Lingoes Nonmetric Program Series}}. Mathesis Press.
 
-\leavevmode\vadjust pre{\hypertarget{ref-mackenzie_78}{}}%
+\leavevmode\hypertarget{ref-mackenzie_78}{}%
 Mackenzie, D. 1978. {``{Statistical Theory and Social Interests: A Case-Study}.''} \emph{Social Studies of Science} 8: 35--83.
 
-\leavevmode\vadjust pre{\hypertarget{ref-mair_deleeuw_A_10}{}}%
+\leavevmode\hypertarget{ref-mair_deleeuw_A_10}{}%
 Mair, P., and J. De Leeuw. 2010. {``A General Framework for Multivariate Analysis with Optimal Scaling: The r Package Aspect.''} \emph{Journal of Statistical Software} 32 (9): 1--23. \url{http://deleeuwpdx.net/janspubs/2010/articles/mair_deleeuw_A_10.pdf}.
 
-\leavevmode\vadjust pre{\hypertarget{ref-marvell_53}{}}%
+\leavevmode\hypertarget{ref-marvell_53}{}%
 Marvell, A. 1653. {``The Character of Holland.''} \url{https://ebooks.adelaide.edu.au/m/marvell/andrew/poems/poem58.html}.
 
-\leavevmode\vadjust pre{\hypertarget{ref-meulman_82}{}}%
+\leavevmode\hypertarget{ref-meulman_82}{}%
 Meulman, J. J. 1982. \emph{{Homogeneity Analysis of Incomplete Data}}. Leiden, The Netherlands: {DSWO} Press.
 
-\leavevmode\vadjust pre{\hypertarget{ref-meulman_heiser_12}{}}%
-Meulman, J. M., and W. J. Heiser. 2012. \emph{IBM SPSS Categories 21}. IBM Corporation.
+\leavevmode\hypertarget{ref-meulman_heiser_12}{}%
+Meulman, J. J., and W. J. Heiser. 2012. \emph{IBM SPSS Categories 21}. IBM Corporation.
 
-\leavevmode\vadjust pre{\hypertarget{ref-michailidis_deleeuw_A_98}{}}%
+\leavevmode\hypertarget{ref-michailidis_deleeuw_A_98}{}%
 Michailidis, G., and J. De Leeuw. 1998. {``The Gifi System for Descriptive Multivariate Analysis.''} \emph{Statistical Science} 13: 307--36. \url{http://deleeuwpdx.net/janspubs/1998/articles/michailidis_deleeuw_A_98.pdf}.
 
-\leavevmode\vadjust pre{\hypertarget{ref-nenadic_greenacre_07}{}}%
+\leavevmode\hypertarget{ref-nenadic_greenacre_07}{}%
 Nenadic, O., and M. Greenacre. 2007. {``{Correspondence Analysis in R, with two- and three-dimensional graphics: The ca package}.''} \emph{Journal of Statistical Software} 20 (3): 1--13.
 
-\leavevmode\vadjust pre{\hypertarget{ref-peschar_75}{}}%
+\leavevmode\hypertarget{ref-peschar_75}{}%
 Peschar, J. L. 1975. \emph{{School, Milieu, Beroep}}. Groningen, The Netherlands: Tjeek Willink.
 
-\leavevmode\vadjust pre{\hypertarget{ref-r_core_team_16}{}}%
+\leavevmode\hypertarget{ref-r_core_team_16}{}%
 R Core Team. 2016. \emph{R: A Language and Environment for Statistical Computing}. {Vienna, Austria}: R Foundation for Statistical Computing. \url{https://www.R-project.org/}.
 
-\leavevmode\vadjust pre{\hypertarget{ref-revelle_15}{}}%
+\leavevmode\hypertarget{ref-revelle_15}{}%
 Revelle, William. 2015. \emph{Psych: Procedures for Psychological, Psychometric, and Personality Research}. Evanston, Illinois: Northwestern University. \url{http://CRAN.R-project.org/package=psych}.
 
-\leavevmode\vadjust pre{\hypertarget{ref-roskam_68}{}}%
+\leavevmode\hypertarget{ref-roskam_68}{}%
 Roskam, E. E. 1968. {``{Metric Analysis of Ordinal Data in Psychology}.''} PhD thesis, University of Leiden.
 
-\leavevmode\vadjust pre{\hypertarget{ref-shmueli_10}{}}%
+\leavevmode\hypertarget{ref-shmueli_10}{}%
 Shmueli, G. 2010. {``{To Explain or to Predict ?}''} \emph{Statistical Science} 25: 289--310.
 
-\leavevmode\vadjust pre{\hypertarget{ref-spss_89}{}}%
+\leavevmode\hypertarget{ref-spss_89}{}%
 SPSS. 1989. \emph{SPSS Categories}. SPSS Inc.
 
-\leavevmode\vadjust pre{\hypertarget{ref-takane_92}{}}%
+\leavevmode\hypertarget{ref-takane_92}{}%
 Takane, Y. 1992. {``{Review of Albert Gifi, Nonlinear Multivariate Analysis}.''} \emph{Journal of the American Statistical Association} 87: 587--88.
 
-\leavevmode\vadjust pre{\hypertarget{ref-tanaka_79}{}}%
+\leavevmode\hypertarget{ref-tanaka_79}{}%
 Tanaka, Y. 1979. {``{Review of the Methods of Quantification}.''} \emph{Environmental Health Perspectives} 32: 113--23.
 
-\leavevmode\vadjust pre{\hypertarget{ref-tenenhaus_tenenhaus_11}{}}%
+\leavevmode\hypertarget{ref-tenenhaus_tenenhaus_11}{}%
 Tenenhaus, A., and M. Tenenhaus. 2011. {``{Regularized Generalized Canonical Correlation Analysis}.''} \emph{Psychometrika} 76: 257--84.
 
-\leavevmode\vadjust pre{\hypertarget{ref-tenenhaus_young_85}{}}%
+\leavevmode\hypertarget{ref-tenenhaus_young_85}{}%
 Tenenhaus, M., and F. W. Young. 1985. {``{An Analysis and Synthesis of Multiple Correspondence Analysis, Optimal Scaling, Dual Scaling, Homogeneity Analysis and Other Methods for Quantifying Categorical Multivariate Data}.''} \emph{Psychometrika} 50: 91--119.
 
-\leavevmode\vadjust pre{\hypertarget{ref-tukey_62}{}}%
+\leavevmode\hypertarget{ref-tukey_62}{}%
 Tukey, J. W. 1962. {``{The Future of Data Analysis}.''} \emph{Annals of Mathematical Statistics} 33: 1--79.
 
-\leavevmode\vadjust pre{\hypertarget{ref-vandegeer_71}{}}%
+\leavevmode\hypertarget{ref-vandegeer_71}{}%
 Van de Geer, J. P. 1971. \emph{{Introduction to Multivariate Analysis for the Social Sciences}}. San Francisco, CA: Freeman.
 
-\leavevmode\vadjust pre{\hypertarget{ref-vanderburg_deleeuw_verdegaal_A_88}{}}%
+\leavevmode\hypertarget{ref-vanderburg_deleeuw_verdegaal_A_88}{}%
 Van der Burg, E., J. De Leeuw, and R. Verdegaal. 1988. {``Homogeneity Analysis with k Sets of Variables: An Alternating Least Squares Approach with Optimal Scaling Features.''} \emph{Psychometrika} 53: 177--97. \url{http://deleeuwpdx.net/janspubs/1988/articles/vanderburg_deleeuw_verdegaal_A_88.pdf}.
 
-\leavevmode\vadjust pre{\hypertarget{ref-vanderheijden_vanbuuren_16}{}}%
+\leavevmode\hypertarget{ref-vanderheijden_vanbuuren_16}{}%
 Van der Heijden, P. G. M., and S. Van Buuren. 1916. {``Looking Back at the Gifi System of Nonlinear Multivariate Analysis.''} \emph{Journal of Statistical Software} 73 (4).
 
-\leavevmode\vadjust pre{\hypertarget{ref-vandervelden_12}{}}%
+\leavevmode\hypertarget{ref-vandervelden_12}{}%
 Van der Velden, M. 2012. {``On Generalized Canonical Correlation Analysis.''} In \emph{Proceedings 58th World Statistical Congress, 2011, Dublin}, 758--65. The Hague: International Statiatical Instutute.
 
-\leavevmode\vadjust pre{\hypertarget{ref-vandervelden_takane_12}{}}%
+\leavevmode\hypertarget{ref-vandervelden_takane_12}{}%
 Van der Velden, M., and Y. Takane. 2012. {``{Generalized Canonical Correlation Analysis with Missing Values}.''} \emph{Computational Statistics} 27: 551--71.
 
-\leavevmode\vadjust pre{\hypertarget{ref-vanrijckevorsel_deleeuw_B_88}{}}%
+\leavevmode\hypertarget{ref-vanrijckevorsel_deleeuw_B_88}{}%
 Van Rijckevorsel, J. L. A., and J. De Leeuw, eds. 1988. \emph{Component and Correspondence Analysis}. Wiley. \url{http://deleeuwpdx.net/janspubs/1988/books/vanrijckevorsel_deleeuw_B_88.pdf}.
 
-\leavevmode\vadjust pre{\hypertarget{ref-wilson_26}{}}%
+\leavevmode\hypertarget{ref-wilson_26}{}%
 Wilson, E. B. 1926. {``{Empiricism and Rationalism}.''} \emph{Science} 64: 47--57.
 
-\leavevmode\vadjust pre{\hypertarget{ref-winsberg_ramsay_80}{}}%
+\leavevmode\hypertarget{ref-winsberg_ramsay_80}{}%
 Winsberg, S., and J. O. Ramsay. 1980. {``{Monotone Transformations to Additivity}.''} \emph{Biometrika} 67: 669--74.
 
-\leavevmode\vadjust pre{\hypertarget{ref-winsberg_ramsay_83}{}}%
+\leavevmode\hypertarget{ref-winsberg_ramsay_83}{}%
 ---------. 1983. {``{Monotone Spline Transformations for Dimension Reduction}.''} \emph{Psychometrika} 48: 575--95.
 
-\leavevmode\vadjust pre{\hypertarget{ref-xie_15}{}}%
+\leavevmode\hypertarget{ref-xie_15}{}%
 Xie, Y. 2015. \emph{Dynamic Documents with r and Knitr}. Second Edition. CRC Press.
 
-\leavevmode\vadjust pre{\hypertarget{ref-xie_16}{}}%
+\leavevmode\hypertarget{ref-xie_16}{}%
 ---------. 2016. \emph{Bookdown: Authoring Books with r Markdown.} \url{https://github.com/rstudio/bookdown}.
 
-\leavevmode\vadjust pre{\hypertarget{ref-young_81}{}}%
+\leavevmode\hypertarget{ref-young_81}{}%
 Young, F. W. 1981. {``{Quantitative Analysis of Qualitative Data}.''} \emph{Psychometrika} 46: 357--88.
 
-\leavevmode\vadjust pre{\hypertarget{ref-young_deleeuw_takane_C_80}{}}%
+\leavevmode\hypertarget{ref-young_deleeuw_takane_C_80}{}%
 Young, F. W., J. De Leeuw, and Y. Takane. 1980. {``Quantifying Qualitative Data.''} In \emph{Similarity and Choice. Papers in Honor of Clyde Coombs}, edited by E. D. Lantermann and H. Feger. Bern: Hans Huber. \url{http://deleeuwpdx.net/janspubs/1980/chapters/young_deleeuw_takane_C_80.pdf}.
 
-\leavevmode\vadjust pre{\hypertarget{ref-yu_14}{}}%
+\leavevmode\hypertarget{ref-yu_14}{}%
 Yu, B. 2014. {``{Let Us Own Data Science}.''} \emph{IMS Bulletin} 43: 1, 13--16.
 
 \end{CSLReferences}
