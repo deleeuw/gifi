@@ -1556,13 +1556,12 @@ par(mfrow=c(1,1))
 </center>
 <hr>
 
-\appendix
 
-#Code
+# Code
 
-##R Code
+## R Code
 
-###Driver
+### Driver
 
 ```{r driver_display_code, eval = FALSE}
 source ("gifiEngine.R")
@@ -1577,7 +1576,7 @@ source ("splineBasis.R")
 source ("coding.R")
 ```
 
-###Engine
+### Engine
 
 ```{r engine_display_code, eval = FALSE}
 
@@ -1801,7 +1800,7 @@ gifiTransform <-
   }
 ```
 
-###Aspect Engine
+### Aspect Engine
 
 ```{r aspect_engine_display_code, eval = FALSE}
 aspectEngine <-
@@ -1920,7 +1919,8 @@ aspectEngine <-
     ))
   }
 ```
-###Some Aspects
+
+### Some Aspects
 
 ```{r some_aspects_display_code, eval = FALSE}
 
@@ -1987,7 +1987,7 @@ maxfac <- function (r, p) {
 }
 ```
 
-###Structures
+### Structures
 
 
 ```{r structures_display_code, eval = FALSE}
@@ -2149,7 +2149,7 @@ xGifi <- function (gifi, ndim) {
 
 ```
 
-###Wrappers
+### Wrappers
 
 ```{r wrappers_display_code, evals = FALSE}
 homals <-
@@ -2650,7 +2650,7 @@ pathals <- function () {
 
 }
 ```
-###Splines
+### Splines
 
 ```{r bsplines_display_code, eval = FALSE}
 
@@ -2701,7 +2701,7 @@ knotsD <- function (x) {
 }
 ```
 
-###Gram-Schmidt
+### Gram-Schmidt
 
 ```{r matrix_display_code, eval = FALSE}
 
@@ -2784,7 +2784,7 @@ ginvRC <- function (x, eps = 1e-10) {
 
 ```
 
-###Cone regression
+### Cone regression
 
 ```{r conergression_display_code, eval = FALSE}
 dyn.load ("code/pava.so")
@@ -2927,7 +2927,7 @@ dykstra <- function (target, basis, data, ties, itmax, eps) {
 }
 ```
 
-###Coding
+### Coding
 
 ```{r coding_display_code}
 dyn.load("code/coding.so")
@@ -2954,7 +2954,7 @@ encode <- function(ind, dims) {
 }
 ```
 
-###Utilities
+### Utilities
 
 ```{r utilities_display_code, eval = FALSE}
 
@@ -3267,9 +3267,9 @@ directSum <- function (x) {
 }
 ```
 
-##C Code
+## C Code
 
-###Splines
+### Splines
 
 ```{c splinebasis_display_code_c, eval = FALSE, engine = "Rcpp"}
 
@@ -3322,7 +3322,8 @@ double bs (int nknots, int nspline, int updegree, double x, double * knots) {
     return y;
 }
 ```
-###Gram-Schmidt
+
+### Gram-Schmidt
 
 ```{c matrix_display_code_c, eval = FALSE, engine = "Rcpp"}
 #include <math.h>
@@ -3382,7 +3383,7 @@ void gsC(double *x, double *r, int *n, int *m, int *rank, int *pivot,
 }
 ```
 
-###Coding
+### Coding
 
 ```{c coding_display_code_c, eval = FALSE, engine = "Rcpp"}
 #include <R.h>
@@ -3426,6 +3427,6 @@ SEXP
   }
 ```
 
-#Key Names and Symbols
+# Key Names and Symbols
 
-#References
+# References
