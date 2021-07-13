@@ -1,0 +1,9 @@
+# Canonical Correspondence Analysis and coranals()
+
+## Introduction
+
+## Equations
+
+Canonical analysis of $GX$ and $H$.
+
+## Examples

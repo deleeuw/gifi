@@ -1,0 +1,138 @@
+# Pattern Constraints and Gifi Loss
+
+## Aspects from Patterns
+
+MVAOS is a linear multivariate technique in the sense that it makes linear combinations of transformed variables, and it is a nonlinear multivariate technique in the sense that these transformations are generally nonlinear. The coefficients of the linear combinations are collected in a matrix $A$, which we call the *pattern*.  There are $L$ linear combinations of the $m$ variable blocks, and consequently there are $mL$ submatrices $A_{j\ell}$. $L$ is the *number of equation blocks*. Constraints on the pattern largely define the technique. The typical situation is that either $A_{j\ell}$ is free to vary over all matrices of the appropriate dimensions, or $A_{j\ell}$ is equal to a fixed matrix, usually either the identity or zero. But more complicated constraints on the $A_{j\ell}$ are sometimes also necessary.
+
+An *MVAOS System* is a bilinear homogeneous system in the transformed variables $H$ and the pattern $A$ of the form $HA=0$. 
+There is no assumption that for actual data this system has a non-trivial solution. We will look for approximate solutions, using a least squares loss function. Thus we define _Gifi Multivariate Analysis_, or *MVAOS*, as the minimization of the loss function
+\begin{equation}
+\sigma(H,A)=\sum_{\ell=1}^L\mathbf{SSQ}\ (\sum_{j=1}^m H_jA_{j\ell}),\label{E:newloss}
+\end{equation}
+over $H$ and $A$, under suitable restrictions. Here $\mathbf{SSQ}()$ is the (unweighted) sum of squares. The usual restriction on $A$ is that for each block of equations $\ell$ there is at least one block of variables $j$ such that $A_{j\ell}=I$.
+
+If we write the MVAOS system simply as $HA=0$ the loss function becomes $\sigma(H,A)=\mathbf{tr}\ A'R(H)A$, with
+$R(H)\df H'H$ the *induced correlation matrix* of the transformed variables in $H$.
+
+In order to make MVAOS systems less mysterious we give three examples, choosing the names of the parameters to fit the problem. This is also an opportunity to sprinkle some more acronyms around. The first is multivariate linear regression (MLR). Its MVAOS system is
+$$
+\begin{bmatrix}
+Y&X
+\end{bmatrix}
+\begin{bmatrix}
+\phantom{-}I\\-B
+\end{bmatrix}
+=
+\begin{bmatrix}
+0
+\end{bmatrix},
+$$
+which means we minimize $\mathbf{SSQ}(Y-XB)$ over $B$ and possibly over transformations of the columns of $X$ and $Y$. If we require that $\mathbf{rank}(B)=p$, with $p$ less than the minimum of the number of rows and columsn of $B$, then this becomes reduced rank regression (RRR). The second example is principal component analysis (PCA). This has the same MVAOS system as MLR, but the minimization over $X$ is over all orthoblocks, i.e. all $X$ such that $X'X=I$. The final example for now is exploratory factor analysis (EFA). Its MVAOS system is
+$$
+\begin{bmatrix}
+Y&F&U
+\end{bmatrix}
+\begin{bmatrix}
+\phantom{-}I\\-A\\-\Delta
+\end{bmatrix}
+=
+\begin{bmatrix}
+0
+\end{bmatrix},
+$$
+and we minimize $\mathbf{SSQ}(Y-FA-U\Delta)$, with the constraint that $(F\mid U)$ is an orthoblock and that $\Delta$ is diagonal.
+
+## Gifi Loss
+
+For embedding the previous Gifi work in our new framework we define a specific class of MVAOS systems, called *Gifi systems*. They are of the form
+$$
+\begin{bmatrix}
+X&H_1&\cdots&H_m
+\end{bmatrix}
+\begin{bmatrix}
+\phantom{-}I&0&\cdots&0\\
+-A_1&\phantom{-}I&\cdots&0\\
+0&-A_2&\cdots&0\\
+\vdots&\vdots&\ddots&\vdots\\
+0&0&\cdots&\phantom{-}I\\
+0&0&\cdots&-A_m
+\end{bmatrix}
+$$
+and thus *Gifi loss* is
+\begin{equation}
+\sigma(X,H,A)=\sum_{j=1}^m\mathbf{SSQ}\ (X-H_jA_j).\label{E:gifiloss}
+\end{equation}
+In $\eqref{E:gifiloss}$ the matrix $X$ is an orthoblock, which contains the *object scores*.  Note that in Gifi loss each variable block $j$ corresponds with a unique submatrix $A_j$, except for the object scores block, which contributes to all equation blocks. In Gifi systems the $A_j$ are generally unconstrained.
+
+There is some additional terminology that is more or less specific to Gifi loss. The *variable scores* are $V_k\df h_ka_k'=G_kz_ka_k'$, and the *block scores* are  $U_j\df H_jA_j=\sum_{k\in\mathcal{K}_j}V_k$. The *category quantifications* are  $Y_k\df z_ka_k'$, so that  $V_k=G_kY_k$. Note that both variable scores and category quantifications, as defined here, are of rank one. In other words, their columns as well as their rows are proportional to each other.
+
+A Gifi solution can be associated with various sets of *loadings*, i.e. correlations between observed variables and constructed (or latent) variables,
+in this case object scores. Since both $X$ and $H_j$ are centered and normalized the *variable loadings* for block $j$ are simply the cross-product $X'H_j$. Because optimal $A_j$ is the linear least squares solution for given $X$ and $H_j$ we have $H_j'(X-H_jA_j)=0$, which means the loadings are equal to the covariances between transformed variables and block scores. Each block has a *discrimination matrix*, defined as $\Delta_j\df A_j'H_j'H_jA_j=A_j'H_j'X=X'H_jH_j^+X$, with $H_j^+$ the Moore-Penrose inverse. The diagonal $\Lambda_j\df\mathbf{diag}(\Delta_j)$ of the discrimination matrix, the *discrimination measures*, are the variances of the block scores. Thus the *block loadings*, the correlations between transformed variables $H_j$ and block scores $U_j$ are equal to the correlations between the object scores and the block scores, and are given by $H_j'U_j\Lambda_j^{-\frac12}=X'U_j\Lambda_j^{-\frac12}$.
+
+Loss function $\eqref{E:gifiloss}$ can be interpreted geometrically. Zero loss, i.e. solvability of the Gifi system, means that the scores $x_i$ for object $i$ coincide with the $j$ block scores $u_{ij}$, which consequently coincide with each other. This is why Gifi analysis is also called
+*homogeneity analysis*, because we transform and combine the variables in such a way that the block scores are as homogeneous as possible. If we plot the $n$ object scores $x_i$ and the $n$ block scores $u_{ij}$ in a p-dimensional plot, then we want to make the squared distances
+$\mathbf{SSQ}(x_i-u_{ij})$ summed over all $i$ and $j$ to be as small as possible.
+
+## Associated Eigenvalue Problems
+
+Associated with the problem of minimizing loss function $\eqref{E:gifiloss}$ are some eigenvalue and singular value problems defined by the matrices $H_j$. This has been discussed in detail in @gifi_B_90, and there are some more recent discussions in @tenenhaus_tenenhaus_11 and @vandervelden_takane_12.
+
+We begin the section with some definitions, which are more or less standard in MVAOS. First $H\df(H_1\mid H_2\mid\cdots\mid H_m),$ and
+$C\df H'H$. The matrix $C$, which is called the *Burt matrix* in correspondence analysis, is a $p\times p$ block matrix, with $m\times m$ blocks define by $C_{j\ell}\df H_j'H_\ell$. We also use separate notation $D_j\df C_{jj}=H_j'H_j$ for the diagonal blocks in $C$, and for their direct sum $D\df D_1\oplus\cdots\oplus D_m$. Finally $A$ stacks the $A_j$ on top of each other.
+
+The stationary equations for minimizing $\sigma$ over $X'X=I$ and $A$, for given $H$, are
+\begin{align}
+H'X&=DA,\\
+HA&=XM,
+\end{align}
+with $X'X=I$, and $M$ an $r\times r$ symmetric matrix of Lagrange multipliers. It follows that
+\begin{equation}
+CA=DAM,\label{E:stata}
+\end{equation}
+as well as
+\begin{equation}
+HD^+H'X=XM,\label{E:statx}
+\end{equation}
+with $X'X=I$ and $D^+$ the Moore-Penrose inverse of $D$. It follows that $X=KT$, where $K$ are eigenvectors corresponding with the $r$
+largest eigenvalues of $HD^+H$ and $L$ is an arbitrary rotation matrix. In the same way $A=LT$, where $L$ are the eigenvectors corresponding with the $r$ largest eigenvalues of $D^+C$. The non-zero eigenvalues of $HD^+H'$ and $D^+C$ are the same, both are equal to the squares of the singular values of $HD^{-\frac12}$, with $D^{-\frac12}$ the symmetric square root of $D^+$.
+
+The result can be made a bit more intuitive by defining the orthogonal projectors $P_j\df H_jD_j^+H_j'$ and their average $P_\star$. Then
+$X$ can be chosen as the normalized eigenvectors of $P_\star$ and, if $\lambda_s$ are the corresponding ordered eigenvalues,
+\begin{equation}
+\min_{X'X=I}\min_A\sigma(X,A,H)=\sum_{s=1}^r(1-\lambda_s(P_\star)).
+\end{equation}
+The eigenvalues in $\Lambda$ are all between zero and one. 
+
+In MVAOS the fit of block $j$ is called the *discrimination matrix*. It is defined as  $\Delta_j\df X'P_jX=A_j'D_jA_j$. Note that the average discrimination measure $\Delta_\star$ is equal to the diagonal matrix $\Lambda$.
+
+## History
+
+The history of loss function $\eqref{E:newloss}$ is simple. Although numerous special cases have been used over the years, in its general form it only occurs, as far as we know, in @deleeuw_C_04a. It was designed to bridge the gap between $\eqref{E:gifiloss}$ and linear systems such as RRR, MIMIC, EFA, and LISREL/EQS.
+It mainly differs from $\eqref{E:gifiloss}$ in its systematic use of copies and orthoblocks.
+
+The history of $\eqref{E:gifiloss}$, on the other hand, is complicated. It is easiest to start with the special case in which all variables are numerical (in our system that means no internal knots and degree equal to one). In that case MVAOS is a form of *Generalized Canonical Correlation Analysis (GCCA)*, which extends canonical correlation analysis (CCA) to two or more blocks of variables.
+
+The various GCCA techniques proposed over the years for computing p-dimensional solutions are either *simultaneous* or *successive*. In a successive algorithm the loss function is only defined for $p=1$. It is first optimized over all one-dimensional solutions. And then, for a subsequent dimension $q$, the one-dimensional criterion is optimized over all solutions that are orthogonal to solutions $1,\cdots,q-1$. In a simultaneous technique the loss function is defined for all $p$, and the solution is computed by minimizing over all p-dimensional solutions. In a successive solution the first $p$ dimensions of a $p+1$ dimensional solution are the $p$ dimensional soution, i.e. successive solutions are *nested*. Simultaneous solutions are generally not nested. On the other hand the successive $p$ dimensional solution is usually not the best possible $p$ dimensional solution.
+
+GCCA starts with @horst_61a, @horst_61b. The techniques proposed by Horst are successive, which means his loss
+functions are only defined for one-dimensional solutions, specifically one-dimensional block scores $u_j=H_ja_j$.
+In @horst_61b four different techniques are proposed, with different loss functions, all defined as functions
+of the *induced correlation matrix* of the block scores. For our purposes, the interesting one is his method 2, in which the largest eigenvalue of the induced correlation matrix is maximized. @horst_61a uses a different criterium,
+the sum of the correlation coefficients, which is not related to the Gifi loss function in any simple way. 
+
+In a small paper, hidden away in a large proceedings volume, @carroll_68 proposed a successive method maximizing
+$\sum_{j=1}^m\mathbf{cor}^2(x,H_ja_j)$ over $a_j$ and the auxilary variable $x$. This turns out to be equivalent to method 2 of Horst. The work of Horst and Carroll was extended by @kettenring_71 (in greater detail in @kettenring_69), who introduced several additional criteria, and baptized the Horst-Carroll method MAXVAR. In later work, it was shown by @gifi_B_80 that minimizing $\sum_{s=1}^p\sum_{j=1}^m\mathbf{cor}^2(x_s,H_ja_{js})$ over 
+$X'X=I$ and $A$ gives the same result as successive MAXVAR. Also see @tenenhaus_young_85. We need one important qualification, using terminology introduced by @dauxois_pousse_76, which is that the successive method should use *weak orthogonality* $\sum_{j=1}^m a_{js}'H_jH_ja_{jt}=\delta^{st}$, with $\delta^{st}$ the Kronecker delta, and not *strong orthogonality*, which says that $a_{js}'H_jH_ja_{jt}=\delta^{st}$ for all $j,s,t$. More recently 
+@kiers_cleroux_tenberge_94 have shown that simultaneous/successive MAXVAR also optimizes various measures of correlation defined on matrix space.
+
+The most important contribution of Gifi, however, is the switch from correlations and quadratic forms to least squares loss functions and Euclidean distances, ultimately leading to the loss function $\eqref{E:gifiloss}$. Undoubtedly this was partly due to the heavily geometrical approach to MVA we were taught by John van de Geer, the father of Albert Gifi (@vandegeer_71). Van de Geer was influenced in turn by 
+@coombs_64, who introduced another basically geometric approach for the representation of data. On the computational side there was the influence of multidimensional scaling, with its emphasis on distance, breaking through in in the late sixties and early seventies.
+Shepard, Kruskal, Gnanadesikan, and Kettenring all worked at Bell Telephone Laboratories in Murray Hill, and both De Leeuw and Benzécri had visiting positions there around that time.
+
+In the classical Gifi system (@gifi_B_90, @michailidis_deleeuw_A_98) a slightly different parametrization of Gifi loss, and a correspondingly different ALS algorithm, were used. The loss function used by Gifi is
+\begin{equation}
+\sigma(X,Y)=\frac{1}{m}\sum_{j=1}^m\mathbf{SSQ}\ (X-\sum_{\ell\in K_j}G_\ell Y_\ell),\label{E:oldloss}
+\end{equation}
+where the $G_\ell$ are known spanning matrices for the cones of transformations, and the $Y_\ell$ are matrices of _category quantifications_. Loss function $\eqref{E:oldloss}$ is geared more towards quantification of discrete categorical variables.
+
+Because of the full rank decompositions $Y_{j\ell}=Z_{j\ell}A_{j\ell}$ it follows that $\eqref{E:gifiloss}$ and $\eqref{E:oldloss}$ are essentially the same. Simply define $H_j=G_jZ_j$. We feel that the alternative parametrization in terms of $H_j$ and $A_j$ has some conceptual and computational advantages.

@@ -1,0 +1,78 @@
+# Multiple Regression and morals()
+
+If the second block only contains a single copy of a single variable then we choose transformations that maximize the multiple correlation of that variable and the variables in the first block.
+
+## Equations
+
+## Examples
+
+### Polynomial Regression
+
+```{r polynom_data, cache = TRUE}
+x <- center(as.matrix (seq (0, pi, length = 20)))
+y <- center(as.matrix (sin (x)))
+h<- morals (x, y, xknots = knotsE(x), xdegrees = 3, xordinal = TRUE)
+plot(y, h$yhat)
+plot(x, h$xhat)
+plot (x, y)
+lines (x, h$ypred)
+```
+
+### Gases with Convertible Components
+
+We analyze a regression example, using data from Neumann, previously used by Willard Gibbs, and analyzed with regression in a still quite readable article by @wilson_26. Wilson's analysis was discussed and modified using splines in @gifi_B_90 (pages 370-376). In the regression analysis in this section we use two copies of temperature, with spline degree zero, and the first copy ordinal. For pressure and the dependent variable density we use a single ordinal copy with spline degree two.
+
+
+```{r neumann_data}
+data (neumann, package = "homals")
+xneumann <- neumann[, 1:2]
+yneumann <- neumann[, 3, drop = FALSE]
+xdegrees <- c(0,2)
+```
+```{r run_neumann, cache = TRUE}
+h <- morals (xneumann, yneumann, xdegrees = c(0,2), xcopies = c(2,1))
+```
+
+In `r h$ntel` iterations we find minimum loss `r h$f`, corresponding with a multiple correlation of `r sum(h$beta*h$rhat[-4,4])`.  The object scores are in figure
+`r figure_nums("neumann_objects", display = "n")` plotted against the original variables (not the transformed variables), and the transformation plots in are figure
+`r figure_nums("neumann_transform", display = "n")`.
+
+<hr>
+```{r plot_neumann_objects, fig.align="center", cache = FALSE, echo = FALSE}
+par(mfrow=c(1,3))
+plot(neumann[,1], h$objscores, col = "RED", ylab = "Object Scores", xlab = "Temperature")
+plot(neumann[,2], h$objscores, col = "RED", ylab = "Object Scores", xlab = "Pressure")
+plot(neumann[,3], h$objscores, col = "RED", ylab = "Object Scores", xlab = "Density")
+par(mfrow=c(1,1))
+```
+<center>
+`r figure_nums("neumann_objects")`
+</center>
+<hr>
+
+<hr>
+```{r plot_neumann, fig.align="center", cache = FALSE, echo = FALSE}
+neumann_knots <- knotsQ(neumann)
+par(mfrow=c(2,2))
+stepPlotter(neumann[,1], h$xhat[,1], neumann_knots[[1]], xlab = "Temperature, Copy 1")
+nknots <- length (neumann_knots[[1]])
+for (k in 1:nknots) abline(v = neumann_knots[[1]][k])
+stepPlotter(neumann[,1], h$xhat[,2], neumann_knots[[1]], xlab = "Temperature, Copy 2")
+nknots <- length (neumann_knots[[1]])
+for (k in 1:nknots) abline(v = neumann_knots[[1]][k])
+oj <- order (neumann[,2])
+plot(neumann[oj ,2], h$xhat[oj ,3], col = "RED", xlab = "Pressure", ylab = "Transform", type = "l", lwd = 3)
+nknots <- length (neumann_knots[[2]])
+for (k in 1:nknots) abline(v = neumann_knots[[2]][k])
+oj <- order (neumann[,3])
+plot(neumann[oj,3], h$yhat[oj], col = "RED", xlab = "Density", ylab = "Transform", type = "l", lwd = 3)
+nknots <- length (neumann_knots[[3]])
+for (k in 1:nknots) abline(v = neumann_knots[[3]][k])
+par(mfrow=c(1,1))
+```
+<center>
+`r figure_nums("neumann_transform")`
+</center>
+<hr>
+
+## Conjoint Analysis and addals()

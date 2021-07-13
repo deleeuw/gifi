@@ -1,0 +1,304 @@
+# Multiple Correspondence Analysis and homals() 
+
+## Introduction
+
+Suppose all basis matrices $G_{j\ell}$ in block $j$ are the same, say equal to $G_j$. Then the block scores $H_jA_j$ are equal to $G_jZ_jA_j$, which we can write simply as $G_jY_j$. Thus loss must be minimized over $X$ and the $Y_j$. 
+
+If all $G_j$ are binary indicators of categorical variables, and the $m$ blocks are all of span one, then MVAOS is _multiple correspondence analysis_ (MCA). The block scores $G_jY_j$ are $k_j$ different points in $\mathbb{R}^p$, with $k_j$ the number of categories of the variable, which is usually much less than $n$. The plot connecting the block scores to the object scores is called the _star plot_ of the variable.
+If $k_j$ is much smaller than $n$ a star plot will connect all object scores to their category centroids, and the plot for a block (i.e. a variable) will show $k_j$ stars. Since loss $\sigma$ is equal to the sum of squared distances between object scores and block scores, we quantify or transform variables so that stars are small.
+
+In our MVAOS MCA function `homals()` we allow for B-spline bases and for monotonicity restrictions. The input data (as for all MVAOS programs) needs to be numeric, and we included a small utility function `makeNumeric()` that can be used on data frames, factors, and character variables to turn them into numeric matrices. All other arguments to the function have default values. 
+
+```{r homals_args, eval = FALSE}
+homals <-
+  function (data,
+            knots = knotsD (data),
+            degrees = rep (-1, ncol (data)),
+            ordinal = rep (FALSE, ncol (data)),
+            ndim = 2,
+            ties = "s",
+            missing = "m",
+            names = colnames (data, do.NULL = FALSE),
+            itmax = 1000,
+            eps = 1e-6,
+            seed = 123,
+            verbose = FALSE)
+```
+
+The output is a structure of class `homals`, i.e. a list with a class attribute`homals`. The list consists of transformed variables (in xhat), their correlation (in rhat), the objectscores (in objectscores), the blockscores (in blockscores, which is itself a list of length number of variables), the discrimination matrices (in dmeasures, a list of length number of variables), their average (in lambda), the weights (in a), the number of iterations (in ntel), and the loss function value (in f).
+
+```{r homals_values, eval = FALSE}
+    return (structure (
+      list (
+        transform = v,
+        rhat = corList (v),
+        objectscores = h$x,
+        scores = y,
+        quantifications = z,
+        dmeasures = d,
+        lambda = dsum / ncol (data),
+        weights = a,
+        loadings = o,
+        ntel = h$ntel,
+        f = h$f
+      ),
+      class = "homals"
+    ))
+```
+
+Note that in MCA we have $H_jA_j=G_jY_j$. In previous Gifi publications the $Y_j$ are called *category quantifications*. Our current `homals()` does not output the categaory quantifications directly, only the block scores $G_jY_j$. If the $G_j$ are binary indicators,
+the $Y_j$ are just the distinct rows of $G_jY_j$. There is also some indeterminacy in the representation $H_jA_j$, which we resolve,
+at least partially, by using the QR decomposition $H_j=Q_jR_j$ to replace $H_j$ by $Q_j$, and use $H_jA_j=Q_j(R_jA_j)$. One small problem with this is that we may have $r_j\df\mathbf{rank}(H_j)<r$, in which case there are only $r_j$ copies in $Q_j$. This happens, for example, in the common case in which variable $j$ is binary and takes only two values.
+
+## Equations
+
+## Examples
+
+### Hartigan's Hardware
+
+Our first example are semi-serious data from @hartigan_75 (p. 228), also analyzed in @gifi_B_90 (p. 128-135). A number of screws, tacks, nails, and bolts are classified by six variables. The data are
+
+```{r hartigan_data, echo = FALSE}
+data(hartigan, package = "homals")
+hartigan
+```
+We can do a simple MCA, using all the default values.
+```{r hartigan_homals}
+h <- homals (makeNumeric(hartigan))
+```
+After `r h$ntel` iterations we find a solution with loss `r h$f`. The object scores are plotted in figure 
+`r figure_nums("hartigan_objscores", display = "n")`.
+<hr>
+```{r plot_hartigan_objscores, fig.align = "center", echo = FALSE}
+par(pty = "s")
+plot(h$objectscores, type = "n", xlab = "dimension 1", ylab = "dimension 2", xlim = c(-.3,.3), ylim = c(-.2,.9))
+text(h$objectscores, row.names(hartigan), col = "RED")
+```
+<center>
+`r figure_nums("hartigan_objscores")`
+</center>
+<hr>
+The star plots, produced by the utility `starPlotter()`  are in figure 
+`r figure_nums("hartigan_stars", display = "n")`.
+<hr>
+```{r plot_hartigan_stars, fig.align = "center", echo = FALSE}
+lbs = names(hartigan)
+par(mfrow = c(2,3), pty = "s")
+for (j in 1:6) {
+par(pty = "s")
+starPlotter (h$objectscores, h$scores[[j]], main = lbs[j])
+}
+```
+<center>
+`r figure_nums("hartigan_stars")`
+</center>
+<hr>
+The discriminations matrices $\Delta_j$ are
+```{r hartigan_dmeasures, echo = FALSE}
+for (i in 1:6) mprint(h$dmeasures[[i]])
+```
+and their average $\Lambda$ is
+```{r hartigan_lambda, echo = FALSE}
+mprint(h$lambda)
+```
+Note that the loss was `r h$f`, which is one minus the average of the trace of $\Lambda$. The induced correlations are
+```{r hartigan_correls, echo = FALSE}
+mprint(h$rhat)
+```
+Of the six variables, three are binary. Thus they only have a single transformed variable associated with them, which is just the standardization to mean zero and sum of squares one. The total number of transformed variables is consequently 9. The eigenvalues of the 
+induced correlation matrix (divided by the number of variables, not the number of transformed variables) are
+```{r hartigan_eigen, echo = FALSE}
+mprint(eigen(h$rhat)$values/6)
+```
+Note that the two dominant eigenvalues are again equal to the diagonal elements of $\Lambda$.
+
+###GALO
+
+The second example is somewhat more realistic. In the GALO dataset (@peschar_75) data on 1290 school children in the sixth grade of an elementary school in 1959 in the city of Groningen (Netherlands) were collected. The variables are gender, IQ (categorized into 9 ordered categories), advice (teacher categorized the children into 7 possible forms of secondary education, i.e., Agr = agricultural; Ext = extended primary education; Gen = general; Grls = secondary school for girls; Man = manual, including housekeeping; None = no further education; Uni = pre- University), SES (parent’s profession in 6 categories) and school (37 different schools). The data have been analyzed previously in many Gifi publications, for example in @deleeuw_mair_A_09a. For our MCA we only make the first four variables, school is treated as passive 
+
+We use this example to illustrate some of the constraints on transformations. Two copies are used for all variables (although gender effectively only has one, of course). IQ is treated as ordinal, using a piecewise linear spline with knots at the nine data points.
+
+```{r galo_data, echo = FALSE}
+data(galo, package = "homals")
+cats <- list()
+for (j in 1:5) {
+  cats <- c(cats, list(unique(galo[,j])))
+}
+galoQ <- galo
+galo<-makeNumeric(galo)
+```
+```{r galo_parameters}
+galo_knots <- knotsD(galo)
+galo_degrees <- c(-1,1,-1,-1,-1)
+galo_ordinal <- c(FALSE, TRUE, FALSE, FALSE,FALSE)
+galo_active <-c (TRUE, TRUE, TRUE, TRUE, FALSE)
+```
+```{r galo_homals, cache = FALSE}
+h <- homals (galo, knots = galo_knots, degrees = galo_degrees, ordinal = galo_ordinal, active = galo_active)
+```
+
+We first give transformations for the active variables (and their copies) in figure `r figure_nums("galo_transform", display = "n")` . We skip gender, because transformation plots for binary variables are not very informative. We give two transformation plots for IQ, first using $H$ and then using $HA$. This illustrates the point made earlier, that transformation plots of block scores for ordinal variables with copies need not be monotone. It also illustrates that additional copies of an ordinal variable are not scaled to be monotone. Note that the plots for advice and SES are made with the utility `stepPlotter()`. Because the degree of the splines for those variables is zero, these transformation plots show step functions, with the steps at the knots, which are represented by vertical lines.
+
+```{r galo_trans, fig.align="center", echo = FALSE}
+par(mfrow=c(2,2))
+ind <- order (galo[,2])
+ht <- h$transform[[2]]
+hs <- h$scores[[2]]
+mma <- max (ht)
+mmi <- min (ht)
+plot (galo[ind, 2], ht[ind, 1], col = "BLUE", type = "l", xlab = "iq", ylab = "Transform", ylim = c(mmi, mma), lwd = 3)
+lines (galo[ind, 2], ht[ind, 2], col = "RED", lwd = 3)
+nknots <- length (galo_knots[[2]])
+for (k in 1:nknots) abline(v = galo_knots[[2]][k])
+plot (galo[ind, 2], hs[ind, 1], col = "RED", type = "l", xlab = "iq", ylab = "Transform", ylim = c(mmi, mma), lwd = 3)
+lines (galo[ind, 2], hs[ind, 2], col = "BLUE", lwd = 3)
+nknots <- length (galo_knots[[2]])
+for (k in 1:nknots) abline(v = galo_knots[[2]][k])
+stepPlotter (galo [, 3], h$scores[[3]], galo_knots[[3]], xlab = "advice")
+nknots <- length (galo_knots[[3]])
+for (k in 1:nknots) abline(v = galo_knots[[3]][k])
+stepPlotter (galo [, 4], h$scores[[4]], galo_knots[[4]], xlab = "SES")
+nknots <- length (galo_knots[[4]])
+for (k in 1:nknots) abline(v = galo_knots[[4]][k])
+par(mfrow=c(1,1))
+```
+<center>
+`r figure_nums("galo_transform")`
+</center>
+<hr>
+
+The four star plots for the active variables, together with the four category quantification plots, are in figure `r figure_nums("galo_quant_stars", display = "n")`. Note that `homals()` does not compute category quantifications, we have to compute them from the `homals()` output. Also note that
+for gender, advice and SES the object scores are connected to the category centroids of the variables. For IQ object scores are connected to points on the line connecting adjacent category quantifications. See @deleeuw_vanrijckevorsel_C_88 for category plots using forms of fuzzy coding (of which B-splines are an example).
+<hr>
+```{r plot_galo_quant_stars, fig.align = "center", echo = FALSE}
+mma <- max(h$objectscores)
+mmi <- min(h$objectscores)
+lbs = c("gender", "iq", "advice", "SES")
+for (j in 1:4) {
+par(mfrow=c(1,2))
+gg <- ifelse(outer(galoQ[,j], unique(galoQ[,j]),"=="), 1, 0)
+yy <- crossprod (gg, h$objectscores) / colSums (gg)
+if (j == 3) {
+  gg <- bsplineBasis (galo[,j], 1, 2:8)
+  yy <- lm.fit (gg, h$objectscores)$coefficients
+}
+plot (h$objectscores, xlab = "dimension 1", ylab = "dimension 2", type = "n", ylim = c(mmi, mma), main = lbs[j])
+text (yy, as.character(cats[[j]]), col = "RED")
+plot(h$objectscores, xlab = "dimension 1", ylab = "dimension 2", col = "RED", cex = .5,  ylim = c(mmi, mma), main = lbs[j])
+gy <- h$scores[[j]]
+points(gy, col = "BLUE", cex = .5)
+for (i in 1:nrow(h$objectscores))
+  lines (rbind (h$objectscores[i,], gy[i,]))
+}
+```
+<center>
+`r figure_nums("galo_quant_stars")`
+</center>
+<hr>
+
+For this analysis we need `r h$ntel` iterations to obtain loss `r h$f`. The average discrimination matrix over the four active variables is 
+```{r galo_discrimination, echo = FALSE}
+mprint(h$lambda)
+```
+while the eigenvalues of the induced correlation matrix of the active variables and their copies, divided by four, are
+```{r galo_eigenvalues, echo = FALSE}
+mprint(eigen(h$rhat[1:7,1:7])$values/4)
+```
+The category quantifications for the passive variable indicating the 37 schools are in figure `r figure_nums("galo_school_passive", display = "n")`. 
+<hr>
+```{r galo_school_passive_plot, fig.align = "center", echo = FALSE}
+plot(h$quantifications[[5]], type = "n", xlab = "dimension 1", ylab = "dimension 2")
+text(h$quantifications[[5]], as.character(1:37), col = "RED")
+```
+<center>
+`r figure_nums("galo_school_passive")`
+</center>
+<hr>
+If we look at the scale of the plot we see all schools are pretty close to the origin. The discrimination matrices are consequently also small. In 1959 schools were pretty much the same.
+```{r galo_school_passive_disc, echo = FALSE}
+mprint(h$dmeasures[[5]], d = 4, w = 7)
+```
+### Thirteen Personality Scales
+
+Our next example is a small data block from the `psych` package [@revelle_15] of five scales from the Eysenck Personality Inventory, five from a Big Five inventory, a Beck Depression Inventory, and State and Trait Anxiety measures.
+
+```{r epi}
+epi<- read.csv("data/epi.bfi.csv")
+epi_knots <- knotsQ(epi)
+epi_degrees <- rep (0, 13)
+epi_ordinal <- rep (FALSE, 13)
+```
+We perform a two-dimensional MCA, using degree zero and inner knots at the three quartiles for all 13 variables.
+```{r run_epi_0, cache = TRUE}
+h <- homals(epi, knots = epi_knots, degrees = epi_degrees, ordinal = epi_ordinal)
+```
+We have convergence in `r h$ntel` iterations to loss `r h$f`. The object scores are in figure `r figure_nums("epi_object_0", display = "n")`.
+<hr>
+```{r plot_epi_x_0, fig.align = "center", echo = FALSE}
+plot(h$objectscores, xlab = "dim1", ylab = "dim2", col = "RED", cex = .5)
+```
+<center>
+`r figure_nums("epi_object_0")`
+</center>
+<hr>
+Figure `r figure_nums("epi_transform_0", display = "n")` has the $G_jY_j$ for each of the thirteen variables, with the first dimension in red, and the second dimension in blue. 
+<hr>
+```{r plot_epi_trans_0, fig.align="center", echo = FALSE}
+lbs <- c("epiE","epiS","epiImp","epiLie","epiNeur","bfagree","bfcon","bfext","bfneur","bfopen","bdi","traitanx","statanx")
+par(mfrow=c(1,5))
+for (j in 1:13) {
+  stepPlotter (epi [, j], h$scores[[j]], epi_knots[[j]], xlab = lbs [j])
+  nknots <- length (epi_knots[[j]])
+  for (k in 1:nknots) abline(v = epi_knots[[j]][k])
+}
+par(mfrow=c(1,1))
+```
+<center>
+`r figure_nums("epi_transform_0")`
+</center>
+<hr>
+The thirteen star plots are in figure `r figure_nums("epi_transform_0", display = "n")`.
+<hr>
+```{r plot_epi_star_0, fig.align = "center", echo = FALSE}
+par(mfrow=c(1,3))
+for (j in 1:13) {
+starPlotter (h$objectscores, h$scores[[j]], main = lbs[j])
+}
+par(mfrow=c(1,1))
+```
+<center>
+`r figure_nums("epi_star_0")`
+</center>
+<hr>
+Now change the degree to two for all variables, i.e. fit piecewise quadratic polynomials which are differentiable at the knots. We still have two copies for each variable, and these two copies define the blocks.
+```{r run_epi_2, cache = TRUE}
+epi_degrees <- rep (2, 13)
+h <- homals (epi, knots = epi_knots, degrees = epi_degrees, ordinal = epi_ordinal)
+```
+We have convergence in `r h$ntel` iterations to loss `r h$f`. The object scores are in figure `r figure_nums("epi_object_2", display = "n")` and the transformation plots in figure `r figure_nums("epi_transform_2", display = "n")`.
+<hr>
+```{r plot_epi_x_2, fig.align = "center", echo = FALSE}
+plot (h$objectscores, xlab = "dim1", ylab = "dim2", col = "RED", cex = .5)
+```
+<center>
+`r figure_nums("epi_object_2")`
+</center>
+<hr>
+
+<hr>
+```{r plot_epi_trans_2, fig.align="center", echo = FALSE}
+par(mfrow=c(1,5))
+for (j in 1:13) {
+  oj <- order (epi[,j])
+  plot(epi[oj,j], h$transform[[j]][oj, 1], col="RED", xlab=lbs[j], ylab="transform", lwd = 3, type = "l")
+  lines (epi[oj, j], h$transform[[j]][oj, 2], col = "BLUE", lwd = 3)
+  nknots <- length (epi_knots[[j]])
+  for (k in 1:nknots) abline(v = epi_knots[[j]][k])
+}
+par(mfrow=c(1,1))
+```
+<center>
+`r figure_nums("epi_transform_2")`
+</center>
+<hr>
+
