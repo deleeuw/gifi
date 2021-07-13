@@ -3,6 +3,12 @@ title: "Gifi Analysis of Multivariate Data"
 author: "Jan de Leeuw"
 date: '`r paste("First created May 04, 2016. Last update", format(Sys.Date(),"%B %d, %Y"))`'
 output:
+  bookdown::pdf_book:
+    keep_tex: yes
+    latex_engine: pdflatex
+    number_sections: yes  
+    toc: yes
+    toc_depth: '4'
   bookdown::gitbook:
     config:
      keep_md: yes
@@ -10,12 +16,6 @@ output:
        position: fixed
      toc: 
       collapse: none
-  bookdown::pdf_book:
-    keep_tex: yes
-    latex_engine: pdflatex
-    number_sections: yes  
-    toc: yes
-    toc_depth: '4'
 description: null
 documentclass: book
 fontsize: 12pt
@@ -192,7 +192,7 @@ There have been some other major publication events in the Gifi saga. Around the
 
 @michailidis_deleeuw_A_98 made an attempt to make the Gifi material somewhat more accessible by publishing a review article in a widely read mainstream statistical journal. Another such attempt is @deleeuw_mair_A_09a, in which the homals package for R is introduced. The homals package is basically a single monolithic R function that can do everything the Gifi programs can do, and then some. In both cases, however, the problem remained that the techniques, and the software, were too convoluted and too different from what both statisticians and users were accustomed to.
 
-@vanderheijden_vanbuuren_16 give an excellent, though somewhat wistful, historic overview of the Gifi project. It is too early for eulogies, however, and we refuse to give up. This book is yet another reorganization of the Gifi material, with many extensions. We take Yoshio Takane advice seriously, and we organize both the theory and the algorithms around what is called "meet loss" in Gifi. In our software we separate the basic computational engine from its various applications that define the techniques of *Multivariate Analysis with Optimal Scaling (MVAOS)*. Hiding the core makes it possible to make the programs behave in much the same way as traditional MVA programs. The software is written in R (@r_core_team_16), with some parts of the computational engine written in C. 
+@vanderheijden_vanbuuren_16 give an excellent, though somewhat wistful, historic overview of the Gifi project. It is too early for eulogies, however, and we refuse to give up. This book is yet another reorganization of the Gifi material, with many extensions. We take Yoshio Takane's advice seriously, and we organize both the theory and the algorithms around what is called "meet-loss" in Gifi. In our software we separate the basic computational engine from its various applications that define the techniques of *Multivariate Analysis with Optimal Scaling (MVAOS)*. Hiding the core makes it possible to make the programs behave in much the same way as traditional MVA programs. The software is written in R (@r_core_team_16), with some parts of the computational engine written in C. 
 
 The book itself is written in Rmarkdown, using bookdown (@xie_16) and knitr (@xie_15) to embed the computations and graphics, and to produce html and pdf versions that are completely reproducible. The book and all the files that go with it are in the public domain.
   
