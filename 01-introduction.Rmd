@@ -3,7 +3,8 @@
 ## Some Dualisms
   
 The type of multivariate analysis (MVA) we discuss in this book is sometimes called *descriptive* or *exploratory*, as opposed to *inferential* or *confirmatory*. It is located somewhere on the line between computational linear algebra and statistics, and it is probably close to data analysis, Big Data, machine learning, knowledge discovery, data mining, business analytics, or whatever other ill-defined label is used for the *mode du jour*. 
-  In the days of @gifi_B_90 there was a small-scale civil war between the mathematical statistical (confirmatory) approach to MVA and the data analytical (exploratory) approach. This is not a new conflict, because it has its roots in the Pearson-Yule debate (@mackenzie_78). The first shots in modern times were probably fired by @tukey_62, but much additional polemic heat was generated in the 50 years since Tukey's famous paper. In order to stand our ground we were forced to participate, for example with @deleeuw_A_84c, @deleeuw_A_88c, @deleeuw_C_90b.
+
+In the days of @gifi_B_90 there was a small-scale civil war between the mathematical statistical (confirmatory) approach to MVA and the data analytical (exploratory) approach. This is not a new conflict, because it has its roots in the Pearson-Yule debate (@mackenzie_78). The first shots in modern times were probably fired by @tukey_62, but much additional polemic heat was generated in the 50 years since Tukey's famous paper. In order to stand our ground we were forced to participate, for example with @deleeuw_A_84c, @deleeuw_A_88c, @deleeuw_C_90b.
   
 Here is what @gifi_B_90 says, clearly with some intent to provoke.
   

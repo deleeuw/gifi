@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>8 Nonlinear Principal Component Analysis and princals() | Gifi Analysis of Multivariate Data</title>
+  <meta name="description" content="null" />
+  <meta name="generator" content="bookdown 0.22.3 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="8 Nonlinear Principal Component Analysis and princals() | Gifi Analysis of Multivariate Data" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="null" />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="8 Nonlinear Principal Component Analysis and princals() | Gifi Analysis of Multivariate Data" />
+  
+  <meta name="twitter:description" content="null" />
+  
+
+<meta name="author" content="Jan de Leeuw" />
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="canonical-correspondence-analysis-and-coranals.html"/>
+<link rel="next" href="canonical-analysis-and-canals.html"/>
+<script src="libs/header-attrs-2.9.2/header-attrs.js"></script>
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Note</a></li>
+<li class="chapter" data-level="" data-path="preface.html"><a href="preface.html"><i class="fa fa-check"></i>Preface</a></li>
+<li class="chapter" data-level="1" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i><b>1</b> Introduction</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="introduction.html"><a href="introduction.html#some-dualisms"><i class="fa fa-check"></i><b>1.1</b> Some Dualisms</a></li>
+<li class="chapter" data-level="1.2" data-path="introduction.html"><a href="introduction.html#quantifying-qualitative-data"><i class="fa fa-check"></i><b>1.2</b> Quantifying Qualitative Data</a></li>
+<li class="chapter" data-level="1.3" data-path="introduction.html"><a href="introduction.html#beyond-gifi"><i class="fa fa-check"></i><b>1.3</b> Beyond Gifi</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="coding-and-transformations.html"><a href="coding-and-transformations.html"><i class="fa fa-check"></i><b>2</b> Coding and Transformations</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="coding-and-transformations.html"><a href="coding-and-transformations.html#variables-and-multivariables"><i class="fa fa-check"></i><b>2.1</b> Variables and Multivariables</a></li>
+<li class="chapter" data-level="2.2" data-path="coding-and-transformations.html"><a href="coding-and-transformations.html#induced-correlations-and-aspects"><i class="fa fa-check"></i><b>2.2</b> Induced Correlations and Aspects</a></li>
+<li class="chapter" data-level="2.3" data-path="coding-and-transformations.html"><a href="coding-and-transformations.html#transformed-variables"><i class="fa fa-check"></i><b>2.3</b> Transformed Variables</a></li>
+<li class="chapter" data-level="2.4" data-path="coding-and-transformations.html"><a href="coding-and-transformations.html#bases"><i class="fa fa-check"></i><b>2.4</b> Bases</a></li>
+<li class="chapter" data-level="2.5" data-path="coding-and-transformations.html"><a href="coding-and-transformations.html#copies-and-rank"><i class="fa fa-check"></i><b>2.5</b> Copies and Rank</a></li>
+<li class="chapter" data-level="2.6" data-path="coding-and-transformations.html"><a href="coding-and-transformations.html#orthoblocks"><i class="fa fa-check"></i><b>2.6</b> Orthoblocks</a></li>
+<li class="chapter" data-level="2.7" data-path="coding-and-transformations.html"><a href="coding-and-transformations.html#constraints"><i class="fa fa-check"></i><b>2.7</b> Constraints</a></li>
+<li class="chapter" data-level="2.8" data-path="coding-and-transformations.html"><a href="coding-and-transformations.html#missing-data"><i class="fa fa-check"></i><b>2.8</b> Missing Data</a></li>
+<li class="chapter" data-level="2.9" data-path="coding-and-transformations.html"><a href="coding-and-transformations.html#active-and-passive-variables"><i class="fa fa-check"></i><b>2.9</b> Active and Passive Variables</a></li>
+<li class="chapter" data-level="2.10" data-path="coding-and-transformations.html"><a href="coding-and-transformations.html#interactive-coding"><i class="fa fa-check"></i><b>2.10</b> Interactive Coding</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="aspects.html"><a href="aspects.html"><i class="fa fa-check"></i><b>3</b> Aspects</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="aspects.html"><a href="aspects.html#definition"><i class="fa fa-check"></i><b>3.1</b> Definition</a></li>
+<li class="chapter" data-level="3.2" data-path="aspects.html"><a href="aspects.html#stationary-equations"><i class="fa fa-check"></i><b>3.2</b> Stationary Equations</a></li>
+<li class="chapter" data-level="3.3" data-path="aspects.html"><a href="aspects.html#bilinearizability"><i class="fa fa-check"></i><b>3.3</b> Bilinearizability</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="pattern-constraints-and-gifi-loss.html"><a href="pattern-constraints-and-gifi-loss.html"><i class="fa fa-check"></i><b>4</b> Pattern Constraints and Gifi Loss</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="pattern-constraints-and-gifi-loss.html"><a href="pattern-constraints-and-gifi-loss.html#aspects-from-patterns"><i class="fa fa-check"></i><b>4.1</b> Aspects from Patterns</a></li>
+<li class="chapter" data-level="4.2" data-path="pattern-constraints-and-gifi-loss.html"><a href="pattern-constraints-and-gifi-loss.html#gifi-loss"><i class="fa fa-check"></i><b>4.2</b> Gifi Loss</a></li>
+<li class="chapter" data-level="4.3" data-path="pattern-constraints-and-gifi-loss.html"><a href="pattern-constraints-and-gifi-loss.html#associated-eigenvalue-problems"><i class="fa fa-check"></i><b>4.3</b> Associated Eigenvalue Problems</a></li>
+<li class="chapter" data-level="4.4" data-path="pattern-constraints-and-gifi-loss.html"><a href="pattern-constraints-and-gifi-loss.html#history"><i class="fa fa-check"></i><b>4.4</b> History</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="algorithm.html"><a href="algorithm.html"><i class="fa fa-check"></i><b>5</b> Algorithm</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="algorithm.html"><a href="algorithm.html#block-relaxation"><i class="fa fa-check"></i><b>5.1</b> Block Relaxation</a></li>
+<li class="chapter" data-level="5.2" data-path="algorithm.html"><a href="algorithm.html#majorization"><i class="fa fa-check"></i><b>5.2</b> Majorization</a></li>
+<li class="chapter" data-level="5.3" data-path="algorithm.html"><a href="algorithm.html#alternating-least-squares"><i class="fa fa-check"></i><b>5.3</b> Alternating Least Squares</a></li>
+<li class="chapter" data-level="5.4" data-path="algorithm.html"><a href="algorithm.html#wrappers"><i class="fa fa-check"></i><b>5.4</b> Wrappers</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="multiple-correspondence-analysis-and-homals.html"><a href="multiple-correspondence-analysis-and-homals.html"><i class="fa fa-check"></i><b>6</b> Multiple Correspondence Analysis and homals()</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="multiple-correspondence-analysis-and-homals.html"><a href="multiple-correspondence-analysis-and-homals.html#introduction-1"><i class="fa fa-check"></i><b>6.1</b> Introduction</a></li>
+<li class="chapter" data-level="6.2" data-path="multiple-correspondence-analysis-and-homals.html"><a href="multiple-correspondence-analysis-and-homals.html#equations"><i class="fa fa-check"></i><b>6.2</b> Equations</a></li>
+<li class="chapter" data-level="6.3" data-path="multiple-correspondence-analysis-and-homals.html"><a href="multiple-correspondence-analysis-and-homals.html#examples"><i class="fa fa-check"></i><b>6.3</b> Examples</a>
+<ul>
+<li class="chapter" data-level="6.3.1" data-path="multiple-correspondence-analysis-and-homals.html"><a href="multiple-correspondence-analysis-and-homals.html#hartigans-hardware"><i class="fa fa-check"></i><b>6.3.1</b> Hartigan’s Hardware</a></li>
+<li class="chapter" data-level="6.3.2" data-path="multiple-correspondence-analysis-and-homals.html"><a href="multiple-correspondence-analysis-and-homals.html#thirteen-personality-scales"><i class="fa fa-check"></i><b>6.3.2</b> Thirteen Personality Scales</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="canonical-correspondence-analysis-and-coranals.html"><a href="canonical-correspondence-analysis-and-coranals.html"><i class="fa fa-check"></i><b>7</b> Canonical Correspondence Analysis and coranals()</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="canonical-correspondence-analysis-and-coranals.html"><a href="canonical-correspondence-analysis-and-coranals.html#introduction-2"><i class="fa fa-check"></i><b>7.1</b> Introduction</a></li>
+<li class="chapter" data-level="7.2" data-path="canonical-correspondence-analysis-and-coranals.html"><a href="canonical-correspondence-analysis-and-coranals.html#equations-1"><i class="fa fa-check"></i><b>7.2</b> Equations</a></li>
+<li class="chapter" data-level="7.3" data-path="canonical-correspondence-analysis-and-coranals.html"><a href="canonical-correspondence-analysis-and-coranals.html#examples-1"><i class="fa fa-check"></i><b>7.3</b> Examples</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="nonlinear-principal-component-analysis-and-princals.html"><a href="nonlinear-principal-component-analysis-and-princals.html"><i class="fa fa-check"></i><b>8</b> Nonlinear Principal Component Analysis and princals()</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="nonlinear-principal-component-analysis-and-princals.html"><a href="nonlinear-principal-component-analysis-and-princals.html#introduction-3"><i class="fa fa-check"></i><b>8.1</b> Introduction</a></li>
+<li class="chapter" data-level="8.2" data-path="nonlinear-principal-component-analysis-and-princals.html"><a href="nonlinear-principal-component-analysis-and-princals.html#equations-2"><i class="fa fa-check"></i><b>8.2</b> Equations</a></li>
+<li class="chapter" data-level="8.3" data-path="nonlinear-principal-component-analysis-and-princals.html"><a href="nonlinear-principal-component-analysis-and-princals.html#examples-2"><i class="fa fa-check"></i><b>8.3</b> Examples</a>
+<ul>
+<li class="chapter" data-level="8.3.1" data-path="nonlinear-principal-component-analysis-and-princals.html"><a href="nonlinear-principal-component-analysis-and-princals.html#thirteen-personality-scales-1"><i class="fa fa-check"></i><b>8.3.1</b> Thirteen Personality Scales</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="canonical-analysis-and-canals.html"><a href="canonical-analysis-and-canals.html"><i class="fa fa-check"></i><b>9</b> Canonical Analysis and canals()</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="canonical-analysis-and-canals.html"><a href="canonical-analysis-and-canals.html#equations-3"><i class="fa fa-check"></i><b>9.1</b> Equations</a></li>
+<li class="chapter" data-level="9.2" data-path="canonical-analysis-and-canals.html"><a href="canonical-analysis-and-canals.html#examples-3"><i class="fa fa-check"></i><b>9.2</b> Examples</a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="multiple-regression-and-morals.html"><a href="multiple-regression-and-morals.html"><i class="fa fa-check"></i><b>10</b> Multiple Regression and morals()</a>
+<ul>
+<li class="chapter" data-level="10.1" data-path="multiple-regression-and-morals.html"><a href="multiple-regression-and-morals.html#equations-4"><i class="fa fa-check"></i><b>10.1</b> Equations</a></li>
+<li class="chapter" data-level="10.2" data-path="multiple-regression-and-morals.html"><a href="multiple-regression-and-morals.html#examples-4"><i class="fa fa-check"></i><b>10.2</b> Examples</a>
+<ul>
+<li class="chapter" data-level="10.2.1" data-path="multiple-regression-and-morals.html"><a href="multiple-regression-and-morals.html#polynomial-regression"><i class="fa fa-check"></i><b>10.2.1</b> Polynomial Regression</a></li>
+<li class="chapter" data-level="10.2.2" data-path="multiple-regression-and-morals.html"><a href="multiple-regression-and-morals.html#gases-with-convertible-components"><i class="fa fa-check"></i><b>10.2.2</b> Gases with Convertible Components</a></li>
+</ul></li>
+<li class="chapter" data-level="10.3" data-path="multiple-regression-and-morals.html"><a href="multiple-regression-and-morals.html#conjoint-analysis-and-addals"><i class="fa fa-check"></i><b>10.3</b> Conjoint Analysis and addals()</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="discriminant-analysis-and-criminals.html"><a href="discriminant-analysis-and-criminals.html"><i class="fa fa-check"></i><b>11</b> Discriminant Analysis and criminals()</a>
+<ul>
+<li class="chapter" data-level="11.1" data-path="discriminant-analysis-and-criminals.html"><a href="discriminant-analysis-and-criminals.html#equations-5"><i class="fa fa-check"></i><b>11.1</b> Equations</a></li>
+<li class="chapter" data-level="11.2" data-path="discriminant-analysis-and-criminals.html"><a href="discriminant-analysis-and-criminals.html#examples-5"><i class="fa fa-check"></i><b>11.2</b> Examples</a>
+<ul>
+<li class="chapter" data-level="11.2.1" data-path="discriminant-analysis-and-criminals.html"><a href="discriminant-analysis-and-criminals.html#iris-data"><i class="fa fa-check"></i><b>11.2.1</b> Iris data</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="multiblock-canonical-correlation-and-overals.html"><a href="multiblock-canonical-correlation-and-overals.html"><i class="fa fa-check"></i><b>12</b> Multiblock Canonical Correlation and overals()</a>
+<ul>
+<li class="chapter" data-level="12.1" data-path="multiblock-canonical-correlation-and-overals.html"><a href="multiblock-canonical-correlation-and-overals.html#equations-6"><i class="fa fa-check"></i><b>12.1</b> Equations</a></li>
+<li class="chapter" data-level="12.2" data-path="multiblock-canonical-correlation-and-overals.html"><a href="multiblock-canonical-correlation-and-overals.html#examples-6"><i class="fa fa-check"></i><b>12.2</b> Examples</a>
+<ul>
+<li class="chapter" data-level="12.2.1" data-path="multiblock-canonical-correlation-and-overals.html"><a href="multiblock-canonical-correlation-and-overals.html#thirteen-personality-scales-2"><i class="fa fa-check"></i><b>12.2.1</b> Thirteen Personality Scales</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="13" data-path="code.html"><a href="code.html"><i class="fa fa-check"></i><b>13</b> Code</a>
+<ul>
+<li class="chapter" data-level="13.1" data-path="code.html"><a href="code.html#r-code"><i class="fa fa-check"></i><b>13.1</b> R Code</a>
+<ul>
+<li class="chapter" data-level="13.1.1" data-path="code.html"><a href="code.html#driver"><i class="fa fa-check"></i><b>13.1.1</b> Driver</a></li>
+<li class="chapter" data-level="13.1.2" data-path="code.html"><a href="code.html#engine"><i class="fa fa-check"></i><b>13.1.2</b> Engine</a></li>
+<li class="chapter" data-level="13.1.3" data-path="code.html"><a href="code.html#aspect-engine"><i class="fa fa-check"></i><b>13.1.3</b> Aspect Engine</a></li>
+<li class="chapter" data-level="13.1.4" data-path="code.html"><a href="code.html#some-aspects"><i class="fa fa-check"></i><b>13.1.4</b> Some Aspects</a></li>
+<li class="chapter" data-level="13.1.5" data-path="code.html"><a href="code.html#structures"><i class="fa fa-check"></i><b>13.1.5</b> Structures</a></li>
+<li class="chapter" data-level="13.1.6" data-path="code.html"><a href="code.html#wrappers-1"><i class="fa fa-check"></i><b>13.1.6</b> Wrappers</a></li>
+<li class="chapter" data-level="13.1.7" data-path="code.html"><a href="code.html#splines"><i class="fa fa-check"></i><b>13.1.7</b> Splines</a></li>
+<li class="chapter" data-level="13.1.8" data-path="code.html"><a href="code.html#gram-schmidt"><i class="fa fa-check"></i><b>13.1.8</b> Gram-Schmidt</a></li>
+<li class="chapter" data-level="13.1.9" data-path="code.html"><a href="code.html#cone-regression"><i class="fa fa-check"></i><b>13.1.9</b> Cone regression</a></li>
+<li class="chapter" data-level="13.1.10" data-path="code.html"><a href="code.html#coding"><i class="fa fa-check"></i><b>13.1.10</b> Coding</a></li>
+<li class="chapter" data-level="13.1.11" data-path="code.html"><a href="code.html#utilities"><i class="fa fa-check"></i><b>13.1.11</b> Utilities</a></li>
+</ul></li>
+<li class="chapter" data-level="13.2" data-path="code.html"><a href="code.html#c-code"><i class="fa fa-check"></i><b>13.2</b> C Code</a>
+<ul>
+<li class="chapter" data-level="13.2.1" data-path="code.html"><a href="code.html#splines-1"><i class="fa fa-check"></i><b>13.2.1</b> Splines</a></li>
+<li class="chapter" data-level="13.2.2" data-path="code.html"><a href="code.html#gram-schmidt-1"><i class="fa fa-check"></i><b>13.2.2</b> Gram-Schmidt</a></li>
+<li class="chapter" data-level="13.2.3" data-path="code.html"><a href="code.html#coding-1"><i class="fa fa-check"></i><b>13.2.3</b> Coding</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="14" data-path="backmatter.html"><a href="backmatter.html"><i class="fa fa-check"></i><b>14</b> Backmatter</a>
+<ul>
+<li class="chapter" data-level="14.1" data-path="backmatter.html"><a href="backmatter.html#key-names-and-symbols"><i class="fa fa-check"></i><b>14.1</b> Key Names and Symbols</a></li>
+<li class="chapter" data-level="14.2" data-path="backmatter.html"><a href="backmatter.html#references"><i class="fa fa-check"></i><b>14.2</b> References</a></li>
+</ul></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Gifi Analysis of Multivariate Data</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="nonlinear-principal-component-analysis-and-princals" class="section level1" number="8">
+<h1><span class="header-section-number">8</span> Nonlinear Principal Component Analysis and princals()</h1>
+<div id="introduction-3" class="section level2" number="8.1">
+<h2><span class="header-section-number">8.1</span> Introduction</h2>
+<p>princals, principals, Shepard-Kruskal, mdrace, history</p>
+</div>
+<div id="equations-2" class="section level2" number="8.2">
+<h2><span class="header-section-number">8.2</span> Equations</h2>
+<p>Suppose all <span class="math inline">\(m\)</span> blocks each contain only a single variable. Then the Burt matrix is the correlation matrix of the <span class="math inline">\(H_j\)</span>, which are all <span class="math inline">\(n\times 1\)</span> matrices in this case. It follows that MVAOS maximizes the sum of the <span class="math inline">\(r\)</span> largest eigenvalues of the correlation matrix over transformations, i.e. MVAOS is <em>nonlinear principal component analysis</em> <span class="citation">(<a href="#ref-deleeuw_C_14" role="doc-biblioref">De Leeuw 2014</a>)</span>.</p>
+</div>
+<div id="examples-2" class="section level2" number="8.3">
+<h2><span class="header-section-number">8.3</span> Examples</h2>
+<div id="thirteen-personality-scales-1" class="section level3" number="8.3.1">
+<h3><span class="header-section-number">8.3.1</span> Thirteen Personality Scales</h3>
+<p>We use the same data as before for an NLPCA with all blocks of rank one, all variables ordinal, and splines of degree 2.</p>
+<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb43-1"><a href="nonlinear-principal-component-analysis-and-princals.html#cb43-1" aria-hidden="true" tabindex="-1"></a>epi_copies <span class="ot">&lt;-</span> <span class="fu">rep</span> (<span class="dv">1</span>, <span class="dv">13</span>)</span>
+<span id="cb43-2"><a href="nonlinear-principal-component-analysis-and-princals.html#cb43-2" aria-hidden="true" tabindex="-1"></a>epi_ordinal <span class="ot">&lt;-</span> <span class="fu">rep</span> (<span class="cn">TRUE</span>, <span class="dv">13</span>)</span>
+<span id="cb43-3"><a href="nonlinear-principal-component-analysis-and-princals.html#cb43-3" aria-hidden="true" tabindex="-1"></a>h <span class="ot">&lt;-</span> <span class="fu">princals</span>(epi, epi_knots, epi_degrees, epi_ordinal, epi_copies)</span></code></pre></div>
+In 19 iterations we find minimum loss 0.7330408597. The object scores are in figure
+17 and the transformation plots in figure
+18. NLPCA maximizes the sum of the two largest eigenvalues of the correlation matrix of the variables. Before transformation the eigenvalues are 4.0043586779, 2.6702003226, 1.9970911525, 0.8813983145, 0.6571462887, 0.6299946278, 0.524689638, 0.4657021776, 0.3457514762, 0.3403360653, 0.2767530816, 0.1835448669, 0.0230333104, after transformation they are 4.1956970306, 2.7452518707, 1.6036670387, 0.8209125803, 0.718259977, 0.676961949, 0.5185327518, 0.4544125071, 0.4197680221, 0.3519542253, 0.2932653658, 0.1700269788, 0.0312897028. The sum of the first two goes from 6.6745590006 to 6.9409489014.
+<hr>
+<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb44-1"><a href="nonlinear-principal-component-analysis-and-princals.html#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(h<span class="sc">$</span>objectscores, <span class="at">xlab =</span> <span class="st">&quot;dim1&quot;</span>, <span class="at">ylab =</span> <span class="st">&quot;dim2&quot;</span>, <span class="at">col =</span> <span class="st">&quot;RED&quot;</span>, <span class="at">cex =</span> .<span class="dv">5</span>)</span></code></pre></div>
+<img src="_main_files/figure-html/plot_epi_x_S_2-1.png" width="672" style="display: block; margin: auto;" />
+<center>
+Figure 17: Personality Scales, Object Scores, Single Ordinal, Degree Two
+</center>
+<hr>
+<hr>
+<img src="_main_files/figure-html/plot_epi_trans_S_0-1.png" width="672" style="display: block; margin: auto;" /><img src="_main_files/figure-html/plot_epi_trans_S_0-2.png" width="672" style="display: block; margin: auto;" /><img src="_main_files/figure-html/plot_epi_trans_S_0-3.png" width="672" style="display: block; margin: auto;" />
+<center>
+Figure 18: Personality Scales, Transformations, Single Ordinal, Degree Two
+</center>
+<hr>
+<p>We repeat the analysis with ordinal variables of degree two, without interior knots. Thus we the transformation plots will be quadratic polynomials that are monotone over the range of the data.</p>
+<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb45-1"><a href="nonlinear-principal-component-analysis-and-princals.html#cb45-1" aria-hidden="true" tabindex="-1"></a>h <span class="ot">&lt;-</span> <span class="fu">princals</span>(epi, <span class="fu">knotsE</span>(epi), epi_degrees, epi_ordinal)</span></code></pre></div>
+In 21 iterations we find minimum loss 0.7392792203. The object scores are in figure
+19 and the transformation plots in figure
+20. The eigenvalues are now 4.0845452813, 2.6942027568, 1.8268475832, 0.8731782338, 0.6698533738, 0.6503449076, 0.5406240035, 0.4597013756, 0.3666352518, 0.3470225888, 0.2847374711, 0.1783404951, 0.0239666775, with sum of the first two equal to 6.7787480381.
+<hr>
+<img src="_main_files/figure-html/plot_epi_x_P_2-1.png" width="672" style="display: block; margin: auto;" />
+<center>
+Figure 19: Personality Scales, Object Scores, Single Numerical, Degree Two
+</center>
+<hr>
+<hr>
+<img src="_main_files/figure-html/plot_epi_trans_P_0-1.png" width="672" style="display: block; margin: auto;" /><img src="_main_files/figure-html/plot_epi_trans_P_0-2.png" width="672" style="display: block; margin: auto;" /><img src="_main_files/figure-html/plot_epi_trans_P_0-3.png" width="672" style="display: block; margin: auto;" />
+<center>
+Figure 20: Personality Scales, Transformations, Single Numerical, Degree Two
+</center>
+<hr>
+
+</div>
+</div>
+</div>
+<h3>References</h3>
+<div id="refs" class="references csl-bib-body hanging-indent">
+<div id="ref-deleeuw_C_14" class="csl-entry">
+———. 2014. <span>“<span class="nocase">History of Nonlinear Principal Component Analysis</span>.”</span> In <em><span class="nocase">The Visualization and Verbalization of Data</span></em>, edited by J. Blasius and M. Greenacre. Chapman; Hall. <a href="http://deleeuwpdx.net/janspubs/2014/chapters/deleeuw_C_14.pdf">http://deleeuwpdx.net/janspubs/2014/chapters/deleeuw_C_14.pdf</a>.
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="canonical-correspondence-analysis-and-coranals.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="canonical-analysis-and-canals.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["_main.pdf"],
+"toc": {
+"collapse": "none"
+},
+"keep_md": true,
+"toolbar": {
+"position": "fixed"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>
