@@ -1,0 +1,25 @@
+# Canonical Analysis and canals()
+
+## Equations
+
+If there are only two blocks the generalized eigenvalue problem for the Burt matrix becomes
+$$
+\begin{bmatrix}
+D_1&C_{12}\\C_{21}&D_2
+\end{bmatrix}
+\begin{bmatrix}
+a_1\\a_2
+\end{bmatrix}=2\lambda\begin{bmatrix}D_1&0\\0&D_2\end{bmatrix}\begin{bmatrix}
+a_1\\a_2
+\end{bmatrix},
+$$
+which we can rewrite as
+$$
+\begin{split}
+C_{12}a_2&=(2\lambda-1)D_1a_1,\\
+C_{21}a_1&=(2\lambda-1)D_2a_2,
+\end{split}
+$$
+from which we see that MVAOS maximizes the sum of the $r$ largest canonical correlations between $H_1$ and $H_2$. See also @vandervelden_12.
+
+## Examples

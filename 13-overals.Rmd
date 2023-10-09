@@ -1,0 +1,45 @@
+# Multiblock Canonical Correlation and overals()
+
+## Equations
+
+## Examples
+
+### Thirteen Personality Scales
+
+This is the same example as before, but now we group the five scales from the Eysenck Personality Inventory and the five from the Big Five inventory into blocks. The remaining three variables define three separate blocks. No copies are used, and we use monotone cubic splines with the interior knots at the quartiles.
+
+```{r multiblock_example}
+epi_knots <- lapply (epi, function (x) fivenum (x)[2:4])
+epi_degrees <- rep (3, 13)
+epi_blocks <- c(1,1,1,1,1,2,2,2,2,2,3,4,5)
+```
+```{r run_multiblock, cache = TRUE, eval = FALSE}
+h <- overals(epi, epi_blocks, epi_copies, epi_knots, epi_degrees, epi_ordinal)
+```
+In `r h$ntel` iterations we find minimum loss `r h$f`. The object scores are in figure
+`r figure_nums("epi_multi_object", display = "n")` and the transformation plots in figure
+`r figure_nums("epi_multi_transform", display = "n")`.
+<hr>
+```{r plot_epi_x_mult, fig.align = "center", cache = FALSE, echo = FALSE, eval = FALSE}
+plot(h$x, xlab = "dim1", ylab = "dim2", col = "RED", cex = .5)
+```
+<center>
+`r figure_nums("epi_multi_object")`
+</center>
+<hr>
+
+<hr>
+```{r plot_epi_trans_mult, fig.align="center", cache = FALSE, echo = FALSE, eval = FALSE}
+par(mfrow=c(1,5))
+for (j in 1:13) {
+  oj <- order (epi[,j])
+  plot(epi[oj,j], h$h[oj,j], col="RED", xlab=lbs[j], ylab="transform", type= "l", lwd = 3)
+  nknots <- length (epi_knots[[j]])
+  for (k in 1:nknots) abline(v = epi_knots[[j]][k])
+}
+par(mfrow=c(1,1))
+```
+<center>
+`r figure_nums("epi_multi_transform")`
+</center>
+<hr>

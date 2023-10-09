@@ -1,0 +1,150 @@
+# Algorithm
+
+## Block Relaxation
+
+Our task is to minimize $\sigma(H,A)$ over $H$ and $A$, suitably constrained. Write the constraints as $H\in\mathcal{H}$ and $A\in\mathcal{A}$. The strategy we 
+use is block relaxation (@deleeuw_B_15). Thus we iterate as follows.
+
+0. Set $k=0$ and start with some $H^{(0)}$.
+1. $A^{(k)}\in\argmin{A\in\mathcal{A}}\ \sigma(H^{(k)},A)$.
+2. $H^{(k+1)}\in\argmin{H\in\mathcal{H}}\ \sigma(H,A^{(k)})$.
+3. If converged stop. Else $k\leftarrow k+1$ and go to step 1.
+
+It is assumed that step 1, updating $A$ for given $H$, can be carried out simply by some form of linear least squares. We assume that for each $\ell$ there is at least one  $j$ such that $A_{j\ell}=I$. Note that this is the case for MLR, PCA, EFA, and for all Gifi Systems.
+
+Step 2 is somewhat more intricate, because of the cone restrictions. In partitioned form we can write the loss function as
+$$
+\sigma(H,A)=\sum_{i=1}^m\mathbf{tr}\ H_i'\sum_{j=1}^mH_j\sum_{\ell=1}^LA_{j\ell}A_{i\ell}'
+$$
+
+$$
+B_{ij}(A)=\sum_{\ell=1}^LA_{j\ell}A_{i\ell}'
+$$
+
+## Majorization
+
+$$
+\mathbf{tr}\ H'HG=\mathbf{tr}\ (\tilde H + (H - \tilde H))'(\tilde H + (H - \tilde H))G\geq\\\mathbf{tr}\ \tilde H'\tilde HG+2\mathbf{tr}\ \tilde H'(H - \tilde H)G
+$$
+
+$$
+\mathbf{tr}\ H'\tilde HG(\tilde H)
+$$
+
+## Alternating Least Squares
+
+The standard way to minimize loss function $\eqref{E:oldloss}$ is implemented in the `OVERALS` program [@vanderburg_deleeuw_verdegaal_A_88, @meulman_heiser_12]. It is also the one used in the `homals` package [@deleeuw_mair_A_09a].
+
+In this paper the algorithm is different because we use the loss function $\eqref{E:gifiloss}$. We still use ALS, which means in this case that we cycle through three substeps in each iteration. We update $A$ for given $X$ and $H$, we then update $X$ for given $H$ and $A$, and finally we update $H$ for given $X$ and $A$. Algorithm A goes as follows.
+
+0. Set $k=0$ and start with some $X^{(0)},H^{(0)},A^{(0)}$.
+1. $X^{(k+1)}=\mathbf{ortho}(\mathbf{center}(H^{(k)}A^{(k)})$.
+2. For $j=1,\cdots,m$ compute $A_j^{(k+1)}=\{H_j^{(k)}\}^+X^{(k+1)}$.
+3. For $j=1,\cdots,m$ and $s=1,\cdots p_j$ compute $h_{js}^{(k+1)}=\mathbf{proj}_{\mathcal{K}_{js}\cap\mathcal{S}}((X^{(k+1)}-\sum_{t<s}h_{jt}^{(k+1)}\{a_{jt}^{(k+1)}\}'-\sum_{t>s}h_{jt}^{(k)}\{a_{jt}^{(k+1)}\}')a_s^{(k+1)})$.
+4. If converged stop. Else $k\leftarrow k+1$ and go to step 1.
+
+In step 1 we use superscript + for the Moore-Penrose inverse. In step 2 the center operator does column centering, the ortho operator finds an orthonormal basis for the column space of its argument.
+
+The complicated part is step 4, the _optimal scaling_, i.e. the updating of $H_j$ for given $X$ and $A_j$. We cycle through the variables in the block, each time projecting a single column on the cone of admissible transformations of the variable, and then normalizing the projection to length one.
+The _target_, i.e. the vector we are projecting, is complicated, because the other variables in the same block must be taken into account.
+
+In order to simplify the optimal scaling computations within an iteration we can use majorization [@deleeuw_C_94c, @heiser_95, @lange_hunter_yang_00, @deleeuw_B_15]. This has the additional benefit that the optimal scaling step becomes embarassingly parallel. We expand the loss for block $j$ around a previous solution $\tilde H_j$.
+$$
+\mathbf{SSQ}(X-H_jA_j)=
+\mathbf{SSQ}(X-\tilde H_jA_j)-2\mathbf{tr}\ (H_j-\tilde H_j)'(X-\tilde H_jA_j)A_j'
++\mathbf{tr}\ A_j'(H_j-\tilde H_j)'(H_j-\tilde H_j)A_j.
+$$
+Now
+$$
+\mathbf{tr}\ (H_j-\tilde H_j)A_jA_j'(H_j-\tilde H_j)'\leq\kappa_j\ \mathbf{tr}\ (H_j-\tilde H_j)'(H_j-\tilde H_j),
+$$
+where $\kappa_j$ is the largest eigenvalue of $A_j'A_j$. Thus
+$$
+\mathbf{SSQ}(X-H_jA_j)\leq\mathbf{SSQ}(X-\tilde H_jA_j)+\kappa_j\ \mathbf{SSQ}(H_j-U_j)-\frac{1}{\kappa_j}\ \mathbf{SSQ}((X-\tilde H_jA_j)A_j'),
+$$
+where $U_j$ is the _target_
+$$
+U_j=\tilde H_j+\frac{1}{\kappa_j}(X-\tilde H_jA_j)A_j'.\tag{3}
+$$
+It follows we can update the optimal scaling of the variables by projecting the columns of $U_j$
+on their respective cones and then normalizing. See @deleeuw_U_75a for results on normalized cone regression. This can be done for all variables in the block separately, without taking any of the other variables in the block (or in any of the other blocks) into account. Thus the optimal scaling is easy to parallellize. The resulting algorithm B is as follows.
+
+0. Set $k=0$ and start with some $X^{(0)},H^{(0)},A^{(0)}$.
+1. $X^{(k+1)}=\mathbf{ortho}(\mathbf{center}(H^{(k)}A^{(k)})$.
+2. For $j=1,\cdots,m$ compute $A_j^{(k+1)}=\{H_j^{(k)}\}^+X^{(k+1)}$.
+3. For $j=1,\cdots,m$ compute $U_j^{(k+1)}=H_j^{(k)}+\frac{1}{\kappa_j}(X^{(k+1)}-H_j^{(k)}A_j^{(k+1)})\{A_j^{(k+1)}\}'$ and for $s=1,\cdots p_j$ compute $h_{js}^{(k+1)}=\mathbf{proj}_{\mathcal{K}_{js}\cap\mathcal{S}}(u_{js}^{(k+1)})$.
+4. If converged stop. Else $k\leftarrow k+1$ and go to step 1.
+
+## Implementation Details
+
+If we follow the ALS strategy strictly the $\mathbf{ortho}()$ operator should be implemented using Procrustus rotation [@gibson_62]. Thus if $Z=K\Lambda L'$ is the singular value decomposition of $X$, then $\mathbf{ortho}(Z)=KL'$. Note, however, that any other basis for the column space of $Z$ merely differs from the Procrustus basis by a rotation. And this rotation matrix will carry unmodified into the upgrade of $A_j$ in step 2 of the algorithm, and thus after steps 1 and 2 the loss will be the same, no matter which rotation we select. In our algorithm we use the QR decomposition to find the basis, using the Gram-Schmidt code from @deleeuw_E_15d.
+
+In actual computation we column-center the basis and compute a full rank QR decomposition, using the code in @deleeuw_E_15d. Thus $G_\ell=Q_\ell R_\ell$, 
+
+We implement the cone restrictions by the constraints $h_{js}=G_{js}z_s$ in combination with $T_{js}h_{js}\geq 0$. Thus the transformed variables must be in the intersection of the subspace spanned by the columns of the _transformation basis_ $G_{js}$ and the polyhedral convex cones of all vectors $h$ such that $T_{js}h\geq 0$. We suppose that all columns of the $G_{js}$ add up to zero, and we require, in addition, the normalization $SSQ(h_{js})=1$.
+
+We use the code described in @deleeuw_E_15e to generate B-spline bases. Note that for coding purposes binary indicators are B-splines of degree zero, while polynomials are B-splines without interior knots. We include the utility functions to generate lists of knots. There is `knotsQ()` for knots at the quantiles, `knotsR()` for knots equally spaced on the range, `knotsD()` for knots at the data points, and `knotsE()` for no interior knots. Also note that binary indicators can be created for qualitative non-numerical variables, for which B-splines are not defined. We have added the option using degree -1 to bypass the B-spline code and generate an indicator matrix,
+using the utility `makeIndicator()`. Note that `'makeIndicator(foo)` is equivalent to `bsplineBasis(foo, degree = 0, innerknots = sort(unique(foo)))`. Throughout we first orthonormalize the basis matrices $G_{js}$, using the Gram-Schmidt code from @deleeuw_E_15d. 
+
+The matrices $T_{js}$ in the homogeneous linear inequality restrictions that define the cones $\mathcal{K}_{js}$ can be used to define monotonicity or convexity of the resulting transformations. In the current implementation we merely allow for monotonicity, which means the $T_{js}$ do not have to be stored. The transformations for each variable can be restricted to be increasing, or they can be unrestricted. By using splines without interior knots we allow in addition for polynomial transformations, which again can be restricted to be either monotonic or not. Note that it is somewhat misleading to say we are fitting monotone splines or polynomials, we are mainly requiring monotonicity at the data points. 
+
+If there are multiple copies of a variable in a block then requiring the transformation to be ordinal means that we want the transformation of the first copy to be monotonic. The transformations of the other copies are not constrained to be monotonic. If you want all copies to
+be transformed monotonically, you have to explicitly introduce them as separate variables.
+
+For variables with copies there is yet another complication. For copies we have $H_jA_j=G_j(Z_jA_j)=G_jY_j$. If we require monotonicity in MVAOS we constrain a column of $H_j$ (in fact, the first one) to be monotonic. In classic Gifi, in which the $G_j$ are binary indicators, we constrain the first column of $Y_j$, which automatically implies the first column of $G_jY_j$ is monotonic as well. In previous Gifi work with B-splines, we also constrained the first column of $Y_j$, which again implied the first column of $G_jY_j$ was monotnic as well. But in our current MVAOS implementation monotonicity of the first column of $H_j$ does not imply monotonicity of the first column of $H_jA_j$,
+even if the basis $G_j$  is a binary indicator. This discrepancy between the old and the new Gifi only comes into play for ordinal variables with multiple copies.
+
+Missing data are incorporated in the definition of the cones of transformations by using a $G_{js}$ which is the direct sum of a spline basis for the non-missing and an identity matrix for the missing data. This is called _missing data multiple_ in @gifi_B_90. There are no linear inequality restrictions on the quantifications of the missing data.
+
+
+## Wrappers
+
+The `homals()` implementation in @deleeuw_mair_A_09a is a single monolithic program in R, which specializes to the various MVAOS techniques by a suitable choice of its parameters. This approach has some disadvantages. If we want principal component analysis, we already know all blocks are singletons. If we want multiple correspondence analysis we know each variable has $p$ copies. If we want multiple regression, we know
+there are two blocks, and one is a singleton. So it is somewhat tedious to specify all parameters all of the time. Also, some of the output, graphical and otherwise,
+is specific to a particular technique. For regression we want residuals and fitted values, in canonical analysis we want block scores and loadings. And, more generally, we may want the output in a form familiar from the classical MVA techniques. It is indeed possible to transform the `homals()` output to more familar forms (@deleeuw_R_09c), but this requires some extra effort.
+
+In this book we go back to the original approach of @gifi_B_90 and write separate programs for nonlinear versions principal component analysis, multiple regression, canonical analysis, discriminant analysis, and so on. 
+
+These programs, now written in R and no longer in FORTRAN, are wrappers for the main computational core, the program `gifiEngine()`. The wrappers, which have the familiar names `morals()`, `corals()`, `princals()`, `homals()`, `criminals()`, `overals()`, `primals()`, and `canals()`, create a gifi object from the data and parameters, and then pass this to `gifiEngine()`. Computations are itereated to convergence, and result are stored in a xGifi object. Then the output is transformed to a format familiar from the corresponding technique from classical MVA. Each wrapper `foo` returns a structure of class `foo`.
+
+This modular approach saves code, because both `makeGifi()` and `gifiEngine()` are common to all programs. It
+also makes it comparatively easy to add new wrappers not currently included, possibly even contributed by others.
+
+Although we like the above quotation from @hill_90, it is not quite accurate. Our current generation of wrappers can use B-spline bases, it can use an arbitrary number of copies of a variable, and each copy can be either categorical, ordinal, polynomial, or splinical. Thus, even more so than the original gifi programs, we have a substantial generalization of the classical techniques, not merely a sequence of synonyms.
+
+## Structures
+
+The computations are controlled by the arguments to the wrappers. These arguments are used to construct three structures: the gifi, the gifiBlock, and the gifiVariable. A gifi is just a list of gifiBlocks, and a gifiBlock is a list of gifiVariables. This reflects the partitioning of the variables into blocks. A gifiVariable contains a great deal of information about the variable. The function `makeGifiVariable()` is a constructor that returns a structure of class `gifiVariable`. The contents of a `gifiVariable` remain the same throughout the computations.
+
+```{r gifi_variable, eval = FALSE}
+    return (structure (
+      list (
+        data = data,
+        basis = basis,
+        qr = qr,
+        copies = copies,
+        degree = degree,
+        ties = ties,
+        missing = missing,
+        ordinal = ordinal,
+        active = active,
+        name = name,
+        type = type
+      ),
+      class = "gifiVariable"
+    ))
+```
+There are three corresponding structures containing initial and intermediate results, and eventually output, the xGifi, xGifiBlock, and xGifiVariable. Again, an
+xGifi is a list of xGifiBlocks, and an xGifiBlock is a list of xGifiVariables. The constructor for an xGifiVariable returns an object of class `xGifiVariable`, which contains  the elements that are updated in each iteration during the computations. There is an `xGifiVariable` for both active and passive variables.
+
+```{r xGifiVariable, eval = FALSE}
+ return (structure (
+    list(
+      transform = transform,
+      weights = weights,
+      scores = scores,
+      quantifications = quantifications
+    ),
+    class = "xGifiVariable"
+  ))
+```

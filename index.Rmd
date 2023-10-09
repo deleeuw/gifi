@@ -1,0 +1,210 @@
+---
+title: "Gifi Analysis of Multivariate Data"
+author: "Jan de Leeuw"
+date: '`r paste("First created May 04, 2016. Last update", format(Sys.Date(),"%B %d, %Y"))`'
+output:
+  bookdown::pdf_book:
+    keep_tex: yes
+    latex_engine: pdflatex
+    number_sections: yes  
+    toc: yes
+    toc_depth: '4'
+  bookdown::gitbook:
+    config:
+     keep_md: yes
+     toolbar:
+       position: fixed
+     toc: 
+      collapse: none
+description: null
+documentclass: book
+fontsize: 12pt
+graphics: yes
+link-citations: yes
+mainfont: Times New Roman
+coverpage: graphics/cover.png
+site: bookdown::bookdown_site
+bibliography:
+- mypubs.bib
+- total.bib
+---
+<style type="text/css">
+
+body{ /* Normal  */
+   font-size: 18px;
+}
+td {  /* Table  */
+   font-size: 18px;
+}
+h1 { /* Header 1 */
+ font-size: 28px;
+ color: DarkBlue;
+}
+h2 { /* Header 2 */
+ font-size: 22px;
+ color: DarkBlue;
+}
+h3 { /* Header 3 */
+ font-size: 18px;
+ color: DarkBlue;
+}
+code.r{ /* Code block */
+  font-size: 18px;
+}
+pre { /* Code block */
+  font-size: 18px
+}
+</style>
+
+
+```{r function_code, echo = FALSE}
+#source("tucker.R")
+#source("parafac.R")
+#source("cfa.R")
+```
+
+```{r packages, echo = FALSE}
+options (digits = 10) 
+suppressPackageStartupMessages (library (captioner, quietly = TRUE))
+suppressPackageStartupMessages (library (knitr, quietly = TRUE))
+suppressPackageStartupMessages (library (microbenchmark, quietly = TRUE))
+figure_nums <- captioner (prefix = "Figure")
+mprint <- function (x,
+                    d = 6,
+                    w = 8,
+                    f = "") {
+  print (noquote (formatC (
+    x,
+    di = d,
+    wi = w,
+    fo = "f",
+    flag = f
+  )))
+}
+```
+
+\newcommand{\ul}[1]{\underline{#1}}
+\newcommand{\ol}[1]{\overline{#1}}
+\newcommand{\bb}[1]{\mathbb{#1}}
+\newcommand{\mc}[1]{\mathcal{#1}}
+\newcommand{\df}{=:}
+\newcommand{\am}[1]{\mathop{\text{argmin}}_{#1}}}
+\newcommand{\ls}[2]{\mathop{\sum\sum}_{#1}^{#2}}}
+\newcommand{\ijs}{\mathop{\sum\sum}_{1\leq i<j\leq n}}
+\newcommand{\jis}{\mathop{\sum\sum}_{1\leq j<i\leq n}}
+\newcommand{\sij}{\sum_{i=1}^n\sum_{j=1}^n}
+\newcommand{\argmin}[1]{\mathop{\mathbf{argmin}}\limits_{#1}}
+\newcommand{\argmax}[1]{\mathop{\mathbf{argmax}}\limits_{#1}}
+
+
+# Note {-}
+
+This book will be expanded/updated frequently.  The directory [deleeuwpdx.net/pubfolders/stress](http://deleeuwpdx.net/pubfolders/stress) has a pdf version, the bib file, the complete Rmd file with the code chunks, and the R and C source code. Suggestions for improvement of text and code are welcome. All text and code are in the public domain and can be copied and used by anybody in any way they like. Attribution will be appreciated, but is not required. 
+
+Just as an aside: "above" in the text refers to anything that comes earlier in the book and "below" refers to anything that comes later. This always confuses me, so I had to write it down. I also number *all* displayed equations. Equations are displayed if and only if they are important, are referred to in the text, or mess up the line spacing.
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  TeX: {equationNumbers: { autoNumber: "AMS" }}
+});
+</script>
+
+```{r captioner, echo = FALSE}
+figure_nums <- captioner (prefix = "Figure")
+figure_nums (name = "galtongifi", caption = "Albert Gifi is not Sir Francis Galton", display = FALSE)
+figure_nums (name = "hartigan_objscores", caption = "Hartigan Data, Object Scores", display = FALSE)
+figure_nums (name = "hartigan_stars", caption = "Hartigan Data, Star Plots", display = FALSE)
+figure_nums (name = "galo_transform", caption = "Galo Data, Transformations", display = FALSE)
+figure_nums (name = "galo_quant_stars", caption = "Galo Data, Category Quantifications and Star Plots", display = FALSE)
+figure_nums (name = "galo_school_passive", caption = "Galo Data, Schools as Passive", display = FALSE)
+figure_nums (name = "epi_object_0", caption = "Personality Scales, Object Scores, Multiple Nominal, Degree Zero", display = FALSE)
+figure_nums (name = "epi_transform_0", caption = "Personality Scales, Transformations, Multiple Nominal, Degree Zero", display = FALSE)
+figure_nums (name = "epi_star_0", caption = "Personality Scales, Star Plots, Multiple Nominal, Degree Zero", display = FALSE)
+figure_nums (name = "epi_object_2", caption = "Personality Scales, Object Scores, Multiple Nominal, Degree Two", display = FALSE)
+figure_nums (name = "epi_transform_2", caption = "Personality Scales, Transformations, Multiple Nominal, Degree Two", display = FALSE)
+figure_nums(name = "glass_quantifications", caption = "Glass Data, Category Quantifications", display = FALSE)
+figure_nums(name = "glass_objectscore_plot", caption = "Glass Data, Object Scores", display = FALSE)
+figure_nums(name = "glass_regression_plots", caption = "Glass Data, Regression Plots", display = FALSE)
+figure_nums(name = "galton_regression_plots", caption = "Galton Data, Regression Plots", display = FALSE)
+figure_nums(name = "galton_transformation_plots", caption = "Galton Data, Transformation Plots", display = FALSE)
+figure_nums (name = "epi_object_S_2", caption = "Personality Scales, Object Scores, Single Ordinal, Degree Two", display = FALSE)
+figure_nums (name = "epi_transform_S_2", caption = "Personality Scales, Transformations, Single Ordinal, Degree Two", display = FALSE)
+figure_nums (name = "epi_object_P_2", caption = "Personality Scales, Object Scores, Single Numerical, Degree Two", display = FALSE)
+figure_nums (name = "epi_transform_P_2", caption = "Personality Scales, Transformations, Single Numerical, Degree Two", display = FALSE)
+figure_nums (name = "neumann_objects", caption = "Gases with Convertible Components, Objects Scores", display = FALSE)
+figure_nums (name = "neumann_transform", caption = "Gases with Convertible Components, Transformations", display = FALSE)
+figure_nums (name = "iris_objects", caption = "Iris Data, Objects Scores", display = FALSE)
+figure_nums (name = "iris_transform", caption = "Iris Data, Transformations", display = FALSE)
+figure_nums (name = "epi_multi_object", caption = "Personality Scales, Multi-Set, Objects Scores", display = FALSE)
+figure_nums (name = "epi_multi_transform", caption = "Personality Scales, Multi-Set, , Transformations", display = FALSE)
+```
+
+
+```{r shlibs, echo = FALSE}
+dyn.load("lib/coding.so")
+dyn.load("lib/matrix.so")
+dyn.load("lib/pava.so")
+dyn.load("lib/splineBasis.so")
+#dyn.load("lib/mySort.so")
+```
+
+```{r code_exec_engine, echo = FALSE}
+source ("rcode/gifiEngine.R")
+source ("rcode/gifiUtilities.R")
+source ("rcode/gifiWrappers.R")
+source ("rcode/gifiStructures.R")
+source ("rcode/aspectEngine.R")
+source ("rcode/theAspects.R")
+source ("rcode/matrix.R")
+source ("rcode/coneRegression.R")
+source ("rcode/splineBasis.R")
+```
+
+# Preface {-}
+
+
+In 1980 members of the Department of Data Theory at the University of Leiden taught a post-doctoral course in Nonlinear Multivariate Analysis. The course content was sort-of-published, in Dutch, as @gifi_B_80. The course was repeated in 1981, and this time the sort-of-published version (@gifi_B_81) was in English. 
+
+The preface gives some details about the author.
+
+> The text is the joint product of the members of the Department of Data Theory of the Faculty of Social Sciences, University of Leiden.
+> 'Albert Gifi' is their 'nom de plume'. The portrait, however, of Albert Gifi shown here, is that of the real Albert Gifi to whose 
+> memory this book is dedicated, as a far too late recompense for his loyalty and devotion, during so any years, to the Cause he served.
+
+Roughly ten years later a revised version of these course notes came out as an actual book in the *Wiley Series in Probabilty and Mathematical Statistics* (@gifi_B_90). This despite the fact that the contents of the book had very little to do with either probability or mathematical statistics. The book is organized around a series of computer programs for correspondence analysis, principal component analysis, and canonical analysis. The programs, written in FORTRAN, are called HOMALS, PRINCALS, PRIMALS, CRIMINALS, CANALS, OVERALS because they combine classical linear multivariate analysis with optimal transformation of the variables, using alternating least squares (or ALS). It serves, to some extent, as a manual for the programs, but it also discusses the properties of the techniques implemented in the programs, and it presents many detailed applications of these techniques.
+
+Reviewers generally had some difficulties separating the wheat from the chaff.
+
+> As the spirit of Albert Gifi has faded away, so has his whimsical approach to 
+> publishing, and his latest book is an idiosyncratic account of multivariate methods 
+> developed by the Leiden group during the 1970s. The names of their computer programs 
+> are distinguished by the ending ~ALS, thus we have OVERALS, PRINCALS, HOMALS, 
+> CANALS, MORALS, MANOVALS, CRIMINALS, PARTALS and PATHALS. Perhaps if you have a 
+> warped mind like this reviewer, you will turn rapidly to CRIMINALS. What can it be ?
+> Surely it must give some illicit view of the truth about the world, a vision of the 
+> underworld of multivariate analysis ? Alas no ! It turns out only to be a synonym of
+> Canonical Variate Analysis, sometimes known as Multiple Discriminant Analysis. 
+> Likewise HOMALS turns out to be Reciprocal Averaging, otherwise known as 
+> Correspondence Analysis. (@hill_90)
+
+This ambiguity and confusion are not too surprising. The Gifi book was a summary of the work of a large number of people, over a period of almost 20 years. Nevertheless, and perhaps because of this, it is somewhat of a *camel*, which we define for our purposes as a *horse designed by a committee*. Different chapters had different authors, and the common ideas behind the various techniques were not always clearly explained. 
+
+> In Gifi's MVA the criterion called "meet" loss plays a central role. Although the 
+> adoption of this criterion is one of the most important contributions of Gifi, the 
+> book would have been much more readable if this criterion had been introduced right 
+> at the outset and was followed throughout the rest of the book. (@takane_92)
+
+Nevertheless there is much original material in @gifi_B_90, and the book has early applications of alternating least squares, majorization, coordinate descent, the delta method, and the bootstrap. And it emphasizes throughout the idea that statistics is about techniques, not about models. But, yes, the organization leaves much to be desired. An on demand printing of the first and only edition is now available on Amazon for $ 492 -- although of course used versions go for much less.
+
+The book was published by a prestiguous publisher in a prestiguous series, but it is fair to say it never really caught on. It is not hard to understand why. The content, and the style, are unfamiliar to statisticians and mathematicians. There is no inference, no probability, and very little rigor.  The content is in multivariate data analysis, which would be most at home these days, if anywhere, in a computer science department. The Gifi group did not have the resources of, say, Benzécri in France or Hayashi in Japan. The members were mostly active in psychometrics, a small and insular field, and they were from The Netherlands, a small country prone to overestimate its importance (@marvell_53). They also did not have the evangelical zeal necessary for creating and sustaining a large impact.
+
+There have been some other major publication events in the Gifi saga. Around the same time as the Wiley book there was the publication of @spss_89. Starting in the late seventies the Gifi FORTRAN programs had been embedded in the SPSS system. The *SPSS Categories* manual was updated many times, in fact every time SPSS or IBM SPSS had a new release. Over the years other programs produced by the Department of Data Theory were added. A recent version is, for example, @meulman_heiser_12, corresponding to IBM SPSS 21. It acknowledges the contributions of some of the members of the Gifi team -- but in @ibm_15, the version for IBM SPSS 23, these acknowledgements and the names of the authors have disappeared. Sic transit gloria mundi.
+
+@michailidis_deleeuw_A_98 made an attempt to make the Gifi material somewhat more accessible by publishing a review article in a widely read mainstream statistical journal. Another such attempt is @deleeuw_mair_A_09a, in which the homals package for R is introduced. The homals package is basically a single monolithic R function that can do everything the Gifi programs can do, and then some. In both cases, however, the problem remained that the techniques, and the software, were too convoluted and too different from what both statisticians and users were accustomed to.
+
+@vanderheijden_vanbuuren_16 give an excellent, though somewhat wistful, historic overview of the Gifi project. It is too early for eulogies, however, and we refuse to give up. This book is yet another reorganization of the Gifi material, with many extensions. We take Yoshio Takane's advice seriously, and we organize both the theory and the algorithms around what is called "meet-loss" in Gifi. In our software we separate the basic computational engine from its various applications that define the techniques of *Multivariate Analysis with Optimal Scaling (MVAOS)*. Hiding the core makes it possible to make the programs behave in much the same way as traditional MVA programs. The software is written in R (@r_core_team_16), with some parts of the computational engine written in C. 
+
+The book itself is written in Rmarkdown, using bookdown (@xie_16) and knitr (@xie_15) to embed the computations and graphics, and to produce html and pdf versions that are completely reproducible. The book and all the files that go with it are in the public domain.
+  
+We would like to acknowledge those who have made substantial contributions to the Gifi project (and its immediate ancestors and offspring) over the years. Some of them are lost in the mists of time, some of them are no longer on this earth. They are, in alphabetical order, Bert Bettonvil, Jason Bond, Catrien Bijleveld, Frank Busing, Jacques Commandeur, Henny Coolen, Steef de Bie, Jan de Leeuw, John Gower, Patrick Groenen, Chris Haveman, Willem Heiser, Abby Israels, Judy Knip, Jan Koster, Pieter Kroonenberg, Patrick Mair, Adriaan Meester, Jacqueline Meulman, George Michailidis, Peter Neufeglise, Dré Nierop, Ineke Stoop, Yoshio Takane, Stef van Buuren, John van de Geer, Gerda van den Berg, Eeke van der Burg, Peter van der Heijden, Anita van der Kooij, Ivo van der Lans, Rien van der Leeden, Jan van Rijckevorsel, Renée Verdegaal, Peter Verboon, Susañña Verdel, and Forrest Young.
+  

@@ -1,0 +1,77 @@
+# Discriminant Analysis and criminals()
+
+## Equations 
+
+If the second block contains more than one copy of a single variable and we use binary indicator coding for that variable, then we optimize the
+eigenvalue (between/within ratio) sums for a canonical discriminant analysis.
+
+## Examples
+
+### Iris data
+
+The next example illustrates (canonical) discriminant analysis, using the obligatory Anderson-Fisher iris data. Since there are three species of iris, we use two copies for the species variable. The other four variables are in the same block, they are transformed using piecewise linear monotone splines with five knots.
+
+```{r iris_data}
+data(iris, package="datasets")
+iris_vars <- names(iris)
+iris_knots <- knotsQ(iris[,1:4])
+x <- as.matrix(iris[,1:4])
+y <- as.matrix(iris[[5]])
+```
+
+```{r run_iris, cache = TRUE}
+h <- criminals (x, y, xdegrees = 1)
+```
+In `r h$ntel` iterations we find minimum loss `r h$f`. The object scores are in figure
+`r figure_nums("iris_objects", display = "n")` plotted against the original variables (not the transformed variables), and the transformation 
+plots are in figure
+`r figure_nums("iris_transform", display = "n")`.
+
+<hr>
+```{r plot_iris_objects, fig.align="center", cache = FALSE, echo = FALSE}
+plot (h$objectscores, col = "RED", type = "n", xlab = "dim 1", ylab = "dim 2")
+text (h$objectscores, as.character (iris[[5]]), col = "RED")
+```
+<center>
+`r figure_nums("iris_objects")`
+</center>
+<hr>
+
+<hr>
+```{r plot_iris_transform, fig.align="center", cache = FALSE, echo = FALSE}
+par(mfrow=c(2,2))
+oj <- order (iris[,1])
+plot(iris[oj ,1], h$xhat[oj ,1], col = "RED", xlab = iris_vars[1], ylab = "Transform", type = "l", lwd = 3)
+nknots <- length (iris_knots[[1]])
+for (k in 1:nknots) abline(v = iris_knots[[1]][k])
+oj <- order (iris[,2])
+plot(iris[oj,2], h$xhat[oj,2], col = "RED", xlab = iris_vars[2], ylab = "Transform", type = "l", lwd = 3)
+nknots <- length (iris_knots[[2]])
+for (k in 1:nknots) abline(v = iris_knots[[2]][k])
+oj <- order (iris[,3])
+plot(iris[oj ,3], h$xhat[oj, 3], col = "RED", xlab = iris_vars[3], ylab = "Transform", type = "l", lwd = 3)
+nknots <- length (iris_knots[[3]])
+for (k in 1:nknots) abline(v = iris_knots[[3]][k])
+oj <- order (iris[,4])
+plot(iris[oj,4], h$xhat[oj,4], col = "RED", xlab = iris_vars[4], ylab = "Transform", type = "l", lwd = 3)
+nknots <- length (iris_knots[[4]])
+for (k in 1:nknots) abline(v = iris_knots[[4]][k])
+```
+<center>
+`r figure_nums("iris_transform")`
+</center>
+<hr>
+```{r iris_cda, echo = FALSE, eval = FALSE}
+cda <- function (x,y) {
+    g <- ifelse (outer(y, unique(y), "=="), 1 ,0)
+    x <- apply (x, 2, function (z) z - mean (z))
+    x <- apply (x, 2, function (z) z / sqrt (sum (z ^ 2)))
+    r <- crossprod (x)
+    b <- qr.solve (g, x)
+    d <- colSums (g)
+    s <- crossprod (b, d * b)
+    return (eigen (solve (r, s)))
+}
+```
+Discriminant analysis decomposes the total dispersion matrix $T$ into a sum of a between-groups dispersion $B$ and a within-groups dispersion $W$, and then finds directions in the space spanned by the variables for which the between-variance is largest relative to the total variance. MVAOS optimizes the sum of the $r$ largest eigenvalues of $T^{-1}B$. Before optimal transformation these 
+eigenvalues for the iris data are `r `, after transformation they are  `r `.

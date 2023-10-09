@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>7 Partials | Gifi Canonical Analysis</title>
+  <meta name="description" content="7 Partials | Gifi Canonical Analysis" />
+  <meta name="generator" content="bookdown 0.22.3 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="7 Partials | Gifi Canonical Analysis" />
+  <meta property="og:type" content="book" />
+  
+  
+  
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="7 Partials | Gifi Canonical Analysis" />
+  
+  
+  
+
+<meta name="author" content="Jan de Leeuw" />
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="aspect-loss.html"/>
+<link rel="next" href="canals.html"/>
+<style type="text/css">
+p.abstract{
+  text-align: center;
+  font-weight: bold;
+}
+div.abstract{
+  margin: auto;
+  width: 90%;
+}
+</style>
+<script src="libs/header-attrs-2.9/header-attrs.js"></script>
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li class="chapter" data-level="1" data-path="intro.html"><a href="intro.html"><i class="fa fa-check"></i><b>1</b> Intro</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="intro.html"><a href="intro.html#deleeuw_b_73"><i class="fa fa-check"></i><b>1.1</b> <span class="citation">De Leeuw (1973)</span></a></li>
+<li class="chapter" data-level="1.2" data-path="intro.html"><a href="intro.html#young_deleeuw_takane_a_76"><i class="fa fa-check"></i><b>1.2</b> <span class="citation">Young, De Leeuw, and Takane (1976)</span></a></li>
+<li class="chapter" data-level="1.3" data-path="intro.html"><a href="intro.html#gifi_b_90-michailidis_deleeuw_r_96b"><i class="fa fa-check"></i><b>1.3</b> <span class="citation">Gifi (1990)</span>, <span class="citation">Michailidis and De Leeuw (1996)</span></a></li>
+<li class="chapter" data-level="1.4" data-path="intro.html"><a href="intro.html#deleeuw_a_88a-deleeuw_c_88b"><i class="fa fa-check"></i><b>1.4</b> <span class="citation">De Leeuw (1988a)</span>, <span class="citation">De Leeuw (1988b)</span></a></li>
+<li class="chapter" data-level="1.5" data-path="intro.html"><a href="intro.html#deleeuw_c_04a"><i class="fa fa-check"></i><b>1.5</b> <span class="citation">De Leeuw (2004)</span></a></li>
+<li class="chapter" data-level="1.6" data-path="intro.html"><a href="intro.html#deleeuw_mair_a_09a"><i class="fa fa-check"></i><b>1.6</b> <span class="citation">De Leeuw and Mair (2009)</span></a></li>
+<li class="chapter" data-level="1.7" data-path="intro.html"><a href="intro.html#deleeuw_e_19i-deleeuw_b_21a"><i class="fa fa-check"></i><b>1.7</b> <span class="citation">De Leeuw (2019)</span>, <span class="citation">De Leeuw (2021)</span></a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="two-set-canonical-analysis.html"><a href="two-set-canonical-analysis.html"><i class="fa fa-check"></i><b>2</b> Two-set Canonical Analysis</a></li>
+<li class="chapter" data-level="3" data-path="gifi-meet-loss.html"><a href="gifi-meet-loss.html"><i class="fa fa-check"></i><b>3</b> Gifi Meet-Loss</a></li>
+<li class="chapter" data-level="4" data-path="relationships.html"><a href="relationships.html"><i class="fa fa-check"></i><b>4</b> Relationships</a></li>
+<li class="chapter" data-level="5" data-path="optimal-scaling.html"><a href="optimal-scaling.html"><i class="fa fa-check"></i><b>5</b> Optimal Scaling</a></li>
+<li class="chapter" data-level="6" data-path="aspect-loss.html"><a href="aspect-loss.html"><i class="fa fa-check"></i><b>6</b> Aspect Loss</a></li>
+<li class="chapter" data-level="7" data-path="partials.html"><a href="partials.html"><i class="fa fa-check"></i><b>7</b> Partials</a></li>
+<li class="chapter" data-level="8" data-path="canals.html"><a href="canals.html"><i class="fa fa-check"></i><b>8</b> Canals</a></li>
+<li class="chapter" data-level="9" data-path="criminals.html"><a href="criminals.html"><i class="fa fa-check"></i><b>9</b> Criminals</a></li>
+<li class="chapter" data-level="10" data-path="morals.html"><a href="morals.html"><i class="fa fa-check"></i><b>10</b> Morals</a></li>
+<li class="chapter" data-level="11" data-path="redundals.html"><a href="redundals.html"><i class="fa fa-check"></i><b>11</b> Redundals</a></li>
+<li class="chapter" data-level="12" data-path="multiple-sets.html"><a href="multiple-sets.html"><i class="fa fa-check"></i><b>12</b> Multiple Sets</a></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Gifi Canonical Analysis</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="partials" class="section level1" number="7">
+<h1><span class="header-section-number">7</span> Partials</h1>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="partials.html#cb1-1" aria-hidden="true" tabindex="-1"></a>normMe <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
+<span id="cb1-2"><a href="partials.html#cb1-2" aria-hidden="true" tabindex="-1"></a>  x <span class="ot">&lt;-</span> <span class="fu">apply</span> (x, <span class="dv">2</span>, <span class="cf">function</span> (x) x <span class="sc">-</span> <span class="fu">mean</span>(x))</span>
+<span id="cb1-3"><a href="partials.html#cb1-3" aria-hidden="true" tabindex="-1"></a>  x <span class="ot">&lt;-</span> <span class="fu">apply</span> (x, <span class="dv">2</span>, <span class="cf">function</span> (x) x <span class="sc">/</span> <span class="fu">sqrt</span>(<span class="fu">sum</span>(x<span class="sc">^</span><span class="dv">2</span>)))</span>
+<span id="cb1-4"><a href="partials.html#cb1-4" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb1-5"><a href="partials.html#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">12345</span>)</span>
+<span id="cb1-6"><a href="partials.html#cb1-6" aria-hidden="true" tabindex="-1"></a>x<span class="ot">&lt;-</span><span class="fu">normMe</span>(<span class="fu">matrix</span>(<span class="fu">rnorm</span>(<span class="dv">300</span>),<span class="dv">100</span>,<span class="dv">3</span>))</span>
+<span id="cb1-7"><a href="partials.html#cb1-7" aria-hidden="true" tabindex="-1"></a>y<span class="ot">&lt;-</span><span class="fu">normMe</span>(<span class="fu">matrix</span>(<span class="fu">rnorm</span>(<span class="dv">300</span>),<span class="dv">100</span>,<span class="dv">3</span>))</span>
+<span id="cb1-8"><a href="partials.html#cb1-8" aria-hidden="true" tabindex="-1"></a>z<span class="ot">&lt;-</span><span class="fu">normMe</span>(<span class="fu">matrix</span>(<span class="fu">rnorm</span>(<span class="dv">300</span>),<span class="dv">100</span>,<span class="dv">3</span>))</span>
+<span id="cb1-9"><a href="partials.html#cb1-9" aria-hidden="true" tabindex="-1"></a>h <span class="ot">&lt;-</span> <span class="fu">cancor</span>(<span class="fu">cbind</span>(x,z), <span class="fu">cbind</span>(y,z))</span>
+<span id="cb1-10"><a href="partials.html#cb1-10" aria-hidden="true" tabindex="-1"></a>zx<span class="ot">&lt;-</span><span class="fu">lsfit</span>(z,x,<span class="at">intercept=</span><span class="cn">FALSE</span>)<span class="sc">$</span>residuals</span>
+<span id="cb1-11"><a href="partials.html#cb1-11" aria-hidden="true" tabindex="-1"></a>zy<span class="ot">&lt;-</span><span class="fu">lsfit</span>(z,y,<span class="at">intercept=</span><span class="cn">FALSE</span>)<span class="sc">$</span>residuals</span>
+<span id="cb1-12"><a href="partials.html#cb1-12" aria-hidden="true" tabindex="-1"></a>g <span class="ot">&lt;-</span> <span class="fu">cancor</span>(zx,zy)</span>
+<span id="cb1-13"><a href="partials.html#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(h<span class="sc">$</span>cor)</span></code></pre></div>
+<pre><code>## [1] 1.00000000000 1.00000000000 1.00000000000 0.33129713443 0.20924325693
+## [6] 0.06758341885</code></pre>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="partials.html#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(g<span class="sc">$</span>cor)</span></code></pre></div>
+<pre><code>## [1] 0.33129713443 0.20924325693 0.06758341885</code></pre>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="partials.html#cb5-1" aria-hidden="true" tabindex="-1"></a>xvar1<span class="ot">&lt;-</span><span class="fu">cbind</span>(x,z)<span class="sc">%*%</span>h<span class="sc">$</span>xcoef[,<span class="sc">-</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>)]</span>
+<span id="cb5-2"><a href="partials.html#cb5-2" aria-hidden="true" tabindex="-1"></a>xvar2<span class="ot">&lt;-</span>zx<span class="sc">%*%</span>g<span class="sc">$</span>xcoef</span></code></pre></div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="aspect-loss.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="canals.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": null,
+"toc": {
+"collapse": "none"
+},
+"keep_md": true,
+"toolbar": {
+"position": "fixed"
+},
+"search": false
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

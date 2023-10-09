@@ -1,0 +1,85 @@
+# Nonlinear Principal Component Analysis and princals() 
+
+## Introduction
+
+princals, principals, Shepard-Kruskal, mdrace, history
+
+## Equations
+
+Suppose all $m$ blocks each contain only a single variable. Then the Burt matrix is the correlation matrix of the $H_j$, which are all $n\times 1$ matrices in this case. It follows that MVAOS maximizes the sum of the $r$ largest eigenvalues of the correlation matrix over transformations, i.e. MVAOS is _nonlinear principal component analysis_ [@deleeuw_C_14].
+
+## Examples
+
+### Thirteen Personality Scales
+
+We use the same data as before for an NLPCA with all blocks of rank one, all variables ordinal, and splines of degree 2.
+
+```{r run_epi_3, cache = TRUE}
+epi_copies <- rep (1, 13)
+epi_ordinal <- rep (TRUE, 13)
+h <- princals(epi, epi_knots, epi_degrees, epi_ordinal, epi_copies)
+```
+```{r eigen_epi, echo = FALSE}
+val0 <- eigen(cor(epi))$values
+val1 <- eigen(h$rhat)$values
+```
+In `r h$ntel` iterations we find minimum loss `r h$f`. The object scores are in figure
+`r figure_nums("epi_object_S_2", display = "n")` and the transformation plots in figure
+`r figure_nums("epi_transform_S_2", display = "n")`. NLPCA maximizes the sum of the two largest eigenvalues of the correlation matrix of the variables. Before transformation the eigenvalues are `r val0`, after transformation they are `r val1`. The sum of the first two goes from `r val0[1]+val0[2]` to `r val1[1]+val1[2]`.
+<hr>
+```{r plot_epi_x_S_2, fig.align = "center"}
+plot(h$objectscores, xlab = "dim1", ylab = "dim2", col = "RED", cex = .5)
+```
+<center>
+`r figure_nums("epi_object_S_2")`
+</center>
+<hr>
+
+<hr>
+```{r plot_epi_trans_S_0, fig.align="center", echo = FALSE}
+par(mfrow=c(1,5))
+for (j in 1:13) {
+  oj <- order (epi[,j])
+  plot(epi[oj,j], h$transform[[j]][oj], col="RED", xlab=lbs[j], ylab="transform", type= "l", lwd = 3)
+  nknots <- length (epi_knots[[j]])
+  for (k in 1:nknots) abline(v = epi_knots[[j]][k])
+}
+par(mfrow=c(1,1))
+```
+<center>
+`r figure_nums("epi_transform_S_2")`
+</center>
+<hr>
+
+We repeat the analysis with ordinal variables of degree two, without interior knots. Thus we the transformation plots will be quadratic polynomials that are monotone over the range of the data.
+```{r run_epi_4, cache = TRUE}
+h <- princals(epi, knotsE(epi), epi_degrees, epi_ordinal)
+```
+```{r epi_eig, echo = FALSE}
+val2 <- eigen(h$rhat)$values
+```
+In `r h$ntel` iterations we find minimum loss `r h$f`. The object scores are in figure
+`r figure_nums("epi_object_P_2", display = "n")` and the transformation plots in figure
+`r figure_nums("epi_transform_P_2", display = "n")`. The eigenvalues are now `r val2`, with sum of the first two equal to `r val2[1]+val2[2]`.
+<hr>
+```{r plot_epi_x_P_2, fig.align = "center", cache = FALSE, echo = FALSE}
+plot(h$objectscores, xlab = "dim1", ylab = "dim2", col = "RED", cex = .5)
+```
+<center>
+`r figure_nums("epi_object_P_2")`
+</center>
+<hr>
+
+<hr>
+```{r plot_epi_trans_P_0, fig.align="center", cache = FALSE, echo = FALSE}
+par(mfrow=c(1,5))
+for (j in 1:13) {
+  oj <- order (epi[,j])
+  plot(epi[oj,j], h$transform[[j]][oj], col="RED", xlab=lbs[j], ylab="transform", type = "l", lwd = 3)
+}
+par(mfrow=c(1,1))
+```
+<center>
+`r figure_nums("epi_transform_P_2")`
+</center>
+<hr>

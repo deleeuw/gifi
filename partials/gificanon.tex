@@ -1,0 +1,801 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+  12pt,
+]{article}
+\usepackage{amsmath,amssymb}
+\usepackage{lmodern}
+\usepackage{ifxetex,ifluatex}
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math}
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\hypersetup{
+  pdftitle={Aspects of Gifi},
+  pdfauthor={Jan de Leeuw},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+\urlstyle{same} % disable monospaced font for URLs
+\usepackage[margin=1in]{geometry}
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.77,0.63,0.00}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\usepackage{longtable,booktabs,array}
+\usepackage{calc} % for calculating minipage widths
+% Correct order of tables after \paragraph or \subparagraph
+\usepackage{etoolbox}
+\makeatletter
+\patchcmd\longtable{\par}{\if@noskipsec\mbox{}\fi\par}{}{}
+\makeatother
+% Allow footnotes in longtable head/foot
+\IfFileExists{footnotehyper.sty}{\usepackage{footnotehyper}}{\usepackage{footnote}}
+\makesavenoteenv{longtable}
+\usepackage{graphicx}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{5}
+\ifluatex
+  \usepackage{selnolig}  % disable illegal ligatures
+\fi
+\newlength{\cslhangindent}
+\setlength{\cslhangindent}{1.5em}
+\newlength{\csllabelwidth}
+\setlength{\csllabelwidth}{3em}
+\newenvironment{CSLReferences}[2] % #1 hanging-ident, #2 entry spacing
+ {% don't indent paragraphs
+  \setlength{\parindent}{0pt}
+  % turn on hanging indent if param 1 is 1
+  \ifodd #1 \everypar{\setlength{\hangindent}{\cslhangindent}}\ignorespaces\fi
+  % set entry spacing
+  \ifnum #2 > 0
+  \setlength{\parskip}{#2\baselineskip}
+  \fi
+ }%
+ {}
+\usepackage{calc}
+\newcommand{\CSLBlock}[1]{#1\hfill\break}
+\newcommand{\CSLLeftMargin}[1]{\parbox[t]{\csllabelwidth}{#1}}
+\newcommand{\CSLRightInline}[1]{\parbox[t]{\linewidth - \csllabelwidth}{#1}\break}
+\newcommand{\CSLIndent}[1]{\hspace{\cslhangindent}#1}
+
+\title{Aspects of Gifi}
+\author{Jan de Leeuw}
+\date{First created July 03, 2021. Last update July 11, 2021}
+
+\begin{document}
+\maketitle
+\begin{abstract}
+Brouhaha
+\end{abstract}
+
+{
+\setcounter{tocdepth}{4}
+\tableofcontents
+}
+\begin{quote}
+\begin{quote}
+aspect (NOUN)\\
+\emph{particular part or feature of something}
+\end{quote}
+\end{quote}
+
+\hypertarget{intro}{%
+\section{Intro}\label{intro}}
+
+The \emph{Gifi System} for descriptive multivariate analysis has a
+complicated history.
+
+\hypertarget{phase-one-starters}{%
+\subsection{Phase One: Starters}\label{phase-one-starters}}
+
+De Leeuw (1973)
+
+\hypertarget{phase-two-alsos}{%
+\subsection{Phase Two: ALSOS}\label{phase-two-alsos}}
+
+Young, De Leeuw, and Takane (1976)
+
+\hypertarget{phase-three-meet-loss}{%
+\subsection{Phase Three: Meet-Loss}\label{phase-three-meet-loss}}
+
+Gifi (1990), (\textbf{michailidis\_deleeuw\_R\_96b?})
+
+(within this
+Van der Burg and De Leeuw (1983),
+Van der Burg and De Leeuw (1988),
+Van der Burg and De Leeuw (1990))
+
+\hypertarget{phase-four-correlational-aspects}{%
+\subsection{Phase Four: Correlational Aspects}\label{phase-four-correlational-aspects}}
+
+De Leeuw (1988a), De Leeuw (1988b)
+
+\hypertarget{phase-five-meet-loss-as-an-aspect}{%
+\subsection{Phase Five: Meet-Loss as an Aspect}\label{phase-five-meet-loss-as-an-aspect}}
+
+De Leeuw (2004)
+
+\hypertarget{phase-six-meet-loss-in-r}{%
+\subsection{Phase Six: Meet-Loss in R}\label{phase-six-meet-loss-in-r}}
+
+De Leeuw and Mair (2009), De Leeuw (2009)
+
+\hypertarget{phase-seven-gifi-2021}{%
+\subsection{Phase Seven: Gifi 2021}\label{phase-seven-gifi-2021}}
+
+De Leeuw (2019), De Leeuw (2021)
+
+\hypertarget{canonical-analysis}{%
+\section{Canonical Analysis}\label{canonical-analysis}}
+
+Suppose \(X\) and \(Y\) are \(n\times r\) and \(n\times s\) matrices of real numbers, with \(X\) containing measurements of \(n\) objects on a first set of \(r\) variables, and with \(Y\) measurements of the same \(n\) objects on a second set of \(s\) variables. Both \(X\) and \(Y\) are supposed to be column-centered and of full column rank. Without loss of generality we assume \(\text{diag}\ X'X=I\) and \(\text{diag}\ Y'Y=I\), so that \(X'X\), \(Y'Y\), and \(X'Y\) are correlation matrices.
+
+In canonical analysis we define the fit function(or goodness-of-fit measure) in \(p\) dimensions, where \(p\leq\min(r,s)\), as
+
+\begin{equation}
+\rho_p^\star(X,Y):=\frac{1}{p}\left\{\max_{A'X'XA=I}\max_{B'Y'YB=I}\text{tr}\ A'X'YB\right\}
+\label{eq:cancor}
+\end{equation}
+
+Here matrix \(A\) is \(r\times p\) and matrix \(B\) is \(s\times p\). It is clear from this formulation that \(\rho_p(X,Y)=\rho_p(XS,YT)\)
+for all non-singular \(S\) and \(T\), specifically for non-singular diagonal \(S\) and \(T\). Thus we assume, without loss of generality, that \(\text{diag}\ X'X=I\) and \(\text{diag}\ Y'Y=I\), so that \(X'X\), \(Y'Y\), and \(X'Y\) are correlation matrices. The invariance under right multiplication shows that \(\rho_p(X,Y)\) is really a characteristic of the column-spaces of \(X\) and \(Y\), and is independent of the choice of bases for these two spaces.
+
+The stationary equations are
+
+\begin{align}
+\begin{split}
+X'YB&=X'XA\Phi,\\
+Y'XA&=Y'YB\Psi,\\
+A'X'XA&=I,\\
+B'Y'YB&=I,
+\end{split}
+\label{eq:se1}
+\end{align}
+
+where \(\Phi\) and \(\Psi\) are two symmetric matrices of Lagrange multipliers. It follows directly from these equations that \(\Phi=\Psi\).
+
+Define \(\tilde A=(X'X)^\frac12 A\) and
+\(\tilde B=(Y'Y)^\frac12 B\). Any matrix square root will do, so we can use the Cholesky factor, or the eigen factorization, or the symmetric square root. Also define
+\(\tilde X=X(X'X)^{-\frac12}\) and \(\tilde Y=Y(Y'Y)^{-\frac12}\). Then the stationary equations \eqref{eq:se1} become
+
+\begin{align}
+\begin{split}
+\tilde X'\tilde Y\tilde B&=\tilde A\Phi,\\
+\tilde Y'\tilde X\tilde A&=\tilde B\Psi,\\
+\tilde A'\tilde A&=I,\\
+\tilde B'\tilde B&=I.
+\end{split}
+\label{eq:se2}
+\end{align}
+
+It follows that \(\Phi=\Psi=M\mathrm{P} M'\), where
+\(M\) is an arbitrary rotation matrix with \(M'M=MM'=I\), and \(\mathrm{P}\) is a diagonal matrix with \(p\) singular values of
+
+\begin{equation}
+\tilde C:=\tilde X'\tilde Y=
+(X'X)^{-\frac12}X'Y(Y'Y)^{-\frac12}.
+\label{eq:tildec}
+\end{equation}
+
+We always choose the singular values to be non-negative.
+
+If the singular value decomposition is
+\(\tilde C=K\mathrm{P} L'\), then the maximum in \eqref{eq:cancor}
+is attained for \(A=(X'X)^{-\frac12}K_pM\)
+and \(B=(Y'Y)^{-\frac12}L_pM\), where \(K_p\)
+and \(L_p\) are singular vectors corresponding with the \(p\) largest singular values, \(\rho_1(X,Y)\geq\cdots\geq\rho_p(X,Y)\) and \(M\)
+is the arbitrary rotation matrix. At the maximum
+
+\begin{equation}
+\rho_p^\star(X,Y)=\frac{1}{p}\sum_{s=1}^p\rho_s(X,Y).
+\label{eq:rhomax}
+\end{equation}
+
+The \(\rho_s(X,Y)\) are the \emph{canonical correlations}. Becase they are proper correlations, we have \(0\leq\rho_s(X,Y)\leq 1\). Thus \(\rho_p^\star(X,Y)\) is the average of the \(p\) largest canonical correlations. We also define the \emph{canonical weights} as the maximizers \(A\) and \(B\), the \emph{canonical variables} as \(XA\) and \(YB\). and the \emph{canonical self-loadings} as the correlations \(X'XA\) and \(Y'YB\) between the original variables and the canonical varables. The \emph{canonical cross-loadings} are \(X'YB\) and \(Y'XA\), but from equations \eqref{eq:se1} we see that the cross loadings are a simple rescaling of the self-loadings.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{x }\OtherTok{\textless{}{-}} \FunctionTok{normy}\NormalTok{(}\FunctionTok{matrix}\NormalTok{(}\FunctionTok{rnorm}\NormalTok{(}\DecValTok{300}\NormalTok{), }\DecValTok{100}\NormalTok{, }\DecValTok{3}\NormalTok{))}
+\NormalTok{y }\OtherTok{\textless{}{-}} \FunctionTok{normy}\NormalTok{(}\FunctionTok{matrix}\NormalTok{(}\FunctionTok{rnorm}\NormalTok{(}\DecValTok{500}\NormalTok{), }\DecValTok{100}\NormalTok{, }\DecValTok{5}\NormalTok{))}
+\NormalTok{h }\OtherTok{\textless{}{-}} \FunctionTok{cancor}\NormalTok{(x, y)}
+\NormalTok{r }\OtherTok{\textless{}{-}}\NormalTok{ h}\SpecialCharTok{$}\NormalTok{cor}
+\NormalTok{a }\OtherTok{\textless{}{-}}\NormalTok{ h}\SpecialCharTok{$}\NormalTok{xcoef}
+\NormalTok{b }\OtherTok{\textless{}{-}}\NormalTok{ h}\SpecialCharTok{$}\NormalTok{ycoef[,}\DecValTok{1}\SpecialCharTok{:}\DecValTok{3}\NormalTok{]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{mprint}\NormalTok{(r)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1]  +0.364068  +0.245573  +0.106719
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{mprint}\NormalTok{(a)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##      [,1]       [,2]       [,3]      
+## [1,]  +0.417988  -0.074202  -0.911973
+## [2,]  +0.337779  -0.893083  +0.338824
+## [3,]  -0.767089  -0.559736  -0.339876
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{mprint}\NormalTok{(b)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##      [,1]       [,2]       [,3]      
+## [1,]  +0.912158  +0.253359  +0.151970
+## [2,]  +0.033129  +0.675454  -0.780475
+## [3,]  +0.074446  -0.612854  -0.175790
+## [4,]  +0.079878  +0.650497  +0.251760
+## [5,]  +0.404800  -0.162086  -0.722730
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{mprint}\NormalTok{(}\FunctionTok{crossprod}\NormalTok{(x }\SpecialCharTok{\%*\%}\NormalTok{ a))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##      [,1]       [,2]       [,3]      
+## [1,]  +1.000000  -0.000000  -0.000000
+## [2,]  -0.000000  +1.000000  -0.000000
+## [3,]  -0.000000  -0.000000  +1.000000
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{mprint}\NormalTok{(}\FunctionTok{crossprod}\NormalTok{(y }\SpecialCharTok{\%*\%}\NormalTok{ b))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##      [,1]       [,2]       [,3]      
+## [1,]  +1.000000  -0.000000  -0.000000
+## [2,]  -0.000000  +1.000000  -0.000000
+## [3,]  -0.000000  -0.000000  +1.000000
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{mprint}\NormalTok{(}\FunctionTok{crossprod}\NormalTok{(x }\SpecialCharTok{\%*\%}\NormalTok{ a, y }\SpecialCharTok{\%*\%}\NormalTok{ b))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##      [,1]       [,2]       [,3]      
+## [1,]  +0.364068  -0.000000  -0.000000
+## [2,]  +0.000000  +0.245573  -0.000000
+## [3,]  -0.000000  +0.000000  +0.106719
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{mprint}\NormalTok{(}\FunctionTok{crossprod}\NormalTok{(x, x }\SpecialCharTok{\%*\%}\NormalTok{ a))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##      [,1]       [,2]       [,3]      
+## [1,]  +0.486329  -0.143087  -0.861981
+## [2,]  +0.478495  -0.829921  +0.286835
+## [3,]  -0.827929  -0.443415  -0.343390
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{mprint}\NormalTok{(}\FunctionTok{crossprod}\NormalTok{(y, y }\SpecialCharTok{\%*\%}\NormalTok{ b))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##      [,1]       [,2]       [,3]      
+## [1,]  +0.916635  +0.073821  +0.208122
+## [2,]  -0.201484  +0.487258  -0.665195
+## [3,]  +0.081807  -0.467680  -0.138525
+## [4,]  +0.029081  +0.507080  +0.364293
+## [5,]  +0.400557  -0.220273  -0.460943
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{mprint}\NormalTok{(}\FunctionTok{crossprod}\NormalTok{(x, x }\SpecialCharTok{\%*\%}\NormalTok{ a))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##      [,1]       [,2]       [,3]      
+## [1,]  +0.486329  -0.143087  -0.861981
+## [2,]  +0.478495  -0.829921  +0.286835
+## [3,]  -0.827929  -0.443415  -0.343390
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{mprint}\NormalTok{(}\FunctionTok{crossprod}\NormalTok{(x, y }\SpecialCharTok{\%*\%}\NormalTok{ b))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##      [,1]       [,2]       [,3]      
+## [1,]  +0.177057  -0.035138  -0.091990
+## [2,]  +0.174205  -0.203806  +0.030611
+## [3,]  -0.301423  -0.108891  -0.036646
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{mprint}\NormalTok{(}\FunctionTok{crossprod}\NormalTok{(y, x }\SpecialCharTok{\%*\%}\NormalTok{ a))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##      [,1]       [,2]       [,3]      
+## [1,]  +0.333717  +0.018129  +0.022211
+## [2,]  -0.073354  +0.119658  -0.070989
+## [3,]  +0.029783  -0.114850  -0.014783
+## [4,]  +0.010587  +0.124525  +0.038877
+## [5,]  +0.145830  -0.054093  -0.049191
+\end{verbatim}
+
+\hypertarget{gifi-meet-loss}{%
+\section{Gifi Meet-Loss}\label{gifi-meet-loss}}
+
+In Gifi (1990) we define \emph{meet-loss} for two sets as the least squares loss function (or badness-of-fit measure)
+
+\begin{equation}
+\sigma_p^\star(X,Y):=\frac12\frac{1}{p}\left\{\min_{Z'Z=I}\min_{A}\min_{B}\left\{\text{SSQ}(Z-XA)+\text{SSQ}(Z-YB)\right\}\right\},
+\label{eq:gifiloss}
+\end{equation}
+
+where we use \(\text{SSQ}\) as shorthand for sum of squares. The name meet-loss derives from the fact that \(\sigma_p^\star(X,Y)=0\)
+if and only if the intersection (or meet) of the column spaces of \(X\) and \(Y\) has dimension \(d\geq p\).
+
+In equation \eqref{eq:gifiloss} the matrices \(X\), \(Y\), \(A\), and \(B\) have the same definitions and dimensions as before. The new component is the \emph{target} \(Z\), an orthonormal \(n\times p\) matrix. Note there are no constraints on the weights \(A\) and \(B\) in this formulation.
+
+The minimum over \(A\) and \(B\) for fixed \(Z\) is attained at
+
+\begin{align}
+A&=(X'X)^{-1}X'Z,\label{eq:aforz}\\ 
+B&=(Y'Y)^{-1}Y'Z.\label{eq:bforz}
+\end{align}
+
+Thus
+
+\begin{equation}
+\sigma_p^\star(X,Y)=1-\frac{1}{p}\max_{Z'Z=I}\text{tr}\ Z'\overline{P}Z,
+\label{eq:partmin}
+\end{equation}
+
+where
+
+\begin{equation}
+\overline{P}:=\frac12\left\{X(X'X)^{-1}X'+Y(Y'Y)^{-1}Y'\right\}
+\label{eq:avproj}
+\end{equation}
+
+is the \emph{average projector}.
+
+If \(\overline{P}=V\Sigma V'\) is the eigen decomposition of \(\overline{P}\), then the optimum in \eqref{eq:partmin}
+is attained for \(Z=V_pM\), where \(V_p\) are the eigenvectors of \(\overline{P}\) corresponding with the \(p\) largest eigenvalues \(\sigma_1(X,Y)\geq\cdots\geq\sigma_p(X,Y)\) and \(M\) is again an arbitrary
+rotation matrix. Note that \(0\leq\sigma_s(X,Y)\leq 1\) for all \(s\). Also
+
+\begin{equation}
+\sigma_p^\star(X,Y)=1-\frac{1}{p}\  \sum_{s=1}^p\sigma_s(X,Y).
+\label{eq:fullmin}
+\end{equation}
+
+Thus meet-loss is one minus the average of the \(p\) largest eigenvalues of
+the average projector. We also see that \(\sigma_p^\star(X,Y)=1\) if and only
+if the column spaces of \(X\) and \(Y\) are orthogonal.
+
+\hypertarget{relationships}{%
+\section{Relationships}\label{relationships}}
+
+Consider the partioned matrix
+
+\begin{equation}
+U:=\begin{bmatrix}
+X(X'X)^{-\frac12}&\mid&Y(Y'Y)^{-\frac12}
+\end{bmatrix}
+\label{eq:partmatrix}
+\end{equation}
+
+then
+\[
+UU'=2\overline{P},
+\]
+and
+\[
+U'U=\begin{bmatrix}I&\tilde X'\tilde Y\\
+\tilde Y'\tilde X& I
+\end{bmatrix}.
+\]
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{u }\OtherTok{\textless{}{-}} \FunctionTok{cbind}\NormalTok{(}\FunctionTok{orthy}\NormalTok{(x), }\FunctionTok{orthy}\NormalTok{(y))}
+\FunctionTok{mprint}\NormalTok{(}\FunctionTok{eigen}\NormalTok{(}\FunctionTok{crossprod}\NormalTok{(u))}\SpecialCharTok{$}\NormalTok{values)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1]  +1.364068  +1.245573  +1.106719  +1.000000  +1.000000  +0.893281  +0.754427
+## [8]  +0.635932
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{mprint}\NormalTok{(}\FunctionTok{eigen}\NormalTok{(}\FunctionTok{tcrossprod}\NormalTok{(u))}\SpecialCharTok{$}\NormalTok{values[}\DecValTok{1}\SpecialCharTok{:}\DecValTok{8}\NormalTok{])}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1]  +1.364068  +1.245573  +1.106719  +1.000000  +1.000000  +0.893281  +0.754427
+## [8]  +0.635932
+\end{verbatim}
+
+For any matrix \(U\) the non-zero eigenvalues of \(U'U\) are the same as the non-zero eigenvalues of \(UU'\). The non-zero eigenvalues of \(UU'\) are \(2\sigma_s(X,Y)\) and those of \(U'U\) are \(1+\rho_s(X,Y)\) and \(1-\rho_s(X,Y)\). Thus \(1+\rho_s(X,Y)=2\sigma_s(X,Y)\)
+and
+
+\[
+\sigma_p^\star(X,Y)=1-\frac{1}{p}\sum_{s=1}^p(\rho_s-1)/2=
+\]
+
+\hypertarget{optimal-scaling}{%
+\section{Optimal Scaling}\label{optimal-scaling}}
+
+\hypertarget{aspect-loss}{%
+\section{Aspect Loss}\label{aspect-loss}}
+
+The \emph{aspect} approach to optimal scaling is due
+to De Leeuw (1988b), with further elaborations in De Leeuw (2004). See also
+Mair and De Leeuw (2010) for the \emph{aspect} package, which provides a partial implementation in R.
+
+In the aspect approach we minimize a concave function \(\phi\) of the correlation matrix \(R\) of the variables in the data.
+
+Suppose that the standardized variables
+are collected in a matrix \(Q\), so that \(R=Q'Q\).
+
+Because \(\phi\) is concave on the space of correlation matrices we have for any two
+correlation matrices \(R\) and \(\tilde R\)
+\[
+\phi(R)\leq\phi(\tilde R)+\text{tr}\ G(\tilde R)(R-\tilde R),
+\]
+where \(G(\tilde R)\) is the matrix
+of partial derivatives of \(\phi\) at \(\tilde R\)
+(or, more generally, any subgradient of \(\phi\)
+at \(\tilde R\)). Note \(G\) is both symmetric and hollow (??).
+
+If \(\tilde R\) is our previous best solution, then we find a better solution by minimizing
+\[
+\text{tr}\ G(\tilde R)R=\text{tr}\ QG(\tilde R)Q'
+\]
+over \(Q\in\mathcal{K}\).
+
+It is shown in De Leeuw (1988b) that the squared multiple correlation of one variable with the others, the log-determinant of the \(R\), the negative of the sum of the \(r\) largest eigenvalues of \(R\), the sum of the correlation coefficients, the negative of any norm of the correlation matrix, and any function of the form
+\[
+\phi(R):=\min_{\Gamma\in\mathcal{R}}\log\Gamma+\text{tr}\ \Gamma^{-1}R
+\]
+are concave in \(R\). Thus the aspect approach covers the optimal scaling versions of multiple regression, path analysis, principal component analysis, and multinormal maximum likelihood.
+
+In section 8 of De Leeuw (1988b) on limitations it was noticed that the canonical correlations
+are not concave in the joint correlation matrix of \(X\) and \(Y\), so aspect theory does not apply. This implied that there was no firm theoretical basis for the alternative apprach to canonical analysis discussed in
+Tijssen and De Leeuw (1989). But then, in De Leeuw (2004), it was discovered that
+if we use the joint correlation matrix
+of \(X, Y\) and \(Z\) from Gifi's meet-loss we
+are back in the realm concavity, and thus we can use the MM aspect algorithm.
+
+Define
+
+\[
+Q=\begin{bmatrix}Z&X&Y\end{bmatrix}
+\]
+
+\[
+G=\begin{bmatrix}\hfill I&\hfill I\\-A&\hfill 0\\\hfill0&-B\end{bmatrix}
+\]
+then
+
+\[
+\sigma_p^\star(X,Y)=\min_{Z'Z=I}\min_{G}\text{tr}\ G'RG
+\]
+
+\hypertarget{partials}{%
+\section{Partials}\label{partials}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{z}\OtherTok{\textless{}{-}}\FunctionTok{normy}\NormalTok{(}\FunctionTok{matrix}\NormalTok{(}\FunctionTok{rnorm}\NormalTok{(}\DecValTok{400}\NormalTok{), }\DecValTok{100}\NormalTok{, }\DecValTok{4}\NormalTok{))}
+\NormalTok{h }\OtherTok{\textless{}{-}} \FunctionTok{cancor}\NormalTok{(}\FunctionTok{cbind}\NormalTok{(x,z), }\FunctionTok{cbind}\NormalTok{(y,z))}
+\NormalTok{zx}\OtherTok{\textless{}{-}}\FunctionTok{lsfit}\NormalTok{(z,x,}\AttributeTok{intercept=}\ConstantTok{FALSE}\NormalTok{)}\SpecialCharTok{$}\NormalTok{residuals}
+\NormalTok{zy}\OtherTok{\textless{}{-}}\FunctionTok{lsfit}\NormalTok{(z,y,}\AttributeTok{intercept=}\ConstantTok{FALSE}\NormalTok{)}\SpecialCharTok{$}\NormalTok{residuals}
+\NormalTok{g }\OtherTok{\textless{}{-}} \FunctionTok{cancor}\NormalTok{(zx,zy)}
+\FunctionTok{print}\NormalTok{(h}\SpecialCharTok{$}\NormalTok{cor)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 1.00000000000 1.00000000000 1.00000000000 1.00000000000 0.37661694169
+## [6] 0.24926259554 0.07652584154
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{print}\NormalTok{(g}\SpecialCharTok{$}\NormalTok{cor)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 0.37661694169 0.24926259554 0.07652584154
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{xvar1}\OtherTok{\textless{}{-}}\FunctionTok{cbind}\NormalTok{(x,z)}\SpecialCharTok{\%*\%}\NormalTok{h}\SpecialCharTok{$}\NormalTok{xcoef[,}\SpecialCharTok{{-}}\NormalTok{(}\DecValTok{1}\SpecialCharTok{:}\DecValTok{3}\NormalTok{)]}
+\NormalTok{xvar2}\OtherTok{\textless{}{-}}\NormalTok{zx}\SpecialCharTok{\%*\%}\NormalTok{g}\SpecialCharTok{$}\NormalTok{xcoef}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{partals}{%
+\section{Partals}\label{partals}}
+
+\[
+SSQ(Y-(X-ZA)B)+\alpha\ SSQ(X-ZA)
+\]
+
+\hypertarget{canals}{%
+\section{Canals}\label{canals}}
+
+\begin{equation}
+\tilde\sigma_p^\star(X,Y)=\min_{A'X'XA=I}\min_B \text{SSQ}(XA-YB)=\min_{B'Y'Y'B=I}\min_A \text{SSQ}(XA-YB)
+\label{eq:canals}
+\end{equation}
+
+\hypertarget{criminals}{%
+\section{Criminals}\label{criminals}}
+
+\hypertarget{morals}{%
+\section{Morals}\label{morals}}
+
+\hypertarget{redundals}{%
+\section{Redundals}\label{redundals}}
+
+Van der Burg and De Leeuw (1990)
+
+\[
+SSQ(Z-XB)+SSQ(Y-ZA)
+\]
+\[
+\text{tr}\ Z'Q_XZ+\text{tr}\ Y'(I-ZZ')Y=p+\text{tr}\ Y'Y-\text{tr}\ Z'P_XZ-\text{tr}\ Z'YY'Z
+\]
+\[
+\begin{bmatrix}
+X(X'X)^{-\frac12}&\mid&Y
+\end{bmatrix}
+\]
+\[
+\begin{bmatrix}
+I&\tilde X'Y\\
+Y'\tilde X&Y'Y
+\end{bmatrix}
+\]
+\[
+A+\tilde X'YB=AM
+\]
+\[
+Y'\tilde XA+Y'YB=BM
+\]
+
+\[
+SSQ(Y-XAB')=SSQ(Y-P_XY-X(AB'-D))=\text{tr}\ Y'Q_XY+\text{tr}\ (D-AB')X'X(D-AB')
+\]
+
+\(D = (X'X)^{-1}X'Y\)
+\[
+\text{tr}\ (D-AB')X'X(D-AB')=K-2\text{tr}\ A'X'YB+\text{tr}\ A'X'XAB'B
+\]
+\[X'YB=X'XAM\]
+\[Y'XA=B\]
+\[
+X'YY'XA=X'XAM
+\]
+\[
+\tilde X'YY'\tilde X\tilde A=\tilde AM
+\]
+
+\hypertarget{totals}{%
+\section{Totals}\label{totals}}
+
+Total Least Squares version
+
+\[
+\mathcal{Y}=\mathcal{X}B
+\]
+\[
+Y+E=(X+D)B
+\]
+\[
+\text{SSQ}(E)+\alpha\ \text{SSQ}(D)
+\]
+\[
+\text{SSQ}(Y-(X+Z)B)+\alpha\ \text{SSQ}(Z)
+\]
+
+\hypertarget{dynamals}{%
+\section{Dynamals}\label{dynamals}}
+
+\hypertarget{multiple-sets}{%
+\section{Multiple Sets}\label{multiple-sets}}
+
+\[
+H_k=W_k^+\sum_{j\in\mathcal{J}_k}W_j(Z-y_ja_j^T)=Z-W_k^+\sum_{j\in\mathcal{J}_k}W_jy_ja_j^T.
+\]
+Let \(v_j=W_k^+W_jy_j\).
+\[
+H_k=Z-V_kA_k
+\]
+
+\[
+H_k'W_kH_k=Z^TW_kZ-2Z^TW_kV_kA_k+A_k^TV_k^TW_kV_kA_k
+\]
+\[
+A_k=(V_k^TW_kV_k)^{-1}V_k^TW_kZ
+\]
+\[
+Z^T(W_k-W_kV_k(V_k^TW_kV_k)^{-1}V_k^TW_k)Z
+\]
+\[
+Z^T(W_\bullet-\sum_{k=1}^KW_kV_k(V_k^TW_kV_k)^{-1}V_k^TW_k)Z
+\]
+\(Z^TW_\bullet Z=I\) \(\tilde Z=W_\bullet^\frac12 Z\)
+
+\[
+\tilde Z^T(I-W_\bullet^{-\frac12}\sum_{k=1}^KW_kV_k(V_k^TW_kV_k)^{-1}V_k^TW_kW_\bullet^{-\frac12})\tilde Z
+\]
+\[
+U_k=W_\bullet^{-\frac12}W_kV_k(V_k^TW_kV_k)^{-\frac12}
+\]
+
+\hypertarget{references}{%
+\section*{References}\label{references}}
+\addcontentsline{toc}{section}{References}
+
+\hypertarget{refs}{}
+\begin{CSLReferences}{1}{0}
+\leavevmode\hypertarget{ref-deleeuw_B_73}{}%
+De Leeuw, J. 1973. {``Canonical Analysis of Categorical Data.''} PhD thesis, University of Leiden, The Netherlands.
+
+\leavevmode\hypertarget{ref-deleeuw_A_88a}{}%
+---------. 1988a. {``Multivariate Analysis with Linearizable Regressions.''} \emph{Psychometrika} 53: 437--54. \url{http://deleeuwpdx.net/janspubs/1988/articles/deleeuw_A_88a.pdf}.
+
+\leavevmode\hypertarget{ref-deleeuw_C_88b}{}%
+---------. 1988b. {``{Multivariate Analysis with Optimal Scaling}.''} In \emph{Proceedings of the International Conference on Advances in Multivariate Statistical Analysis}, edited by S. Das Gupta and J. K. Ghosh, 127--60. Calcutta, India: Indian Statistical Institute. \url{http://deleeuwpdx.net/janspubs/1988/chapters/deleeuw_C_88b.pdf}.
+
+\leavevmode\hypertarget{ref-deleeuw_C_04a}{}%
+---------. 2004. {``Least Squares Optimal Scaling of Partially Observed Linear Systems.''} In \emph{Recent Developments in Structural Equation Models}, edited by K. van Montfort, J. Oud, and A. Satorra. Dordrecht, Netherlands: Kluwer Academic Publishers. \url{http://deleeuwpdx.net/janspubs/2004/chapters/deleeuw_C_04a.pdf}.
+
+\leavevmode\hypertarget{ref-deleeuw_R_09c}{}%
+---------. 2009. {``{Regression, Discriminant Analysis, and Canonical Analysis with homals}.''} Preprint Series 562. Los Angeles, CA: UCLA Department of Statistics. \url{http://deleeuwpdx.net/janspubs/2009/reports/deleeuw_R_09c.pdf}.
+
+\leavevmode\hypertarget{ref-deleeuw_E_19i}{}%
+---------. 2019. {``{Gifi Update Notes}.''} 2019. \url{http://deleeuwpdx.net/pubfolders/gifi/Gifi_New/gifi.pdf}.
+
+\leavevmode\hypertarget{ref-deleeuw_B_21a}{}%
+---------. 2021. \emph{Multivariate Analysis with Optimal Scaling}. Bookdown. \url{https://github.com/deleeuw/gifi/blob/main/_book/_main.pdf}.
+
+\leavevmode\hypertarget{ref-deleeuw_mair_A_09a}{}%
+De Leeuw, J., and P. Mair. 2009. {``Homogeneity Analysis in r: The Package Homals.''} \emph{Journal of Statistical Software} 31 (4): 1--21. \url{http://deleeuwpdx.net/janspubs/2009/articles/deleeuw_mair_A_09a.pdf}.
+
+\leavevmode\hypertarget{ref-gifi_B_90}{}%
+Gifi, A. 1990. \emph{Nonlinear Multivariate Analysis}. New York, N.Y.: Wiley.
+
+\leavevmode\hypertarget{ref-mair_deleeuw_A_10}{}%
+Mair, P., and J. De Leeuw. 2010. {``A General Framework for Multivariate Analysis with Optimal Scaling: The r Package Aspect.''} \emph{Journal of Statistical Software} 32 (9): 1--23. \url{http://deleeuwpdx.net/janspubs/2010/articles/mair_deleeuw_A_10.pdf}.
+
+\leavevmode\hypertarget{ref-tijssen_deleeuw_C_89}{}%
+Tijssen, R. J. W., and J. De Leeuw. 1989. {``Multi-Set Nonlinear Canonical Analysis via the Burt Matrix.''} In \emph{Multiway Data Analysis}, edited by R. Coppi and S. Bolasko. Amsterdam; New York: North Holland Publishing Company. \url{http://deleeuwpdx.net/janspubs/1989/chapters/tijssen_deleeuw_C_89.pdf}.
+
+\leavevmode\hypertarget{ref-vanderburg_deleeuw_A_83}{}%
+Van der Burg, E., and J. De Leeuw. 1983. {``Non-Linear Canonical Correlation.''} \emph{British Journal of Mathematical and Statistical Psychology} 36: 54--80. \url{http://deleeuwpdx.net/janspubs/1983/articles/vanderburg_deleeuw_A_83.pdf}.
+
+\leavevmode\hypertarget{ref-vanderburg_deleeuw_A_88}{}%
+---------. 1988. {``Use of the Multinomial Jackknife and Bootstrap in Generalized Nonlinear Canonical Correlation Analysis.''} \emph{Applied Stochastic Models and Data Analysis} 4 (159--172). \url{http://deleeuwpdx.net/janspubs/1988/articles/vanderburg_deleeuw_A_88.pdf}.
+
+\leavevmode\hypertarget{ref-vanderburg_deleeuw_A_90}{}%
+---------. 1990. {``Nonlinear Redundancy Analysis.''} \emph{British Journal of Mathematical and Statistical Psychology} 43: 217--30. \url{http://deleeuwpdx.net/janspubs/1990/articles/vanderburg_deleeuw_A_90.pdf}.
+
+\leavevmode\hypertarget{ref-young_deleeuw_takane_A_76}{}%
+Young, F. W., J. De Leeuw, and Y. Takane. 1976. {``Regression with Qualitative and Quantitative Data: An Alternating Least Squares Approach with Optimal Scaling Features.''} \emph{Psychometrika} 41: 505--29. \url{http://deleeuwpdx.net/janspubs/1976/articles/young_deleeuw_takane_A_76.pdf}.
+
+\end{CSLReferences}
+
+\end{document}

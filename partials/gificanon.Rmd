@@ -1,0 +1,513 @@
+---
+title: "Aspects of Gifi"
+author: "Jan de Leeuw"
+date: '`r paste("First created July 03, 2021. Last update", format(Sys.Date(),"%B %d, %Y"))`'
+output:
+  bookdown::pdf_document2:
+    keep_tex: yes
+    latex_engine: pdflatex
+    number_sections: yes  
+    toc: yes
+    toc_depth: '4'
+  bookdown::html_document2:
+    config:
+     keep_md: yes
+     toolbar:
+       position: fixed
+     toc: 
+      collapse: none
+fontsize: 12pt
+graphics: yes
+bibliography:
+- mypubs.bib
+- total.bib
+abstract: Brouhaha
+---
+
+<style type="text/css">
+
+body{ /* Normal  */
+   font-size: 18px;
+}
+td {  /* Table  */
+   font-size: 18px;
+}
+h1 { /* Header 1 */
+ font-size: 28px;
+ color: DarkBlue;
+}
+h2 { /* Header 2 */
+ font-size: 22px;
+ color: DarkBlue;
+}
+h3 { /* Header 3 */
+ font-size: 18px;
+ color: DarkBlue;
+}
+code.r{ /* Code block */
+  font-size: 18px;
+}
+pre { /* Code block */
+  font-size: 18px
+}
+</style>
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  TeX: { equationNumbers: { autoNumber: "AMS" } }
+});
+</script>
+
+```{r function_code, echo = FALSE}
+#source("dcone.R")
+```
+```{r code, echo = FALSE}
+options (digits = 10) 
+set.seed(12345)
+
+mprint <- function (x, d = 6, w = 10, f = "+") {
+  print (noquote (formatC (
+    x, di = d, wi = w, fo = "f", flag = f
+  )))
+}
+
+normy <- function(x) {
+  x <- apply(x, 2, function (x) x - mean(x))
+  return (apply(x, 2, function (x) x / sqrt(sum(x ^ 2))))
+}
+
+orthy <- function(x) {
+  s <- svd (x)
+  return (tcrossprod (s$u, s$v))
+}
+```
+
+
+>> aspect (NOUN)  
+>> *particular part or feature of something*
+
+# Intro
+
+The *Gifi System* for descriptive multivariate analysis has a 
+complicated history. 
+
+## Phase One: Starters
+
+@deleeuw_B_73
+
+## Phase Two: ALSOS
+
+@young_deleeuw_takane_A_76
+
+## Phase Three: Meet-Loss
+
+@gifi_B_90, @michailidis_deleeuw_R_96b
+
+(within this
+@vanderburg_deleeuw_A_83,
+@vanderburg_deleeuw_A_88,
+@vanderburg_deleeuw_A_90)
+
+## Phase Four: Correlational Aspects
+
+@deleeuw_A_88a, @deleeuw_C_88b
+
+## Phase Five: Meet-Loss as an Aspect
+
+@deleeuw_C_04a
+
+## Phase Six: Meet-Loss in R
+
+@deleeuw_mair_A_09a, @deleeuw_R_09c
+
+## Phase Seven: Gifi 2021
+
+@deleeuw_E_19i, @deleeuw_B_21a
+
+
+# Canonical Analysis
+
+Suppose $X$ and $Y$ are $n\times r$ and $n\times s$ matrices of real numbers, with $X$ containing measurements of $n$ objects on a first set of $r$ variables, and with $Y$ measurements of the same $n$ objects on a second set of $s$ variables. Both $X$ and $Y$ are supposed to be column-centered and of full column rank. Without loss of generality we assume $\text{diag}\ X'X=I$ and $\text{diag}\ Y'Y=I$, so that $X'X$, $Y'Y$, and $X'Y$ are correlation matrices.
+
+In canonical analysis we define the fit function(or goodness-of-fit measure) in $p$ dimensions, where $p\leq\min(r,s)$, as
+
+\begin{equation}
+\rho_p^\star(X,Y):=\frac{1}{p}\left\{\max_{A'X'XA=I}\max_{B'Y'YB=I}\text{tr}\ A'X'YB\right\}
+(\#eq:cancor)
+\end{equation}
+
+Here matrix $A$ is $r\times p$ and matrix $B$ is $s\times p$. It is clear from this formulation that $\rho_p(X,Y)=\rho_p(XS,YT)$
+for all non-singular $S$ and $T$, specifically for non-singular diagonal $S$ and $T$. Thus we assume, without loss of generality, that $\text{diag}\ X'X=I$ and $\text{diag}\ Y'Y=I$, so that $X'X$, $Y'Y$, and $X'Y$ are correlation matrices. The invariance under right multiplication shows that $\rho_p(X,Y)$ is really a characteristic of the column-spaces of $X$ and $Y$, and is independent of the choice of bases for these two spaces.
+
+The stationary equations are
+
+\begin{align}
+\begin{split}
+X'YB&=X'XA\Phi,\\
+Y'XA&=Y'YB\Psi,\\
+A'X'XA&=I,\\
+B'Y'YB&=I,
+\end{split}
+(\#eq:se1)
+\end{align}
+
+where $\Phi$ and $\Psi$ are two symmetric matrices of Lagrange multipliers. It follows directly from these equations that $\Phi=\Psi$.
+
+Define $\tilde A=(X'X)^\frac12 A$ and
+$\tilde B=(Y'Y)^\frac12 B$. Any matrix square root will do, so we can use the Cholesky factor, or the eigen factorization, or the symmetric square root. Also define
+$\tilde X=X(X'X)^{-\frac12}$ and $\tilde
+Y=Y(Y'Y)^{-\frac12}$. Then the stationary equations \@ref(eq:se1) become
+
+\begin{align}
+\begin{split}
+\tilde X'\tilde Y\tilde B&=\tilde A\Phi,\\
+\tilde Y'\tilde X\tilde A&=\tilde B\Psi,\\
+\tilde A'\tilde A&=I,\\
+\tilde B'\tilde B&=I.
+\end{split}
+(\#eq:se2)
+\end{align}
+
+It follows that $\Phi=\Psi=M\mathrm{P} M'$, where
+$M$ is an arbitrary rotation matrix with $M'M=MM'=I$, and $\mathrm{P}$ is a diagonal matrix with $p$ singular values of
+
+\begin{equation}
+\tilde C:=\tilde X'\tilde Y=
+(X'X)^{-\frac12}X'Y(Y'Y)^{-\frac12}.
+(\#eq:tildec)
+\end{equation}
+
+We always choose the singular values to be non-negative.
+
+If the singular value decomposition is
+$\tilde C=K\mathrm{P} L'$, then the maximum in \@ref(eq:cancor)
+is attained for $A=(X'X)^{-\frac12}K_pM$
+and $B=(Y'Y)^{-\frac12}L_pM$, where $K_p$
+and $L_p$ are singular vectors corresponding with the $p$ largest singular values, $\rho_1(X,Y)\geq\cdots\geq\rho_p(X,Y)$ and $M$
+is the arbitrary rotation matrix. At the maximum 
+
+\begin{equation}
+\rho_p^\star(X,Y)=\frac{1}{p}\sum_{s=1}^p\rho_s(X,Y).
+(\#eq:rhomax)
+\end{equation}
+
+The $\rho_s(X,Y)$ are the *canonical correlations*. Becase they are proper correlations, we have $0\leq\rho_s(X,Y)\leq 1$. Thus $\rho_p^\star(X,Y)$ is the average of the $p$ largest canonical correlations. We also define the *canonical weights* as the maximizers $A$ and $B$, the *canonical variables* as $XA$ and $YB$. and the *canonical self-loadings* as the correlations $X'XA$ and $Y'YB$ between the original variables and the canonical varables. The *canonical cross-loadings* are $X'YB$ and $Y'XA$, but from equations \@ref(eq:se1) we see that the cross loadings are a simple rescaling of the self-loadings.
+
+```{r}
+x <- normy(matrix(rnorm(300), 100, 3))
+y <- normy(matrix(rnorm(500), 100, 5))
+h <- cancor(x, y)
+r <- h$cor
+a <- h$xcoef
+b <- h$ycoef[,1:3]
+```
+```{r}
+mprint(r)
+```
+```{r}
+mprint(a)
+```
+```{r}
+mprint(b)
+```
+```{r}
+mprint(crossprod(x %*% a))
+```
+```{r}
+mprint(crossprod(y %*% b))
+```
+```{r}
+mprint(crossprod(x %*% a, y %*% b))
+```
+```{r}
+mprint(crossprod(x, x %*% a))
+```
+```{r}
+mprint(crossprod(y, y %*% b))
+```
+```{r}
+mprint(crossprod(x, x %*% a))
+```
+```{r}
+mprint(crossprod(x, y %*% b))
+```
+```{r}
+mprint(crossprod(y, x %*% a))
+```
+
+# Gifi Meet-Loss
+
+In @gifi_B_90 we define *meet-loss* for two sets as the least squares loss function (or badness-of-fit measure)
+
+\begin{equation}
+\sigma_p^\star(X,Y):=\frac12\frac{1}{p}\left\{\min_{Z'Z=I}\min_{A}\min_{B}\left\{\text{SSQ}(Z-XA)+\text{SSQ}(Z-YB)\right\}\right\},
+(\#eq:gifiloss)
+\end{equation}
+
+where we use $\text{SSQ}$ as shorthand for sum of squares. The name meet-loss derives from the fact that $\sigma_p^\star(X,Y)=0$
+if and only if the intersection (or meet) of the column spaces of $X$ and $Y$ has dimension $d\geq p$.
+
+In equation \@ref(eq:gifiloss) the matrices $X$, $Y$, $A$, and $B$ have the same definitions and dimensions as before. The new component is the *target* $Z$, an orthonormal $n\times p$ matrix. Note there are no constraints on the weights $A$ and $B$ in this formulation. 
+
+The minimum over $A$ and $B$ for fixed $Z$ is attained at
+
+\begin{align}
+A&=(X'X)^{-1}X'Z,(\#eq:aforz)\\ 
+B&=(Y'Y)^{-1}Y'Z.(\#eq:bforz)
+\end{align}
+
+Thus
+
+\begin{equation}
+\sigma_p^\star(X,Y)=1-\frac{1}{p}\max_{Z'Z=I}\text{tr}\ Z'\overline{P}Z,
+(\#eq:partmin)
+\end{equation}
+
+where
+
+\begin{equation}
+\overline{P}:=\frac12\left\{X(X'X)^{-1}X'+Y(Y'Y)^{-1}Y'\right\}
+(\#eq:avproj)
+\end{equation}
+
+is the *average projector*.
+
+If $\overline{P}=V\Sigma V'$ is the eigen decomposition of $\overline{P}$, then the optimum in \@ref(eq:partmin)
+is attained for $Z=V_pM$, where $V_p$ are the eigenvectors of $\overline{P}$ corresponding with the $p$ largest eigenvalues $\sigma_1(X,Y)\geq\cdots\geq\sigma_p(X,Y)$ and $M$ is again an arbitrary
+rotation matrix. Note that $0\leq\sigma_s(X,Y)\leq 1$ for all $s$. Also 
+
+\begin{equation}
+\sigma_p^\star(X,Y)=1-\frac{1}{p}\  \sum_{s=1}^p\sigma_s(X,Y).
+(\#eq:fullmin)
+\end{equation}
+
+Thus meet-loss is one minus the average of the $p$ largest eigenvalues of
+the average projector. We also see that $\sigma_p^\star(X,Y)=1$ if and only 
+if the column spaces of $X$ and $Y$ are orthogonal. 
+
+# Relationships
+
+
+Consider the partioned matrix
+
+\begin{equation}
+U:=\begin{bmatrix}
+X(X'X)^{-\frac12}&\mid&Y(Y'Y)^{-\frac12}
+\end{bmatrix}
+(\#eq:partmatrix)
+\end{equation}
+
+then
+$$
+UU'=2\overline{P},
+$$
+and
+$$
+U'U=\begin{bmatrix}I&\tilde X'\tilde Y\\
+\tilde Y'\tilde X& I
+\end{bmatrix}.
+$$
+
+```{r}
+u <- cbind(orthy(x), orthy(y))
+mprint(eigen(crossprod(u))$values)
+mprint(eigen(tcrossprod(u))$values[1:8])
+```
+
+For any matrix $U$ the non-zero eigenvalues of $U'U$ are the same as the non-zero eigenvalues of $UU'$. The non-zero eigenvalues of $UU'$ are $2\sigma_s(X,Y)$ and those of $U'U$ are $1+\rho_s(X,Y)$ and $1-\rho_s(X,Y)$. Thus   $1+\rho_s(X,Y)=2\sigma_s(X,Y)$
+and 
+
+$$
+\sigma_p^\star(X,Y)=1-\frac{1}{p}\sum_{s=1}^p(\rho_s-1)/2=
+$$
+
+# Optimal Scaling
+
+
+
+# Aspect Loss
+
+The *aspect* approach to optimal scaling is due 
+to @deleeuw_C_88b, with further elaborations in @deleeuw_C_04a. See also
+@mair_deleeuw_A_10 for the *aspect* package, which provides a partial implementation in R.
+
+
+In the aspect approach we minimize a concave function $\phi$ of the correlation matrix $R$ of the variables in the data.
+
+Suppose that the standardized variables
+are collected in a matrix $Q$, so that $R=Q'Q$.
+
+Because $\phi$ is concave on the space of correlation matrices we have for any two
+correlation matrices $R$ and $\tilde R$
+$$
+\phi(R)\leq\phi(\tilde R)+\text{tr}\ G(\tilde R)(R-\tilde R),
+$$
+where $G(\tilde R)$ is the matrix
+of partial derivatives of $\phi$ at $\tilde R$
+(or, more generally, any subgradient of $\phi$
+at $\tilde R$). Note $G$ is both symmetric and hollow (??).
+
+If $\tilde R$ is our previous best solution, then we find a better solution by minimizing
+$$
+\text{tr}\ G(\tilde R)R=\text{tr}\ QG(\tilde R)Q'
+$$
+over $Q\in\mathcal{K}$. 
+
+
+It is shown in @deleeuw_C_88b that the squared multiple correlation of one variable with the others, the log-determinant of the $R$, the negative of the sum of the $r$ largest eigenvalues of $R$, the sum of the correlation coefficients, the negative of any norm of the correlation matrix, and any function of the form 
+$$
+\phi(R):=\min_{\Gamma\in\mathcal{R}}\log\Gamma+\text{tr}\ \Gamma^{-1}R
+$$
+are concave in $R$. Thus the aspect approach covers the optimal scaling versions of multiple regression, path analysis, principal component analysis, and multinormal maximum likelihood.
+
+In section 8 of @deleeuw_C_88b on limitations it was noticed that the canonical correlations
+are not concave in the joint correlation matrix of $X$ and $Y$, so aspect theory does not apply. This implied that there was no firm theoretical basis for the alternative apprach to canonical analysis discussed in
+@tijssen_deleeuw_C_89. But then, in @deleeuw_C_04a, it was discovered that
+if we use the joint correlation matrix
+of $X, Y$ and $Z$ from Gifi's meet-loss we
+are back in the realm concavity, and thus we can use the MM aspect algorithm.
+
+Define
+
+$$
+Q=\begin{bmatrix}Z&X&Y\end{bmatrix}
+$$
+
+$$
+G=\begin{bmatrix}\hfill I&\hfill I\\-A&\hfill 0\\\hfill0&-B\end{bmatrix}
+$$
+then 
+
+$$
+\sigma_p^\star(X,Y)=\min_{Z'Z=I}\min_{G}\text{tr}\ G'RG
+$$
+
+
+# Partials
+
+
+```{r}
+z<-normy(matrix(rnorm(400), 100, 4))
+h <- cancor(cbind(x,z), cbind(y,z))
+zx<-lsfit(z,x,intercept=FALSE)$residuals
+zy<-lsfit(z,y,intercept=FALSE)$residuals
+g <- cancor(zx,zy)
+print(h$cor)
+print(g$cor)
+xvar1<-cbind(x,z)%*%h$xcoef[,-(1:3)]
+xvar2<-zx%*%g$xcoef
+```
+
+# Partals
+
+$$
+SSQ(Y-(X-ZA)B)+\alpha\ SSQ(X-ZA)
+$$
+
+# Canals
+
+\begin{equation}
+\tilde\sigma_p^\star(X,Y)=\min_{A'X'XA=I}\min_B \text{SSQ}(XA-YB)=\min_{B'Y'Y'B=I}\min_A \text{SSQ}(XA-YB)
+(\#eq:canals)
+\end{equation}
+
+# Criminals
+
+# Morals
+
+# Redundals
+
+@vanderburg_deleeuw_A_90
+
+$$
+SSQ(Z-XB)+SSQ(Y-ZA)
+$$
+$$
+\text{tr}\ Z'Q_XZ+\text{tr}\ Y'(I-ZZ')Y=p+\text{tr}\ Y'Y-\text{tr}\ Z'P_XZ-\text{tr}\ Z'YY'Z
+$$
+$$
+\begin{bmatrix}
+X(X'X)^{-\frac12}&\mid&Y
+\end{bmatrix}
+$$
+$$
+\begin{bmatrix}
+I&\tilde X'Y\\
+Y'\tilde X&Y'Y
+\end{bmatrix}
+$$
+$$
+A+\tilde X'YB=AM
+$$
+$$
+Y'\tilde XA+Y'YB=BM
+$$
+
+$$
+SSQ(Y-XAB')=SSQ(Y-P_XY-X(AB'-D))=\text{tr}\ Y'Q_XY+\text{tr}\ (D-AB')X'X(D-AB')
+$$
+
+$D = (X'X)^{-1}X'Y$
+$$
+\text{tr}\ (D-AB')X'X(D-AB')=K-2\text{tr}\ A'X'YB+\text{tr}\ A'X'XAB'B
+$$
+$$X'YB=X'XAM$$
+$$Y'XA=B$$
+$$
+X'YY'XA=X'XAM
+$$
+$$
+\tilde X'YY'\tilde X\tilde A=\tilde AM
+$$
+
+# Totals
+
+Total Least Squares version
+
+$$
+\mathcal{Y}=\mathcal{X}B
+$$
+$$
+Y+E=(X+D)B
+$$
+$$
+\text{SSQ}(E)+\alpha\ \text{SSQ}(D)
+$$
+$$
+\text{SSQ}(Y-(X+Z)B)+\alpha\ \text{SSQ}(Z)
+$$
+
+# Dynamals
+
+# Multiple Sets
+
+$$
+H_k=W_k^+\sum_{j\in\mathcal{J}_k}W_j(Z-y_ja_j^T)=Z-W_k^+\sum_{j\in\mathcal{J}_k}W_jy_ja_j^T.
+$$
+Let $v_j=W_k^+W_jy_j$.
+$$
+H_k=Z-V_kA_k
+$$
+
+$$
+H_k'W_kH_k=Z^TW_kZ-2Z^TW_kV_kA_k+A_k^TV_k^TW_kV_kA_k
+$$
+$$
+A_k=(V_k^TW_kV_k)^{-1}V_k^TW_kZ
+$$
+$$
+Z^T(W_k-W_kV_k(V_k^TW_kV_k)^{-1}V_k^TW_k)Z
+$$
+$$
+Z^T(W_\bullet-\sum_{k=1}^KW_kV_k(V_k^TW_kV_k)^{-1}V_k^TW_k)Z
+$$
+$Z^TW_\bullet Z=I$ $\tilde Z=W_\bullet^\frac12 Z$
+
+$$
+\tilde Z^T(I-W_\bullet^{-\frac12}\sum_{k=1}^KW_kV_k(V_k^TW_kV_k)^{-1}V_k^TW_kW_\bullet^{-\frac12})\tilde Z
+$$
+$$
+U_k=W_\bullet^{-\frac12}W_kV_k(V_k^TW_kV_k)^{-\frac12}
+$$
+
+# References

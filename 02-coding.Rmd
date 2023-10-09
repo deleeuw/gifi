@@ -1,0 +1,106 @@
+# Coding and Transformations
+
+## Variables and Multivariables
+
+In the multivariate analysis techniques presented in this book the data are measurements or classifications of $n$ *objects* by $m$ *variables*.
+Perhaps it is useful to insert some definitions here. A *variable* is a function that maps a domain of objects to a range of values. Domains are finite. The elements of the domain can be individuals, animals, plants, time points, locations, and so on. It is useful to distinguish the *codomain* (or *range*) of a variable and its *image*. The codomain of a variable can be the real numbers, but the image always is a finite set, the actual values the variable assumes on the domain. A *multivariable* is a sequence of variables defined on the same domain, with possibly different codomains.  Multivariables are implemented in R as *dataframes*. Variables can have a finite codomain, which can be either ordered or unordered. This corresponds with a *factor* or an *ordered factor* in R. MVAOS techniques *quantify* factors, replacing the values in the image by real numbers. If the variables are real-valued to start with we replace real numbers by other real numbers and we *transform* instead of *quantify*. The distinction between quantification and transformation is somewhat fluid, because the image of a variable is always finite and thus, in a sense, all variables are categorical (a point also emphasized, for example, in @holland_79).
+
+Although the variables in a multivariable have the same domain, there can be different numbers of missing data for different variables. We handle this in the same way as R, by adding `NA` to the range of all variables. In this context it is also useful to define *latent* or *unobserved* variables. These are variables for which all values are missing, i.e. for which the image only contains `NA`. At first thought it seems somewhat perverse to have such completely missing variables, but think of examples such as principal components, factor scores, or error terms in linear models.
+
+## Induced Correlations and Aspects
+
+If all categorical variables are quantified and all numerical variables are transformed we can compute the *induced correlation matrix* of the transformed and quantified variables. In the forms of MVAOS we consider in this book the statistics we compute, except for the transformations themselves, are usually functions of this induced correlation matrix. This means that they are functions of the second order relations between the variables, or, in order words, they are *joint bivariate*. Higher order moments and product moments are ignored. Different multivariate distributions with the same bivariate marginals will give the same MVAOS results.
+
+## Transformed Variables
+
+The data are collected in the $n\times m$ matrix $H$, which codes the observations on the $m$ variables. MVAOS does not operate on the data directly, but on *transformations* or *quantifications* of the variables. Choosing a transformation to minimize a loss function is known as *optimal scaling*. Clearly this so-called optimality is only defined in terms of a specific loss function, with specific constraints. Different constraints and different loss functions will lead to different optimal transformations.
+
+Let us define the types of transformations we are interested in. The $n\times m$ matrix of *transformed variables* $H$ has columns $h_j$, which are constrained by $h_j=G_jz_j$, where $G_j$ is a given matrix defining the *basis* for variable $j$. In addition we require $h_j\in\mathcal{C}_j$ and $h_j\in\mathcal{S}$, where $\mathcal{C}_j$ is a _cone of transformations_ and $\mathcal{S}$ is the unit sphere in $\mathbb{R}^n$. This will be discussed in more detail in later sections, but for the time being think of the example in which $h_j$ is required to be a (centered and normalized) monotone polynomial function of the image values of variable $j$. The whole of $\mathbb{R}^n$ and a single point in $\mathbb{R}^n$ are both special cases of these normalized cones. It is important, especially for algorithm construction, that the restrictions are defined for each variable separately. An exception to this rule is the *orthoblock*, using terminology from @deleeuw_C_04a, which requires that all or some of the columns of $H$ are not only normalized but also orthogonal to each other. Clearly a normalized variable is an orthoblock of size one.
+
+## Bases
+
+In earlier MVAOS work, summarized for example in @gifi_B_90 or @michailidis_deleeuw_A_98, the basis matrices $G_j$ were binary zero-one matrices, indicating category membership. These matrices are also known as *indicator matrices*. The same is true for the software in IBM SPSS Categories [@meulman_heiser_12] or in the R package homals  [@deleeuw_mair_A_09a]. In this paper we extend the current MVAOS software using *B-spline bases*, which provide a form of fuzzy non-binary coding suitable for both categorical and numerical variables [@vanrijckevorsel_deleeuw_B_88]. B-spline basis were already discussed for some special cases in @deleeuw_vanrijckevorsel_vanderwouden_A_81 and @gifi_B_90, but corresponding easily accessible software was never released.
+
+In this book we continue to use the term *indicators* for bases. Thus bases $G_j$ must be non-negative, with rows that add up to one. If there is only one non-zero entry in each row, which of course is then equal to one, the indicator is *crisp*, otherwise it is *fuzzy*. B-spline bases are the prime example of fuzzy indicators, but other examples are discussed in @vanrijckevorsel_deleeuw_B_88. Only B-spline bases are implemented in our software, however.
+
+Note that the identity matrix is a crisp indicator. This is of importance in connection with missing data and orthoblocks.
+
+## Copies and Rank
+
+Within a block there can be more than one version of the same variable. These multiple versions are called *copies*. They were first introduced into the Gifi framework by @deleeuw_C_84c. Since MVAOS transforms variables, having more than one copy is not necessarily redundant, because different copies can and will be transformed differently. As a simple example of copies, think of using different monomials or orthogonal polynomials of a single variable $x$ in a polynomial regression. The difference between copies and simply including a variable more than once is that copies have the same basis $G_j$.
+
+In the Gifi algorithms copies of a variable are treated in exactly the same way as other variables. The notion of copies replaces the notion of the *rank of a quantification* used in traditional Gifi, which in turn generalizes the distinction between *single* and *multiple* quantifications. A single variable has only one copy in its block, a multiple variable has the maximum number of copies. 
+
+In our software the copies of a variable by definition have the same basis. It is possible, of course, to include the same variable multiple times, but with different bases. This must be done, however, at the input level. In terms of the structures defined in the software, a gifiVariable can have multiple copies but it only has one basis. If there is more than one basis for a variable, then we need to define an additional gifiVariable. Also note that copies of a variable are all in the same block. If you want different versions of a variable in different blocks, then that requires you to create different gifiVariables.
+
+Defining copies is thus basically a coding problem. It can be handled simply by adding a variable multiple times to a data set, and giving each variable the same bases. In our algorithm we use the fact that copies belong to the same variable to create some special shortcuts and handling routines.
+
+Ordinality restrictions on variables with copies require some special attention. In our current implementation we merely require the first copy to be ordinal with the data, the other copies are not restricted. Once again, if you want ordinal restrictions on all copies you need to create separate gifiVariables for each copy.
+
+## Orthoblocks
+
+If a variable has more than one copy, then we require without loss of generality that the transformations are orthogonal. 
+
+
+
+## Constraints
+
+As discussed earlier, each variable has a cone of transformations associated with it, and we optimize over these transformations. In
+ALSOS and classical Gifi the three type of transformation cones considered are *nominal, ordinal,* and *numerical*. Our use of B-splines
+generalizes this distinction, because both numerical and nominal can be implemented using splines. What remains is the choice for
+the degree of the spline and the location of the knots. 
+
+Choice of degree and knots is basically up to the user, but the programs have some defaults. In most cases the default is to use crisp indicators with knots at the data points. Of course for truly categorical variables (i.e. for factors in R) crisp indicators are simply constructed by using the levels of the factor. We include some utilities to place knots at percentiles, or equally spaced on the range, or to have no interior knots at all (in which case we fit polynomials).
+
+And finally the user decides, for all variables, if she wants the transformations (step functions, splines, and polynomials) to be monotonic with the data. Default is not requiring monotonicity.
+
+Note that we require the spline to be monotonic in the non-missing data points -- this does not mean the spline is monotonic outside the range of the data (think, for example, of a quadratic polynomial), it does not even mean the spline is monotonic between data points. This makes our spline transformations different from the integrated B-splines, or I-splines, used by @winsberg_ramsay_83, which are monotone on the whole real line. Because each variable has a finite image we are not really fitting a spline, we are fitting a number of discrete points that are required to be on a spline, and optionally to be monotonic with the data. In @winsberg_ramsay_83 the requirement is that the fitted points are on an I-spline, which automatically makes them monotonic with the data. Clearly our approach is the less restrictive one.
+
+## Missing Data
+
+The utility `makeMissing()` expands the basis for the non-missing data in various ways. Option "m" (for "multiple") is the default. It replaces the basis with the direct sum of the non-missing basis and an identity matrix for the missing elements. Option "s" (for "single") adds a single binary column to the basis indicating which elements are missing. Option "a" (for "average") codes missing data by having all the elements in rows of the basis corresponding with missing data equal to one over the number of rows. With all three options the basis remains an indicator. Some of these options make most sense in the context of crisp indicators, where they are compared in @meulman_82.
+
+So suppose the data are
+```{r missing_example, echo = FALSE}
+x <- as.matrix(c(-.5,NA,.75,.99,NA))
+mprint(x)
+```
+Create a basis for the non-missing values with
+```{r missing_basis_example}
+mprint(basis <- bsplineBasis(x[which(!is.na(x))],1,c(-1,0,1)))
+```
+The three different completion options for missing data give
+```{r missing_complete_example}
+mprint (makeMissing (x, basis, missing = "m"))
+mprint (makeMissing (x, basis, missing = "s"))
+mprint (makeMissing (x, basis, missing = "a"))
+```
+The default option for missing data in the previous version of the Gifi system was "missing data deleted", which involves weighting the rows in the loss functions by the number of non-missing data in that row. This leads to some complications,
+and consequently we have no option "d" in this version of Gifi.
+
+## Active and Passive Variables
+
+If a variable is *passive* (or *supplementary*) it is incorporated in the analysis, but it does not contribute to the loss. Thus an analysis that leaves the passive variables out will give the same results for the active variables.
+Passive variables are transformed like all the others, but they do not contribute to the block scores, and thus not
+to the loss. They have category quantifications and scores, and can be used in the corresponding plots.
+
+If all variables in a block are passive, then the whole block does not contribute to the loss. This happens specifically
+for singletons, if the single variable in the block is passive.
+
+
+## Interactive Coding
+
+One of the major contributions of *Analyse des Données* is the emphasis on *coding*, which in our context can be defined as choosing how to represent the raw data of an experiment in an actual data frame (and, to a lesser extent, how to choose blocks, number of copies, dimensionality, degrees, and knots). In the section we discuss one important coding variation. Suppose we have $n$ observations on two factors, one with $p$ levels and one with $q$ levels. Then the data can be coded as $n$ observations on one factor with $p\times q$ levels, and we can construct a corresponding crisp indicator. The same reasoning applies to more than two categorical variables, which we can always code  *interactively*. It also applies to bases for numerical variables, where we can define an interactive basis by using products of columns from the bases of each of the variables.
+
+If $G=\{g_{is}\}$ and $H=\{h_{it}\}$ are two indicators of dimensions $n\times m_g$ and $n\times m_h$, then the $n\times m_gm_h$ matrix with elements \{g_{is}h_{it}\} is again an indicator: the elements are non-negative, and rows add up to one.
+
+
+```{r interactive_example_x}
+mprint (x <- bsplineBasis (1:9/10, 1, .5))
+```
+```{r interactive_example_y}
+mprint (y <- makeIndicator (c (rep (1, 5), rep (2, 4))))
+```
+```{r interactive_example_xy}
+mprint (makeColumnProduct (list (x, y)))
+```

@@ -1,0 +1,34 @@
+# Aspects
+
+## Definition
+
+An *aspect* is a real valued function $\phi$ defined on the compact convex set $\mathcal{R}^{m\times m}$ of correlation matrices of order $m$. Note that a *correlation matrix* is a positive semi-definite matrix with ones on the diagonal.
+
+In @deleeuw_C_04a a class of MVAOS techniques is defined by optimizing aspects, using majorization algorithms. Optimization is over a set $\mathcal{R}$ of correlation matrices, usually the correlation matrices that correspond with admissible transformations of the data. See @deleeuw_A_88a and @deleeuw_michailidis_wang_C_99 for additional results on aspects. Software in R that optimizes general aspects is discussed by @mair_deleeuw_A_10.
+
+The aspect optimization algorithm is based on majorization, and assumes that the aspect that is maximized is a convex function on the space of correlation matrices (or, equivalently, that the aspect is concave and minimized). Some examples of interesting convex aspects are:
+
+* The sum of the $p$ largest eigenvalues of the correlation matrix (as in principal component analysis).
+* The squared multiple correlation (SMC) of one variable with the others (as in multiple regression).
+* The sum of some SMC's over some or all variables (as in path analysis).
+
+There are also some convex aspects are not directly associated with a standard multivariate technique.
+
+* The sum of the $p^{th}$ powers of the correlation coefficients, with $p\geq 1$.
+* The sum of the $p^{th}$ powers of the absolute values of the correlation coefficients, with $p\geq 1$.
+* Any norm on the space of correlation matrices.
+
+Another interesting aspect, related to multinormal maximum likelihood estimation, is
+$$
+\phi(R)=\min_{\Gamma\in\mathcal{G}} \log\mathbf{det}(\Gamma)+\mathbf{tr}\ R\Gamma^{-1},
+$$
+where $\mathcal{G}$ is some (possibly parametrized) subset of the correlation matrices. For instance, $\mathcal{G}$ could be all matrices satisfying some factor analysis or structural equations model. To compute $\phi$ we have to calculate the multinormal maximum likelihood estimate of the model for given $R$. The aspect $\phi$ is concave in $R$, so in our framework we minimize it over $R\in\mathcal{R}$.
+
+## Stationary Equations
+
+The stationary equations when optimizing a differentiable aspect $\phi$ over the centered and standardized transformations in $x_j$ are
+$$
+\sum_{\ell=1}^m \frac{\partial\phi}{\partial r_{j\ell}}\mathbf{E}(x_\ell|x_j)=\lambda_jx_j
+$$
+
+## Bilinearizability
