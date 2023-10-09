@@ -1,0 +1,463 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+  12pt,
+]{book}
+\usepackage{amsmath,amssymb}
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math} % this also loads fontspec
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+\usepackage{lmodern}
+\ifPDFTeX\else
+  % xetex/luatex font selection
+  \setmainfont[]{Times New Roman}
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\usepackage{longtable,booktabs,array}
+\usepackage{calc} % for calculating minipage widths
+% Correct order of tables after \paragraph or \subparagraph
+\usepackage{etoolbox}
+\makeatletter
+\patchcmd\longtable{\par}{\if@noskipsec\mbox{}\fi\par}{}{}
+\makeatother
+% Allow footnotes in longtable head/foot
+\IfFileExists{footnotehyper.sty}{\usepackage{footnotehyper}}{\usepackage{footnote}}
+\makesavenoteenv{longtable}
+\usepackage{graphicx}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{5}
+% definitions for citeproc citations
+\NewDocumentCommand\citeproctext{}{}
+\NewDocumentCommand\citeproc{mm}{%
+  \begingroup\def\citeproctext{#2}\cite{#1}\endgroup}
+\makeatletter
+ % allow citations to break across lines
+ \let\@cite@ofmt\@firstofone
+ % avoid brackets around text for \cite:
+ \def\@biblabel#1{}
+ \def\@cite#1#2{{#1\if@tempswa , #2\fi}}
+\makeatother
+\newlength{\cslhangindent}
+\setlength{\cslhangindent}{1.5em}
+\newlength{\csllabelwidth}
+\setlength{\csllabelwidth}{3em}
+\newenvironment{CSLReferences}[2] % #1 hanging-indent, #2 entry-spacing
+ {\begin{list}{}{%
+  \setlength{\itemindent}{0pt}
+  \setlength{\leftmargin}{0pt}
+  \setlength{\parsep}{0pt}
+  % turn on hanging indent if param 1 is 1
+  \ifodd #1
+   \setlength{\leftmargin}{\cslhangindent}
+   \setlength{\itemindent}{-1\cslhangindent}
+  \fi
+  % set entry spacing
+  \setlength{\itemsep}{#2\baselineskip}}}
+ {\end{list}}
+\usepackage{calc}
+\newcommand{\CSLBlock}[1]{\hfill\break#1\hfill\break}
+\newcommand{\CSLLeftMargin}[1]{\parbox[t]{\csllabelwidth}{\strut#1\strut}}
+\newcommand{\CSLRightInline}[1]{\parbox[t]{\linewidth - \csllabelwidth}{\strut#1\strut}}
+\newcommand{\CSLIndent}[1]{\hspace{\cslhangindent}#1}
+\ifLuaTeX
+  \usepackage{selnolig}  % disable illegal ligatures
+\fi
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same}
+\hypersetup{
+  pdftitle={Gifi Analysis of Multivariate Data},
+  pdfauthor={Jan de Leeuw},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+
+\title{Gifi Analysis of Multivariate Data}
+\author{Jan de Leeuw}
+\date{First created May 04, 2016. Last update October 09, 2023}
+
+\begin{document}
+\maketitle
+
+{
+\setcounter{tocdepth}{3}
+\tableofcontents
+}
+\newcommand{\ul}[1]{\underline{#1}}
+\newcommand{\ol}[1]{\overline{#1}}
+\newcommand{\bb}[1]{\mathbb{#1}}
+\newcommand{\mc}[1]{\mathcal{#1}}
+\newcommand{\df}{=:}
+\newcommand{\am}[1]{\mathop{\text{argmin}}_{#1}}
+
+\}
+
+\newcommand{\ls}[2]{\mathop{\sum\sum}_{#1}^{#2}}
+
+\}
+\newcommand{\ijs}{\mathop{\sum\sum}_{1\leq i<j\leq n}}
+\newcommand{\jis}{\mathop{\sum\sum}_{1\leq j<i\leq n}}
+\newcommand{\sij}{\sum_{i=1}^n\sum_{j=1}^n}
+
+\newcommand{\argmin}[1]{\mathop{\mathbf{argmin}}\limits_{#1}}
+\newcommand{\argmax}[1]{\mathop{\mathbf{argmax}}\limits_{#1}}
+
+\chapter*{Note}\label{note}
+\addcontentsline{toc}{chapter}{Note}
+
+This book will be expanded/updated frequently. The directory \href{http://deleeuwpdx.net/pubfolders/stress}{deleeuwpdx.net/pubfolders/stress} has a pdf version, the bib file, the complete Rmd file with the code chunks, and the R and C source code. Suggestions for improvement of text and code are welcome. All text and code are in the public domain and can be copied and used by anybody in any way they like. Attribution will be appreciated, but is not required.
+
+Just as an aside: ``above'' in the text refers to anything that comes earlier in the book and ``below'' refers to anything that comes later. This always confuses me, so I had to write it down. I also number \emph{all} displayed equations. Equations are displayed if and only if they are important, are referred to in the text, or mess up the line spacing.
+
+\chapter*{Preface}\label{preface}
+\addcontentsline{toc}{chapter}{Preface}
+
+In 1980 members of the Department of Data Theory at the University of Leiden taught a post-doctoral course in Nonlinear Multivariate Analysis. The course content was sort-of-published, in Dutch, as Gifi (\citeproc{ref-gifi_B_80}{1980}). The course was repeated in 1981, and this time the sort-of-published version (Gifi (\citeproc{ref-gifi_B_81}{1981})) was in English.
+
+The preface gives some details about the author.
+
+\begin{quote}
+The text is the joint product of the members of the Department of Data Theory of the Faculty of Social Sciences, University of Leiden.
+`Albert Gifi' is their `nom de plume'. The portrait, however, of Albert Gifi shown here, is that of the real Albert Gifi to whose
+memory this book is dedicated, as a far too late recompense for his loyalty and devotion, during so any years, to the Cause he served.
+\end{quote}
+
+Roughly ten years later a revised version of these course notes came out as an actual book in the \emph{Wiley Series in Probabilty and Mathematical Statistics} (Gifi (\citeproc{ref-gifi_B_90}{1990})). This despite the fact that the contents of the book had very little to do with either probability or mathematical statistics. The book is organized around a series of computer programs for correspondence analysis, principal component analysis, and canonical analysis. The programs, written in FORTRAN, are called HOMALS, PRINCALS, PRIMALS, CRIMINALS, CANALS, OVERALS because they combine classical linear multivariate analysis with optimal transformation of the variables, using alternating least squares (or ALS). It serves, to some extent, as a manual for the programs, but it also discusses the properties of the techniques implemented in the programs, and it presents many detailed applications of these techniques.
+
+Reviewers generally had some difficulties separating the wheat from the chaff.
+
+\begin{quote}
+As the spirit of Albert Gifi has faded away, so has his whimsical approach to
+publishing, and his latest book is an idiosyncratic account of multivariate methods
+developed by the Leiden group during the 1970s. The names of their computer programs
+are distinguished by the ending \textasciitilde ALS, thus we have OVERALS, PRINCALS, HOMALS,
+CANALS, MORALS, MANOVALS, CRIMINALS, PARTALS and PATHALS. Perhaps if you have a
+warped mind like this reviewer, you will turn rapidly to CRIMINALS. What can it be ?
+Surely it must give some illicit view of the truth about the world, a vision of the
+underworld of multivariate analysis ? Alas no ! It turns out only to be a synonym of
+Canonical Variate Analysis, sometimes known as Multiple Discriminant Analysis.
+Likewise HOMALS turns out to be Reciprocal Averaging, otherwise known as
+Correspondence Analysis. (Hill (\citeproc{ref-hill_90}{1990}))
+\end{quote}
+
+This ambiguity and confusion are not too surprising. The Gifi book was a summary of the work of a large number of people, over a period of almost 20 years. Nevertheless, and perhaps because of this, it is somewhat of a \emph{camel}, which we define for our purposes as a \emph{horse designed by a committee}. Different chapters had different authors, and the common ideas behind the various techniques were not always clearly explained.
+
+\begin{quote}
+In Gifi's MVA the criterion called ``meet'' loss plays a central role. Although the
+adoption of this criterion is one of the most important contributions of Gifi, the
+book would have been much more readable if this criterion had been introduced right
+at the outset and was followed throughout the rest of the book. (Takane (\citeproc{ref-takane_92}{1992}))
+\end{quote}
+
+Nevertheless there is much original material in Gifi (\citeproc{ref-gifi_B_90}{1990}), and the book has early applications of alternating least squares, majorization, coordinate descent, the delta method, and the bootstrap. And it emphasizes throughout the idea that statistics is about techniques, not about models. But, yes, the organization leaves much to be desired. An on demand printing of the first and only edition is now available on Amazon for \$ 492 -- although of course used versions go for much less.
+
+The book was published by a prestiguous publisher in a prestiguous series, but it is fair to say it never really caught on. It is not hard to understand why. The content, and the style, are unfamiliar to statisticians and mathematicians. There is no inference, no probability, and very little rigor. The content is in multivariate data analysis, which would be most at home these days, if anywhere, in a computer science department. The Gifi group did not have the resources of, say, Benzécri in France or Hayashi in Japan. The members were mostly active in psychometrics, a small and insular field, and they were from The Netherlands, a small country prone to overestimate its importance (Marvell (\citeproc{ref-marvell_53}{1653})). They also did not have the evangelical zeal necessary for creating and sustaining a large impact.
+
+There have been some other major publication events in the Gifi saga. Around the same time as the Wiley book there was the publication of SPSS (\citeproc{ref-spss_89}{1989}). Starting in the late seventies the Gifi FORTRAN programs had been embedded in the SPSS system. The \emph{SPSS Categories} manual was updated many times, in fact every time SPSS or IBM SPSS had a new release. Over the years other programs produced by the Department of Data Theory were added. A recent version is, for example, Meulman and Heiser (\citeproc{ref-meulman_heiser_12}{2012}), corresponding to IBM SPSS 21. It acknowledges the contributions of some of the members of the Gifi team -- but in IBM (\citeproc{ref-ibm_15}{2015}), the version for IBM SPSS 23, these acknowledgements and the names of the authors have disappeared. Sic transit gloria mundi.
+
+Michailidis and De Leeuw (\citeproc{ref-michailidis_deleeuw_A_98}{1998}) made an attempt to make the Gifi material somewhat more accessible by publishing a review article in a widely read mainstream statistical journal. Another such attempt is De Leeuw and Mair (\citeproc{ref-deleeuw_mair_A_09a}{2009}), in which the homals package for R is introduced. The homals package is basically a single monolithic R function that can do everything the Gifi programs can do, and then some. In both cases, however, the problem remained that the techniques, and the software, were too convoluted and too different from what both statisticians and users were accustomed to.
+
+Van der Heijden and Van Buuren (\citeproc{ref-vanderheijden_vanbuuren_16}{1916}) give an excellent, though somewhat wistful, historic overview of the Gifi project. It is too early for eulogies, however, and we refuse to give up. This book is yet another reorganization of the Gifi material, with many extensions. We take Yoshio Takane's advice seriously, and we organize both the theory and the algorithms around what is called ``meet-loss'' in Gifi. In our software we separate the basic computational engine from its various applications that define the techniques of \emph{Multivariate Analysis with Optimal Scaling (MVAOS)}. Hiding the core makes it possible to make the programs behave in much the same way as traditional MVA programs. The software is written in R ((\citeproc{ref-r_core_team_16}{\textbf{r\_core\_team\_16?}})), with some parts of the computational engine written in C.
+
+The book itself is written in Rmarkdown, using bookdown (Xie (\citeproc{ref-xie_16}{2016})) and knitr (Xie (\citeproc{ref-xie_15}{2015})) to embed the computations and graphics, and to produce html and pdf versions that are completely reproducible. The book and all the files that go with it are in the public domain.
+
+We would like to acknowledge those who have made substantial contributions to the Gifi project (and its immediate ancestors and offspring) over the years. Some of them are lost in the mists of time, some of them are no longer on this earth. They are, in alphabetical order, Bert Bettonvil, Jason Bond, Catrien Bijleveld, Frank Busing, Jacques Commandeur, Henny Coolen, Steef de Bie, Jan de Leeuw, John Gower, Patrick Groenen, Chris Haveman, Willem Heiser, Abby Israels, Judy Knip, Jan Koster, Pieter Kroonenberg, Patrick Mair, Adriaan Meester, Jacqueline Meulman, George Michailidis, Peter Neufeglise, Dré Nierop, Ineke Stoop, Yoshio Takane, Stef van Buuren, John van de Geer, Gerda van den Berg, Eeke van der Burg, Peter van der Heijden, Anita van der Kooij, Ivo van der Lans, Rien van der Leeden, Jan van Rijckevorsel, Renée Verdegaal, Peter Verboon, Susañña Verdel, and Forrest Young.
+
+\chapter{Introduction}\label{introduction}
+
+Placeholder
+
+\section{Some Dualisms}\label{some-dualisms}
+
+\section{Quantifying Qualitative Data}\label{quantifying-qualitative-data}
+
+\section{Beyond Gifi}\label{beyond-gifi}
+
+\chapter{Coding and Transformations}\label{coding-and-transformations}
+
+Placeholder
+
+\section{Variables and Multivariables}\label{variables-and-multivariables}
+
+\section{Induced Correlations and Aspects}\label{induced-correlations-and-aspects}
+
+\section{Transformed Variables}\label{transformed-variables}
+
+\section{Bases}\label{bases}
+
+\section{Copies and Rank}\label{copies-and-rank}
+
+\section{Orthoblocks}\label{orthoblocks}
+
+\section{Constraints}\label{constraints}
+
+\section{Missing Data}\label{missing-data}
+
+\section{Active and Passive Variables}\label{active-and-passive-variables}
+
+\section{Interactive Coding}\label{interactive-coding}
+
+\chapter{Aspects}\label{aspects}
+
+Placeholder
+
+\section{Definition}\label{definition}
+
+\section{Stationary Equations}\label{stationary-equations}
+
+\section{Bilinearizability}\label{bilinearizability}
+
+\chapter{Pattern Constraints and Gifi Loss}\label{pattern-constraints-and-gifi-loss}
+
+Placeholder
+
+\section{Aspects from Patterns}\label{aspects-from-patterns}
+
+\section{Gifi Loss}\label{gifi-loss}
+
+\section{Associated Eigenvalue Problems}\label{associated-eigenvalue-problems}
+
+\section{History}\label{history}
+
+\chapter{Algorithm}\label{algorithm}
+
+Placeholder
+
+\section{Block Relaxation}\label{block-relaxation}
+
+\section{Majorization}\label{majorization}
+
+\section{Alternating Least Squares}\label{alternating-least-squares}
+
+\section{Implementation Details}\label{implementation-details}
+
+\section{Wrappers}\label{wrappers}
+
+\section{Structures}\label{structures}
+
+\chapter{Multiple Correspondence Analysis and homals()}\label{multiple-correspondence-analysis-and-homals}
+
+Placeholder
+
+\section{Introduction}\label{introduction-1}
+
+\section{Equations}\label{equations}
+
+\section{Examples}\label{examples}
+
+\subsection{Hartigan's Hardware}\label{hartigans-hardware}
+
+\subsection{Thirteen Personality Scales}\label{thirteen-personality-scales}
+
+\chapter{Canonical Correspondence Analysis and coranals()}\label{canonical-correspondence-analysis-and-coranals}
+
+\section{Introduction}\label{introduction-2}
+
+\section{Equations}\label{equations-1}
+
+Canonical analysis of \(GX\) and \(H\).
+
+\section{Examples}\label{examples-1}
+
+\chapter{Nonlinear Principal Component Analysis and princals()}\label{nonlinear-principal-component-analysis-and-princals}
+
+Placeholder
+
+\section{Introduction}\label{introduction-3}
+
+\section{Equations}\label{equations-2}
+
+\section{Examples}\label{examples-2}
+
+\subsection{Thirteen Personality Scales}\label{thirteen-personality-scales-1}
+
+\chapter{Canonical Analysis and canals()}\label{canonical-analysis-and-canals}
+
+\section{Equations}\label{equations-3}
+
+If there are only two blocks the generalized eigenvalue problem for the Burt matrix becomes
+\[
+\begin{bmatrix}
+D_1&C_{12}\\C_{21}&D_2
+\end{bmatrix}
+\begin{bmatrix}
+a_1\\a_2
+\end{bmatrix}=2\lambda\begin{bmatrix}D_1&0\\0&D_2\end{bmatrix}\begin{bmatrix}
+a_1\\a_2
+\end{bmatrix},
+\]
+which we can rewrite as
+\[
+\begin{split}
+C_{12}a_2&=(2\lambda-1)D_1a_1,\\
+C_{21}a_1&=(2\lambda-1)D_2a_2,
+\end{split}
+\]
+from which we see that MVAOS maximizes the sum of the \(r\) largest canonical correlations between \(H_1\) and \(H_2\). See also Van der Velden (\citeproc{ref-vandervelden_12}{2012}).
+
+\section{Examples}\label{examples-3}
+
+\chapter{Multiple Regression and morals()}\label{multiple-regression-and-morals}
+
+Placeholder
+
+\section{Equations}\label{equations-4}
+
+\section{Examples}\label{examples-4}
+
+\subsection{Polynomial Regression}\label{polynomial-regression}
+
+\subsection{Gases with Convertible Components}\label{gases-with-convertible-components}
+
+\section{Conjoint Analysis and addals()}\label{conjoint-analysis-and-addals}
+
+\chapter{Discriminant Analysis and criminals()}\label{discriminant-analysis-and-criminals}
+
+Placeholder
+
+\section{Equations}\label{equations-5}
+
+\section{Examples}\label{examples-5}
+
+\subsection{Iris data}\label{iris-data}
+
+\chapter{Multiblock Canonical Correlation and overals()}\label{multiblock-canonical-correlation-and-overals}
+
+Placeholder
+
+\section{Equations}\label{equations-6}
+
+\section{Examples}\label{examples-6}
+
+\subsection{Thirteen Personality Scales}\label{thirteen-personality-scales-2}
+
+\chapter{Code}\label{code}
+
+Placeholder
+
+\section{R Code}\label{r-code}
+
+\subsection{Driver}\label{driver}
+
+\subsection{Engine}\label{engine}
+
+\subsection{Aspect Engine}\label{aspect-engine}
+
+\subsection{Some Aspects}\label{some-aspects}
+
+\subsection{Structures}\label{structures-1}
+
+\subsection{Wrappers}\label{wrappers-1}
+
+\subsection{Splines}\label{splines}
+
+\subsection{Gram-Schmidt}\label{gram-schmidt}
+
+\subsection{Cone regression}\label{cone-regression}
+
+\subsection{Coding}\label{coding}
+
+\subsection{Utilities}\label{utilities}
+
+\section{C Code}\label{c-code}
+
+\subsection{Splines}\label{splines-1}
+
+\subsection{Gram-Schmidt}\label{gram-schmidt-1}
+
+\subsection{Coding}\label{coding-1}
+
+\chapter{Backmatter}\label{backmatter}
+
+\section{Key Names and Symbols}\label{key-names-and-symbols}
+
+\section{References}\label{references}
+
+\phantomsection\label{refs}
+\begin{CSLReferences}{1}{0}
+\bibitem[\citeproctext]{ref-deleeuw_mair_A_09a}
+De Leeuw, J., and P. Mair. 2009. {``{Homogeneity Analysis in {R}: the Package homals}.''} \emph{Journal of Statistical Software} 31 (4): 1--21. \url{https://www.jstatsoft.org/v31/i04/}.
+
+\bibitem[\citeproctext]{ref-gifi_B_80}
+Gifi, A. 1980. \emph{Niet-Lineaire Multivariate Analyse {[}Nonlinear Multivariate Analysis{]}}. Leiden, The Netherlands: Department of Data Theory FSW/RUL.
+
+\bibitem[\citeproctext]{ref-gifi_B_81}
+---------. 1981. \emph{Nonlinear Multivariate Analysis}. Leiden, The Netherlands: Department of Data Theory FSW/RUL.
+
+\bibitem[\citeproctext]{ref-gifi_B_90}
+---------. 1990. \emph{Nonlinear Multivariate Analysis}. New York, N.Y.: Wiley.
+
+\bibitem[\citeproctext]{ref-hill_90}
+Hill, M. O. 1990. {``{Review of A. Gifi, Multivariate Analysis}.''} \emph{Journal of Ecology} 78 (4): 1148--49.
+
+\bibitem[\citeproctext]{ref-ibm_15}
+IBM. 2015. \emph{IBM SPSS Categories 23}. IBM Corporation.
+
+\bibitem[\citeproctext]{ref-marvell_53}
+Marvell, A. 1653. {``The Character of Holland.''}
+
+\bibitem[\citeproctext]{ref-meulman_heiser_12}
+Meulman, J. J., and W. J. Heiser. 2012. \emph{IBM SPSS Categories 21}. IBM Corporation.
+
+\bibitem[\citeproctext]{ref-michailidis_deleeuw_A_98}
+Michailidis, G., and J. De Leeuw. 1998. {``The Gifi System for Descriptive Multivariate Analysis.''} \emph{Statistical Science} 13: 307--36.
+
+\bibitem[\citeproctext]{ref-spss_89}
+SPSS. 1989. \emph{SPSS Categories}. SPSS Inc.
+
+\bibitem[\citeproctext]{ref-takane_92}
+Takane, Y. 1992. {``{Review of Albert Gifi, Nonlinear Multivariate Analysis}.''} \emph{Journal of the American Statistical Association} 87: 587--88.
+
+\bibitem[\citeproctext]{ref-vanderheijden_vanbuuren_16}
+Van der Heijden, P. G. M., and S. Van Buuren. 1916. {``Looking Back at the Gifi System of Nonlinear Multivariate Analysis.''} \emph{Journal of Statistical Software} 73 (4).
+
+\bibitem[\citeproctext]{ref-vandervelden_12}
+Van der Velden, M. 2012. {``On Generalized Canonical Correlation Analysis.''} In \emph{Proceedings 58th World Statistical Congress, 2011, Dublin}, 758--65. The Hague: International Statiatical Instutute.
+
+\bibitem[\citeproctext]{ref-xie_15}
+Xie, Y. 2015. \emph{{Dynamic Documents with R and knitr}}. Second Edition. CRC Press.
+
+\bibitem[\citeproctext]{ref-xie_16}
+---------. 2016. \emph{Bookdown: Authoring Books with r Markdown.}
+
+\end{CSLReferences}
+
+\end{document}
